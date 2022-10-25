@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace P3-Project
+namespace P3Project
 {
     class Program
     {
-        static void Main(string args[])
+        static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
         }
