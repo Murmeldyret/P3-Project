@@ -6,9 +6,29 @@ namespace P3Project
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+
         }
 
+    }
+
+    public class Filter
+    {
+        
+    }
+
+    public class Reference
+    {
+
+    }
+
+    public class Spreadsheet
+    {
+
+    }
+
+    public class Api
+    {
+        
     }
 
 }
