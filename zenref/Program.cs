@@ -1,2 +1,14 @@
-﻿// See https://aka.ms/new-console-template for more information
-System.Console.WriteLine("Hello, World!");
+﻿using System;
+
+namespace P3-Project
+{
+    class Program
+    {
+        static void Main(string args[])
+        {
+            Console.WriteLine("Hello World!");
+        }
+
+    }
+
+}
