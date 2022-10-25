@@ -20,8 +20,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\zenref\zenref.csproj" />
-  </ItemGroup>
-
 </Project>
