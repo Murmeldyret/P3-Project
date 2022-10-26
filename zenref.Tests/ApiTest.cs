@@ -1,12 +1,9 @@
 ﻿using Xunit;
 using System;
 using P3Project.API;
+using Moq;
 namespace zenref.Tests;
 
-public class TestAPIen : Api
-{
-
-}
 
 public class ApiTest
 {
@@ -18,6 +15,6 @@ public class ApiTest
     [Fact]
     public void ReferenceFetchIsNotImplemented()
     {
-        TestAPIen api = new TestAPIen();
+        Mock<Api> api = new Mock<Api>();
     }
 }
