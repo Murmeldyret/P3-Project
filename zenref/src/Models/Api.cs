@@ -10,7 +10,10 @@ namespace P3Project.API
         protected bool _isApiKeyValid { get; set; } = true;
 
         // A function that returns processed data, using delegates to parse data. The API returns a reference
-        
+        public Reference ReferenceFetch(string SearchQuery, Func<HttpResponseMessage, Reference> referenceParser)
+        {
+            return new Reference();
+        }
 
 
         
