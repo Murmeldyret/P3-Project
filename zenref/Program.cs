@@ -29,9 +29,9 @@ namespace P3Project
             return 1;
         }
 
-        public static string[] NGramiser(string text)
+        public static List<string> NGramiser(string text)
         {
-            return new[] { text }; // Whatever... 
+            throw new NotImplementedException();
         }
 
         public string? Author { get; set; }
