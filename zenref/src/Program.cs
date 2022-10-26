@@ -6,9 +6,7 @@ namespace P3Project
     {
         static void Main(string[] args)
         {
-
         }
-
     }
 
     public class Filter
@@ -25,10 +23,4 @@ namespace P3Project
     {
 
     }
-
-    public class Api
-    {
-        
-    }
-
 }
