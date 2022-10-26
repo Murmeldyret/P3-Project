@@ -12,6 +12,7 @@ namespace P3Project.API
         // A function that returns processed data, using delegates to parse data. The API returns a reference
         public Reference ReferenceFetch(string SearchQuery, Func<HttpResponseMessage, Reference> referenceParser)
         {
+            throw new NotImplementedException();
             return new Reference();
         }
 
