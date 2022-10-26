@@ -17,6 +17,10 @@ namespace P3Project.API
         // A function that uses fuzzy matching to determine the accuracy of the response.
 
         // A function that handles status codes. Should be private.
+        protected bool _isHTTPResponseCodeSuccess()
+        {
+            return true;
+        }
 
         // A function that returns what fileformat the response is in.
 
