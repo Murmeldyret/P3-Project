@@ -32,7 +32,7 @@ namespace P3Project.API
         {
             if (true)
             {
-            _isApiKeyValid = false;//
+                //_isApiKeyValid = false;
                 throw new NotImplementedException("Fuck dig ikke implementeret");
                 //throw new ArgumentException($"{_baseURL}\nAPI key is not valid. Please update the key, or this site will not be available ");
             }
