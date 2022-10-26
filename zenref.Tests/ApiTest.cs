@@ -1,5 +1,5 @@
 ﻿using Xunit;
-using System.IO;
+using System;
 using P3Project.API;
 namespace zenref.Tests;
 
@@ -18,6 +18,6 @@ public class ApiTest
     [Fact]
     public void ReferenceFetchIsNotImplemented()
     {
-        // Api api = new Api();
+        TestAPIen api = new TestAPIen();
     }
 }
