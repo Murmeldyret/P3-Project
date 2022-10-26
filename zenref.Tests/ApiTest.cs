@@ -8,13 +8,10 @@ namespace zenref.Tests;
 public class ApiTest
 {
     [Fact]
-    public void Test1()
-    {
-
-    }
-    [Fact]
-    public void ReferenceFetchIsNotImplemented()
+    public void ApiIsApiKeyValidThrowsNotImplemented()
     {
         Mock<Api> api = new Mock<Api>();
+
+        Assert.Throws<NotImplementedException>(api.Object.IsApiKeyValid);
     }
 }
