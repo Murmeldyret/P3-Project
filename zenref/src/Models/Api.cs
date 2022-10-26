@@ -8,7 +8,10 @@ namespace P3Project.API
         protected string _apiKey { get; init; }
         protected Uri _baseURL { get; init; }
         protected bool _isApiKeyValid { get; set; } = true;
-
+        /// <summary>
+        /// Represents the minimum number of milliseconds that has to pass before another call to this api can be made.
+        /// </summary>
+        public uint RateLimitInMsecs { get; init; }
         // A function that returns processed data, using delegates to parse data. The API returns a reference
         public Reference ReferenceFetch(string SearchQuery, Func<HttpResponseMessage, Reference> referenceParser)
         {
