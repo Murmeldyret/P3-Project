@@ -1,7 +1,7 @@
 namespace P3Project.API
 {
     /// <summary>
-    /// Represents a RESTful webApi
+    /// Represents a RESTful WebApi
     /// </summary>
     public abstract class Api
     {
