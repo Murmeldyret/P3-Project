@@ -13,7 +13,6 @@ namespace P3Project.API
         public Reference ReferenceFetch(string SearchQuery, Func<HttpResponseMessage, Reference> referenceParser)
         {
             throw new NotImplementedException();
-            return new Reference();
         }
 
 
@@ -27,6 +26,10 @@ namespace P3Project.API
         }
 
         // A function that returns what fileformat the response is in.
+        public string fileformatResponse(HttpResponseMessage response)
+        {
+            throw new NotImplementedException();
+        }
 
         // Key validation.
         public void IsApiKeyValid()
