@@ -23,7 +23,7 @@ namespace P3Project.API
         // A function that handles status codes. Should be private.
         protected bool _isHTTPResponseCodeSuccess()
         {
-            return true;
+            throw new NotImplementedException("Fuck dig ikke implementeret");
         }
 
         // A function that returns what fileformat the response is in.
@@ -33,8 +33,9 @@ namespace P3Project.API
         {
             if (true)
             {
-            _isApiKeyValid = false;
-            throw new ArgumentException($"{_baseURL}\nAPI key is not valid. Please update the key, or this site will not be available ");
+                //_isApiKeyValid = false;
+                throw new NotImplementedException("Fuck dig ikke implementeret");
+                //throw new ArgumentException($"{_baseURL}\nAPI key is not valid. Please update the key, or this site will not be available ");
             }
         }
 
