@@ -5,7 +5,7 @@ using Moq;
 namespace zenref.Tests;
 
 
-public class ApiTest
+public class ApiTest : Api
 {
     //Test IsApiKeyValid
     [Fact]
@@ -36,8 +36,17 @@ public class ApiTest
     [InlineData(404)]
     public void isHTTPResponseCodeSuccessFailOnCode4xx(int value)
     {
-        //Assert false
+        // Arrange
+        System.Net.Http.HttpResponseMessage response = new System.Net.Http.HttpResponseMessage((System.Net.HttpStatusCode)value);
+
+        // Act
+        bool response_failure = _isHTTPResponseCodeSuccess(response);
+
+        // Assert
+        Assert.Equal(false, response_failure);
     }
+
+    
     [Theory]
     [InlineData(201)]
     [InlineData(200)]

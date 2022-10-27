@@ -19,7 +19,7 @@ namespace P3Project.API
         }
 
         // A function that handles status codes. Should be private.
-        protected bool _isHTTPResponseCodeSuccess()
+        protected bool _isHTTPResponseCodeSuccess(HttpResponseMessage message)
         {
             throw new NotImplementedException("Fuck dig ikke implementeret");
         }
