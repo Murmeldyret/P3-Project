@@ -37,39 +37,26 @@ namespace zenref.Tests
         }
 
         [Fact]
-        public void OpenTest()
+        public void ImportTest()
         {
             //Arrange
             Spreadsheet testSpreadsheet = new Spreadsheet("test.xlsx");
 
             //Act
-            bool result = testSpreadsheet.Open();
+            bool result = testSpreadsheet.Import();
 
             //Assert
             Assert.True(result);
         }
 
         [Fact]
-        public void CloseTest()
+        public void ExportTest()
         {
             //Arrange
             Spreadsheet testSpreadsheet = new Spreadsheet("test.xlsx");
 
             //Act
-            bool result = testSpreadsheet.Close();
-
-            //Assert
-            Assert.True(result);
-        }
-
-        [Fact]
-        public void CreateTest()
-        {
-            //Arrange
-            Spreadsheet testSpreadsheet = new Spreadsheet("test.xlsx");
-
-            //Act
-            bool result = testSpreadsheet.Create();
+            bool result = testSpreadsheet.Export();
 
             //Assert
             Assert.True(result);
