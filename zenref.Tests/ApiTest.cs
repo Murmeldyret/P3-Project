@@ -46,13 +46,20 @@ public class ApiTest : Api
         Assert.Equal(false, response_failure);
     }
 
-    
+
     [Theory]
     [InlineData(201)]
     [InlineData(200)]
     public void httpResponseCodeSuccessOn2xx(int value)
     {
-        //Assert true
+        // Arrange
+        System.Net.Http.HttpResponseMessage response = new System.Net.Http.HttpResponseMessage((System.Net.HttpStatusCode)value);
+
+        // Act
+        bool response_success = _isHTTPResponseCodeSuccess(response);
+
+        // Assert
+        Assert.Equal(true, response_success);
     }
     //End Test _isHTTPResponseCodeSuccess
     //Test fileformatResponse
