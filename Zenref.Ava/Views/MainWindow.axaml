@@ -4,10 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="600"
-        x:Class="Zenref.Ava.Views.MainWindow">
-
+        x:Class="Zenref.Ava.Views.MainWindow"
+		Title="Main Window">
+		
 	<Design.DataContext>
-		<viewModels:MainViewModel />
+		<viewModels:MainWindowViewModel />
 	</Design.DataContext>
 
 	<Grid Name="grid" RowDefinitions="Auto, Auto">
@@ -17,7 +18,8 @@
 			<Button Name="deleteReferenceButton"> Slet</Button>
 			<TextBox Name="searchTextBox" Watermark="Søg" Width="150" FontSize="15" KeyUp="SearchTextBox_TextInput"></TextBox>
 		</Menu>
-		<DataGrid Name="dataGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,40"       RowBackground="LightGray" CanUserResizeColumns="True"       Height="500" Width="1000">
+		<DataGrid Name="dataGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,40"      
+				  RowBackground="LightGray" CanUserResizeColumns="True" Height="500" Width="1000">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Uddannelse" Binding="{Binding Uddannelse, Mode=TwoWay}"/>
 				<DataGridTextColumn Header="Uddannelsesinstitution" Binding="{Binding Uddannelsesinstitution, Mode=TwoWay}"/>

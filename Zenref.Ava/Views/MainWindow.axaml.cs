@@ -11,9 +11,9 @@ using Zenref.Ava.Models;
 using Zenref.Ava.ViewModels;
 using DynamicData;
 
-namespace AvaloniaApplication1.Views
+namespace Zenref.Ava.Views
 {
-    public partial class MainView : Window
+    public partial class MainWindow : Window
     {
         DataGrid data_Grid;
         Button AddReferenceButton;
@@ -22,7 +22,7 @@ namespace AvaloniaApplication1.Views
 
         List<Reference> ReferenceList = new List<Reference>();
 
-        public MainView()
+        public MainWindow()
         {
             InitializeComponent();
             InitializeWindow();
