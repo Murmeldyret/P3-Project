@@ -14,7 +14,11 @@ namespace P3Project.API.APIHelper
 		/// <remarks>
 		/// Remember to use the method <c>InitializeClient</c> Before using this property
 		/// </remarks>
-		public static HttpClient ApiClient { get; private set; }
+		public static HttpClient ApiClient
+		{
+			get => ApiClient ?? throw new MemberAccessException("ApiClient not initialized");
+			private set => ApiClient = value;
+		}
 
 		public static void InitializeClient()
 		{

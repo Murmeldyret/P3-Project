@@ -33,9 +33,7 @@ namespace zenref.Tests
 
 			Assert.True(apiHelperAcceptsXML);
         }
-
-		
-
+		//TODO Test if class throws when ApiClient is null (Note that the property is static)
 	}
 }
 
