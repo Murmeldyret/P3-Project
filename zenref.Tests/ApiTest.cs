@@ -1,11 +1,12 @@
 ﻿using Xunit;
 using System;
 using P3Project.API;
+using P3Project;
 using Moq;
 namespace zenref.Tests;
 
-
-public class ApiTest : Api
+// For testing public methods
+public class ApiTest
 {
     //Test IsApiKeyValid
     [Fact]
@@ -21,7 +22,11 @@ public class ApiTest : Api
     //Test ReferenceFetch
     public void ReferenceFetchUnsuccesful()
     {
-        //et eller andet
+        string url = "https://averywrong.url";
+
+        Reference response_reference = null;
+
+        Assert.Null(response_reference);
     }
     [Fact]
     public void ReferenceFetchSuccesful()
@@ -29,6 +34,14 @@ public class ApiTest : Api
         //
     }
     //End Test ReferenceFetch
+    //Test fileformatResponse
+
+    // End Test fileformatResponse
+}
+
+// For testing protected methods.
+public class ApiTest1 : Api
+{
     //Test _isHTTPResponseCodeSuccess
     [Theory]
     [InlineData(400)]
@@ -60,9 +73,13 @@ public class ApiTest : Api
 
         // Assert
         Assert.Equal(true, response_success);
+        
     }
     //End Test _isHTTPResponseCodeSuccess
-    //Test fileformatResponse
 
-    // End Test fileformatResponse
+    public override System.Threading.Tasks.Task<Reference> ReferenceFetch(Reference inputReference)
+    {
+        throw new NotImplementedException();
+    }
+
 }
