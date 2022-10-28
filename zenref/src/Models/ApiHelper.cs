@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http.Headers;
 
-namespace zenref.src.Models
+namespace P3Project.API.APIHelper
 {
 	/// <summary>
 	/// Represents an HTTP client that accepts JSON and XML content
