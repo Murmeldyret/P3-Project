@@ -13,10 +13,20 @@ namespace P3Project.API
         /// </summary>
         public uint RateLimitInMsecs { get; init; }
         // A function that returns processed data, using delegates to parse data. The API returns a reference
-        public Reference ReferenceFetch(string SearchQuery, Func<HttpResponseMessage, Reference> referenceParser)
-        {
-            throw new NotImplementedException();
-        }
+
+        //public async Task<Reference> ReferenceFetch(string SearchQuery, Func<HttpResponseMessage, Reference> referenceParser)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        /// <summary>
+        /// The method responsible for fetching data from a specific Api connection. Implementations should be async
+        /// </summary>
+        /// <param name="inputReference">The Reference that is to be looked up (usually unidentified)</param>
+        /// <returns>A reference with correctly filled fields</returns>
+        public abstract Task<Reference> ReferenceFetch(Reference inputReference);
+
+
 
         // A function that handles status codes. Should be private.
         protected bool _isHTTPResponseCodeSuccess(HttpResponseMessage message)
