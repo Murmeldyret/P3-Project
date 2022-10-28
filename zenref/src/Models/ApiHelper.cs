@@ -15,9 +15,6 @@ namespace zenref.src.Models
 		/// Remember to use the method <c>InitializeClient</c> Before using this property
 		/// </remarks>
 		public static HttpClient ApiClient { get; private set; }
-		public ApiHelper()
-		{
-		}
 
 		public static void InitializeClient()
 		{
