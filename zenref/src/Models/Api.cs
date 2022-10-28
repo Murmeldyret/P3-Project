@@ -35,7 +35,7 @@ namespace P3Project.API
         }
 
         // A function that returns what fileformat the response is in.
-        public string fileformatResponse(HttpResponseMessage response)
+        protected string fileformatResponse(HttpResponseMessage response)
         {
             throw new NotImplementedException();
         }
