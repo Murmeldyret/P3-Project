@@ -1,13 +1,13 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using AvaloniaApplication1.Models;
+using Zenref.Ava.Models;
 
-namespace AvaloniaApplication1.Views
+namespace Zenref.Ava.Views
 {
-    public partial class DragAndDropView : Window
+    public partial class ExpandReferenceWindow : Window
     {
-        public DragAndDropView()
+        public ExpandReferenceWindow()
         {
             this.InitializeComponent();
             InitializeWindow();

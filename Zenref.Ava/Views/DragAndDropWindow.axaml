@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="500"
 		Width="700" Height="500"
-        x:Class="AvaloniaApplication1.Views.DragAndDropView"
+        x:Class="Zenref.Ava.Views.DragAndDropWindow"
         Title="Drag and drop window">
 	<Grid>
 		<Border Name="CopyTarget"

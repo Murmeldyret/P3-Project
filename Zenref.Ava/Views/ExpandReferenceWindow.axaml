@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="550"
 		Width="450" Height="550"
-        x:Class="AvaloniaApplication1.Views.ExpandReferenceView"
+        x:Class="Zenref.Ava.Views.ExpandReferenceWindow"
         Title="Expand reference window">
    <Window.Styles>
     <Style Selector=":is(Button)">

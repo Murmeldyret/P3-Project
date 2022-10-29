@@ -29,8 +29,17 @@
 	<PackageReference Include="XamlNameReferenceGenerator" Version="1.3.4" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Views\DragAndDropWindow.axaml.cs">
+      <DependentUpon>DragAndDropWindow.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ExpandReferenceWindow.axaml.cs">
+      <DependentUpon>ExpandReferenceWindow.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\NewReferenceWindow.axaml.cs">
       <DependentUpon>NewReferenceWindow.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SearchCriteriaWIndow.axaml.cs">
+      <DependentUpon>SearchCriteriaWindow.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

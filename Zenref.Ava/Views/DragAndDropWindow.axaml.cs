@@ -1,16 +1,15 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using AvaloniaApplication1.Models;
+using Zenref.Ava.Models;
 
-namespace AvaloniaApplication1.Views
+namespace Zenref.Ava.Views
 {
-    public partial class SearchCriteriaView : Window
+    public partial class DragAndDropWindow : Window
     {
-        public SearchCriteriaView()
+        public DragAndDropWindow()
         {
             this.InitializeComponent();
-
             InitializeWindow();
         }
 
