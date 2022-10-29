@@ -1,0 +1,56 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:viewModels="using:AvaloniaApplication1.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="450"
+        Width="700" Height="450"
+        x:Class="AvaloniaApplication1.Views.SearchCriteriaView">
+
+	<Design.DataContext>
+		<viewModels:MainViewModel />
+	</Design.DataContext>
+
+	<Window.Styles>
+		<Style Selector="TextBox">
+			<Setter Property="Width" Value="150"/>
+			<Setter Property="Margin" Value="10"/>
+			<Setter Property="Watermark" Value="Søge kriterie"/>
+		</Style>
+		<Style Selector="ComboBox">
+			<Setter Property="Width" Value="70"/>
+			<Setter	Property="Margin" Value="10,12"/>
+		</Style>
+	</Window.Styles>
+	<Grid Name="grid">
+		<StackPanel Orientation="Vertical">
+			<StackPanel Orientation="Horizontal">
+				<ComboBox PlaceholderText="Felter">
+				</ComboBox>
+				<TextBox PasswordChar="#" Width="240"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<ComboBox PlaceholderText="OG">
+				</ComboBox>
+				<ComboBox PlaceholderText="Felter">
+				</ComboBox>
+				<TextBox PasswordChar="#"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<ComboBox PlaceholderText="ELLER">
+				</ComboBox>
+				<ComboBox PlaceholderText="Felter">
+				</ComboBox>
+				<TextBox PasswordChar="#"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<ComboBox PlaceholderText="IKKE">
+				</ComboBox>
+				<ComboBox PlaceholderText="Felter">
+				</ComboBox>
+				<TextBox PasswordChar="#"/>
+			</StackPanel>
+		</StackPanel>
+		<Button HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20,10">Tilføj</Button>
+	</Grid>
+</Window>
