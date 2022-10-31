@@ -9,10 +9,10 @@ namespace Zenref.Ava.Models
     public class DataContext : DbContext
     {
         public DbSet<Reference> References { get; set; }
+        public DbSet<Spreadsheet> Spreadsheets { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // Write file to data folder
             optionsBuilder.UseSqlite("Data Source=data/zenref.db");
             // optionsBuilder.UseSqlite("Data Source=zenref.db");
         }
