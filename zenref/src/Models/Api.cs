@@ -5,7 +5,10 @@ namespace P3Project.API
     /// </summary>
     public abstract class Api
     {
-        public Api() {
+        /// <summary>
+        /// Empty constructor for testing purposes. Not meant for use in the program.
+        /// </summary>
+        protected Api() {
             _apiKey = "Not valid";
             _baseURL = new Uri("https://example.com");
         }
