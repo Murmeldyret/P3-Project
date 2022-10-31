@@ -13,7 +13,7 @@
 		</Style>
 	</Window.Styles>
 	<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-		<Button>Kendte kilder</Button>
-		<Button>Identificer kilder</Button>
+		<Button Name="knownReferencesButton">Kendte kilder</Button>
+		<Button Name="identifyReferencesButton">Identificer kilder</Button>
 	</StackPanel>
 </Window>
