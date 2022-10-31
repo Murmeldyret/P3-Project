@@ -6,8 +6,8 @@ namespace P3Project
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello there");
-            Console.WriteLine("General Kenobi");
+            //Console.WriteLine("Hello there");
+            //Console.WriteLine("General Kenobi");
         }
 
     }

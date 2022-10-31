@@ -18,10 +18,14 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="ClosedXML" Version="0.97.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\zenref\zenref.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="ClosedXML" />
+  </ItemGroup>
 </Project>
