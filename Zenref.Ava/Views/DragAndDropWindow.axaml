@@ -19,8 +19,8 @@
 					   FontSize="50" FontWeight="Heavy" Text="Drop file here"></TextBlock>
 		</Border>
 		<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" FontWeight="Bold">File Name</TextBlock>
-		<Button VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20,10">Import</Button>
-		<Button VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="100,10">Afbryd</Button>
-		<Button VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="20,10">Næste</Button>
+		<Button Name="importButton" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20,10">Import</Button>
+		<Button Name="cancelButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="100,10">Afbryd</Button>
+		<Button Name="nextButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="20,10">Næste</Button>
 	</Grid>
 </Window>
