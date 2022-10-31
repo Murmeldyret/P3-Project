@@ -13,6 +13,7 @@ namespace zenref.Models.Spreadsheet
         public int ReferenceCount { get; }
         public bool State { get; }
         // public string Worksheet { get; } // Egen klasse...
+        protected XLWorkbook? Workbook { get; set; }
 
         public Spreadsheet(string fileName)
         {
@@ -43,7 +44,16 @@ namespace zenref.Models.Spreadsheet
         */
         public bool Import()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            try
+            {
+            Workbook = new XLWorkbook(FileName);
+            }
+            catch (ArgumentException ex)
+            {
+                throw new FileNotFoundException("File not found\n" + ex.Message);
+            }
+
         }
 
         /**
