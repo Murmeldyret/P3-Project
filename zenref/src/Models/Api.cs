@@ -5,6 +5,11 @@ namespace P3Project.API
     /// </summary>
     public abstract class Api
     {
+        public Api(string apiKey, Uri URL)
+        {
+            this._apiKey = apiKey;
+            this._baseURL = URL;
+        }
         protected string _apiKey { get; init; }
         protected Uri _baseURL { get; init; }
         protected bool _isApiKeyValid { get; set; } = true;
@@ -27,7 +32,6 @@ namespace P3Project.API
         public abstract Task<Reference> ReferenceFetch(Reference inputReference);
 
 
-
         // A function that handles status codes. Should be protected.
         protected bool _isHTTPResponseCodeSuccess(HttpResponseMessage message)
         {
@@ -40,6 +44,8 @@ namespace P3Project.API
             throw new NotImplementedException();
         }
 
+
+
         // Key validation.
         public void IsApiKeyValid()
         {
@@ -50,10 +56,10 @@ namespace P3Project.API
                 //throw new ArgumentException($"{_baseURL}\nAPI key is not valid. Please update the key, or this site will not be available ");
             }
         }
-
-        // 
-
     }
 
-    
+    public class
+
+
+
 }
