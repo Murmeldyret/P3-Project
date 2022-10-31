@@ -23,28 +23,28 @@
 			<StackPanel Orientation="Horizontal">
 				<ComboBox PlaceholderText="Felter">
 				</ComboBox>
-				<TextBox PasswordChar="#" Width="240"/>
+				<TextBox Width="240"/>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
 				<ComboBox PlaceholderText="OG">
 				</ComboBox>
 				<ComboBox PlaceholderText="Felter">
 				</ComboBox>
-				<TextBox PasswordChar="#"/>
+				<TextBox/>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
 				<ComboBox PlaceholderText="ELLER">
 				</ComboBox>
 				<ComboBox PlaceholderText="Felter">
 				</ComboBox>
-				<TextBox PasswordChar="#"/>
+				<TextBox/>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
 				<ComboBox PlaceholderText="IKKE">
 				</ComboBox>
 				<ComboBox PlaceholderText="Felter">
 				</ComboBox>
-				<TextBox PasswordChar="#"/>
+				<TextBox/>
 			</StackPanel>
 		</StackPanel>
 		<Button HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20,10">Tilføj</Button>
