@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using zenref.Models;
+using zenref.Models.Spreadsheet;
 using ClosedXML.Excel;
+using System.IO;
 
 namespace zenref.Tests
 {
@@ -38,18 +39,32 @@ namespace zenref.Tests
         }
 
         [Fact]
-        public void ImportTest()
+        public void ImportTestWhenFileFound()
         {
             //Arrange
-            Spreadsheet testSpreadsheet = new Spreadsheet("test.xlsx");
-
+            const string testFileName = "test.xlsx";
+            XLWorkbook tempWorkbook = new XLWorkbook();
+            tempWorkbook.AddWorksheet("testsheet");
+            tempWorkbook.SaveAs(testFileName);
+            Spreadsheet testSpreadsheet = new Spreadsheet(testFileName);
             //Act
-            bool result = testSpreadsheet.Import();
+            testSpreadsheet.Import();
 
             //Assert
-            Assert.True(result);
+            Assert.True(testSpreadsheet.DoesExcelFileExist);
+            File.Delete(testFileName);
         }
+        [Fact]
+        public void ImportTestWhenFileNotFound()
+        {
+            const string NonExistentExcelFileName = "DoesNotExsist.xlsx";
+            Spreadsheet TestUnFindableSpreadsheet = new Spreadsheet(NonExistentExcelFileName);
 
+            Action importNonExistentFile = () => TestUnFindableSpreadsheet.Import();
+
+            Assert.Throws<FileNotFoundException>(importNonExistentFile);
+
+        }
         [Fact]
         public void ExportTest()
         {

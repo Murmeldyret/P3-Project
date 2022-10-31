@@ -12,11 +12,12 @@ namespace zenref.Models.Spreadsheet
         private string FileName { get; }
         public int ReferenceCount { get; }
         public bool State { get; }
+        public bool DoesExcelFileExist { get => _workbook is not null; }
         // public string Worksheet { get; } // Egen klasse...
-        protected XLWorkbook? Workbook
+        protected XLWorkbook? _workbook
         {
-            get => Workbook ?? throw new FileNotFoundException();
-            set => Workbook = value;
+            get => _workbook ?? throw new FileNotFoundException($"{nameof(_workbook)} is null, use import() to fill this property");
+            set => _workbook = value;
         }
 
         public Spreadsheet(string fileName)
@@ -51,7 +52,7 @@ namespace zenref.Models.Spreadsheet
             //throw new NotImplementedException();
             try
             {
-            Workbook = new XLWorkbook(FileName);
+            _workbook = new XLWorkbook(FileName);
             }
             catch (ArgumentException ex)
             {
@@ -67,13 +68,13 @@ namespace zenref.Models.Spreadsheet
         /// <exception cref="ArgumentNullException">If Workbook is null, this exception is thrown</exception>
         public void Export(string filename)
         {
-            if (Workbook is null)
+            if (_workbook is null)
             {
                 throw new ArgumentNullException("Workbook cannot be saved when it is null");
             }
             else
             {
-            Workbook.SaveAs(filename);
+            _workbook.SaveAs(filename);
             }
             //throw new NotImplementedException();
             // Export spreadsheet....
