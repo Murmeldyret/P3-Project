@@ -5,6 +5,10 @@ namespace P3Project.API
     /// </summary>
     public abstract class Api
     {
+        public Api() {
+            _apiKey = "Not valid";
+            _baseURL = new Uri("https://example.com");
+        }
         /// <summary>
         /// Constructor <c>Api</c> that initialize with the apikey and the URI for calling the API.
         /// <example>
