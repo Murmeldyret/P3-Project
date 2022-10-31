@@ -52,10 +52,12 @@ namespace Zenref.Ava.Views
 
         private void AddReferenceButton_Click(object sender, RoutedEventArgs e)
         {
-            Reference randomReference = ReferenceList[(new Random()).Next(ReferenceList.Count)];
-            ReferenceList.Add(randomReference);
-            data_Grid.Items = null;
-            data_Grid.Items = ReferenceList;
+            DragAndDropWindow dragAndDropWindow = new DragAndDropWindow();
+            dragAndDropWindow.ShowDialog(this);
+            //Reference randomReference = ReferenceList[(new Random()).Next(ReferenceList.Count)];
+            //ReferenceList.Add(randomReference);
+            //data_Grid.Items = null;
+            //data_Grid.Items = ReferenceList;
         }
         private void DeleteReferenceButton_Click(object sender, RoutedEventArgs e)
         {
