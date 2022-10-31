@@ -13,7 +13,11 @@ namespace zenref.Models.Spreadsheet
         public int ReferenceCount { get; }
         public bool State { get; }
         // public string Worksheet { get; } // Egen klasse...
-        protected XLWorkbook? Workbook { get; set; }
+        protected XLWorkbook? Workbook
+        {
+            get => Workbook ?? throw new FileNotFoundException();
+            set => Workbook = value;
+        }
 
         public Spreadsheet(string fileName)
         {
