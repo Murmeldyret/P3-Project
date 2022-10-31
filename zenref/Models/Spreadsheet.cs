@@ -42,7 +42,7 @@ namespace zenref.Models.Spreadsheet
          * Opens File and verifies if it opened
          * @param fileName
         */
-        public bool Import()
+        public void Import()
         {
             //throw new NotImplementedException();
             try
