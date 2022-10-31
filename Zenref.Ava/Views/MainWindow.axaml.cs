@@ -19,6 +19,7 @@ namespace Zenref.Ava.Views
         Button AddReferenceButton;
         Button EditReferenceButton;
         Button DeleteReferenceButton;
+        Button MenuButton;
 
         List<Reference> ReferenceList = new List<Reference>();
 
@@ -47,6 +48,8 @@ namespace Zenref.Ava.Views
             EditReferenceButton = this.FindControl<Button>("editReferenceButton");
             DeleteReferenceButton = this.FindControl<Button>("deleteReferenceButton");
             DeleteReferenceButton.Click += DeleteReferenceButton_Click;
+            MenuButton = this.FindControl<Button>("menuButton");
+            MenuButton.Click += MenuButton_Click;
 
         }
 
@@ -67,6 +70,11 @@ namespace Zenref.Ava.Views
                 data_Grid.Items = null;
                 data_Grid.Items = ReferenceList;
             }
+        }
+        private void MenuButton_Click(object sender, RoutedEventArgs e) 
+        {
+            MenuWindow menuWindow = new MenuWindow();
+            menuWindow.ShowDialog(this);
         }
         private void SearchTextBox_TextInput(object sender, KeyEventArgs e)
         {
