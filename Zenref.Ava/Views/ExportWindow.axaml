@@ -82,8 +82,8 @@
 			</StackPanel>
 		</Border>
 	</StackPanel>
-		<Button VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="100" Margin="10">Menu</Button>
-		<Button VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Margin="125,10">Start</Button>
-		<Button VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Margin="10,10">Exporter</Button>
+		<Button Name="menuButton" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="100" Margin="10">Menu</Button>
+		<Button Name="startButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Margin="125,10">Start</Button>
+		<Button Name="exportButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Margin="10,10">Exporter</Button>
 	</Grid>
 </Window>
