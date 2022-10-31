@@ -1,0 +1,85 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
+        x:Class="Zenref.Ava.Views.ExportWindow"
+        Title="ExportWindow">
+	<Window.Styles>
+		<Style Selector="Border">
+			<Setter Property="BorderThickness" Value="1"/>
+			<Setter Property="BorderBrush" Value="Black"/>
+		</Style>
+		<Style Selector="TextBox">
+			<Setter Property="Width" Value="150"/>	
+			<Setter Property="FontSize" Value="12"/>
+		</Style>
+	</Window.Styles>
+	<Grid>
+		<StackPanel Orientation="Horizontal" Spacing="50" Margin="20" VerticalAlignment="Top">
+		<Border HorizontalAlignment="Left" Width="250" Height="300" Padding="10">
+			<StackPanel Orientation="Vertical">
+				<StackPanel Orientation="Horizontal">
+					<TextBox>Tidsskrifte</TextBox>
+					<Button Width="25" Height="25">
+						<Image Source="/Assets/options.ico"/>
+					</Button>
+					<Button Width="25" Height="25">
+						<Image Source="/Assets/cross.ico"/>
+					</Button>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBox>Antologibidrag</TextBox>
+					<Button Width="25" Height="25">
+						<Image Source="/Assets/options.ico"/>
+					</Button>
+					<Button Width="25" Height="25">
+						<Image Source="/Assets/cross.ico"/>
+					</Button>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBox>Bøger</TextBox>
+					<Button Width="25" Height="25">
+						<Image Source="/Assets/options.ico"/>
+					</Button>
+					<Button Width="25" Height="25">
+						<Image Source="/Assets/cross.ico"/>
+					</Button>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBox Watermark="Indsæt publikationstype"></TextBox>
+					<Button Width="25" Height="25">
+						<Image Source="/Assets/options.ico"/>
+					</Button>
+					<Button Width="25" Height="25">
+						<Image Source="/Assets/cross.ico"/>
+					</Button>
+				</StackPanel>
+				
+			</StackPanel>
+		</Border>
+		<Border Width="250" Height="300" Padding="10">
+			<StackPanel Orientation="Vertical" Spacing="3">
+				<StackPanel Orientation="Horizontal" Spacing="10">
+					<TextBlock Text="Referencer importeret" Width="125"/>
+					<TextBlock Text=":"/>
+					<TextBlock Text="60000"/>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal" Spacing="10">
+					<TextBlock Text="Identificeret" Width="125"/>
+					<TextBlock Text=":"/>
+					<TextBlock Text="0"/>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal" Spacing="10">
+					<TextBlock Text="Uidentificeret" Width="125"/>
+					<TextBlock Text=":"/>
+					<TextBlock Text="0"/>
+				</StackPanel>
+			</StackPanel>
+		</Border>
+	</StackPanel>
+		<Button VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="100" Margin="10">Menu</Button>
+		<Button VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Margin="125,10">Start</Button>
+		<Button VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Margin="10,10">Exporter</Button>
+	</Grid>
+</Window>
