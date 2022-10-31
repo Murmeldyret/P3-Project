@@ -5,10 +5,19 @@ namespace P3Project.API
     /// </summary>
     public abstract class Api
     {
+        protected string _apiKey { get; init; }
+        protected Uri _baseURL { get; init; }
+        protected bool _isApiKeyValid { get; set; } = true;
+        /// <summary>
+        /// Represents the minimum number of milliseconds that has to pass before another call to this api can be made.
+        /// </summary>
+        public uint RateLimitInMsecs { get; init; }
+
         /// <summary>
         /// Empty constructor for testing purposes. Not meant for use in the program.
         /// </summary>
-        protected Api() {
+        protected Api()
+        {
             _apiKey = "Not valid";
             _baseURL = new Uri("https://example.com");
         }
@@ -48,13 +57,7 @@ namespace P3Project.API
             this.RateLimitInMsecs = RateLimitInMsecs;
         }
 
-        protected string _apiKey { get; init; }
-        protected Uri _baseURL { get; init; }
-        protected bool _isApiKeyValid { get; set; } = true;
-        /// <summary>
-        /// Represents the minimum number of milliseconds that has to pass before another call to this api can be made.
-        /// </summary>
-        public uint RateLimitInMsecs { get; init; }
+
         // A function that returns processed data, using delegates to parse data. The API returns a reference
 
         //public async Task<Reference> ReferenceFetch(string SearchQuery, Func<HttpResponseMessage, Reference> referenceParser)
