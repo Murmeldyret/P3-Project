@@ -32,11 +32,11 @@ namespace zenref.Models.Spreadsheet
         {
             throw new NotImplementedException();
         }
-        
-        /**
-         * Check the file if it is a valid file
-         * @param fileName
-        */
+
+        /// <summary>
+        /// Checks if <c>FileName</c> is an Excelfile
+        /// </summary>
+        /// <returns><c>true</c> if <c>FileName</c>suffix is .xlsx, <c>false</c> otherwise </returns>
         public bool IsFileExcel()
         {
             throw new NotImplementedException();
