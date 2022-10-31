@@ -10,20 +10,29 @@ namespace zenref.Models.Spreadsheet
     public class Spreadsheet
     {
         private string FileName { get; }
+        /// <summary>
+        /// Represents the total amount of rows in a spreadsheet
+        /// </summary>
         public int ReferenceCount { get; }
         public bool State { get; }
+        /// <summary>
+        /// Represents the path that the file should be read to.
+        /// </summary>
+        /// <remarks>Should only be used if new Excel files are to be created</remarks>
         public string FilePath { get; private set; }
         public bool DoesExcelFileExist { get => _workbook is not null; }
         // public string Worksheet { get; } // Egen klasse...
-        protected XLWorkbook? _workbook
+        private XLWorkbook? _workbook
         {
             get => _workbook ?? throw new FileNotFoundException($"{nameof(_workbook)} is null, use import() to fill this property");
             set => _workbook = value;
         }
 
+
         public Spreadsheet(string fileName)
         {
             FileName = fileName;
+            FilePath = "";
         }
         public Spreadsheet(string fileName, string filepath)
         {
