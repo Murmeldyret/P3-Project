@@ -5,11 +5,19 @@ namespace P3Project.API
     /// </summary>
     public abstract class Api
     {
-        public Api(string apiKey, Uri URL)
+        public Api(string apiKey, Uri URI)
         {
             this._apiKey = apiKey;
-            this._baseURL = URL;
+            this._baseURL = URI;
         }
+
+        public Api(string apiKey, Uri URI, uint RateLimitInMsecs)
+        {
+            this._apiKey = apiKey;
+            this._baseURL = URI;
+            this.RateLimitInMsecs = RateLimitInMsecs;
+        }
+        
         protected string _apiKey { get; init; }
         protected Uri _baseURL { get; init; }
         protected bool _isApiKeyValid { get; set; } = true;
