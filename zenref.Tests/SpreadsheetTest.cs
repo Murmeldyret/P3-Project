@@ -12,11 +12,12 @@ namespace zenref.Tests
 {
     public class SpreadsheetTest
     {
+        const string SPREADSHEETTESTNAME = "test.xlsx";
         [Fact]
         public void CheckFilename()
         {
             //Arrange
-            Spreadsheet testSpreadsheet = new Spreadsheet("test.xlsx");
+            Spreadsheet testSpreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
 
             //Act
             bool result = testSpreadsheet.IsFileExcel();
@@ -29,7 +30,7 @@ namespace zenref.Tests
         public void ReadRefTest()
         {
             //Arrange
-            Spreadsheet testSpreadsheet = new Spreadsheet("test.xlsx");
+            Spreadsheet testSpreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
 
             //Act
             bool result = testSpreadsheet.ReadRef();
@@ -42,17 +43,16 @@ namespace zenref.Tests
         public void ImportTestWhenFileFound()
         {
             //Arrange
-            const string testFileName = "test.xlsx";
             XLWorkbook tempWorkbook = new XLWorkbook();
             tempWorkbook.AddWorksheet("testsheet");
-            tempWorkbook.SaveAs(testFileName);
-            Spreadsheet testSpreadsheet = new Spreadsheet(testFileName);
+            tempWorkbook.SaveAs(SPREADSHEETTESTNAME);
+            Spreadsheet testSpreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
             //Act
             testSpreadsheet.Import();
 
             //Assert
             Assert.True(testSpreadsheet.DoesExcelFileExist);
-            File.Delete(testFileName);
+            File.Delete(SPREADSHEETTESTNAME);
         }
         [Fact]
         public void ImportTestWhenFileNotFound()
@@ -66,16 +66,49 @@ namespace zenref.Tests
 
         }
         [Fact]
-        public void ExportTest()
+        public void ExportTestWhenNotNull()
         {
             //Arrange
-            Spreadsheet testSpreadsheet = new Spreadsheet("test.xlsx");
+            Spreadsheet testSpreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
 
             //Act
             bool result = testSpreadsheet.Export();
 
             //Assert
             Assert.True(result);
+        }
+        [Fact]
+        public void CreateEmptySheet()
+        {
+            Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
+
+            spreadsheet.Create();
+
+            Assert.True(spreadsheet.DoesExcelFileExist);
+        }
+        [Fact]
+        public void AddReferenceThrows()
+        {
+            Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
+
+            Action addReference = () => { spreadsheet.AddReference(new Models.Reference()); };
+
+            Assert.Throws<NotImplementedException>(addReference);
+        }
+        [Fact]
+        public void AddReferenceIEnumberableThrows()
+        {
+            Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
+            List<Models.Reference> listOfReferences = new List<Models.Reference>();
+
+
+            listOfReferences.Add(new Models.Reference());
+            listOfReferences.Add(new Models.Reference());
+
+            Action addReference = () => { spreadsheet.AddReference(listOfReferences); };
+
+
+            Assert.Throws<NotImplementedException>(addReference);
         }
     }
 }
