@@ -5,19 +5,42 @@ namespace P3Project.API
     /// </summary>
     public abstract class Api
     {
+        /// <summary>
+        /// Constructor <c>Api</c> that initialize with the apikey and the URI for calling the API.
+        /// <example>
+        /// For example:
+        /// <code>
+        /// Api("SomeApiKey", new Uri("https://example.com"));
+        /// </code>
+        /// </example>
+        /// </summary>
+        /// <param name="apiKey">The key for getting access to the API</param>
+        /// <param name="URI">The URI that the client should fetch data from.</param>
         public Api(string apiKey, Uri URI)
         {
             this._apiKey = apiKey;
             this._baseURL = URI;
         }
 
+        /// <summary>
+        /// Constructor <c>Api</c> with optional ratelimit parameter for limiting the amount of API calls that can be done.
+        /// <example>
+        /// For example:
+        /// <code>
+        /// Api("SomeApiKey", new Uri("https://example.com"), 100);
+        /// </code>
+        /// </example>
+        /// </summary>
+        /// <param name="apiKey">The key for getting access to the API</param>
+        /// <param name="URI">The URI that the client should fetch data from.</param>
+        /// <param name="RateLimitInMsecs">The rate limit entered in milliseconds, to prevent overloading the API. Must be 0 or greater.</param>
         public Api(string apiKey, Uri URI, uint RateLimitInMsecs)
         {
             this._apiKey = apiKey;
             this._baseURL = URI;
             this.RateLimitInMsecs = RateLimitInMsecs;
         }
-        
+
         protected string _apiKey { get; init; }
         protected Uri _baseURL { get; init; }
         protected bool _isApiKeyValid { get; set; } = true;
