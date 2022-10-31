@@ -14,6 +14,10 @@
 			<Setter Property="Width" Value="150"/>	
 			<Setter Property="FontSize" Value="12"/>
 		</Style>
+		<Style Selector="Button.b1">
+			<Setter Property="Width" Value="25"/>
+			<Setter Property="Height" Value="25"/>
+		</Style>
 	</Window.Styles>
 	<Grid>
 		<StackPanel Orientation="Horizontal" Spacing="50" Margin="20" VerticalAlignment="Top">
@@ -21,37 +25,37 @@
 			<StackPanel Orientation="Vertical">
 				<StackPanel Orientation="Horizontal">
 					<TextBox>Tidsskrifte</TextBox>
-					<Button Width="25" Height="25">
+					<Button Classes="b1">
 						<Image Source="/Assets/options.ico"/>
 					</Button>
-					<Button Width="25" Height="25">
+					<Button Classes="b1">
 						<Image Source="/Assets/cross.ico"/>
 					</Button>
 				</StackPanel>
 				<StackPanel Orientation="Horizontal">
 					<TextBox>Antologibidrag</TextBox>
-					<Button Width="25" Height="25">
+					<Button Classes="b1">
 						<Image Source="/Assets/options.ico"/>
 					</Button>
-					<Button Width="25" Height="25">
+					<Button Classes="b1">
 						<Image Source="/Assets/cross.ico"/>
 					</Button>
 				</StackPanel>
 				<StackPanel Orientation="Horizontal">
 					<TextBox>Bøger</TextBox>
-					<Button Width="25" Height="25">
+					<Button Classes="b1">
 						<Image Source="/Assets/options.ico"/>
 					</Button>
-					<Button Width="25" Height="25">
+					<Button Classes="b1">
 						<Image Source="/Assets/cross.ico"/>
 					</Button>
 				</StackPanel>
 				<StackPanel Orientation="Horizontal">
 					<TextBox Watermark="Indsæt publikationstype"></TextBox>
-					<Button Width="25" Height="25">
+					<Button Classes="b1">
 						<Image Source="/Assets/options.ico"/>
 					</Button>
-					<Button Width="25" Height="25">
+					<Button Classes="b1">
 						<Image Source="/Assets/cross.ico"/>
 					</Button>
 				</StackPanel>
