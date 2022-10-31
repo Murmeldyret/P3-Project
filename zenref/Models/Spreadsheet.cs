@@ -12,6 +12,7 @@ namespace zenref.Models.Spreadsheet
         private string FileName { get; }
         public int ReferenceCount { get; }
         public bool State { get; }
+        public string FilePath { get; private set; }
         public bool DoesExcelFileExist { get => _workbook is not null; }
         // public string Worksheet { get; } // Egen klasse...
         protected XLWorkbook? _workbook
@@ -24,12 +25,29 @@ namespace zenref.Models.Spreadsheet
         {
             FileName = fileName;
         }
+        public Spreadsheet(string fileName, string filepath)
+        {
+            FileName = fileName;
+            FilePath = filepath;
+        }
 
-        /**
-         * Reads the content of the file
-         * @param fileName
-        */
-        public bool ReadRef()
+        /// <summary>
+        /// Reads the next reference in the spreadsheet
+        /// </summary>
+        /// <returns>The next reference</returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public Reference ReadRef()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Reads the next references in the spreadsheet, delimited by <paramref name="amount"/>
+        /// </summary>
+        /// <param name="amount">The amount of references to read, if <paramref name="amount"/> is 0, reads all references in the worksheet.</param>
+        /// <returns>List of references from spreadsheet</returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public List<Reference> ReadRef(uint amount)
         {
             throw new NotImplementedException();
         }
@@ -93,7 +111,7 @@ namespace zenref.Models.Spreadsheet
         /// <summary>
         /// Saves the spreadsheet as an Excel file with the given name.
         /// </summary>
-        /// <param name="filename">The name of the Excelfile</param>
+        /// <param name="filename">The name of the Excelfile. If <paramref name="filename"/> already exists an error is thrown</param>
         /// <exception cref="ArgumentNullException">If Workbook is null, this exception is thrown</exception>
         /// <exception cref="ArgumentException">If a file with <c>filename</c> already exists</exception>
         public void Export(string filename)
@@ -108,7 +126,7 @@ namespace zenref.Models.Spreadsheet
             }
             else
             {
-            _workbook.SaveAs(filename);
+            _workbook.SaveAs(Path.Join(FilePath + filename));
             }
             //throw new NotImplementedException();
             // Export spreadsheet....
