@@ -55,7 +55,7 @@ namespace zenref.Models.Spreadsheet
         private int VolumePos       { get; set; } = 20;
         private int ChaptersPos     { get; set; } = 21;
         private int BookTitlePos    { get; set; } = 22;
-        //TODO Sikkert en bedre måde at gøre dette
+        //TODO Sikkert en bedre måde at gøre dette, måske en dictionary til at holde styr på det
         #endregion ManyFields
 
         public Spreadsheet(string fileName)
