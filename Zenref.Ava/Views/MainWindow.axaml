@@ -41,7 +41,7 @@
 				<DataGridTemplateColumn>
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<Button Name="deleteReferenceButton2" Width="40" Height="40">
+							<Button Name="btnDelete" Click="DeleteButton_Click" Width="40" Height="40">
 								<Image Source="/Assets/cross.ico"/>
 							</Button>
 						</DataTemplate>
