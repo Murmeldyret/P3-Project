@@ -6,8 +6,9 @@ namespace P3Project.API.APIHelper
 	/// <summary>
 	/// Represents an HTTP client that accepts JSON and XML content
 	/// </summary>
-	public class ApiHelper
+	public static class ApiHelper
 	{
+		private static HttpClient _ApiClient {get; set;}
 		/// <summary>
 		/// The actual client making HTTP requests
 		/// </summary>
@@ -16,8 +17,8 @@ namespace P3Project.API.APIHelper
 		/// </remarks>
 		public static HttpClient ApiClient
 		{
-			get => ApiClient ?? throw new MemberAccessException("ApiClient not initialized");
-			private set => ApiClient = value;
+			get => _ApiClient ?? throw new MemberAccessException("ApiClient not initialized");
+			private set {_ApiClient = value;}
 		}
 
 		public static void InitializeClient()

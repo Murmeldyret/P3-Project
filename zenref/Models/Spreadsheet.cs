@@ -23,9 +23,11 @@ namespace zenref.Models.Spreadsheet
         /// <summary>
         /// Represents whether or not <c>_workbook</c> exists or not
         /// </summary>
-        public bool DoesExcelFileExist { get => _workbook is not null; }
+        public bool DoesExcelFileExist { get => _workbookProperty is not null; }
 
-        private XLWorkbook? _workbook
+        private XLWorkbook? _workbook {get; set;}
+
+        private XLWorkbook? _workbookProperty
         {
             get => _workbook ?? throw new FileNotFoundException($"{nameof(_workbook)} is null, use import() to fill this property");
             set => _workbook = value;
@@ -103,7 +105,7 @@ namespace zenref.Models.Spreadsheet
         /// </summary>
         public void Create()
         {
-            _workbook = new XLWorkbook();
+            _workbookProperty = new XLWorkbook();
         }
 
         /// <summary>
@@ -137,7 +139,7 @@ namespace zenref.Models.Spreadsheet
             //throw new NotImplementedException();
             try
             {
-            _workbook = new XLWorkbook(FileName);
+            _workbookProperty = new XLWorkbook(FileName);
             }
             catch (ArgumentException ex)
             {
@@ -154,7 +156,7 @@ namespace zenref.Models.Spreadsheet
         /// <exception cref="ArgumentException">If a file with <c>filename</c> already exists</exception>
         public void Export(string filename)
         {
-            if (_workbook is null)
+            if (_workbookProperty is null)
             {
                 throw new ArgumentNullException("Workbook cannot be saved when it is null");
             }
@@ -164,7 +166,7 @@ namespace zenref.Models.Spreadsheet
             }
             else
             {
-            _workbook.SaveAs(Path.Join(FilePath + filename));
+            _workbookProperty.SaveAs(Path.Join(FilePath + filename));
             }
             //throw new NotImplementedException();
             // Export spreadsheet....
