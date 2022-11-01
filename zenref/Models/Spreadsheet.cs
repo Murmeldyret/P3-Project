@@ -96,7 +96,7 @@ namespace zenref.Models.Spreadsheet
         /// <returns><c>true</c> if <c>FileName</c>suffix is .xlsx, <c>false</c> otherwise </returns>
         public bool IsFileExcel()
         {
-            throw new NotImplementedException();
+            return (Path.GetExtension(FileName) != ".xlsx");
         }
         /// <summary>
         /// Creates a new, empty workbook, primarily for creating a new spreadsheet with <c>Reference</c>s
