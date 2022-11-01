@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
 namespace Zenref.Ava.Models
@@ -15,23 +11,23 @@ namespace Zenref.Ava.Models
         public string? PubType { get; set; }
         public string? Publisher { get; set; }
         public int? YearRef { get; set; }
-        public int? ISBN { get; set; }
-        public int? DOI { get; set; }
+        public string? ISBN { get; set; }
+        public string? DOI { get; set; }
         public string? Edu { get; set; }
         public string? Location { get; set; }
         public string? Semester { get; set; }
         public string? Language { get; set; }
         public int? YearReport { get; set; }
         //public string reference { get; set; }
-        public int? Match { get; set; }
+        public double? Match { get; set; }
         public string? Commentary { get; set; }
         public string? Syllabus { get; set; }
         public string? Season { get; set; }
         public string? ExamEvent { get; set; }
         public string? Source { get; set; }
         public int? Pages { get; set; }
-        public string? Volume { get; set; }
-        public string? Chapters { get; set; }
+        public int? Volume { get; set; }
+        public int? Chapters { get; set; }
         public string? BookTitle { get; set; }
     }
 }

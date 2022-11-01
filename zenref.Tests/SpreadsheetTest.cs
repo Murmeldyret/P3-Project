@@ -34,10 +34,10 @@ namespace zenref.Tests
             Spreadsheet testSpreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
 
             //Act
-            Reference result = testSpreadsheet.ReadRef();
+            zenref.Models.Reference result = testSpreadsheet.ReadRef();
 
             //Assert
-            //Assert.True(result);
+            Assert.NotNull(result);
         }
 
         [Fact]
