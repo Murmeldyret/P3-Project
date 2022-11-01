@@ -8,7 +8,7 @@ namespace P3Project.API.APIHelper
 	/// </summary>
 	public static class ApiHelper
 	{
-		private static HttpClient _ApiClient {get; set;}
+		private static HttpClient? _ApiClient {get; set;}
 		/// <summary>
 		/// The actual client making HTTP requests
 		/// </summary>
