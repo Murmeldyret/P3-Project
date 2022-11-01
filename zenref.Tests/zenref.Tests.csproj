@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\zenref\zenref.csproj" />
+    <ProjectReference Include="..\Zenref.Ava\Zenref.Ava.csproj" />
   </ItemGroup>
 
   <ItemGroup>
