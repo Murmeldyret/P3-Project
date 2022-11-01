@@ -5,9 +5,9 @@ namespace Zenref.Ava.Views
 {
     public partial class ExportWindow : Window
     {
-        Button MenuButton;
-        Button StartButton;
-        Button ExportButton;
+        Button? MenuButton;
+        Button? StartButton;
+        Button? ExportButton;
         public ExportWindow()
         {
             InitializeComponent();
@@ -16,23 +16,21 @@ namespace Zenref.Ava.Views
         private void InitializeWindow()
         {
             MenuButton = this.FindControl<Button>("menuButton");
-            MenuButton.Click += MenuButton_Click;
+            MenuButton.Click += (s, e) =>
+            {
+                MenuWindow menuWindow = new MenuWindow();
+                menuWindow.ShowDialog(this);
+            };
             StartButton = this.FindControl<Button>("startButton");
+            StartButton.Click += (s, e) =>
+            {
+
+            };
             ExportButton = this.FindControl<Button>("exportButton");
+            StartButton.Click += (s, e) =>
+            {
 
-        }
-        private void MenuButton_Click(object sender, RoutedEventArgs e)
-        {
-            MenuWindow menuWindow = new MenuWindow();
-            menuWindow.ShowDialog(this);
-        }
-        private void StartButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void ExportButton_Click(object sender, RoutedEventArgs e)
-        {
-
+            };
         }
     }
 }

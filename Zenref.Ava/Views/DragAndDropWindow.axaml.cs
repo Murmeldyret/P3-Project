@@ -8,13 +8,13 @@ namespace Zenref.Ava.Views
 {
     public partial class DragAndDropWindow : Window
     {
-        Button ImportButton;
-        Button CancelButton;
-        Button NextButton;
+        Button? ImportButton;
+        Button? CancelButton;
+        Button? NextButton;
 
         public DragAndDropWindow()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             InitializeWindow();
         }
 
@@ -26,24 +26,21 @@ namespace Zenref.Ava.Views
         private void InitializeWindow()
         {
             ImportButton = this.FindControl<Button>("importButton");
-            ImportButton.Click += ImportButton_Click;
+            ImportButton.Click += (s, e) =>
+            {
+                    
+            };
             CancelButton = this.FindControl<Button>("cancelButton");
-            CancelButton.Click += CancelButton_Click;
+            CancelButton.Click += (s, e) => 
+            {
+                this.Close();
+            };
             NextButton = this.FindControl<Button>("nextButton");
-            NextButton.Click += NextButton_Click;
-        }
-        private void ImportButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-        private void NextButton_Click(object sender, RoutedEventArgs e) 
-        {
-            ExportWindow exportWindow = new ExportWindow();
-            exportWindow.ShowDialog(this);
+            NextButton.Click += (s, e) =>
+            {
+                ExportWindow exportWindow = new ExportWindow();
+                exportWindow.ShowDialog(this);
+            };
         }
     }
 }

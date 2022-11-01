@@ -8,31 +8,28 @@ namespace Zenref.Ava.Views
 {
     public partial class SearchCriteriaWindow : Window
     {
-        Button AddButton;
-        Button CancelButton;
+        Button? AddButton;
+        Button? CancelButton;
         public SearchCriteriaWindow()
         {
             InitializeComponent();
-
             InitializeWindow();
         }
 
         private void InitializeWindow()
         {
             AddButton = this.FindControl<Button>("addButton");
-            AddButton.Click += AddButton_Click;
+            AddButton.Click += (s, e) =>
+            {
+
+            };
             CancelButton = this.FindControl<Button>("cancelButton");
-            CancelButton.Click += CancelButton_Click;
+            CancelButton.Click += (s, e) =>
+            {
+                this.Close();
+            };
 
 
-        }
-        private void AddButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
     }
 }
