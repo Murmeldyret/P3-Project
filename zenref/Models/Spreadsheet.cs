@@ -30,6 +30,9 @@ namespace zenref.Models.Spreadsheet
             get => _workbook ?? throw new FileNotFoundException($"{nameof(_workbook)} is null, use import() to fill this property");
             set => _workbook = value;
         }
+        private int _activeSheet { get; set; } = 1;
+        private int _currentRow { get; set; } = 2;
+
         #region ManyFields
         //Reference field positioning
         //These fields represent the column positioning of each Reference field in the Worksheet
@@ -67,6 +70,70 @@ namespace zenref.Models.Spreadsheet
         {
             FileName = fileName;
             FilePath = filepath;
+        }
+
+        /// <summary>
+        /// Gets the position and names of all the worksheets in the workbook
+        /// </summary>
+        /// <returns>A <c>Dictionary</c> where the key represents the position of the sheet in the book and the value is the name of the sheet.</returns>
+        /// <exception cref="FileNotFoundException">Throws if a spreadsheet has not been imported</exception>
+        public Dictionary<int,string> GetWorksheets()
+        {
+            Dictionary<int, string> resDic = new Dictionary<int, string>();
+
+            IXLWorksheet worksheet;
+
+            for (int i = 1; i < _workbook.Worksheets.Count; i++)
+            {
+                worksheet = _workbook.Worksheet(i);
+                resDic.Add(worksheet.Position, worksheet.Name);
+            }
+            return resDic;
+        }
+
+        /// <summary>
+        /// Sets the active worksheet to read from or write to. If the sheet does not exist, it creates one.
+        /// </summary>
+        /// <param name="position">The position of the sheet</param>
+        /// <exception cref="ArgumentException">Throws if position is below 0</exception>
+        public void SetActiveSheet(int position)
+        {
+            if (_workbook.Worksheets.Count > position && position != 0)
+            {
+                _activeSheet = position;
+            }
+            else if (position <=0)
+            {
+                throw new ArgumentException("Position of worksheet must be 1 or greater");
+            }
+            else
+            {
+                _workbook.Worksheets.Add(DateTime.Now.ToString(), position);
+            }
+        }
+        ///<inheritdoc cref="SetActiveSheet(int)"/>
+        /// <param name="sheetname">The name of a sheet</param>
+        public void SetActiveSheet(string sheetname)
+        {
+            Dictionary<int, string> dic = GetWorksheets();
+            int actualSheetPos = -1;
+
+            if (dic.ContainsValue(sheetname))
+            {
+                foreach (KeyValuePair<int,string> pair in dic)
+                {
+                    if (pair.Value == sheetname)
+                    {
+                        actualSheetPos = pair.Key;
+                    }
+                }
+            }
+            else
+            {
+                actualSheetPos = _workbook.Worksheets.Count + 1;
+                _workbook.AddWorksheet(sheetname, actualSheetPos);
+            }
+            _activeSheet = actualSheetPos;
         }
 
         /// <summary>
