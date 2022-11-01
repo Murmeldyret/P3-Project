@@ -6,10 +6,7 @@ namespace P3Project
     {
         static void Main(string[] args)
         {
-            //Console.WriteLine("Hello there");
-            //Console.WriteLine("General Kenobi");
         }
-
     }
 
     public class Filter
@@ -52,10 +49,4 @@ namespace P3Project
     {
 
     }
-
-    public class Api
-    {
-        
-    }
-
 }
