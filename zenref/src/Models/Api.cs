@@ -70,7 +70,12 @@ namespace P3Project.API
         /// </summary>
         /// <param name="inputReference">The Reference that is to be looked up (usually unidentified)</param>
         /// <returns>A reference with correctly filled fields</returns>
-        public abstract Task<Reference> ReferenceFetch(Reference inputReference);
+        public abstract Task<Reference> ReferenceFetch(Reference inputReference, Func<HttpResponseMessage, Reference> referenceParser);
+
+        protected void CacheReference(Reference CacheableReference)
+        {
+            throw new NotImplementedException("No code that cache references");
+        }
 
 
         // A function that handles status codes. Should be protected.

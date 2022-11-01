@@ -77,7 +77,17 @@ public class ApiTest1 : Api
     }
     //End Test _isHTTPResponseCodeSuccess
 
-    public override System.Threading.Tasks.Task<Reference> ReferenceFetch(Reference inputReference)
+    // Start test CacheReferenceTest
+    /// <summary>
+    /// This test will test whether the program can cache a reference in the database if it doesn't already exist.
+    /// </summary>
+    public void CacheReferenceTest()
+    {
+        
+    }
+    // End test CacheReferenceTest
+
+    public override System.Threading.Tasks.Task<Reference> ReferenceFetch(Reference inputReference, Func<System.Net.Http.HttpResponseMessage, Reference> referenceParser)
     {
         throw new NotImplementedException();
     }
