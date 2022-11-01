@@ -158,7 +158,7 @@ namespace zenref.Models.Spreadsheet
             {
                 throw new ArgumentNullException("Workbook cannot be saved when it is null");
             }
-            else if (File.Exists(filename))
+            if (File.Exists(filename))
             {
                 throw new ArgumentException("File with this name already exists");
             }

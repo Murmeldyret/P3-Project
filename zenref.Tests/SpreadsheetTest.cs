@@ -72,10 +72,10 @@ namespace zenref.Tests
             Spreadsheet testSpreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
 
             //Act
-            bool result = testSpreadsheet.Export();
+            Action exportNullWorkbook = () => testSpreadsheet.Export(SPREADSHEETTESTNAME);
 
             //Assert
-            Assert.True(result);
+            Assert.Throws<ArgumentNullException>(exportNullWorkbook);
         }
         [Fact]
         public void CreateEmptySheet()
