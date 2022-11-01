@@ -3,6 +3,8 @@ using System;
 using P3Project.API;
 using P3Project;
 using Moq;
+using zenref.Models;
+
 namespace zenref.Tests;
 
 // For testing public methods

@@ -205,6 +205,7 @@ namespace zenref.Models.Spreadsheet
         {
             //Read from the corresponding fields according to dict
 
+
             //Make instance of class filled with said fields
 
             //increment _currentRow

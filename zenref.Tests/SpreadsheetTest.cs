@@ -7,6 +7,7 @@ using Xunit;
 using zenref.Models.Spreadsheet;
 using ClosedXML.Excel;
 using System.IO;
+using zenref.Models;
 
 namespace zenref.Tests
 {
@@ -33,10 +34,10 @@ namespace zenref.Tests
             Spreadsheet testSpreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
 
             //Act
-            bool result = testSpreadsheet.ReadRef();
+            Reference result = testSpreadsheet.ReadRef();
 
             //Assert
-            Assert.True(result);
+            //Assert.True(result);
         }
 
         [Fact]
@@ -109,6 +110,23 @@ namespace zenref.Tests
 
 
             Assert.Throws<NotImplementedException>(addReference);
+        }
+        [Fact]
+        public void GetWorkSheetsDictionaryContainsOneSheet()
+        {
+            const string TESTSHEET = "testsheet";
+            Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
+
+            XLWorkbook tempWorkbook = new XLWorkbook();
+            tempWorkbook.AddWorksheet(TESTSHEET);
+            tempWorkbook.SaveAs(SPREADSHEETTESTNAME);
+
+            spreadsheet.Import();
+
+            Dictionary<int, string> sheetDic = spreadsheet.GetWorksheets();
+
+            Assert.Equal<Dictionary<int, string>>(sheetDic, new Dictionary<int, string>() { { 1, TESTSHEET } });
+            File.Delete(SPREADSHEETTESTNAME);
         }
     }
 }
