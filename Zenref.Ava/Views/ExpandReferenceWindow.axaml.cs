@@ -9,7 +9,7 @@ namespace Zenref.Ava.Views
     {
         public ExpandReferenceWindow()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             InitializeWindow();
         }
 
