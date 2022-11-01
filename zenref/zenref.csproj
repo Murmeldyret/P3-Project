@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ClosedXML" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.97.0" />
     <None Remove="Newtonsoft.Json" />
     <None Remove="Microsoft.AspNet.WebApi.Client" />
   </ItemGroup>
