@@ -31,6 +31,7 @@ namespace zenref.Models.Spreadsheet
             set => _workbook = value;
         }
         private int _activeSheet { get; set; } = 1;
+        private IXLWorksheet xLWorksheet { get => _workbook.Worksheet(_activeSheet); }
         private int _currentRow { get; set; } = 2;
 
         #region ManyFields
@@ -60,7 +61,9 @@ namespace zenref.Models.Spreadsheet
         //private int BookTitlePos    { get; set; } = 22;
         #endregion ManyFields
 
-
+        /// <summary>
+        /// Represents the different fields that a reference instance contains.
+        /// </summary>
         private enum _referenceFields
         {
             Author,
@@ -84,7 +87,9 @@ namespace zenref.Models.Spreadsheet
             Pages,
             Volume,
             Chapters,
-            BookTitle
+            BookTitle,
+            Isbn,
+            D
         }
 
         /// <summary>
@@ -198,6 +203,12 @@ namespace zenref.Models.Spreadsheet
         /// <exception cref="NotImplementedException"></exception>
         public Reference ReadRef()
         {
+            //Read from the corresponding fields according to dict
+
+            //Make instance of class filled with said fields
+
+            //increment _currentRow
+            //return reference
             throw new NotImplementedException();
         }
 
@@ -209,6 +220,8 @@ namespace zenref.Models.Spreadsheet
         /// <exception cref="NotImplementedException"></exception>
         public List<Reference> ReadRef(uint amount)
         {
+            //ReadRef() in loop with yield return statement
+
             throw new NotImplementedException();
         }
 
