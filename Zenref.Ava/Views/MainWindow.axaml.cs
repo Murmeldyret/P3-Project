@@ -73,6 +73,7 @@ namespace Zenref.Ava.Views
             if (textBox?.Text != "")
             {
                 var filteredList = references.Where(x => x.Henvisning.ToLower().Contains(textBox.Text.ToLower()));
+                DataGrid.Items = filteredList;
             }
             else
             {
@@ -81,8 +82,14 @@ namespace Zenref.Ava.Views
         }
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            Reference? dataContext = (Reference)((Button)e.Source).DataContext;
-            references.Remove(dataContext);
+            Reference? buttonReference = (Reference)((Button)e.Source).DataContext;
+            references.Remove(buttonReference);
+        }
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            Reference? buttonReference = (Reference)((Button)e.Source).DataContext;
+            ExpandReferenceWindow expandReferenceWindow = new ExpandReferenceWindow();
+            expandReferenceWindow.ShowDialog(this);
         }
     }
 }

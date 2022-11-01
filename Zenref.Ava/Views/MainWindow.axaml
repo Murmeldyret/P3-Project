@@ -32,7 +32,7 @@
 				<DataGridTemplateColumn>
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<Button Width="40" Height="40">
+							<Button Name="btnEdit" Click="EditButton_Click" Width="40" Height="40">
 								<Image Source="/Assets/options.ico"/>
 							</Button>
 						</DataTemplate>
