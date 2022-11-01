@@ -119,6 +119,23 @@ public class ApiTest1 : Api
 
         //! Missing class for database and therefore methods too.
     }
+
+    public void CacheReferenceTestInvalid()
+    {
+        Reference? testReference = new Reference();
+        testReference = null;
+
+        try
+        {
+            CacheReference(testReference);    //* Don't worry. It is supposed to be null.
+        }
+        catch (Exception e)
+        {
+            Assert.IsType<NullReferenceException>(e);
+        }
+    }
+
+
     public override System.Threading.Tasks.Task<Reference> ReferenceFetch(Reference inputReference, Func<System.Net.Http.HttpResponseMessage, Reference> referenceParser)
     {
         throw new NotImplementedException();
