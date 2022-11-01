@@ -8,15 +8,15 @@
         public string? Publisher { get; set; }
         public int? YearRef { get; set; }
         public int? ID { get; set; }
-        public int? ISBN { get; set; }
-        public int? DOI { get; set; }
+        public string? ISBN { get; set; }
+        public string? DOI { get; set; }
         public string? Edu { get; set; }
         public string? Location { get; set; }
         public string? Semester { get; set; }
         public string? Language { get; set; }
         public int? YearReport { get; set; }
         //public string reference { get; set; }
-        public int? Match { get; set; }
+        public double? Match { get; set; }
         public string? Commentary { get; set; }
         public string? Syllabus { get; set; }
         public string? Season { get; set; }
