@@ -2,6 +2,32 @@
 {
     public class Reference
     {
+        //constructor with named arguments, where some properties are null by default.
+        public Reference(string _Author = "", string _Title = "", string _PubType = "", string _Publisher = "",
+                        int _YearRef = 0, int _ID = 0, string _ISBN = "", string _DOI = "", string _Edu = "",
+                        string _Location = "", string _Semester = "", string _Language = "", int _YearReport = 0,
+                        double _Match = 0.0, string _Commentary = "", string _Syllabus = "", string _Season = "",
+                        string _ExamEvent = "", string _Source = "", int _Pages = 0, string _Volume = "", 
+                        string _Chapters = "", string _BookTitle = "")
+        {
+            Author = _Author;
+            Title = _Title;
+            PubType = _PubType;
+            Publisher = _Publisher;
+            YearRef = _YearRef;
+            ID = _ID;
+            ISBN = _ISBN;
+            Commentary = _Commentary;
+            Syllabus = _Syllabus;
+            Season = _Season;
+            ExamEvent = _ExamEvent;
+            Source = _Source;
+            Pages = _Pages;
+            Volume = _Volume;
+            Chapters = _Chapters;
+            BookTitle = _BookTitle;
+        }
+
         public string? Author { get; set; }
         public string? Title { get; set; }
         public string? PubType { get; set; }
