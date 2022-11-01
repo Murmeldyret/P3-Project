@@ -35,7 +35,7 @@ namespace Zenref.Ava.Migrations
                     b.Property<string>("Commentary")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("DOI")
+                    b.Property<string?>("DOI")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Edu")
@@ -44,7 +44,7 @@ namespace Zenref.Ava.Migrations
                     b.Property<string>("ExamEvent")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("ISBN")
+                    b.Property<string?>("ISBN")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Language")
@@ -53,7 +53,7 @@ namespace Zenref.Ava.Migrations
                     b.Property<string>("Location")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Match")
+                    b.Property<double?>("Match")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("Pages")
