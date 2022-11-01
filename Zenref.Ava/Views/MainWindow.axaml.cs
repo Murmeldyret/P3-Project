@@ -15,11 +15,11 @@ namespace Zenref.Ava.Views
 {
     public partial class MainWindow : Window
     {
-        DataGrid data_Grid;
-        Button AddReferenceButton;
-        Button EditReferenceButton;
-        Button DeleteReferenceButton;
-        Button MenuButton;
+        DataGrid? DataGrid;
+        Button? AddReferenceButton;
+        Button? DeleteReferenceButton;
+        Button? MenuButton;
+        TextBox? SearchTextBox;
 
         List<Reference> ReferenceList = new List<Reference>();
 
@@ -40,56 +40,51 @@ namespace Zenref.Ava.Views
             ReferenceList.Add(new Reference("Pædagog", "Thisted", "5. Modul | Forår", "2018", "Fællesdel - Pædagogen som myndighedsperson", "2110082", "Bae, Berit (1996): Voksnes definitionsmagt og børns selvopfattelse. Social Kritik, Årg. 8, Nr. 47. S. 6 - 21. Kan findes her: Artikel (Links til en ekstern webside.)"));
             ReferenceList.Add(new Reference("Pædagog", "Thisted", "8. Modul | Efterår", "2018", "Dagtilbudspædagogik - Professionsviden og forskning i relation til dagtilbudspædagogik", "2110128", "Klarsgaard, Nadia, Dam Larsen, Jesper og Høgh, Trine: Børns perspektiver på venskaber og fællesskaber, 0-14, 27. årg. nr. 3 (2017)."));
 
-            data_Grid = this.FindControl<DataGrid>("dataGrid");
-            data_Grid.Items = ReferenceList;
+            DataGrid = this.FindControl<DataGrid>("dataGrid");
+            DataGrid.Items = ReferenceList;
 
             AddReferenceButton = this.FindControl<Button>("addReferenceButton");
-            AddReferenceButton.Click += AddReferenceButton_Click;
-            EditReferenceButton = this.FindControl<Button>("editReferenceButton");
+            AddReferenceButton.Click += (s, e) =>
+            {
+                DragAndDropWindow dragAndDropWindow = new DragAndDropWindow();
+                dragAndDropWindow.ShowDialog(this);
+                //Reference randomReference = ReferenceList[(new Random()).Next(ReferenceList.Count)];
+                //ReferenceList.Add(randomReference);
+                //data_Grid.Items = null;
+                //data_Grid.Items = ReferenceList;
+            };
             DeleteReferenceButton = this.FindControl<Button>("deleteReferenceButton");
-            DeleteReferenceButton.Click += DeleteReferenceButton_Click;
+            DeleteReferenceButton.Click += (s, e) =>
+            {
+                if (DataGrid.SelectedIndex != -1)
+                {
+                    ReferenceList.Remove((Reference)DataGrid.SelectedItem);
+                    DataGrid.Items = null;
+                    DataGrid.Items = ReferenceList;
+                }
+            };
             MenuButton = this.FindControl<Button>("menuButton");
-            MenuButton.Click += MenuButton_Click;
+            MenuButton.Click += (s, e) =>
+            {
+                MenuWindow menuWindow = new MenuWindow();
+                menuWindow.ShowDialog(this);
+            };
+            SearchTextBox = this.FindControl<TextBox>("searchTextBox");
+            SearchTextBox.KeyUp += (s, e) =>
+            {
+                TextBox? textBox = s as TextBox;
+                if (textBox?.Text == "")
+                {
+                    List<Reference> filteredList = (List<Reference>)ReferenceList.Where(x => x.Henvisning.ToLower().Contains(textBox.Text.ToLower()));
+                    DataGrid.Items = null;
+                    DataGrid.Items = filteredList;
+                }
+                else
+                {
+                    DataGrid.Items = ReferenceList;
+                }
+            };
 
         }
-
-        private void AddReferenceButton_Click(object sender, RoutedEventArgs e)
-        {
-            DragAndDropWindow dragAndDropWindow = new DragAndDropWindow();
-            dragAndDropWindow.ShowDialog(this);
-            //Reference randomReference = ReferenceList[(new Random()).Next(ReferenceList.Count)];
-            //ReferenceList.Add(randomReference);
-            //data_Grid.Items = null;
-            //data_Grid.Items = ReferenceList;
-        }
-        private void DeleteReferenceButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (data_Grid.SelectedIndex != -1)
-            {
-                ReferenceList.Remove((Reference)data_Grid.SelectedItem);
-                data_Grid.Items = null;
-                data_Grid.Items = ReferenceList;
-            }
-        }
-        private void MenuButton_Click(object sender, RoutedEventArgs e) 
-        {
-            MenuWindow menuWindow = new MenuWindow();
-            menuWindow.ShowDialog(this);
-        }
-        private void SearchTextBox_TextInput(object sender, KeyEventArgs e)
-        {
-            var textBox = sender as TextBox;
-            if (textBox.Text != "")
-            {
-                var filteredList = ReferenceList.Where(x => x.Henvisning.ToLower().Contains(textBox.Text.ToLower()));
-                data_Grid.Items = null;
-                data_Grid.Items = filteredList;
-            }
-            else
-            {
-                data_Grid.Items = ReferenceList;
-            }
-        }
-
     }
 }
