@@ -36,30 +36,85 @@ namespace zenref.Models.Spreadsheet
         #region ManyFields
         //Reference field positioning
         //These fields represent the column positioning of each Reference field in the Worksheet
-        private int AuthorPos       { get; set; } = 1;
-        private int TitlePos        { get; set; } = 2;
-        private int PubTypePos      { get; set; } = 3;
-        private int PublisherPos    { get; set; } = 4;
-        private int YearRefPos      { get; set; } = 5;
-        private int IDRefPos        { get; set; } = 6;
-        private int EduPos          { get; set; } = 7;
-        private int LocationPos     { get; set; } = 8;
-        private int SemesterPos     { get; set; } = 9;
-        private int LanguagePos     { get; set; } = 10;
-        private int YearReportPos   { get; set; } = 11;
-        private int OriginalRefPos  { get; set; } = 12;
-        private int MatchPos        { get; set; } = 13;
-        private int CommentaryPos   { get; set; } = 14;
-        private int SyllabusPos     { get; set; } = 15;
-        private int SeasonPos       { get; set; } = 16;
-        private int ExamEventPos    { get; set; } = 17;
-        private int SourcePos       { get; set; } = 18;
-        private int PagesPos        { get; set; } = 19;
-        private int VolumePos       { get; set; } = 20;
-        private int ChaptersPos     { get; set; } = 21;
-        private int BookTitlePos    { get; set; } = 22;
-        //TODO Sikkert en bedre måde at gøre dette, måske en dictionary til at holde styr på det
+        //private int AuthorPos       { get; set; } = 1;
+        //private int TitlePos        { get; set; } = 2;
+        //private int PubTypePos      { get; set; } = 3;
+        //private int PublisherPos    { get; set; } = 4;
+        //private int YearRefPos      { get; set; } = 5;
+        //private int IDRefPos        { get; set; } = 6;
+        //private int EduPos          { get; set; } = 7;
+        //private int LocationPos     { get; set; } = 8;
+        //private int SemesterPos     { get; set; } = 9;
+        //private int LanguagePos     { get; set; } = 10;
+        //private int YearReportPos   { get; set; } = 11;
+        //private int OriginalRefPos  { get; set; } = 12;
+        //private int MatchPos        { get; set; } = 13;
+        //private int CommentaryPos   { get; set; } = 14;
+        //private int SyllabusPos     { get; set; } = 15;
+        //private int SeasonPos       { get; set; } = 16;
+        //private int ExamEventPos    { get; set; } = 17;
+        //private int SourcePos       { get; set; } = 18;
+        //private int PagesPos        { get; set; } = 19;
+        //private int VolumePos       { get; set; } = 20;
+        //private int ChaptersPos     { get; set; } = 21;
+        //private int BookTitlePos    { get; set; } = 22;
         #endregion ManyFields
+
+
+        private enum _referenceFields
+        {
+            Author,
+            Title,
+            PublicationType,
+            Publisher,
+            YearRef,
+            IdRef,
+            Education,
+            Location,
+            Semester,
+            Language,
+            YearReport,
+            OriginalRef,
+            Match,
+            Comment,
+            Syllabus,
+            Season,
+            ExamEvent,
+            Source,
+            Pages,
+            Volume,
+            Chapters,
+            BookTitle
+        }
+
+        /// <summary>
+        /// Represents the different fields in an Excel worksheet where the key is the column position and the value is the content
+        /// </summary>
+        private Dictionary<int, _referenceFields> _positionOfReferencesInSheet = new Dictionary<int,_referenceFields>()
+        {
+            {1,_referenceFields.Author },
+            {2,_referenceFields.Title },
+            {3,_referenceFields.PublicationType },
+            {4,_referenceFields.Publisher },
+            {5,_referenceFields.YearRef },
+            {6,_referenceFields.IdRef },
+            {7,_referenceFields.Education },
+            {8,_referenceFields.Location },
+            {9,_referenceFields.Semester },
+            {10,_referenceFields.Language },
+            {11,_referenceFields.YearReport },
+            {12,_referenceFields.OriginalRef },
+            {13,_referenceFields.Match },
+            {14,_referenceFields.Comment },
+            {15,_referenceFields.Syllabus },
+            {16,_referenceFields.Season },
+            {17,_referenceFields.ExamEvent },
+            {18,_referenceFields.Source },
+            {19,_referenceFields.Pages },
+            {20,_referenceFields.Volume },
+            {21,_referenceFields.Chapters },
+            {22,_referenceFields.BookTitle }
+        };
 
         public Spreadsheet(string fileName)
         {
