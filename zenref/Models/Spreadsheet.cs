@@ -196,7 +196,17 @@ namespace zenref.Models.Spreadsheet
         public IEnumerable<Reference> ReadRef(uint amount)
         {
             //ReadRef() in loop with yield return statement
-            for (int i = _currentRow; i <= _currentRow+ (int)amount; i++)
+            int totalrows;
+            if (amount != 0)
+            {
+                totalrows = _currentRow + (int)amount;
+            }
+            else
+            {
+                totalrows = xLWorksheet.RowsUsed().Count();
+            }
+
+            for (int i = _currentRow; i <= totalrows; i++)
             {
                 yield return ReadRef();
             }
