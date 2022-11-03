@@ -1,5 +1,26 @@
 namespace zenref.Models
 {
+
+    public static class FilterCollection
+    {
+        private static List<Filter> Filters = new List<Filter>();
+
+        public static void deleteFilter()
+        {
+            throw new NotImplementedException();
+        }
+
+        public static void findFilter()
+        {
+            throw new NotImplementedException();
+        }
+
+        public static void createFilter(List<string> filters, string categoryName)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class Filter
     {
         protected List<string> filterQuery;
