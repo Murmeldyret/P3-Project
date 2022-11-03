@@ -5,18 +5,29 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
+using zenref.Models;
+
 namespace zenref.Tests
 {
     public class FilterTest
     {
-        //[Fact]
-        //public string categorizeTest()
-        //{
-        //    //Arrange
+        // Test creation of filters.
+        [Fact]
+        public void SuccessfulFilterCreation()
+        {
 
-        //    //Act
+            List<string> filters = new List<string>()
+            {
+                "Podcast",
+                "Radio",
+            };
 
-        //    //Assert
-        //}
+            string category = "Podcast";
+
+            Filter searchFilters = new Filter(filters, category);
+
+            Assert.Equal(filters, searchFilters.returnFilterQueries());
+            Assert.Equal(category, searchFilters.returnFilterCategory());
+        }
     }
 }
