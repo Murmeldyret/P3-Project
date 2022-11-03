@@ -92,7 +92,7 @@ namespace zenref.Models.Spreadsheet
             {19,_referenceFields.Pages },
             {20,_referenceFields.Volume },
             {21,_referenceFields.Chapters },
-            {22,_referenceFields.BookTitle }
+            {22,_referenceFields.BookTitle },
         };
 
         public Spreadsheet(string fileName)
@@ -193,11 +193,14 @@ namespace zenref.Models.Spreadsheet
         /// <param name="amount">The amount of references to read, if <paramref name="amount"/> is 0, reads all references in the worksheet.</param>
         /// <returns>List of references from spreadsheet</returns>
         /// <exception cref="NotImplementedException"></exception>
-        public List<Reference> ReadRef(uint amount)
+        public IEnumerable<Reference> ReadRef(uint amount)
         {
             //ReadRef() in loop with yield return statement
-
-            throw new NotImplementedException();
+            for (int i = _currentRow; i <= _currentRow+ (int)amount; i++)
+            {
+                yield return ReadRef();
+            }
+            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -214,6 +217,7 @@ namespace zenref.Models.Spreadsheet
         public void Create()
         {
             _workbookProperty = new XLWorkbook();
+            _workbookProperty.AddWorksheet("Sheet1");
         }
 
         /// <summary>
