@@ -101,6 +101,83 @@ namespace zenref.Tests
             Assert.Equal(categoryName, result.returnFilterCategory());
         }
 
-        
+        [Fact]
+        public void filterSearching()
+        {
+            // Arrange
+            // Filter 1
+            List<string> filterQuery1 = new List<string>()
+            {
+                "Podcast",
+                "Radio",
+            };
+            string categoryName1 = "Podcast";
+
+            // Filter 2
+            List<string> filterQuery2 = new List<string>()
+            {
+                "Video",
+                "Movie",
+            };
+            string categoryName2 = "Video";
+
+            // Filter 3
+            List<string> filterQuery3 = new List<string>()
+            {
+                "Journal",
+            };
+            string categoryName3 = "Journal";
+
+            FilterCollection.createFilter(filterQuery1, categoryName1);
+            FilterCollection.createFilter(filterQuery2, categoryName2);
+            FilterCollection.createFilter(filterQuery3, categoryName3);
+
+            // Act
+            Filter result = FilterCollection.findFilter("Video");
+
+            // Assert
+            Assert.Equal(filterQuery2, result.returnFilterQueries());
+            Assert.Equal(categoryName2, result.returnFilterCategory());
+        }
+
+        [Fact]
+        public void filterIndexSearching()
+        {
+            // Arrange
+            // Filter 1
+            List<string> filterQuery1 = new List<string>()
+            {
+                "Podcast",
+                "Radio",
+            };
+            string categoryName1 = "Podcast";
+
+            // Filter 2
+            List<string> filterQuery2 = new List<string>()
+            {
+                "Video",
+                "Movie",
+            };
+            string categoryName2 = "Video";
+
+            // Filter 3
+            List<string> filterQuery3 = new List<string>()
+            {
+                "Journal",
+            };
+            string categoryName3 = "Journal";
+
+            FilterCollection.createFilter(filterQuery1, categoryName1);
+            FilterCollection.createFilter(filterQuery2, categoryName2);
+            FilterCollection.createFilter(filterQuery3, categoryName3);
+
+            // Act
+            int result = FilterCollection.findFilterIndex("Video");
+
+            // Assert
+            Assert.Equal(2, result);
+        }
+
+
     }
 }
