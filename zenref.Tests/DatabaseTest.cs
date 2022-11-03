@@ -72,13 +72,12 @@ namespace zenref.Tests
             context.References.Add(reference);
             context.SaveChanges();
 
-            Reference reference2 = context.References.Find(reference.Id);
+            Reference? reference2 = context.References.Find(reference);
 
-            Assert.Equal(reference.Id, reference2.Id);
-            Assert.Equal(reference.Title, reference2.Title);
-            Assert.Equal(reference.Author, reference2.Author);
-            Assert.Equal(reference.ISBN, reference2.ISBN);
-            Assert.Equal(reference.DOI, reference2.DOI);
+            Assert.Equal(reference.Title, reference2?.Title);
+            Assert.Equal(reference.Author, reference2?.Author);
+            Assert.Equal(reference.ISBN, reference2?.ISBN);
+            Assert.Equal(reference.DOI, reference2?.DOI);
         }
 
         [Fact]
