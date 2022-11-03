@@ -32,8 +32,8 @@ namespace zenref.Models.Spreadsheet
             get => _workbook ?? throw new FileNotFoundException($"{nameof(_workbook)} is null, use import() to fill this property");
             set => _workbook = value;
         }
-        private int _activeSheet { get; set; } = 1;
-        private IXLWorksheet xLWorksheet { get => _workbook.Worksheet(_activeSheet); }
+        public int ActiveSheet { get; set; } = 1;
+        private IXLWorksheet xLWorksheet { get => _workbook.Worksheet(ActiveSheet); }
         private int _currentRow { get; set; } = 2;
 
         #region ManyFields
@@ -159,9 +159,9 @@ namespace zenref.Models.Spreadsheet
         /// <exception cref="ArgumentException">Throws if position is below 0</exception>
         public void SetActiveSheet(int position)
         {
-            if (_workbook.Worksheets.Count > position && position != 0)
+            if (_workbook.Worksheets.Count > position && position > 0)
             {
-                _activeSheet = position;
+                ActiveSheet = position;
             }
             else if (position <=0)
             {
@@ -177,7 +177,7 @@ namespace zenref.Models.Spreadsheet
         public void SetActiveSheet(string sheetname)
         {
             Dictionary<int, string> dic = GetWorksheets();
-            int actualSheetPos = -1;
+            int outputSheetPos = -1;
 
             if (dic.ContainsValue(sheetname))
             {
@@ -185,16 +185,16 @@ namespace zenref.Models.Spreadsheet
                 {
                     if (pair.Value == sheetname)
                     {
-                        actualSheetPos = pair.Key;
+                        outputSheetPos = pair.Key;
                     }
                 }
             }
             else
             {
-                actualSheetPos = _workbook.Worksheets.Count + 1;
-                _workbook.AddWorksheet(sheetname, actualSheetPos);
+                outputSheetPos = _workbook.Worksheets.Count + 1;
+                _workbook.AddWorksheet(sheetname, outputSheetPos);
             }
-            _activeSheet = actualSheetPos;
+            ActiveSheet = outputSheetPos;
         }
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace zenref.Models.Spreadsheet
         /// <returns><c>true</c> if <c>FileName</c>suffix is .xlsx, <c>false</c> otherwise </returns>
         public bool IsFileExcel()
         {
-            return (Path.GetExtension(FileName) != ".xlsx");
+            return (Path.GetExtension(FileName) == ".xlsx");
         }
         /// <summary>
         /// Creates a new, empty workbook, primarily for creating a new spreadsheet with <c>Reference</c>s
