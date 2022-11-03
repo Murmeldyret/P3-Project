@@ -3,20 +3,44 @@
     public class Reference
     {
         //constructor with named arguments, where some properties are null by default.
-        public Reference(string _Author = "", string _Title = "", string _PubType = "", string _Publisher = "",
-                        int _YearRef = 0, int _ID = 0, string _ISBN = "", string _DOI = "", string _Edu = "",
-                        string _Location = "", string _Semester = "", string _Language = "", int _YearReport = 0,
-                        double _Match = 0.0, string _Commentary = "", string _Syllabus = "", string _Season = "",
-                        string _ExamEvent = "", string _Source = "", int _Pages = 0, string _Volume = "", 
-                        string _Chapters = "", string _BookTitle = "")
+        public Reference(
+            KeyValuePair<_typeOfId, string> _UID, 
+            string _Author = "", 
+            string _Title = "", 
+            string _PubType = "",
+            string _Publisher = "",
+            int _YearRef = 0,
+            int _ID = 0,
+            string _Edu = "",
+            string _Location = "",
+            string _Semester = "",
+            string _Language = "",
+            int _YearReport = 0,
+            double _Match = 0.0,
+            string _Commentary = "",
+            string _Syllabus = "",
+            string _Season = "",
+            string _ExamEvent = "",
+            string _Source = "",
+            int _Pages = 0,
+            string _Volume = "",
+            string _Chapters = "",
+            string _BookTitle = ""
+            )
         {
+            UID = _UID;
             Author = _Author;
             Title = _Title;
             PubType = _PubType;
             Publisher = _Publisher;
             YearRef = _YearRef;
             ID = _ID;
-            ISBN = _ISBN;
+            Edu = _Edu;
+            Location = _Location;
+            Semester = _Semester;
+            Language = _Language;
+            YearReport = _YearReport;
+            Match = _Match;
             Commentary = _Commentary;
             Syllabus = _Syllabus;
             Season = _Season;
@@ -28,14 +52,20 @@
             BookTitle = _BookTitle;
         }
 
+        public enum _typeOfId
+        {
+            Unknown,
+            DOI,
+            ISBN,
+            ISSN,
+        }
+        public KeyValuePair<_typeOfId, string> UID;
         public string? Author { get; set; }
         public string? Title { get; set; }
         public string? PubType { get; set; }
         public string? Publisher { get; set; }
         public int? YearRef { get; set; }
         public int? ID { get; set; }
-        public string? ISBN { get; set; }
-        public string? DOI { get; set; }
         public string? Edu { get; set; }
         public string? Location { get; set; }
         public string? Semester { get; set; }
