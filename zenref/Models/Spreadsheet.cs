@@ -91,7 +91,6 @@ namespace zenref.Models.Spreadsheet
             Chapters,
             BookTitle,
             Isbn,
-            D
         }
 
         /// <summary>
@@ -145,7 +144,7 @@ namespace zenref.Models.Spreadsheet
 
             IXLWorksheet worksheet;
 
-            for (int i = 1; i < _workbook.Worksheets.Count; i++)
+            for (int i = 1; i <= _workbook.Worksheets.Count; i++)
             {
                 worksheet = _workbook.Worksheet(i);
                 resDic.Add(worksheet.Position, worksheet.Name);
@@ -275,7 +274,7 @@ namespace zenref.Models.Spreadsheet
             //throw new NotImplementedException();
             try
             {
-            _workbookProperty = new XLWorkbook(FileName);
+                _workbookProperty = new XLWorkbook(FileName);
             }
             catch (ArgumentException ex)
             {
@@ -292,17 +291,13 @@ namespace zenref.Models.Spreadsheet
         /// <exception cref="ArgumentException">If a file with <c>filename</c> already exists</exception>
         public void Export(string filename)
         {
-            if (_workbookProperty is null)
-            {
-                throw new ArgumentNullException("Workbook cannot be saved when it is null");
-            }
             if (File.Exists(filename))
             {
-                throw new ArgumentException("File with this name already exists");
+                throw new IOException("File with this name already exists");
             }
             else
             {
-            _workbookProperty.SaveAs(Path.Join(FilePath + filename));
+                _workbookProperty.SaveAs(Path.Join(FilePath + filename));
             }
             //throw new NotImplementedException();
             // Export spreadsheet....

@@ -71,12 +71,14 @@ namespace zenref.Tests
         {
             //Arrange
             Spreadsheet testSpreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
+            File.Delete(SPREADSHEETTESTNAME);
 
             //Act
             Action exportNullWorkbook = () => testSpreadsheet.Export(SPREADSHEETTESTNAME);
 
             //Assert
-            Assert.Throws<ArgumentNullException>(exportNullWorkbook);
+            Assert.Throws<FileNotFoundException>(exportNullWorkbook);
+            File.Delete(SPREADSHEETTESTNAME);
         }
         [Fact]
         public void CreateEmptySheet()
@@ -115,17 +117,24 @@ namespace zenref.Tests
         public void GetWorkSheetsDictionaryContainsOneSheet()
         {
             const string TESTSHEET = "testsheet";
+            const string SECONDTESTSHEET = "secondtestsheet";
             Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
 
             XLWorkbook tempWorkbook = new XLWorkbook();
             tempWorkbook.AddWorksheet(TESTSHEET);
+            tempWorkbook.AddWorksheet(SECONDTESTSHEET);
             tempWorkbook.SaveAs(SPREADSHEETTESTNAME);
 
             spreadsheet.Import();
 
             Dictionary<int, string> sheetDic = spreadsheet.GetWorksheets();
 
-            Assert.Equal<Dictionary<int, string>>(sheetDic, new Dictionary<int, string>() { { 1, TESTSHEET } });
+            Assert.Equal<Dictionary<int, string>>(sheetDic, new Dictionary<int, string>()
+            {
+                { 1, TESTSHEET },
+                {2, SECONDTESTSHEET },
+            }
+            );
             File.Delete(SPREADSHEETTESTNAME);
         }
     }
