@@ -17,7 +17,7 @@ namespace zenref.Tests
             int result = Reference.Fuzzy(testString, testValue);
 
             //Assert
-            Assert.True(result < 3);
+            Assert.True(result = 1);
         }
 
         [Fact]
@@ -31,7 +31,7 @@ namespace zenref.Tests
             int result = Reference.Fuzzy(testString, testValue);
 
             //Assert
-            Assert.True(result < 3);
+            Assert.True(result = 1);
         }
 
         [Fact]
