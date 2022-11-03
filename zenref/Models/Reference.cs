@@ -54,10 +54,15 @@
         public string? BookTitle { get; set; }
         
         //Based on Levenshteins distance
-        public static int FuzzyLocal(string test, string test2)
+        public static int Fuzzy(string test, string test2)
         {
+            int levenshteinDistance = Fastenshtein.Levenshtein.Distance(test, test2);
+            return levenshteinDistance;
+            /*
             /// <summary>
             /// Compute the distance between two strings.
+            /// This is done through the processes of Replacing, Inserting or Deleting.
+            /// The lower the integer, the closer the strings are to each other.
             /// </summary>
             
                 int n = test.Length;
@@ -75,7 +80,7 @@
                     return n;
                 }
 
-                // Step 2 Initialisering af matrix
+                // Step 2 Initialization of a matrix
                 for (int i = 0; i <= n; d[i, 0] = i++)
                 {
                 }
@@ -93,27 +98,22 @@
                         // Step 5
                         int cost = (test2[j - 1] == test[i - 1]) ? 0 : 1;
 
-                        // Step 6
+                        // Step 6 finds the lowest number of operations to change the string
+                        // throughout the string comparisons
                         d[i, j] = Math.Min(
                             Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
                             d[i - 1, j - 1] + cost);
                     }
                 }
-                // Step 7
-                return d[n, m];
-        }
-        
-        //    throw new NotImplementedException();
-        //}
-
-        public static int FuzzyOnline(string test, string test2)
-        {
-            throw new NotImplementedException();
+                // Step 7 
+                return d[n, m];*/
         }
 
+
+        //split sentences into individual words. NOTICE IT ONLY TAKES 1 STRING AS INPUT. NOT A LIST!
         public static List<string> NGramiser(string text)
         {
-            throw new NotImplementedException();
+            return text.Split(' ').ToList();
         }
     }
 }
