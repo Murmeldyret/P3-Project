@@ -75,9 +75,6 @@ namespace zenref.Tests
                 "TV",
             }, searchFilters.returnFilterQueries());
         }
-
-
-
     }
 
     public class FilterCollectionTest
