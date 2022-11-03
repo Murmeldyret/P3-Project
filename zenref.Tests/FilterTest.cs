@@ -76,5 +76,31 @@ namespace zenref.Tests
             }, searchFilters.returnFilterQueries());
         }
 
+
+
+    }
+
+    public class FilterCollectionTest
+    {
+        [Fact]
+        public void filterCreation()
+        {
+            List<string> filterQuery = new List<string>()
+            {
+                "Podcast",
+                "Radio",
+            };
+
+            string categoryName = "Podcast";
+
+            FilterCollection.createFilter(filterQuery, categoryName);
+
+            Filter result = FilterCollection.findFilter("Podcast");
+
+            Assert.Equal(filterQuery, result.returnFilterQueries());
+            Assert.Equal(categoryName, result.returnFilterCategory());
+        }
+
+        
     }
 }
