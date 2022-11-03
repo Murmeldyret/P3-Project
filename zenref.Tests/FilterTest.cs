@@ -29,5 +29,52 @@ namespace zenref.Tests
             Assert.Equal(filters, searchFilters.returnFilterQueries());
             Assert.Equal(category, searchFilters.returnFilterCategory());
         }
+
+        [Fact]
+        public void AddFilter()
+        {
+            List<string> filters = new List<string>()
+            {
+                "Podcast",
+                "Radio",
+            };
+
+            string category = "Podcast";
+
+            Filter searchFilters = new Filter(filters, category);
+
+            searchFilters.addFilterQuery("TV");
+
+            Assert.Equal(new List<string>()
+            {
+                "Podcast",
+                "Radio",
+                "TV",
+            }, searchFilters.returnFilterQueries());
+        }
+
+        [Fact]
+        public void removeFilter()
+        {
+            List<string> filters = new List<string>()
+            {
+                "Podcast",
+                "Radio",
+                "TV",
+            };
+
+            string category = "Podcast";
+
+            Filter searchFilters = new Filter(filters, category);
+
+            searchFilters.removeFilterQuery("Radio");
+
+            Assert.Equal(new List<string>()
+            {
+                "Podcast",
+                "TV",
+            }, searchFilters.returnFilterQueries());
+        }
+
     }
 }

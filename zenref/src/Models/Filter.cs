@@ -19,7 +19,7 @@ namespace zenref.Models
 
         public void addFilterQuery(string query)
         {
-            filterQuery.Append(query);
+            this.filterQuery.Append(query);
         }
 
         public bool removeFilterQuery(string query)
