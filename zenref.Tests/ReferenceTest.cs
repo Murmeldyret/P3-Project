@@ -14,10 +14,10 @@ namespace zenref.Tests
             string testValue = "hello2";
 
             //Act
-            int result = Reference.FuzzyLocal(testString, testValue);
+            int result = Reference.Fuzzy(testString, testValue);
 
             //Assert
-            Assert.True(result > 75);
+            Assert.True(result = 1);
         }
 
         [Fact]
@@ -28,10 +28,10 @@ namespace zenref.Tests
             string testValue = "hello2";
 
             //Act
-            int result = Reference.FuzzyOnline(testString, testValue);
+            int result = Reference.Fuzzy(testString, testValue);
 
             //Assert
-            Assert.True(result > 75);
+            Assert.True(result = 1);
         }
 
         [Fact]
