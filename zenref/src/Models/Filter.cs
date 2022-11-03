@@ -10,7 +10,12 @@ namespace zenref.Models
             throw new NotImplementedException();
         }
 
-        public static void findFilter()
+        public static Filter findFilter(string categoryName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static int findFilterIndex(string categoryName)
         {
             throw new NotImplementedException();
         }
