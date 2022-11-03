@@ -69,7 +69,7 @@ namespace zenref.Models.Spreadsheet
         /// <summary>
         /// Represents the different fields in an Excel worksheet where the key is the column position and the value is the content
         /// </summary>
-        private Dictionary<int, _referenceFields> _positionOfReferencesInSheet = new Dictionary<int,_referenceFields>()
+        private SortedDictionary<int, _referenceFields> _positionOfReferencesInSheet = new SortedDictionary<int,_referenceFields>()
         {
             {1,_referenceFields.Author },
             {2,_referenceFields.Title },
@@ -177,14 +177,38 @@ namespace zenref.Models.Spreadsheet
         /// <exception cref="NotImplementedException"></exception>
         public Reference ReadRef()
         {
+            var OneRow = xLWorksheet.Range(_currentRow, _positionOfReferencesInSheet.First().Key, _currentRow, _positionOfReferencesInSheet.Last().Key);
             //Read from the corresponding fields according to dict
-
-
+            Reference FilledReference = new Reference(
+                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(2).Key).GetValue<string>(),
+                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(3).Key).GetValue<string>(),
+                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(4).Key).GetValue<string>(),
+                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(5).Key).GetValue<string>(),
+                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(6).Key).GetValue<int>(),
+                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(7).Key).GetValue<int>(),
+                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(8).Key).GetValue<string>(),
+                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(9).Key).GetValue<string>(),
+                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(10).Key).GetValue<string>(),
+                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(11).Key).GetValue<string>(),
+                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(12).Key).GetValue<int>(),
+                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(13).Key).GetValue<int>(),
+                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(14).Key).GetValue<string>(),
+                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(15).Key).GetValue<string>(),
+                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(16).Key).GetValue<string>(),
+                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(17).Key).GetValue<string>(),
+                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(18).Key).GetValue<string>(),
+                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(19).Key).GetValue<int>(),
+                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(20).Key).GetValue<string>(),
+                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(21).Key).GetValue<string>()
+                );          
+          
             //Make instance of class filled with said fields
-
+             
             //increment _currentRow
+            _currentRow++;
             //return reference
-            throw new NotImplementedException();
+            return FilledReference;
         }
 
         /// <summary>
