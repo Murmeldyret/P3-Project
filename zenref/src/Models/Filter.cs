@@ -5,7 +5,7 @@ namespace zenref.Models
     {
         private static List<Filter> Filters = new List<Filter>();
 
-        public static void deleteFilter()
+        public static void deleteFilter(int filterIndex)
         {
             throw new NotImplementedException();
         }
