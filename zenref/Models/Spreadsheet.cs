@@ -36,33 +36,6 @@ namespace zenref.Models.Spreadsheet
         private IXLWorksheet xLWorksheet { get => _workbook.Worksheet(ActiveSheet); }
         private int _currentRow { get; set; } = 2;
 
-        #region ManyFields
-        //Reference field positioning
-        //These fields represent the column positioning of each Reference field in the Worksheet
-        //private int AuthorPos       { get; set; } = 1;
-        //private int TitlePos        { get; set; } = 2;
-        //private int PubTypePos      { get; set; } = 3;
-        //private int PublisherPos    { get; set; } = 4;
-        //private int YearRefPos      { get; set; } = 5;
-        //private int IDRefPos        { get; set; } = 6;
-        //private int EduPos          { get; set; } = 7;
-        //private int LocationPos     { get; set; } = 8;
-        //private int SemesterPos     { get; set; } = 9;
-        //private int LanguagePos     { get; set; } = 10;
-        //private int YearReportPos   { get; set; } = 11;
-        //private int OriginalRefPos  { get; set; } = 12;
-        //private int MatchPos        { get; set; } = 13;
-        //private int CommentaryPos   { get; set; } = 14;
-        //private int SyllabusPos     { get; set; } = 15;
-        //private int SeasonPos       { get; set; } = 16;
-        //private int ExamEventPos    { get; set; } = 17;
-        //private int SourcePos       { get; set; } = 18;
-        //private int PagesPos        { get; set; } = 19;
-        //private int VolumePos       { get; set; } = 20;
-        //private int ChaptersPos     { get; set; } = 21;
-        //private int BookTitlePos    { get; set; } = 22;
-        #endregion ManyFields
-
         /// <summary>
         /// Represents the different fields that a reference instance contains.
         /// </summary>

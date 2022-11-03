@@ -52,6 +52,8 @@
         public string? Volume { get; set; }
         public string? Chapters { get; set; }
         public string? BookTitle { get; set; }
+
+
         
         public static int FuzzyLocal(string test, string test2)
         {
