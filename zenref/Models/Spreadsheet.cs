@@ -10,16 +10,20 @@ namespace zenref.Models.Spreadsheet
     public class Spreadsheet
     {
         private string FileName { get; }
+
         /// <summary>
         /// Represents the total amount of rows in a spreadsheet
         /// </summary>
         public int ReferenceCount { get; }
+        //TODO slet
         public bool State { get; }
+
         /// <summary>
         /// Represents the path that the file should be read to.
         /// </summary>
         /// <remarks>Should only be used if new Excel files are to be created</remarks>
         public string FilePath { get; private set; }
+
         /// <summary>
         /// Represents whether or not <c>_workbook</c> exists or not
         /// </summary>
@@ -177,7 +181,7 @@ namespace zenref.Models.Spreadsheet
         /// <exception cref="NotImplementedException"></exception>
         public Reference ReadRef()
         {
-            var OneRow = xLWorksheet.Range(_currentRow, _positionOfReferencesInSheet.First().Key, _currentRow, _positionOfReferencesInSheet.Last().Key);
+            IXLRange OneRow = xLWorksheet.Range(_currentRow, _positionOfReferencesInSheet.First().Key, _currentRow, _positionOfReferencesInSheet.Last().Key);
             //Read from the corresponding fields according to dict
             Reference FilledReference = new Reference(
                 new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
@@ -221,6 +225,10 @@ namespace zenref.Models.Spreadsheet
         {
             //ReadRef() in loop with yield return statement
             int totalrows;
+            if (amount + _currentRow >= 1048576)
+            {
+                throw new ArgumentOutOfRangeException($"Excel does not support more than 1,048,576 rows, tried to read {amount+_currentRow} rows.  ");
+            }
             if (amount != 0)
             {
                 totalrows = _currentRow + (int)amount;
@@ -238,7 +246,7 @@ namespace zenref.Models.Spreadsheet
         }
 
         /// <summary>
-        /// Checks if <c>FileName</c> is an Excelfile
+        /// Checks if <c>FileName</c> is an Excel file
         /// </summary>
         /// <returns><c>true</c> if <c>FileName</c>suffix is .xlsx, <c>false</c> otherwise </returns>
         public bool IsFileExcel()

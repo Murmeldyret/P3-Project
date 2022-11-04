@@ -143,6 +143,11 @@
 
 
         //split sentences into individual words. NOTICE IT ONLY TAKES 1 STRING AS INPUT. NOT A LIST!
+        /// <summary>
+        /// Splits a string of words into a list of strings with each element being a word.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public static List<string> NGramiser(string text)
         {
             return text.Split(' ').ToList();
