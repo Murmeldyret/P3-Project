@@ -1,3 +1,4 @@
+using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -25,10 +26,24 @@ namespace Zenref.Ava.Views
 
         private void InitializeWindow()
         {
+            Border border = this.FindControl<Border>("CopyTarget")
+            border
             ImportButton = this.FindControl<Button>("importButton");
-            ImportButton.Click += (s, e) =>
+            ImportButton.Click += async (s, e) =>
             {
-                    
+                OpenFileDialog openFileDialog = new OpenFileDialog
+                {
+                    InitialDirectory = @"C:\",
+                    Title = "Browse for excel file",
+                };
+                openFileDialog.Filters.Add(new FileDialogFilter() { Name = "Excel", Extensions = { "xlsx" } });
+                string[] result = await openFileDialog.ShowAsync(this);
+                if (result != null)
+                {
+                    string filePath = string.Join(" ", result);
+                    TextBlock textBlock = this.FindControl<TextBlock>("fileNameTextBlock");
+                    textBlock.Text = filePath;
+                }
             };
             CancelButton = this.FindControl<Button>("cancelButton");
             CancelButton.Click += (s, e) => 
@@ -41,6 +56,10 @@ namespace Zenref.Ava.Views
                 ExportWindow exportWindow = new ExportWindow();
                 exportWindow.ShowDialog(this);
             };
+        }
+        private void DragDropEvent(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

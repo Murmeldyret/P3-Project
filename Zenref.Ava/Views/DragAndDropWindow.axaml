@@ -14,11 +14,12 @@
 					BorderThickness="1"
 					Width="650"
 					Height="200"
-					DragDrop.AllowDrop="True">
+					DragDrop.AllowDrop="True"
+					DragDrop.Drop="DropEvent">
 			<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" 
 					   FontSize="50" FontWeight="Heavy" Text="Drop file here"></TextBlock>
 		</Border>
-		<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" FontWeight="Bold">File Name</TextBlock>
+		<TextBlock Name="fileNameTextBlock" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" FontWeight="Bold">File Name</TextBlock>
 		<Button Name="importButton" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20,10">Import</Button>
 		<Button Name="cancelButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="100,10">Afbryd</Button>
 		<Button Name="nextButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="20,10">Næste</Button>
