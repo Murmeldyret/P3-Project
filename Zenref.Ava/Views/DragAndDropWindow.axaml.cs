@@ -26,8 +26,7 @@ namespace Zenref.Ava.Views
 
         private void InitializeWindow()
         {
-            Border border = this.FindControl<Border>("CopyTarget")
-            border
+            Border border = this.FindControl<Border>("CopyTarget");
             ImportButton = this.FindControl<Button>("importButton");
             ImportButton.Click += async (s, e) =>
             {
