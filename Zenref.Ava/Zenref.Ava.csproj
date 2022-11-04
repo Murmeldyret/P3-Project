@@ -38,7 +38,7 @@
     <Compile Update="Views\NewReferenceWindow.axaml.cs">
       <DependentUpon>NewReferenceWindow.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\SearchCriteriaWIndow.axaml.cs">
+    <Compile Update="Views\SearchCriteriaWindow.axaml.cs">
       <DependentUpon>SearchCriteriaWindow.axaml</DependentUpon>
     </Compile>
   </ItemGroup>

@@ -30,21 +30,30 @@
 				<TextBox Width="240"/>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
-				<ComboBox PlaceholderText="OG">
+				<ComboBox SelectedIndex="0">
+					<ComboBoxItem>OG</ComboBoxItem>
+					<ComboBoxItem>ELLER</ComboBoxItem>
+					<ComboBoxItem>IKKE</ComboBoxItem>
 				</ComboBox>
 				<ComboBox PlaceholderText="Felter">
 				</ComboBox>
 				<TextBox/>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
-				<ComboBox PlaceholderText="ELLER">
+				<ComboBox SelectedIndex="1">
+					<ComboBoxItem>OG</ComboBoxItem>
+					<ComboBoxItem>ELLER</ComboBoxItem>
+					<ComboBoxItem>IKKE</ComboBoxItem>
 				</ComboBox>
 				<ComboBox PlaceholderText="Felter">
 				</ComboBox>
 				<TextBox/>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
-				<ComboBox PlaceholderText="IKKE">
+				<ComboBox SelectedIndex="2">
+					<ComboBoxItem>OG</ComboBoxItem>
+					<ComboBoxItem>ELLER</ComboBoxItem>
+					<ComboBoxItem>IKKE</ComboBoxItem>
 				</ComboBox>
 				<ComboBox PlaceholderText="Felter">
 				</ComboBox>
