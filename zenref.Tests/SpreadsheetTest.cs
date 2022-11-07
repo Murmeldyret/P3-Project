@@ -32,18 +32,18 @@ namespace zenref.Tests
             File.Delete(SPREADSHEETTESTNAME);
         }
 
-        [Fact]
-        public void ReadRefTest()
-        {
-            //Arrange
-            Spreadsheet testSpreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
+        //[Fact]
+        //public void ReadRefTest()
+        //{
+        //    //Arrange
+        //    Spreadsheet testSpreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
 
-            //Act
-            Reference result = testSpreadsheet.ReadRef();
+        //    //Act
+        //    Reference result = testSpreadsheet.ReadRef();
 
-            //Assert
-            Assert.NotNull(result);
-        }
+        //    //Assert
+        //    Assert.NotNull(result);
+        //}
 
         [Fact]
         public void ImportTestWhenFileFound()
@@ -93,30 +93,6 @@ namespace zenref.Tests
             spreadsheet.Create();
 
             Assert.True(spreadsheet.DoesExcelFileExist);
-        }
-        [Fact]
-        public void AddReferenceThrows()
-        {
-            Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
-
-            Action addReference = () => { spreadsheet.AddReference(new Models.Reference()); };
-
-            Assert.Throws<NotImplementedException>(addReference);
-        }
-        [Fact]
-        public void AddReferenceIEnumberableThrows()
-        {
-            Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
-            List<Models.Reference> listOfReferences = new List<Models.Reference>();
-
-
-            listOfReferences.Add(new Models.Reference());
-            listOfReferences.Add(new Models.Reference());
-
-            Action addReference = () => { spreadsheet.AddReference(listOfReferences); };
-
-
-            Assert.Throws<NotImplementedException>(addReference);
         }
         [Fact]
         public void GetWorkSheetsDictionaryContainsTwoSheets()

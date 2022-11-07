@@ -146,7 +146,7 @@ namespace zenref.Models.Spreadsheet
             }
             else
             {
-                _workbook.Worksheets.Add(DateTime.Now.ToString(), position);
+                _workbook.Worksheets.Add(DateTimeOffset.Now.ToUnixTimeSeconds().ToString(), position);
             }
         }
         ///<inheritdoc cref="SetActiveSheet(int)"/>
