@@ -7,6 +7,7 @@ using Xunit;
 using zenref.Models.Spreadsheet;
 using ClosedXML.Excel;
 using System.IO;
+using zenref.Models;
 
 namespace zenref.Tests
 {
@@ -17,27 +18,32 @@ namespace zenref.Tests
         public void CheckFilename()
         {
             //Arrange
+            XLWorkbook workbook = new XLWorkbook();
+            workbook.AddWorksheet("Temp");
+            workbook.SaveAs(SPREADSHEETTESTNAME);
             Spreadsheet testSpreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
 
             //Act
+            testSpreadsheet.Import();
             bool result = testSpreadsheet.IsFileExcel();
 
             //Assert
             Assert.True(result);
+            File.Delete(SPREADSHEETTESTNAME);
         }
 
-        [Fact]
-        public void ReadRefTest()
-        {
-            //Arrange
-            Spreadsheet testSpreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
+        //[Fact]
+        //public void ReadRefTest()
+        //{
+        //    //Arrange
+        //    Spreadsheet testSpreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
 
-            //Act
-            zenref.Models.Reference result = testSpreadsheet.ReadRef();
+        //    //Act
+        //    Reference result = testSpreadsheet.ReadRef();
 
-            //Assert
-            Assert.NotNull(result);
-        }
+        //    //Assert
+        //    Assert.NotNull(result);
+        //}
 
         [Fact]
         public void ImportTestWhenFileFound()
@@ -60,7 +66,7 @@ namespace zenref.Tests
             const string NonExistentExcelFileName = "DoesNotExsist.xlsx";
             Spreadsheet TestUnFindableSpreadsheet = new Spreadsheet(NonExistentExcelFileName);
 
-            Action importNonExistentFile = () => TestUnFindableSpreadsheet.Import();
+            Action importNonExistentFile = TestUnFindableSpreadsheet.Import;
 
             Assert.Throws<FileNotFoundException>(importNonExistentFile);
 
@@ -70,12 +76,14 @@ namespace zenref.Tests
         {
             //Arrange
             Spreadsheet testSpreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
+            File.Delete(SPREADSHEETTESTNAME);
 
             //Act
             Action exportNullWorkbook = () => testSpreadsheet.Export(SPREADSHEETTESTNAME);
 
             //Assert
-            Assert.Throws<ArgumentNullException>(exportNullWorkbook);
+            Assert.Throws<FileNotFoundException>(exportNullWorkbook);
+            File.Delete(SPREADSHEETTESTNAME);
         }
         [Fact]
         public void CreateEmptySheet()
@@ -87,28 +95,108 @@ namespace zenref.Tests
             Assert.True(spreadsheet.DoesExcelFileExist);
         }
         [Fact]
-        public void AddReferenceThrows()
+        public void GetWorkSheetsDictionaryContainsTwoSheets()
         {
+            const string TESTSHEET = "testsheet";
+            const string SECONDTESTSHEET = "secondtestsheet";
             Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
 
-            Action addReference = () => { spreadsheet.AddReference(new Models.Reference()); };
+            XLWorkbook tempWorkbook = new XLWorkbook();
+            tempWorkbook.AddWorksheet(TESTSHEET);
+            tempWorkbook.AddWorksheet(SECONDTESTSHEET);
+            tempWorkbook.SaveAs(SPREADSHEETTESTNAME);
 
-            Assert.Throws<NotImplementedException>(addReference);
+            spreadsheet.Import();
+
+            Dictionary<int, string> sheetDic = spreadsheet.GetWorksheets();
+
+            Assert.Equal<Dictionary<int, string>>(sheetDic, new Dictionary<int, string>()
+            {
+                {1, TESTSHEET },
+                {2, SECONDTESTSHEET },
+            }
+            );
+            File.Delete(SPREADSHEETTESTNAME);
         }
         [Fact]
-        public void AddReferenceIEnumberableThrows()
+        public void SetActiveSheetIntExistingSheet()
         {
+            const string SHEETNAME = "test";
+            File.Delete(SPREADSHEETTESTNAME);
+            XLWorkbook workbook = new XLWorkbook();
+            workbook.AddWorksheet(SHEETNAME, 1);
+            workbook.SaveAs(SPREADSHEETTESTNAME);
             Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
-            List<Models.Reference> listOfReferences = new List<Models.Reference>();
+            spreadsheet.Import();
+            Dictionary<int, string> sheetdic = spreadsheet.GetWorksheets();
+
+            spreadsheet.SetActiveSheet(1);
+
+            Assert.True(sheetdic[1] == SHEETNAME);
+            File.Delete(SPREADSHEETTESTNAME);
+        }
+        [Fact]
+        public void SetActiveSheetIntNonExistentSheet()
+        {
+            File.Delete(SPREADSHEETTESTNAME);
+            XLWorkbook workbook = new XLWorkbook();
+            workbook.AddWorksheet(1);
+            workbook.SaveAs(SPREADSHEETTESTNAME);
+
+            Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
+            spreadsheet.Import();
+
+            spreadsheet.SetActiveSheet(2);
+            Dictionary<int, string> sheetdic = spreadsheet.GetWorksheets();
+            string sheet2Name = sheetdic[2]; //FIXME Test giver ikke mening
+
+            Assert.True(sheetdic[2] == sheet2Name);
+            File.Delete(SPREADSHEETTESTNAME);
+
+        }
+        [Fact]
+        public void SetActiveSheetStringExistingSheet()
+        {
+            const string SHEETNAME = "test";
+
+            File.Delete(SPREADSHEETTESTNAME);
+            XLWorkbook workbook = new XLWorkbook();
+            workbook.AddWorksheet(SHEETNAME);
+            workbook.SaveAs(SPREADSHEETTESTNAME);
+
+            Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
+            spreadsheet.Import();
 
 
-            listOfReferences.Add(new Models.Reference());
-            listOfReferences.Add(new Models.Reference());
+            spreadsheet.SetActiveSheet(SHEETNAME);
+            Dictionary<int, string> sheetdic = spreadsheet.GetWorksheets();
+            string sheetname;
+            sheetdic.TryGetValue(1, out sheetname!);
 
-            Action addReference = () => { spreadsheet.AddReference(listOfReferences); };
+            Assert.True(sheetname == SHEETNAME);
+            File.Delete(SPREADSHEETTESTNAME);
 
+        }
+        [Fact]
+        public void SetActiveSheetStringNonExistentSheet()
+        {
+            const string SHEETNAME = "test";
 
-            Assert.Throws<NotImplementedException>(addReference);
+            File.Delete(SPREADSHEETTESTNAME);
+            XLWorkbook workbook = new XLWorkbook();
+            workbook.AddWorksheet("A bad sheetname");
+            workbook.SaveAs(SPREADSHEETTESTNAME);
+
+            Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
+            spreadsheet.Import();
+
+            spreadsheet.SetActiveSheet(SHEETNAME);
+            Dictionary<int, string> sheetdic = spreadsheet.GetWorksheets();
+            string sheetname;
+            sheetdic.TryGetValue(2, out sheetname!);
+
+            Assert.True(sheetname == SHEETNAME);
+            File.Delete(SPREADSHEETTESTNAME);
         }
     }
 }
