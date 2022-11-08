@@ -311,7 +311,10 @@ namespace zenref.Ava.Models.Spreadsheet
         /// Appends <c>reference</c> to the the next row of the first worksheet
         /// </summary>
         /// <param name="reference">The reference to be added</param>
+        public void AddReference(Reference reference, int row)
+        {
 
+        }
         /// <summary>
         /// Appends multiple <c>references</c> to the next rows of the first worksheet
         /// </summary>
@@ -391,14 +394,23 @@ namespace zenref.Ava.Models.Spreadsheet
 
         public void RemoveAt(int index)
         {
-            throw new NotImplementedException();
+            if (index <0 && index >=Count)
+            {
+                Reference itemToBeRemoved = this[index];
+                Remove(itemToBeRemoved);
+            }
+            else
+            {
+                throw new ArgumentException("Error in deleting item");
+            }
         }
 
         public void Add(Reference item)
         {
-            throw new NotImplementedException();
+            AddReference(item, Count + 1);
         }
 
+        //TODO Skal clear rydde spreadsheetet eller hvad vil folk have?
         public void Clear()
         {
             throw new NotImplementedException();
