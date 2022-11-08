@@ -1,8 +1,8 @@
+using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using ClosedXML.Excel;
 using System.IO;
+using System.Linq;
 
 namespace zenref.Ava.Models.Spreadsheet
 {
@@ -195,27 +195,27 @@ namespace zenref.Ava.Models.Spreadsheet
         /// <returns>A Reference from the given row</returns>
         private Reference readRow(IXLRow row)
         {
-            string author = getCell(row,_referenceFields.Author).GetValue<string>();
-            string title = getCell(row,_referenceFields.Title).GetValue<string>();
+            string author = getCell(row, _referenceFields.Author).GetValue<string>();
+            string title = getCell(row, _referenceFields.Title).GetValue<string>();
             string pubType = getCell(row, _referenceFields.PublicationType).GetValue<string>();
-            string publisher = getCell(row,_referenceFields.Publisher).GetValue<string>();
-            int yearOfRef = getCell(row,_referenceFields.YearRef).GetValue<int>();
-            int id = getCell(row,_referenceFields.IdRef).GetValue<int>();
-            string edu = getCell(row,_referenceFields.Education).GetValue<string>();
-            string location = getCell(row,_referenceFields.Location).GetValue<string>();
-            string semester = getCell(row,_referenceFields.Semester).GetValue<string>();
-            string language = getCell(row,_referenceFields.Language).GetValue<string>();
-            int yearOfReport = getCell(row,_referenceFields.YearReport).GetValue<int>();
+            string publisher = getCell(row, _referenceFields.Publisher).GetValue<string>();
+            int yearOfRef = getCell(row, _referenceFields.YearRef).GetValue<int>();
+            int id = getCell(row, _referenceFields.IdRef).GetValue<int>();
+            string edu = getCell(row, _referenceFields.Education).GetValue<string>();
+            string location = getCell(row, _referenceFields.Location).GetValue<string>();
+            string semester = getCell(row, _referenceFields.Semester).GetValue<string>();
+            string language = getCell(row, _referenceFields.Language).GetValue<string>();
+            int yearOfReport = getCell(row, _referenceFields.YearReport).GetValue<int>();
             double match = getCell(row, _referenceFields.Match).GetValue<double>();
             string comment = getCell(row, _referenceFields.Comment).GetValue<string>();
             string syllabus = getCell(row, _referenceFields.Syllabus).GetValue<string>();
-            string season = getCell(row,_referenceFields.Season).GetValue<string>();
-            string examEvent = getCell(row,_referenceFields.ExamEvent).GetValue<string>();
-            string source = getCell(row,_referenceFields.Source).GetValue<string>();
-            int pages = getCell(row,_referenceFields.Pages).GetValue<int>();
-            string volume = getCell(row,_referenceFields.Volume).GetValue<string>();
-            string chapters = getCell(row,_referenceFields.Chapters).GetValue<string>();
-            string bookTitle = getCell(row,_referenceFields.BookTitle).GetValue<string>();
+            string season = getCell(row, _referenceFields.Season).GetValue<string>();
+            string examEvent = getCell(row, _referenceFields.ExamEvent).GetValue<string>();
+            string source = getCell(row, _referenceFields.Source).GetValue<string>();
+            int pages = getCell(row, _referenceFields.Pages).GetValue<int>();
+            string volume = getCell(row, _referenceFields.Volume).GetValue<string>();
+            string chapters = getCell(row, _referenceFields.Chapters).GetValue<string>();
+            string bookTitle = getCell(row, _referenceFields.BookTitle).GetValue<string>();
 
             return new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
                                  author,
@@ -246,7 +246,7 @@ namespace zenref.Ava.Models.Spreadsheet
         /// <param name="row">The row of a worksheet</param>
         /// <param name="field">The field in a row</param>
         /// <returns></returns>
-        private IXLCell getCell(IXLRow row,_referenceFields field)
+        private IXLCell getCell(IXLRow row, _referenceFields field)
         {
             return row.Cell(_positionOfReferencesInSheet[field]);
         }
