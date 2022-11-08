@@ -1,12 +1,16 @@
 using ClosedXML.Excel;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 namespace zenref.Ava.Models.Spreadsheet
 {
-    public class Spreadsheet
+    /// <summary>
+    /// Represents an Excel file containing an amount of worksheets
+    /// </summary>
+    public class Spreadsheet : IList<Reference>
     {
         private string FileName { get; }
 
@@ -38,6 +42,12 @@ namespace zenref.Ava.Models.Spreadsheet
         public int ActiveSheet { get; set; } = 1;
         private IXLWorksheet xLWorksheet { get => _workbook.Worksheet(ActiveSheet); }
         private int _currentRow { get; set; } = 2;
+
+        public int Count => xLWorksheet.RowsUsed().Count();
+
+        public bool IsReadOnly => _workbook.IsProtected;
+
+        public Reference this[int index] { get => GetReference(index); set => throw new NotImplementedException(); }
 
         /// <summary>
         /// Represents the different fields that a reference instance contains.
@@ -301,10 +311,6 @@ namespace zenref.Ava.Models.Spreadsheet
         /// Appends <c>reference</c> to the the next row of the first worksheet
         /// </summary>
         /// <param name="reference">The reference to be added</param>
-        public void AddReference(Reference reference)
-        {
-            throw new NotImplementedException("Fuck dig ikke implementeret");
-        }
 
         /// <summary>
         /// Appends multiple <c>references</c> to the next rows of the first worksheet
@@ -356,6 +362,88 @@ namespace zenref.Ava.Models.Spreadsheet
             //throw new NotImplementedException();
             // Export spreadsheet....
             // Window.close(); 
+        }
+
+        public int IndexOf(Reference item)
+        {
+            int indexof = -1;
+            for (int i = 2; i < Count; i++)
+            {
+                if (this[i].Equals(item))
+                {
+                    indexof = i;
+                }
+            }
+            return indexof;
+        }
+
+        public void Insert(int index, Reference item)
+        {
+            if (index >0 && index <= Count)
+            {
+                this[index] = item;
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public void RemoveAt(int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Add(Reference item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Contains(Reference item)
+        {
+            bool doesContain = false;
+            foreach (Reference reference in this)
+            {
+                if (reference.Equals(item))
+                {
+                    doesContain = true;
+                }
+            }
+            return doesContain;
+        }
+
+        public void CopyTo(Reference[] array, int arrayIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(Reference item)
+        {
+            if (IndexOf(item) == -1)
+            {
+                return false;
+            }
+            IXLRow row = xLWorksheet.Row(IndexOf(item));
+            row.Delete();
+            return true;
+        }
+
+        public IEnumerator<Reference> GetEnumerator()
+        {
+            foreach(Reference item in this)
+            {
+                yield return item;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }
