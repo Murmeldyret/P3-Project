@@ -1,4 +1,4 @@
-namespace zenref.Models
+namespace zenref.Ava.Models
 {
 
     public static class FilterCollection
