@@ -14,10 +14,9 @@
 					BorderThickness="1"
 					Width="650"
 					Height="200"
-					DragDrop.AllowDrop="True"
-					DragDrop.Drop="DropEvent">
-			<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" 
-					   FontSize="50" FontWeight="Heavy" Text="Drop file here"></TextBlock>
+					DragDrop.AllowDrop="True">
+			<TextBlock Name="DropState" HorizontalAlignment="Center" VerticalAlignment="Center" 
+					   FontSize="50" FontWeight="Heavy" Text="Drop filen her"></TextBlock>
 		</Border>
 		<TextBlock Name="fileNameTextBlock" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" FontWeight="Bold">File Name</TextBlock>
 		<Button Name="importButton" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20,10">Import</Button>

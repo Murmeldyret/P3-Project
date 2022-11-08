@@ -1,9 +1,10 @@
 using System;
-using Avalonia;
+using System.Collections.Generic;
+using System.IO;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
+using Avalonia.Input;
 using Avalonia.Markup.Xaml;
-using Zenref.Ava.Models;
+
 
 namespace Zenref.Ava.Views
 {
@@ -12,11 +13,15 @@ namespace Zenref.Ava.Views
         Button? ImportButton;
         Button? CancelButton;
         Button? NextButton;
+        private TextBlock _TextBlock;
 
         public DragAndDropWindow()
         {
             InitializeComponent();
             InitializeWindow();
+
+            AddHandler(DragDrop.DropEvent, Drop);
+            AddHandler(DragDrop.DragOverEvent, DragOver);
         }
 
         private void InitializeComponent()
@@ -26,7 +31,7 @@ namespace Zenref.Ava.Views
 
         private void InitializeWindow()
         {
-            Border border = this.FindControl<Border>("CopyTarget");
+            _TextBlock = this.FindControl<TextBlock>("fileNameTextBlock");
             ImportButton = this.FindControl<Button>("importButton");
             ImportButton.Click += async (s, e) =>
             {
@@ -40,8 +45,7 @@ namespace Zenref.Ava.Views
                 if (result != null)
                 {
                     string filePath = string.Join(" ", result);
-                    TextBlock textBlock = this.FindControl<TextBlock>("fileNameTextBlock");
-                    textBlock.Text = filePath;
+                    _TextBlock.Text = filePath;
                 }
             };
             CancelButton = this.FindControl<Button>("cancelButton");
@@ -56,9 +60,30 @@ namespace Zenref.Ava.Views
                 exportWindow.ShowDialog(this);
             };
         }
-        private void DragDropEvent(object sender, RoutedEventArgs e)
+
+        private void DragOver(object sender, DragEventArgs e)
         {
-            
+            e.DragEffects = e.DragEffects & DragDropEffects.Copy;
+            if (!e.Data.Contains(DataFormats.FileNames))
+            {
+                e.DragEffects = DragDropEffects.None;
+            }
+        }
+        private void Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.Contains(DataFormats.FileNames))
+            {
+                _TextBlock.Text = string.Join(Environment.NewLine, e.Data.GetFileNames());
+
+                //_TextBlock.Text = "";
+                //List<string> fileList = new List<string>(e.Data.GetFileNames());
+                //foreach (string file in fileList)
+                //{
+                //    FileInfo fileInfo = new FileInfo(file);
+                //    long fileSize = fileInfo.Length / 1024;
+                //    _TextBlock.Text = string.Concat(_TextBlock.Text, $"{file} ({fileSize} KB)\n");
+                //}
+            }
         }
     }
 }
