@@ -72,30 +72,30 @@ namespace zenref.Ava.Models.Spreadsheet
         /// <summary>
         /// Represents the different fields in an Excel worksheet where the key is the column position and the value is the content
         /// </summary>
-        public SortedDictionary<int, _referenceFields> _positionOfReferencesInSheet = new SortedDictionary<int, _referenceFields>()
+        public SortedDictionary<_referenceFields, int> _positionOfReferencesInSheet = new SortedDictionary<_referenceFields, int>()
         {
-            {1,_referenceFields.Author },
-            {2,_referenceFields.Title },
-            {3,_referenceFields.PublicationType },
-            {4,_referenceFields.Publisher },
-            {5,_referenceFields.YearRef },
-            {6,_referenceFields.IdRef },
-            {7,_referenceFields.Education },
-            {8,_referenceFields.Location },
-            {9,_referenceFields.Semester },
-            {10,_referenceFields.Language },
-            {11,_referenceFields.YearReport },
-            {12,_referenceFields.OriginalRef },
-            {13,_referenceFields.Match },
-            {14,_referenceFields.Comment },
-            {15,_referenceFields.Syllabus },
-            {16,_referenceFields.Season },
-            {17,_referenceFields.ExamEvent },
-            {18,_referenceFields.Source },
-            {19,_referenceFields.Pages },
-            {20,_referenceFields.Volume },
-            {21,_referenceFields.Chapters },
-            {22,_referenceFields.BookTitle },
+            {_referenceFields.Author, 1},
+            {_referenceFields.Title, 2},
+            {_referenceFields.PublicationType, 3},
+            {_referenceFields.Publisher, 4},
+            {_referenceFields.YearRef, 5},
+            {_referenceFields.IdRef, 6},
+            {_referenceFields.Education, 7},
+            {_referenceFields.Location, 8},
+            {_referenceFields.Semester, 9},
+            {_referenceFields.Language, 10},
+            {_referenceFields.YearReport, 11},
+            {_referenceFields.OriginalRef, 12},
+            {_referenceFields.Match, 13},
+            {_referenceFields.Comment, 14},
+            {_referenceFields.Syllabus, 15},
+            {_referenceFields.Season, 16},
+            {_referenceFields.ExamEvent, 17},
+            {_referenceFields.Source, 18},
+            {_referenceFields.Pages, 19},
+            {_referenceFields.Volume, 20},
+            {_referenceFields.Chapters, 21},
+            {_referenceFields.BookTitle, 22},
         };
 
         public Spreadsheet(string fileName)
@@ -173,54 +173,90 @@ namespace zenref.Ava.Models.Spreadsheet
             ActiveSheet = outputSheetPos;
         }
 
+
+
         /// <summary>
-        /// Reads the next reference in the spreadsheet
+        /// Gets a reference at the specified row
         /// </summary>
-        /// <returns>The next reference</returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public Reference ReadRef()
+        /// <param name="index">The row index of the ReferenceNote that Excel is 1-indexed, and the 1st row is usually reserved for metadata</param>
+        /// <returns>The Reference at the given row</returns>
+        /// <remarks>Note that Excel is 1-indexed, and the 1st row is usually reserved for metadata</remarks>
+        public Reference GetReference(int index)
         {
-            IXLRange OneRow = xLWorksheet.Range(_currentRow, _positionOfReferencesInSheet.First().Key, _currentRow, _positionOfReferencesInSheet.Last().Key);
-            //Read from the corresponding fields according to dict
-            Reference FilledReference = new Reference(
-                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
-                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(2).Key).GetValue<string>(),
-                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(3).Key).GetValue<string>(),
-                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(4).Key).GetValue<string>(),
-                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(5).Key).GetValue<string>(),
-                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(6).Key).GetValue<int>(),
-                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(7).Key).GetValue<int>(),
-                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(8).Key).GetValue<string>(),
-                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(9).Key).GetValue<string>(),
-                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(10).Key).GetValue<string>(),
-                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(11).Key).GetValue<string>(),
-                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(12).Key).GetValue<int>(),
-                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(13).Key).GetValue<int>(),
-                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(14).Key).GetValue<string>(),
-                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(15).Key).GetValue<string>(),
-                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(16).Key).GetValue<string>(),
-                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(17).Key).GetValue<string>(),
-                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(18).Key).GetValue<string>(),
-                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(19).Key).GetValue<int>(),
-                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(20).Key).GetValue<string>(),
-                OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(21).Key).GetValue<string>()
-                );
+            _currentRow = index;
+            IXLRow indexedRow = xLWorksheet.Row(index);
 
-            //Make instance of class filled with said fields
-
-            //increment _currentRow
-            _currentRow++;
-            //return reference
-            return FilledReference;
+            return readRow(indexedRow);
         }
+        /// <summary>
+        /// Reads the contents of an Excel row and returns a Reference
+        /// </summary>
+        /// <param name="row">The Excel row containing a Reference</param>
+        /// <returns>A Reference from the given row</returns>
+        private Reference readRow(IXLRow row)
+        {
+            string author = getCell(row,_referenceFields.Author).GetValue<string>();
+            string title = getCell(row,_referenceFields.Title).GetValue<string>();
+            string pubType = getCell(row, _referenceFields.PublicationType).GetValue<string>();
+            string publisher = getCell(row,_referenceFields.Publisher).GetValue<string>();
+            int yearOfRef = getCell(row,_referenceFields.YearRef).GetValue<int>();
+            int id = getCell(row,_referenceFields.IdRef).GetValue<int>();
+            string edu = getCell(row,_referenceFields.Education).GetValue<string>();
+            string location = getCell(row,_referenceFields.Location).GetValue<string>();
+            string semester = getCell(row,_referenceFields.Semester).GetValue<string>();
+            string language = getCell(row,_referenceFields.Language).GetValue<string>();
+            int yearOfReport = getCell(row,_referenceFields.YearReport).GetValue<int>();
+            double match = getCell(row, _referenceFields.Match).GetValue<double>();
+            string comment = getCell(row, _referenceFields.Comment).GetValue<string>();
+            string syllabus = getCell(row, _referenceFields.Syllabus).GetValue<string>();
+            string season = getCell(row,_referenceFields.Season).GetValue<string>();
+            string examEvent = getCell(row,_referenceFields.ExamEvent).GetValue<string>();
+            string source = getCell(row,_referenceFields.Source).GetValue<string>();
+            int pages = getCell(row,_referenceFields.Pages).GetValue<int>();
+            string volume = getCell(row,_referenceFields.Volume).GetValue<string>();
+            string chapters = getCell(row,_referenceFields.Chapters).GetValue<string>();
+            string bookTitle = getCell(row,_referenceFields.BookTitle).GetValue<string>();
 
+            return new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                                 author,
+                                 title,
+                                 pubType,
+                                 publisher,
+                                 yearOfRef,
+                                 id,
+                                 edu,
+                                 location,
+                                 semester,
+                                 language,
+                                 yearOfReport,
+                                 match,
+                                 comment,
+                                 syllabus,
+                                 season,
+                                 examEvent,
+                                 source,
+                                 pages,
+                                 volume,
+                                 chapters,
+                                 bookTitle);
+        }
+        /// <summary>
+        /// Gets the Excel cell at a given row and specific field
+        /// </summary>
+        /// <param name="row">The row of a worksheet</param>
+        /// <param name="field">The field in a row</param>
+        /// <returns></returns>
+        private IXLCell getCell(IXLRow row,_referenceFields field)
+        {
+            return row.Cell(_positionOfReferencesInSheet[field]);
+        }
         /// <summary>
         /// Reads the next references in the spreadsheet, delimited by <paramref name="amount"/>
         /// </summary>
         /// <param name="amount">The amount of references to read, if <paramref name="amount"/> is 0, reads all references in the worksheet.</param>
         /// <returns>List of references from spreadsheet</returns>
         /// <exception cref="NotImplementedException"></exception>
-        public IEnumerable<Reference> ReadRef(uint amount)
+        public IEnumerable<Reference> GetReference(uint amount)
         {
             //ReadRef() in loop with yield return statement
             int totalrows;
@@ -239,7 +275,7 @@ namespace zenref.Ava.Models.Spreadsheet
 
             for (int i = _currentRow; i <= totalrows; i++)
             {
-                yield return ReadRef();
+                yield return GetReference(i);
             }
             //throw new NotImplementedException();
         }

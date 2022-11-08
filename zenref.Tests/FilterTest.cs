@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-using zenref.Models;
+using zenref.Ava.Models;
 
 namespace zenref.Tests
 {

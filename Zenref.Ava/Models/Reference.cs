@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -86,6 +87,10 @@ namespace zenref.Ava.Models
         public string? Volume { get; set; }
         public string? Chapters { get; set; }
         public string? BookTitle { get; set; }
+        //Skal fjernes senere
+        public string ISBN { get; set; }
+        //Også fjernes
+        public string DOI { get; set; }
 
 
 

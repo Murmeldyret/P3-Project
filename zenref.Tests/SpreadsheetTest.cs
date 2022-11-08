@@ -213,9 +213,9 @@ namespace zenref.Tests
             IXLRow firstrow = ws.Row(1);
             //IXLRange firstrow = ws.Range(1, 1, 1, 22);
 
-            for (int i = 1; i <= 22; i++)
+            for (int i = 0; i < sheet._positionOfReferencesInSheet.Count; i++)
             {
-                firstrow.Cell(i).SetValue<string>(sheet._positionOfReferencesInSheet[i].ToString());
+                firstrow.Cell(i+1).SetValue<string>(sheet._positionOfReferencesInSheet.ElementAt(i).Key.ToString());
             }
             IXLRow secondrow = ws.Row(2);
             secondrow.Cell(1).SetValue<string>("Anders Rask");
@@ -241,6 +241,38 @@ namespace zenref.Tests
             secondrow.Cell(21).SetValue<string>("16-21");
             secondrow.Cell(22).SetValue<string>("Din far");
             wb.SaveAs(FILLEDSPREADSHEETNAME);
+
+            //Read reference should be equal to this
+            Reference reference = new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "Anders Rask",
+                "titel på noget",
+                "bog",
+                "AAU",
+                2022,
+                12345,
+                "Software",
+                "Aalborg",
+                "Tredje",
+                "Dansk",
+                2021,
+                0.9,
+                "blank",
+                "Det ved jeg ikke",
+                "Efterår",
+                "pas",
+                "ved jeg heller ikke",
+                69,
+                "20th",
+                "16-21",
+                "Din far");
+
+            sheet.Import();
+            Reference importedReference = sheet.GetReference(2);
+
+            //Equivalent verifies that each public property is the same
+            Assert.Equivalent(reference, importedReference);
+
+
         }
     }
 }

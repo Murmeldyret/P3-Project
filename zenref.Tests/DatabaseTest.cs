@@ -2,6 +2,8 @@ using System.Linq;
 using Xunit;
 using Zenref.Ava.Models;
 using System;
+using zenref.Ava.Models;
+using System.Collections.Generic;
 
 namespace zenref.Tests
 {
@@ -20,7 +22,7 @@ namespace zenref.Tests
         {
             using DataContext context = new DataContext();
 
-            Reference reference = new Reference
+            Reference reference = new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""))
             {
                 Title = "Test Title",
                 Author = "Test Author",
@@ -39,7 +41,7 @@ namespace zenref.Tests
         {
             using DataContext context = new DataContext();
 
-            Reference reference = new Reference
+            Reference reference = new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""))
             {
                 Title = "Test Title",
                 Author = "Test Author",
@@ -61,7 +63,7 @@ namespace zenref.Tests
         {
             using DataContext context = new DataContext();
 
-            Reference reference = new Reference
+            Reference reference = new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""))
             {
                 Title = "Test Title",
                 Author = "Test Author",
@@ -85,7 +87,7 @@ namespace zenref.Tests
         {
             using DataContext context = new DataContext();
 
-            Reference reference = new Reference
+            Reference reference = new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""))
             {
                 Title = "Test Title",
                 Author = "Test Author",
