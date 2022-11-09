@@ -13,14 +13,15 @@ namespace zenref.Ava.Models.Spreadsheet
     /// </summary>
     public class Spreadsheet : IList<Reference>
     {
+        /// <summary>
+        /// The name of the Excel file
+        /// </summary>
         private string FileName { get; }
 
         /// <summary>
         /// Represents the total amount of rows in a spreadsheet
         /// </summary>
         public int ReferenceCount { get; }
-        //TODO slet
-        public bool State { get; }
 
         /// <summary>
         /// Represents the path that the file should be read to.
@@ -40,6 +41,9 @@ namespace zenref.Ava.Models.Spreadsheet
             get => _workbook ?? throw new FileNotFoundException($"{nameof(_workbook)} is null, use Spreadsheet.Import() or Spreadsheet.Create() to fill this property");
             set => _workbook = value;
         }
+        /// <summary>
+        /// The Position of the active worksheet in Excel.
+        /// </summary>
         public int ActiveSheet { get; set; } = 1;
         private IXLWorksheet xLWorksheet { get => _workbook.Worksheet(ActiveSheet); }
         private int _currentRow { get; set; } = 2;
@@ -420,10 +424,15 @@ namespace zenref.Ava.Models.Spreadsheet
             // Window.close(); 
         }
 
+        /// <summary>
+        /// Gets the index of the reference matching the input reference.
+        /// </summary>
+        /// <param name="item">The Reference to find.</param>
+        /// <returns>The index position of the reference, -1 if no such reference was found</returns>
         public int IndexOf(Reference item)
         {
             int indexof = -1;
-            for (int i = 2; i < Count; i++)
+            for (int i = 0; i < Count; i++)
             {
                 if (this[i].Equals(item))
                 {
@@ -433,9 +442,16 @@ namespace zenref.Ava.Models.Spreadsheet
             return indexof;
         }
 
+        /// <summary>
+        /// Inserts the reference at the given index position
+        /// </summary>
+        /// <param name="index">The index position to insert the reference</param>
+        /// <param name="item">The reference to be inserted</param>
+        /// <exception cref="ArgumentOutOfRangeException">Throws if the index position is less than 1 or higher than Count </exception>
+        /// <remarks>To append a refernce to the list, use <c>Add</c> instead</remarks>
         public void Insert(int index, Reference item)
         {
-            if (index > 0 && index <= Count)
+            if (index >= 0 && index <= Count)
             {
 
                 AddReference(item, index);
@@ -445,7 +461,11 @@ namespace zenref.Ava.Models.Spreadsheet
                 throw new ArgumentOutOfRangeException();
             }
         }
-
+        /// <summary>
+        /// Removes the reference at the given index
+        /// </summary>
+        /// <param name="index">The index position</param>
+        /// <exception cref="ArgumentException">Throws if the reference could not be deleted.</exception>
         public void RemoveAt(int index)
         {
             if (index < 0 && index >= Count)
@@ -460,6 +480,10 @@ namespace zenref.Ava.Models.Spreadsheet
             }
         }
 
+        /// <summary>
+        /// Appends a reference to the end of list
+        /// </summary>
+        /// <param name="item">The reference to append</param>
         public void Add(Reference item)
         {
             AddReference(item, Count + 1);
@@ -474,6 +498,11 @@ namespace zenref.Ava.Models.Spreadsheet
             xLWorksheet.Delete();
         }
 
+        /// <summary>
+        /// Determines whether the reference exists in the list
+        /// </summary>
+        /// <param name="item">The reference to match</param>
+        /// <returns>True </returns>
         public bool Contains(Reference item)
         {
             bool doesContain = false;
