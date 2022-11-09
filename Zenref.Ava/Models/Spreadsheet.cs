@@ -1,4 +1,5 @@
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace zenref.Ava.Models.Spreadsheet
 
         private XLWorkbook? _workbookProperty
         {
-            get => _workbook ?? throw new FileNotFoundException($"{nameof(_workbook)} is null, use import() to fill this property");
+            get => _workbook ?? throw new FileNotFoundException($"{nameof(_workbook)} is null, use Spreadsheet.Import() or Spreadsheet.Create() to fill this property");
             set => _workbook = value;
         }
         public int ActiveSheet { get; set; } = 1;
@@ -82,7 +83,7 @@ namespace zenref.Ava.Models.Spreadsheet
         /// <summary>
         /// Represents the different fields in an Excel worksheet where the key is the column position and the value is the content
         /// </summary>
-        public SortedDictionary<_referenceFields, int> _positionOfReferencesInSheet = new SortedDictionary<_referenceFields, int>()
+        public SortedDictionary<_referenceFields, int> PositionOfReferencesInSheet = new SortedDictionary<_referenceFields, int>()
         {
             {_referenceFields.Author, 1},
             {_referenceFields.Title, 2},
@@ -183,8 +184,6 @@ namespace zenref.Ava.Models.Spreadsheet
             ActiveSheet = outputSheetPos;
         }
 
-
-
         /// <summary>
         /// Gets a reference at the specified row
         /// </summary>
@@ -198,6 +197,7 @@ namespace zenref.Ava.Models.Spreadsheet
 
             return readRow(indexedRow);
         }
+
         /// <summary>
         /// Reads the contents of an Excel row and returns a Reference
         /// </summary>
@@ -250,6 +250,7 @@ namespace zenref.Ava.Models.Spreadsheet
                                  chapters,
                                  bookTitle);
         }
+
         /// <summary>
         /// Gets the Excel cell at a given row and specific field
         /// </summary>
@@ -258,7 +259,7 @@ namespace zenref.Ava.Models.Spreadsheet
         /// <returns></returns>
         private IXLCell getCell(IXLRow row, _referenceFields field)
         {
-            return row.Cell(_positionOfReferencesInSheet[field]);
+            return row.Cell(PositionOfReferencesInSheet[field]);
         }
         /// <summary>
         /// Reads the next references in the spreadsheet, delimited by <paramref name="amount"/>
@@ -313,18 +314,52 @@ namespace zenref.Ava.Models.Spreadsheet
         /// <param name="reference">The reference to be added</param>
         public void AddReference(Reference reference, int row)
         {
+            _currentRow = row;
+            IXLRow indexedRow = xLWorksheet.Row(row);
+
+            setReference(reference,indexedRow);
 
         }
+
+        private void setReference(Reference reference, IXLRow indexedRow)
+        {
+
+            getCell(indexedRow, _referenceFields.Author).SetValue<string>(reference.Author ?? "");
+            getCell(indexedRow, _referenceFields.Title).SetValue<string>(reference.Title ?? "");
+            getCell(indexedRow, _referenceFields.PublicationType).SetValue<string>(reference.PubType ?? "");
+            getCell(indexedRow, _referenceFields.Publisher).SetValue<string>(reference.Publisher ?? "");
+            getCell(indexedRow, _referenceFields.YearRef).SetValue<int?>(reference.YearRef);
+            getCell(indexedRow, _referenceFields.IdRef).SetValue<int?>(reference.ID);
+            getCell(indexedRow, _referenceFields.Education).SetValue<string>(reference.Edu ?? "");
+            getCell(indexedRow, _referenceFields.Location).SetValue<string>(reference.Location ?? "");
+            getCell(indexedRow, _referenceFields.Semester).SetValue<string>(reference.Semester ?? "");
+            getCell(indexedRow, _referenceFields.Language).SetValue<string>(reference.Language ?? "");
+            getCell(indexedRow, _referenceFields.YearReport).SetValue<int?>(reference.YearReport);
+            getCell(indexedRow, _referenceFields.Match).SetValue<double?>(reference.Match);
+            getCell(indexedRow, _referenceFields.Comment).SetValue<string>(reference.Commentary ?? "");
+            getCell(indexedRow, _referenceFields.Syllabus).SetValue<string>(reference.Syllabus ?? "");
+            getCell(indexedRow, _referenceFields.Season).SetValue<string>(reference.Season ?? "");
+            getCell(indexedRow, _referenceFields.ExamEvent).SetValue<string>(reference.ExamEvent ?? "");
+            getCell(indexedRow, _referenceFields.Source).SetValue<string>(reference.Source ?? "");
+            getCell(indexedRow, _referenceFields.Pages).SetValue<int?>(reference.Pages);
+            getCell(indexedRow, _referenceFields.Volume).SetValue<string>(reference.Volume ?? "");
+            getCell(indexedRow, _referenceFields.Chapters).SetValue<string>(reference.Chapters ?? "");
+            getCell(indexedRow, _referenceFields.BookTitle).SetValue<string>(reference.BookTitle ?? "");
+
+        }
+
         /// <summary>
         /// Appends multiple <c>references</c> to the next rows of the first worksheet
         /// </summary>
         /// <param name="references">Collection of references to be added</param>
-        public void AddReference(IEnumerable<Reference> references)
+        /// <param name="startRow">The start row from where the references should be inserted. If default, appends to end of list of references</param>
+        public void AddReference(IEnumerable<Reference> references, int startRow = -1)
         {
+            if (startRow == -1) startRow = xLWorksheet.RowsUsed().Count();
             foreach (Reference reference in references)
             {
                 //AddReference(reference);
-                throw new NotImplementedException("Fuck dig ikke implementeret");
+                AddReference(reference, startRow++);
             }
         }
 

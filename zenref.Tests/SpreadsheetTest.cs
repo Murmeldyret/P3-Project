@@ -213,9 +213,9 @@ namespace zenref.Tests
             IXLRow firstrow = ws.Row(1);
             //IXLRange firstrow = ws.Range(1, 1, 1, 22);
 
-            for (int i = 0; i < sheet._positionOfReferencesInSheet.Count; i++)
+            for (int i = 0; i < sheet.PositionOfReferencesInSheet.Count; i++)
             {
-                firstrow.Cell(i+1).SetValue<string>(sheet._positionOfReferencesInSheet.ElementAt(i).Key.ToString());
+                firstrow.Cell(i+1).SetValue<string>(sheet.PositionOfReferencesInSheet.ElementAt(i).Key.ToString());
             }
             IXLRow secondrow = ws.Row(2);
             secondrow.Cell(1).SetValue<string>("Anders Rask");
