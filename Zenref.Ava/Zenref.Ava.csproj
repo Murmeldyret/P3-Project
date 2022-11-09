@@ -35,6 +35,12 @@
     <Compile Update="Views\ExpandReferenceWindow.axaml.cs">
       <DependentUpon>ExpandReferenceWindow.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\DatabaseWindow.axaml.cs">
+      <DependentUpon>DatabaseWindow.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MainWindow.axaml.cs">
+      <DependentUpon>MainWindow.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\NewReferenceWindow.axaml.cs">
       <DependentUpon>NewReferenceWindow.axaml</DependentUpon>
     </Compile>

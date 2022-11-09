@@ -18,7 +18,7 @@ namespace Zenref.Ava.Views
             MenuButton = this.FindControl<Button>("menuButton");
             MenuButton.Click += (s, e) =>
             {
-                MenuWindow menuWindow = new MenuWindow();
+                MainWindow menuWindow = new MainWindow();
                 menuWindow.ShowDialog(this);
             };
             StartButton = this.FindControl<Button>("startButton");
