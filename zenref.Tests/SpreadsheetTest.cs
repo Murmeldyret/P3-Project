@@ -198,7 +198,7 @@ namespace zenref.Tests
             Assert.True(sheetname == SHEETNAME);
             File.Delete(SPREADSHEETTESTNAME);
         }
-        [Fact] 
+        [Fact]
         public void ReadRefReadsFieldsCorrectly()
         {
             const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
@@ -215,7 +215,7 @@ namespace zenref.Tests
 
             for (int i = 0; i < sheet.PositionOfReferencesInSheet.Count; i++)
             {
-                firstrow.Cell(i+1).SetValue<string>(sheet.PositionOfReferencesInSheet.ElementAt(i).Key.ToString());
+                firstrow.Cell(i + 1).SetValue<string>(sheet.PositionOfReferencesInSheet.ElementAt(i).Key.ToString());
             }
             IXLRow secondrow = ws.Row(2);
             secondrow.Cell(1).SetValue<string>("Anders Rask");
@@ -322,6 +322,28 @@ namespace zenref.Tests
             sheet.Import();
 
             Assert.Equal("Software", sheet[2].Edu);
+        }
+        [Fact]
+        public void AddReferenceWorksAtCorrectField()
+        {
+            const int ROWTOINSERTAT = 4;
+            File.Delete(SPREADSHEETTESTNAME);
+            Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
+
+            spreadsheet.Create();
+
+            spreadsheet.AddReference(new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                                     _Author: "Din far"),ROWTOINSERTAT);
+            spreadsheet.Export(SPREADSHEETTESTNAME);
+
+            XLWorkbook wb = new XLWorkbook(SPREADSHEETTESTNAME);
+            IXLWorksheet ws = wb.Worksheet(1);
+            IXLRow row = ws.Row(ROWTOINSERTAT);
+            bool isEmpty = row.IsEmpty();
+
+            Assert.False(isEmpty); ;
+
+
         }
     }
 }
