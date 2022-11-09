@@ -7,7 +7,7 @@
 	
 	<Grid Name="grid" RowDefinitions="Auto, Auto">
 		<Menu Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Stretch">
-			<Button Name="addReferenceButton"> Tilføj</Button>
+			<Button Name="addReferenceButton" Command="{Binding OpenImportView}"> Tilføj</Button>
 			<TextBox Name="searchTextBox" Watermark="Søg" Width="150" FontSize="15"></TextBox>
 		</Menu>
 	</Grid>

@@ -1,4 +1,6 @@
+using System;
 using Avalonia.Controls;
+using Zenref.Ava;
 
 namespace Zenref.Ava.Views
 {
