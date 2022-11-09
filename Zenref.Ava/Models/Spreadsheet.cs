@@ -51,7 +51,13 @@ namespace zenref.Ava.Models.Spreadsheet
 
         public bool IsReadOnly => _workbook.IsProtected;
 
-        public Reference this[int index] { get => GetReference(index); set => throw new NotImplementedException(); }
+        /// <summary>
+        /// Gets the reference at the given row index
+        /// </summary>
+        /// <param name="index">An integer greater than 1 (And almost always 2) and less than the total amount of references in the worksheet</param>
+        /// <returns>The reference at the given index</returns>
+        /// <remarks>Cannot insert individual Reference properties with the setter</remarks>
+        public Reference this[int index] { get => GetReference(index); set => Insert(index, value); }
 
         /// <summary>
         /// Represents the different fields that a reference instance contains.
@@ -327,10 +333,10 @@ namespace zenref.Ava.Models.Spreadsheet
         /// <param name="row">Optional, adds reference to a given row, possibly overwriting it</param>
         public void AddReference(Reference reference, int row = -1)
         {
-            _currentRow = row != -1 ? row : xLWorksheet.RowsUsed().Count()+1;
+            _currentRow = row != -1 ? row : xLWorksheet.RowsUsed().Count() + 1;
             IXLRow indexedRow = xLWorksheet.Row(row);
             indexedRow.Clear();
-            setReference(reference,indexedRow);
+            setReference(reference, indexedRow);
         }
 
         private void setReference(Reference reference, IXLRow indexedRow)
@@ -367,7 +373,7 @@ namespace zenref.Ava.Models.Spreadsheet
         /// <param name="startRow">The start row from where the references should be inserted. If default, appends to end of list of references</param>
         public void AddReference(IEnumerable<Reference> references, int startRow = -1)
         {
-            if (startRow == -1) startRow = xLWorksheet.RowsUsed().Count()+1;
+            if (startRow == -1) startRow = xLWorksheet.RowsUsed().Count() + 1;
             foreach (Reference reference in references)
             {
                 //AddReference(reference);
@@ -429,7 +435,7 @@ namespace zenref.Ava.Models.Spreadsheet
 
         public void Insert(int index, Reference item)
         {
-            if (index >0 && index <= Count)
+            if (index > 0 && index <= Count)
             {
 
                 AddReference(item, index);
@@ -442,7 +448,7 @@ namespace zenref.Ava.Models.Spreadsheet
 
         public void RemoveAt(int index)
         {
-            if (index <0 && index >=Count)
+            if (index < 0 && index >= Count)
             {
                 //Reference itemToBeRemoved = this[index];
                 //Remove(itemToBeRemoved);
@@ -500,7 +506,7 @@ namespace zenref.Ava.Models.Spreadsheet
 
         public IEnumerator<Reference> GetEnumerator()
         {
-            foreach(Reference item in this)
+            foreach (Reference item in this)
             {
                 yield return item;
             }

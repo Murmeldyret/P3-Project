@@ -274,5 +274,54 @@ namespace zenref.Tests
 
 
         }
+        [Fact]
+        public void IListIndexerGetterWorks()
+        {
+            const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
+            const string SHEETNAME = "test";
+
+            File.Delete(FILLEDSPREADSHEETNAME);
+
+            XLWorkbook wb = new XLWorkbook();
+            Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
+
+            IXLWorksheet ws = wb.AddWorksheet(SHEETNAME);
+            IXLRow firstrow = ws.Row(1);
+            //IXLRange firstrow = ws.Range(1, 1, 1, 22);
+
+            for (int i = 0; i < sheet.PositionOfReferencesInSheet.Count; i++)
+            {
+                firstrow.Cell(i + 1).SetValue<string>(sheet.PositionOfReferencesInSheet.ElementAt(i).Key.ToString());
+            }
+            IXLRow secondrow = ws.Row(2);
+            secondrow.Cell(1).SetValue<string>("Anders Rask");
+            secondrow.Cell(2).SetValue<string>("titel på noget");
+            secondrow.Cell(3).SetValue<string>("bog");
+            secondrow.Cell(4).SetValue<string>("AAU");
+            secondrow.Cell(5).SetValue<int>(2022);
+            secondrow.Cell(6).SetValue<int>(12345);
+            secondrow.Cell(7).SetValue<string>("Software");
+            secondrow.Cell(8).SetValue<string>("Aalborg");
+            secondrow.Cell(9).SetValue<string>("Tredje");
+            secondrow.Cell(10).SetValue<string>("Dansk");
+            secondrow.Cell(11).SetValue<int>(2021);
+            secondrow.Cell(12).SetValue<string>("lang tekst");
+            secondrow.Cell(13).SetValue<double>(0.9);
+            secondrow.Cell(14).SetValue<string>("blank");
+            secondrow.Cell(15).SetValue<string>("Det ved jeg ikke");
+            secondrow.Cell(16).SetValue<string>("Efterår");
+            secondrow.Cell(17).SetValue<string>("pas");
+            secondrow.Cell(18).SetValue<string>("ved jeg heller ikke");
+            secondrow.Cell(19).SetValue<int>(69);
+            secondrow.Cell(20).SetValue<string>("20th");
+            secondrow.Cell(21).SetValue<string>("16-21");
+            secondrow.Cell(22).SetValue<string>("Din far");
+            wb.SaveAs(FILLEDSPREADSHEETNAME);
+
+
+            sheet.Import();
+
+            Assert.Equal("Software", sheet[2].Edu);
+        }
     }
 }
