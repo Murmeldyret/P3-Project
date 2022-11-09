@@ -4,7 +4,7 @@ using System.Linq;
 using ClosedXML.Excel;
 using System.IO;
 
-namespace zenref.Ava.Models.Spreadsheet
+namespace Zenref.Ava.Models.Spreadsheet
 {
     public class Spreadsheet
     {
@@ -183,7 +183,7 @@ namespace zenref.Ava.Models.Spreadsheet
             IXLRange OneRow = xLWorksheet.Range(_currentRow, _positionOfReferencesInSheet.First().Key, _currentRow, _positionOfReferencesInSheet.Last().Key);
             //Read from the corresponding fields according to dict
             Reference FilledReference = new Reference(
-                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                //new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
                 OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(2).Key).GetValue<string>(),
                 OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(3).Key).GetValue<string>(),
                 OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(4).Key).GetValue<string>(),

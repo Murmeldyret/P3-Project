@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using zenref.Ava.Models.Spreadsheet;
+using Zenref.Ava.Models.Spreadsheet;
 using ClosedXML.Excel;
 using System.IO;
-using zenref.Ava.Models;
+using Zenref.Ava.Models;
 
 namespace zenref.Tests
 {

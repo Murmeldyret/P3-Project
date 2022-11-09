@@ -2,9 +2,8 @@
 using System;
 using P3Project.API;
 using P3Project;
-using zenref.Models;
+using Zenref.Ava.Models;
 using Moq;
-using zenref.Models;
 
 namespace zenref.Tests;
 
