@@ -44,6 +44,9 @@ namespace zenref.Ava.Models.Spreadsheet
         private IXLWorksheet xLWorksheet { get => _workbook.Worksheet(ActiveSheet); }
         private int _currentRow { get; set; } = 2;
 
+        /// <summary>
+        /// Returns the total number of references in the active Worksheet.
+        /// </summary>
         public int Count => xLWorksheet.RowsUsed().Count();
 
         public bool IsReadOnly => _workbook.IsProtected;
@@ -109,11 +112,20 @@ namespace zenref.Ava.Models.Spreadsheet
             {_referenceFields.BookTitle, 22},
         };
 
+        /// <summary>
+        /// Represents a spreadsheet existing in the same current working directory as the program
+        /// </summary>
+        /// <param name="fileName">The name of the Excelfile, with file extension .xlsx</param>
         public Spreadsheet(string fileName)
         {
             FileName = fileName;
             FilePath = "";
         }
+        /// <summary>
+        /// Represents a spreadsheet in a given directory
+        /// </summary>
+        /// <param name="fileName">The name of the Excelfile, with file extension .xlsx</param>
+        /// <param name="filepath">The Absolute or relative path of the Excel file</param>
         public Spreadsheet(string fileName, string filepath)
         {
             FileName = fileName;
@@ -312,13 +324,13 @@ namespace zenref.Ava.Models.Spreadsheet
         /// Appends <c>reference</c> to the the next row of the first worksheet
         /// </summary>
         /// <param name="reference">The reference to be added</param>
-        public void AddReference(Reference reference, int row)
+        /// <param name="row">Optional, adds reference to a given row, possibly overwriting it</param>
+        public void AddReference(Reference reference, int row = -1)
         {
-            _currentRow = row;
+            _currentRow = row != -1 ? row : xLWorksheet.RowsUsed().Count()+1;
             IXLRow indexedRow = xLWorksheet.Row(row);
-
+            indexedRow.Clear();
             setReference(reference,indexedRow);
-
         }
 
         private void setReference(Reference reference, IXLRow indexedRow)
@@ -355,7 +367,7 @@ namespace zenref.Ava.Models.Spreadsheet
         /// <param name="startRow">The start row from where the references should be inserted. If default, appends to end of list of references</param>
         public void AddReference(IEnumerable<Reference> references, int startRow = -1)
         {
-            if (startRow == -1) startRow = xLWorksheet.RowsUsed().Count();
+            if (startRow == -1) startRow = xLWorksheet.RowsUsed().Count()+1;
             foreach (Reference reference in references)
             {
                 //AddReference(reference);
@@ -419,7 +431,8 @@ namespace zenref.Ava.Models.Spreadsheet
         {
             if (index >0 && index <= Count)
             {
-                this[index] = item;
+
+                AddReference(item, index);
             }
             else
             {
@@ -431,8 +444,9 @@ namespace zenref.Ava.Models.Spreadsheet
         {
             if (index <0 && index >=Count)
             {
-                Reference itemToBeRemoved = this[index];
-                Remove(itemToBeRemoved);
+                //Reference itemToBeRemoved = this[index];
+                //Remove(itemToBeRemoved);
+                xLWorksheet.Row(index).Clear();
             }
             else
             {
@@ -446,9 +460,12 @@ namespace zenref.Ava.Models.Spreadsheet
         }
 
         //TODO Skal clear rydde spreadsheetet eller hvad vil folk have?
+        /// <summary>
+        /// Deletes the active worksheet.
+        /// </summary>
         public void Clear()
         {
-            throw new NotImplementedException();
+            xLWorksheet.Delete();
         }
 
         public bool Contains(Reference item)
@@ -469,6 +486,7 @@ namespace zenref.Ava.Models.Spreadsheet
             throw new NotImplementedException();
         }
 
+        /// <remarks>Don't use in a loop, ClosedXML alleges poor performance consider using clear</remarks>
         public bool Remove(Reference item)
         {
             if (IndexOf(item) == -1)
