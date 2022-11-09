@@ -24,8 +24,8 @@ namespace Zenref.Ava.Views
             IdentifyReferencesButton = this.FindControl<Button>("identifyReferencesButton");
             IdentifyReferencesButton.Click += (s, e) =>
             {
-                DragAndDropWindow dragAndDropWindow = new DragAndDropWindow();
-                dragAndDropWindow.ShowDialog(this);
+                ExportWindow exportWindow = new ExportWindow();
+                exportWindow.ShowDialog(this);
             };
         }
     }
