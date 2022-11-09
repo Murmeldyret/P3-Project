@@ -51,7 +51,12 @@ namespace zenref.Ava.Models.Spreadsheet
         /// <summary>
         /// Returns the total number of references in the active Worksheet.
         /// </summary>
+        /// <remarks>Empty rows between first and last row will not be included in the count</remarks>
         public int Count => xLWorksheet.RowsUsed().Count();
+        /// <summary>
+        /// Returns the number of rows to the last used row in the active worksheet.
+        /// </summary>
+        public int Length => xLWorksheet.LastRowUsed().RowNumber();
 
         public bool IsReadOnly => _workbook.IsProtected;
 
