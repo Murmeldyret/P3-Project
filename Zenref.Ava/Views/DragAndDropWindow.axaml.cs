@@ -39,12 +39,13 @@ namespace Zenref.Ava.Views
                 {
                     InitialDirectory = @"C:\",
                     Title = "Browse for excel file",
+                    AllowMultiple = true,
                 };
-                openFileDialog.Filters.Add(new FileDialogFilter() { Name = "Excel", Extensions = { "xlsx" } });
+                openFileDialog.Filters.Add(new FileDialogFilter() { Name = "Excel", Extensions = { "xlsx", "xlsm" } });
                 string[] result = await openFileDialog.ShowAsync(this);
                 if (result != null)
                 {
-                    string filePath = string.Join(" ", result);
+                    string filePath = string.Join(Environment.NewLine, result);
                     _TextBlock.Text = filePath;
                 }
             };
