@@ -14,9 +14,9 @@
 			<Button Content="Database" Command="{Binding UpdateViewCommand}" CommandParameter="Database"/>
 			<Button Content="Export" Command="{Binding UpdateViewCommand}" CommandParameter="Export"/>
 		</StackPanel>
-
-		<ContentControl Grid.Row="1" Content="{Binding SelectedViewModel}"/>
 		
+		<ContentControl Grid.Row="1" Content="{Binding SelectedViewModel}"/>
+
 	</Grid>
 	
 </Window>

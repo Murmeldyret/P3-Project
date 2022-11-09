@@ -64,17 +64,17 @@
 			<Border Width="250" Height="300" Padding="10">
 				<StackPanel Orientation="Vertical" Spacing="3">
 					<StackPanel Orientation="Horizontal" Spacing="10">
-						<TextBlock Text="Referencer importeret" Width="125"/>
+						<TextBlock Text="Referencer importeret" Width="150"/>
 						<TextBlock Text=":"/>
 						<TextBlock Text="60000"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal" Spacing="10">
-						<TextBlock Text="Identificeret" Width="125"/>
+						<TextBlock Text="Identificeret" Width="150"/>
 						<TextBlock Text=":"/>
 						<TextBlock Text="0"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal" Spacing="10">
-						<TextBlock Text="Uidentificeret" Width="125"/>
+						<TextBlock Text="Uidentificeret" Width="150"/>
 						<TextBlock Text=":"/>
 						<TextBlock Text="0"/>
 					</StackPanel>
