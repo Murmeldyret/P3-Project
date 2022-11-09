@@ -1,0 +1,33 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="Zenref.Ava.Views.ImportView">
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<Border Name="CopyTarget"
+					Grid.Row="0"
+					Margin="10"
+					BorderBrush="Black"
+					BorderThickness="1"
+					Width="600"
+					Height="400"
+					DragDrop.AllowDrop="True">
+			<TextBlock Name="DropState" HorizontalAlignment="Center" VerticalAlignment="Center"
+					   FontSize="50" FontWeight="Heavy" Text="Drop filen her"></TextBlock>
+		</Border>
+		<TextBlock Name="fileNameTextBlock" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" FontWeight="Bold">File Name</TextBlock>
+		<Menu Grid.Row="2" VerticalAlignment="Bottom">
+			<Button Name="importButton" >Import</Button>
+			<Button Name="cancelButton" >Afbryd</Button>
+			<Button Name="nextButton" >Næste</Button>
+		</Menu>
+
+	</Grid>
+</UserControl>
