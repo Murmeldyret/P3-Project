@@ -7,11 +7,16 @@
         x:Class="Zenref.Ava.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="Zenref.Ava">
+    
+	<Grid RowDefinitions="auto, auto" Margin="20 10">
 
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
+		<StackPanel Orientation="Horizontal" Grid.Row="0" Spacing="20">
+			<Button Content="Database" Command="{Binding UpdateViewCommand}" CommandParameter="Database"/>
+			<Button Content="Export" Command="{Binding UpdateViewCommand}" CommandParameter="Export"/>
+		</StackPanel>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
+		<ContentControl Grid.Row="1" Content="{Binding SelectedViewModel}"/>
+		
+	</Grid>
+	
 </Window>
