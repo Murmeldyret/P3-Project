@@ -14,20 +14,20 @@ namespace zenref.Ava.Models
             string _Title = "",
             string _PubType = "",
             string _Publisher = "",
-            int _YearRef = 0,
-            int _ID = 0,
+            int? _YearRef = null,
+            int? _ID = null,
             string _Edu = "",
             string _Location = "",
             string _Semester = "",
             string _Language = "",
-            int _YearReport = 0,
-            double _Match = 0.0,
+            int? _YearReport = null,
+            double? _Match = null,
             string _Commentary = "",
             string _Syllabus = "",
             string _Season = "",
             string _ExamEvent = "",
             string _Source = "",
-            int _Pages = 0,
+            int? _Pages = null,
             string _Volume = "",
             string _Chapters = "",
             string _BookTitle = ""
@@ -87,11 +87,9 @@ namespace zenref.Ava.Models
         public string? Volume { get; set; }
         public string? Chapters { get; set; }
         public string? BookTitle { get; set; }
-        //Skal fjernes senere
-        public string ISBN { get; set; }
-        //Også fjernes
-        public string DOI { get; set; }
 
+
+        //TODO Metode til value equality
 
 
         //Based on Levenshteins distance

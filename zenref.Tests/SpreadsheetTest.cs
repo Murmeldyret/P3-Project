@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 using zenref.Ava.Models.Spreadsheet;
 using ClosedXML.Excel;
 using System.IO;
 using zenref.Ava.Models;
+using System.Collections;
+using DeepEqual;
+using DeepEqual.Syntax;
 
 namespace zenref.Tests
 {
@@ -322,6 +323,278 @@ namespace zenref.Tests
             sheet.Import();
 
             Assert.Equal("Software", sheet[2].Edu);
+
+            File.Delete(FILLEDSPREADSHEETNAME);
+        }
+        [Fact] //ha to referencer og de ska være equivalente.
+               //Check for value reference
+        public void IndexOf()
+        {
+            //Arrange
+            const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
+
+
+            File.Delete(FILLEDSPREADSHEETNAME);
+
+            Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
+
+
+            //Act
+
+            //Assert
+
+            File.Delete(FILLEDSPREADSHEETNAME);
+        }
+
+        [Fact]  //Tar to værdier. index og reference som skal ind.
+        public void InsertUnoccupiedRow()
+        {
+            //Arrange
+            const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
+
+            File.Delete(FILLEDSPREADSHEETNAME);
+
+            Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
+
+            Reference reference1 = new Reference(
+                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "Anders er ikke rask",
+                "wololo"
+                );
+
+            Reference reference2 = new Reference(
+                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "True Winner"
+                );
+            Reference reference3 = new Reference(
+                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "True Winner"
+                );
+
+            //Act
+            sheet.Create();
+            sheet.Insert(1, reference1);
+            sheet.Insert(2, reference2);
+            sheet.Insert(3, reference3);
+
+            //Assert
+            sheet.Export(FILLEDSPREADSHEETNAME);
+            Assert.Equal(3, sheet.Count);
+            File.Delete(FILLEDSPREADSHEETNAME);
+        }
+
+        [Fact]  //Tar to værdier. index og reference som skal ind.
+                //den overskriver hvis der allerede er en.
+        public void InsertOnOccupiedRow()
+        {
+            //Arrange
+            const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
+
+            File.Delete(FILLEDSPREADSHEETNAME);
+
+            Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
+
+            Reference reference1 = new Reference(
+                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "Anders er ikke rask",
+                "wololo"
+                );
+
+            Reference reference2 = new Reference(
+                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "True Winner"
+                );
+            Reference reference3 = new Reference(
+                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "True Winner"
+                );
+
+            //Act
+            sheet.Create();
+            sheet.Insert(1, reference1);
+            sheet.Insert(2, reference2);
+            sheet.Insert(1, reference3);
+            bool result = sheet[1].IsDeepEqual(reference3);
+
+            //Assert
+            //Er reference 1 stadig på index 1?
+            sheet.Export(FILLEDSPREADSHEETNAME);
+            Assert.True(result);
+            File.Delete(FILLEDSPREADSHEETNAME);
+            
+        }
+
+        [Fact]  //Appendering af reference til spreadsheet
+                // tager kun reference som input
+        public void Add()
+        {
+            //Arrange
+            const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
+
+            File.Delete(FILLEDSPREADSHEETNAME);
+
+            Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
+            
+            Reference reference1 = new Reference(
+                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "Anders er ikke rask",
+                "wololo"
+                );
+            Reference reference2 = new Reference(
+                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "True Winner"
+                );
+
+            //Act
+            sheet.Create();
+            sheet.Add(reference1);
+            sheet.Add(reference2);
+
+            //Assert
+            Assert.Equal(2, sheet.Count);
+            File.Delete(FILLEDSPREADSHEETNAME);
+        }
+
+        [Fact]  //Tog et index som parameter og fjerne hvad
+                //end der er på rækken uden at slette rækken
+        public void RemoveAt()
+        {
+            //Arrange
+            const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
+
+            File.Delete(FILLEDSPREADSHEETNAME);
+
+            Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
+            Reference reference1 = new Reference(
+                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "Anders er ikke rask",
+                "wololo"
+                );
+
+            Reference reference2 = new Reference(
+                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "True Winner"
+                );
+            Reference reference3 = new Reference(
+                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "True Winner"
+                );
+
+            //Act
+            sheet.Create();
+            sheet.AddReference(reference1, 1);
+            sheet.AddReference(reference2, 2);
+            sheet.AddReference(reference3, 3);
+            sheet.RemoveAt(2);
+
+            //Assert
+            Assert.Equal(2, sheet.Count);
+            File.Delete(FILLEDSPREADSHEETNAME);
+        }
+        [Fact]  //Clear worksheet
+        public void ClearWorksheet()
+        {
+            //Arrange
+            /*const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
+            const string SHEETNAME = "test";
+            const string SHEETNAMETWO = "test1";
+
+            File.Delete(FILLEDSPREADSHEETNAME);
+
+            XLWorkbook wb = new XLWorkbook();
+            Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
+
+            IXLWorksheet ws = wb.AddWorksheet(SHEETNAME);
+            IXLWorksheet ws2 = wb.AddWorksheet(SHEETNAMETWO);
+
+            Reference reference1 = new Reference(
+                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "Anders er ikke rask",
+                "wololo"
+                );
+
+            //Act
+            sheet.Create();
+            sheet.AddReference(reference1, 1);
+            ws.Clear();
+
+            //Assert
+            sheet.Export(FILLEDSPREADSHEETNAME);
+            Assert.Empty(sheet);
+            File.Delete(FILLEDSPREADSHEETNAME);*/
+        }
+
+        [Fact]  //TODO
+        public void RemoveRowContent()
+        {
+            //Arrange
+            const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
+
+            File.Delete(FILLEDSPREADSHEETNAME);
+          
+            Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
+
+            Reference reference1 = new Reference(
+                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "Anders er ikke rask",
+                "wololo"
+                );
+
+            Reference reference2 = new Reference(
+                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "True Winner"
+                );
+            Reference reference3 = new Reference(
+                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "True Winner"
+                );
+
+            //Act
+            sheet.Create();
+            sheet.AddReference(reference1, 1);
+            sheet.AddReference(reference2, 2);
+            sheet.AddReference(reference3, 3);
+            sheet.Remove(reference2);
+            bool res = sheet[2].IsDeepEqual(reference2);
+
+            //Assert
+            sheet.Export(FILLEDSPREADSHEETNAME);
+            //Assert.Equivalent(reff, reference2);
+            Assert.False(res);
+            //File.Delete(FILLEDSPREADSHEETNAME);
+        }
+
+        [Fact]
+        public void CountNotNullRows()
+        {
+            //Arrange
+            const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
+
+            File.Delete(FILLEDSPREADSHEETNAME);
+
+            Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
+
+            Reference reference1 = new Reference(
+                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "Anders er ikke rask",
+                "wololo"
+                );
+
+            Reference referencenull = new Reference(
+                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, "")
+                );
+
+            //Act
+            sheet.Create();
+            sheet.AddReference(reference1,1);
+            sheet.AddReference(reference1,2);
+            sheet.AddReference(referencenull,3);
+            sheet.AddReference(referencenull,4);
+            sheet.AddReference(reference1,5);
+
+            //Assert
+            Assert.Equal(3, sheet.Count);
+            File.Delete(FILLEDSPREADSHEETNAME);
         }
     }
 }

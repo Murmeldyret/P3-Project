@@ -231,20 +231,20 @@ namespace zenref.Ava.Models.Spreadsheet
             string title = getCell(row, _referenceFields.Title).GetValue<string>();
             string pubType = getCell(row, _referenceFields.PublicationType).GetValue<string>();
             string publisher = getCell(row, _referenceFields.Publisher).GetValue<string>();
-            int yearOfRef = getCell(row, _referenceFields.YearRef).GetValue<int>();
-            int id = getCell(row, _referenceFields.IdRef).GetValue<int>();
+            int? yearOfRef = getCell(row, _referenceFields.YearRef).GetValue<int?>();
+            int? id = getCell(row, _referenceFields.IdRef).GetValue<int?>();
             string edu = getCell(row, _referenceFields.Education).GetValue<string>();
             string location = getCell(row, _referenceFields.Location).GetValue<string>();
             string semester = getCell(row, _referenceFields.Semester).GetValue<string>();
             string language = getCell(row, _referenceFields.Language).GetValue<string>();
-            int yearOfReport = getCell(row, _referenceFields.YearReport).GetValue<int>();
-            double match = getCell(row, _referenceFields.Match).GetValue<double>();
+            int? yearOfReport = getCell(row, _referenceFields.YearReport).GetValue<int?>();
+            double? match = getCell(row, _referenceFields.Match).GetValue<double?>();
             string comment = getCell(row, _referenceFields.Comment).GetValue<string>();
             string syllabus = getCell(row, _referenceFields.Syllabus).GetValue<string>();
             string season = getCell(row, _referenceFields.Season).GetValue<string>();
             string examEvent = getCell(row, _referenceFields.ExamEvent).GetValue<string>();
             string source = getCell(row, _referenceFields.Source).GetValue<string>();
-            int pages = getCell(row, _referenceFields.Pages).GetValue<int>();
+            int? pages = getCell(row, _referenceFields.Pages).GetValue<int?>();
             string volume = getCell(row, _referenceFields.Volume).GetValue<string>();
             string chapters = getCell(row, _referenceFields.Chapters).GetValue<string>();
             string bookTitle = getCell(row, _referenceFields.BookTitle).GetValue<string>();
@@ -337,7 +337,7 @@ namespace zenref.Ava.Models.Spreadsheet
         /// <param name="row">Optional, adds reference to a given row, possibly overwriting it</param>
         public void AddReference(Reference reference, int row = -1)
         {
-            _currentRow = row != -1 ? row : xLWorksheet.RowsUsed().Count() + 1;
+            row = row != -1 ? row : xLWorksheet.RowsUsed().Count() + 1;
             IXLRow indexedRow = xLWorksheet.Row(row);
             indexedRow.Clear();
             setReference(reference, indexedRow);
@@ -432,7 +432,7 @@ namespace zenref.Ava.Models.Spreadsheet
         public int IndexOf(Reference item)
         {
             int indexof = -1;
-            for (int i = 0; i < Count; i++)
+            for (int i = 1; i < Count; i++)
             {
                 if (this[i].Equals(item))
                 {
@@ -451,7 +451,7 @@ namespace zenref.Ava.Models.Spreadsheet
         /// <remarks>To append a refernce to the list, use <c>Add</c> instead</remarks>
         public void Insert(int index, Reference item)
         {
-            if (index >= 0 && index <= Count)
+            if (index > 0 && index <= 1048576)
             {
 
                 AddReference(item, index);
@@ -468,7 +468,7 @@ namespace zenref.Ava.Models.Spreadsheet
         /// <exception cref="ArgumentException">Throws if the reference could not be deleted.</exception>
         public void RemoveAt(int index)
         {
-            if (index < 0 && index >= Count)
+            if (index > 0 && index <= Count)
             {
                 //Reference itemToBeRemoved = this[index];
                 //Remove(itemToBeRemoved);
