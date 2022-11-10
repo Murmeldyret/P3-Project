@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace zenref.Ava.Models
 {
@@ -89,10 +90,75 @@ namespace zenref.Ava.Models
         public string? BookTitle { get; set; }
         //Skal fjernes senere
         public string ISBN { get; set; }
-        //Også fjernes
+        //Ogsï¿½ fjernes
         public string DOI { get; set; }
 
 
+
+        /// <summary>
+        /// Compares each public property of two references and checks if their value is equal
+        /// </summary>
+        /// <param name="other">The other reference to compare</param>
+        /// <returns><c>true</c> if all properties are the same, <c>false</c> otherwise.</returns>
+        /// <remarks>If other public properties are added, this method will need to be updated.</remarks>
+        public bool ValueEquals(Reference other)
+        {
+            bool isEqual = false;
+            if (this is null)
+            {
+                throw new ArgumentNullException("Reference calling ValueEquals is null");
+            }
+            if (other is null)
+            {
+                return false;
+            }
+
+            bool AuthorEquals = this.Author == other.Author;
+            bool TitleEquals = this.Title == other.Title;
+            bool PubTypeEquals = this.PubType == other.PubType;
+            bool PublisherEquals = this.Publisher == other.Publisher;
+            bool YearRefEquals = this.YearRef == other.YearRef;
+            bool IDEquals = this.ID == other.ID;
+            bool EduEquals = this.Edu == other.Edu;
+            bool LocationEquals = this.Location == other.Location;
+            bool SemesterEquals = this.Semester == other.Semester;
+            bool LanguageEquals = this.Language == other.Language;
+            bool YearReportEquals = this.YearRef == other.YearRef;
+            bool MatchEquals = this.Match == this.Match;
+            bool CommentaryEquals = this.Commentary == other.Commentary;
+            bool SyllabusEquals = this.Syllabus == other.Syllabus;
+            bool SeasonEquals = this.Season == other.Season;
+            bool ExamEventEquals = this.ExamEvent == other.ExamEvent;
+            bool SourceEquals = this.Source == other.Source;
+            bool PagesEquals = this.Pages == other.Pages;
+            bool VolumeEquals = this.Volume == other.Volume;
+            bool ChaptersEquals = this.Chapters == other.Chapters;
+            bool BookTitleEquals = this.BookTitle == other.BookTitle;
+
+            isEqual = AuthorEquals
+                      && TitleEquals
+                      && PubTypeEquals
+                      && PublisherEquals
+                      && YearRefEquals
+                      && IDEquals
+                      && EduEquals
+                      && LocationEquals
+                      && SemesterEquals
+                      && LanguageEquals
+                      && YearReportEquals
+                      && MatchEquals
+                      && CommentaryEquals
+                      && SyllabusEquals
+                      && SeasonEquals
+                      && ExamEventEquals
+                      && SourceEquals
+                      && PagesEquals
+                      && VolumeEquals
+                      && ChaptersEquals
+                      && BookTitleEquals;
+
+            return isEqual;
+        }
 
         //Based on Levenshteins distance
         public static int Fuzzy(string test, string test2)
