@@ -7,8 +7,6 @@ using ClosedXML.Excel;
 using System.IO;
 using zenref.Ava.Models;
 using System.Collections;
-using DeepEqual;
-using DeepEqual.Syntax;
 
 namespace zenref.Tests
 {
@@ -414,7 +412,7 @@ namespace zenref.Tests
             sheet.Insert(1, reference1);
             sheet.Insert(2, reference2);
             sheet.Insert(1, reference3);
-            bool result = sheet[1].IsDeepEqual(reference3);
+            bool result = sheet[1].ValueEquals(reference3);
 
             //Assert
             //Er reference 1 stadig på index 1?
@@ -555,7 +553,7 @@ namespace zenref.Tests
             sheet.AddReference(reference2, 2);
             sheet.AddReference(reference3, 3);
             sheet.Remove(reference2);
-            bool res = sheet[2].IsDeepEqual(reference2);
+            bool res = sheet[2].ValueEquals(reference2);
 
             //Assert
             sheet.Export(FILLEDSPREADSHEETNAME);
@@ -614,7 +612,7 @@ namespace zenref.Tests
             IXLRow row = ws.Row(ROWTOINSERTAT);
             bool isEmpty = row.IsEmpty();
 
-            Assert.False(isEmpty); ;
+            Assert.False(isEmpty);
 
 
         }
