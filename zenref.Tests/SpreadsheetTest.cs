@@ -338,10 +338,29 @@ namespace zenref.Tests
 
 
             //Act
+            Reference reference1 = new Reference(
+                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "Anders er ikke rask",
+                "wololo"
+                );
 
+            Reference reference2 = new Reference(
+                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "True Winner"
+                );
+            Reference reference3 = new Reference(
+                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "Med løg på"
+                );
+
+            sheet.Create();
+            sheet.AddReference(new List<Reference>() { reference1, reference2, reference3 });
+            sheet.Export(FILLEDSPREADSHEETNAME);
             //Assert
+            int index = sheet.IndexOf(reference2);
 
-            File.Delete(FILLEDSPREADSHEETNAME);
+            Assert.Equal(2, index);
+            //File.Delete(FILLEDSPREADSHEETNAME);
         }
 
         [Fact]  //Tar to værdier. index og reference som skal ind.
