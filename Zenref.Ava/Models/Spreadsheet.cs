@@ -505,6 +505,7 @@ namespace zenref.Ava.Models.Spreadsheet
             IXLRow lastrow = xLWorksheet.LastRowUsed();
             IXLColumn lastcolumn = xLWorksheet.LastColumnUsed();
             IXLRange allRows = xLWorksheet.Range(1,1,lastrow.RowNumber(),lastcolumn.ColumnNumber());
+            allRows.Clear();
         }
 
         /// <summary>
@@ -549,6 +550,11 @@ namespace zenref.Ava.Models.Spreadsheet
 
         public IEnumerator<Reference> GetEnumerator()
         {
+            if (Count == 0)
+            {
+                //Hvis count er 0 så bliver GetEnumerator kaldt rekursivt uden en stop case, idk why
+                yield break;
+            }
             foreach (Reference item in this)
             {
                 yield return item;

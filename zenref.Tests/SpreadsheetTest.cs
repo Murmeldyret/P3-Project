@@ -493,7 +493,7 @@ namespace zenref.Tests
         public void ClearWorksheet()
         {
             //Arrange
-            /*const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
+            const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
             const string SHEETNAME = "test";
             const string SHEETNAMETWO = "test1";
 
@@ -515,11 +515,14 @@ namespace zenref.Tests
             sheet.Create();
             sheet.AddReference(reference1, 1);
             ws.Clear();
+            sheet.Clear();
 
             //Assert
             sheet.Export(FILLEDSPREADSHEETNAME);
             Assert.Empty(sheet);
-            File.Delete(FILLEDSPREADSHEETNAME);*/
+            //Assert.Equal(0, sheet.Count);
+
+            File.Delete(FILLEDSPREADSHEETNAME);
         }
 
         [Fact]  //TODO
