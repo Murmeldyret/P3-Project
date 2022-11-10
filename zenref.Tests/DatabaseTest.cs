@@ -10,7 +10,7 @@ namespace zenref.Tests
         [Fact]
         public void DatabaseConnection()
         {
-            using DataContext context = new DataContext();
+            using DataContext context = new();
 
             Assert.True(context.Database.CanConnect());
         }
@@ -18,14 +18,12 @@ namespace zenref.Tests
         [Fact]
         public void CreateReference()
         {
-            using DataContext context = new DataContext();
+            using DataContext context = new();
 
-            Reference reference = new Reference
+            Reference reference = new()
             {
                 Title = "Test Title",
                 Author = "Test Author",
-                ISBN = "Test ISBN",
-                DOI = "Test DOI",
             };
 
             context.References.Add(reference);
@@ -37,14 +35,12 @@ namespace zenref.Tests
         [Fact]
         public void DeleteReference()
         {
-            using DataContext context = new DataContext();
+            using DataContext context = new();
 
-            Reference reference = new Reference
+            Reference reference = new()
             {
                 Title = "Test Title",
                 Author = "Test Author",
-                ISBN = "Test ISBN",
-                DOI = "Test DOI",
             };
 
             context.References.Add(reference);
@@ -59,14 +55,12 @@ namespace zenref.Tests
         [Fact]
         public void FindReference()
         {
-            using DataContext context = new DataContext();
+            using DataContext context = new();
 
-            Reference reference = new Reference
+            Reference reference = new()
             {
                 Title = "Test Title",
                 Author = "Test Author",
-                ISBN = "Test ISBN",
-                DOI = "Test DOI",
             };
 
             context.References.Add(reference);
@@ -76,21 +70,17 @@ namespace zenref.Tests
 
             Assert.Equal(reference.Title, reference2?.Title);
             Assert.Equal(reference.Author, reference2?.Author);
-            Assert.Equal(reference.ISBN, reference2?.ISBN);
-            Assert.Equal(reference.DOI, reference2?.DOI);
         }
 
         [Fact]
         public void UpdateReference()
         {
-            using DataContext context = new DataContext();
+            using DataContext context = new();
 
-            Reference reference = new Reference
+            Reference reference = new()
             {
                 Title = "Test Title",
                 Author = "Test Author",
-                ISBN = "Test ISBN",
-                DOI = "Test DOI",
             };
 
             context.References.Add(reference);
@@ -98,21 +88,17 @@ namespace zenref.Tests
 
             reference.Title = "Test Title 2";
             reference.Author = "Test Author 2";
-            reference.ISBN = "Test ISBN 2";
-            reference.DOI = "Test DOI 2";
 
             context.References.Update(reference);
             context.SaveChanges();
 
             Assert.Equal("Test Title 2", reference.Title);
             Assert.Equal("Test Author 2", reference.Author);
-            Assert.Equal("Test ISBN 2", reference.ISBN);
-            Assert.Equal("Test DOI 2", reference.DOI);
         }
 
         public void Dispose()
         {
-            using DataContext context = new DataContext();
+            using DataContext context = new();
 
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();

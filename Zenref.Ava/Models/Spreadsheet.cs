@@ -1,13 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 using ClosedXML.Excel;
 using System.IO;
 
-namespace zenref.Ava.Models.Spreadsheet
+namespace Zenref.Ava.Models.Spreadsheet
 {
     public class Spreadsheet
     {
@@ -45,7 +42,7 @@ namespace zenref.Ava.Models.Spreadsheet
         /// <summary>
         /// Represents the different fields that a reference instance contains.
         /// </summary>
-        private enum _referenceFields
+        public enum _referenceFields
         {
             Author,
             Title,
@@ -75,7 +72,7 @@ namespace zenref.Ava.Models.Spreadsheet
         /// <summary>
         /// Represents the different fields in an Excel worksheet where the key is the column position and the value is the content
         /// </summary>
-        private SortedDictionary<int, _referenceFields> _positionOfReferencesInSheet = new SortedDictionary<int, _referenceFields>()
+        public SortedDictionary<int, _referenceFields> _positionOfReferencesInSheet = new SortedDictionary<int, _referenceFields>()
         {
             {1,_referenceFields.Author },
             {2,_referenceFields.Title },
@@ -186,7 +183,7 @@ namespace zenref.Ava.Models.Spreadsheet
             IXLRange OneRow = xLWorksheet.Range(_currentRow, _positionOfReferencesInSheet.First().Key, _currentRow, _positionOfReferencesInSheet.Last().Key);
             //Read from the corresponding fields according to dict
             Reference FilledReference = new Reference(
-                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                //new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
                 OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(2).Key).GetValue<string>(),
                 OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(3).Key).GetValue<string>(),
                 OneRow.Cell(_currentRow, _positionOfReferencesInSheet.ElementAt(4).Key).GetValue<string>(),
