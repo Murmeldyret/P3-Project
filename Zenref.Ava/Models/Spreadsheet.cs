@@ -47,11 +47,17 @@ namespace zenref.Ava.Models.Spreadsheet
         public int ActiveSheet { get; set; } = 1;
         private IXLWorksheet xLWorksheet { get => _workbook.Worksheet(ActiveSheet); }
         private int _currentRow { get; set; } = 2;
+        private const int _MAXROWSINEXCEL = 1048576;
 
         /// <summary>
         /// Returns the total number of references in the active Worksheet.
         /// </summary>
+        /// <remarks>Empty rows between first and last row will not be included in the count</remarks>
         public int Count => xLWorksheet.RowsUsed().Count();
+        /// <summary>
+        /// Returns the number of rows to the last used row in the active worksheet.
+        /// </summary>
+        public int Length => xLWorksheet.LastRowUsed().RowNumber();
 
         public bool IsReadOnly => _workbook.IsProtected;
 
@@ -293,7 +299,7 @@ namespace zenref.Ava.Models.Spreadsheet
         {
             //ReadRef() in loop with yield return statement
             int totalrows;
-            if (amount + _currentRow >= 1048576)
+            if (amount + _currentRow >= _MAXROWSINEXCEL)
             {
                 throw new ArgumentOutOfRangeException($"Excel does not support more than 1,048,576 rows, tried to read {amount + _currentRow} rows.  ");
             }
@@ -434,7 +440,7 @@ namespace zenref.Ava.Models.Spreadsheet
             int indexof = -1;
             for (int i = 1; i < Count; i++)
             {
-                if (this[i].Equals(item))
+                if (this[i].ValueEquals(item))
                 {
                     indexof = i;
                 }
@@ -451,7 +457,7 @@ namespace zenref.Ava.Models.Spreadsheet
         /// <remarks>To append a refernce to the list, use <c>Add</c> instead</remarks>
         public void Insert(int index, Reference item)
         {
-            if (index > 0 && index <= 1048576)
+            if (index > 0 && index <= _MAXROWSINEXCEL)
             {
 
                 AddReference(item, index);
@@ -495,7 +501,9 @@ namespace zenref.Ava.Models.Spreadsheet
         /// </summary>
         public void Clear()
         {
-            xLWorksheet.Delete();
+            IXLRow lastrow = xLWorksheet.LastRowUsed();
+            IXLColumn lastcolumn = xLWorksheet.LastColumnUsed();
+            IXLRange allRows = xLWorksheet.Range(1,1,lastrow.RowNumber(),lastcolumn.ColumnNumber());
         }
 
         /// <summary>
@@ -508,7 +516,7 @@ namespace zenref.Ava.Models.Spreadsheet
             bool doesContain = false;
             foreach (Reference reference in this)
             {
-                if (reference.Equals(item))
+                if (reference.ValueEquals(item))
                 {
                     doesContain = true;
                 }
