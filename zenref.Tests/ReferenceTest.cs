@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Xunit;
-using zenref.Models;
+using Zenref.Ava.Models;
 
 namespace zenref.Tests
 {
