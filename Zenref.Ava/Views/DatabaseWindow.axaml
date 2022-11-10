@@ -10,10 +10,7 @@
 	<Grid Name="grid" RowDefinitions="Auto, Auto">
 		<Menu Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Stretch">
 			<Button Name="addReferenceButton"> Tilføj</Button>
-			<Button Name="editReferenceButton"> Ændre</Button>
-			<Button Name="deleteReferenceButton"> Slet</Button>
 			<TextBox Name="searchTextBox" Watermark="Søg" Width="150" FontSize="15" KeyUp="SearchTextBox_TextInput"></TextBox>
-			<Button Name="menuButton">Menu</Button>
 		</Menu>
 		<DataGrid Name="dataGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,40"      
 				  RowBackground="LightGray" CanUserResizeColumns="True" Height="500" Width="1000">

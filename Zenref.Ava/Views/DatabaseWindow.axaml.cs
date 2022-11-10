@@ -21,8 +21,6 @@ namespace Zenref.Ava.Views
     {
         DataGrid? DataGrid;
         Button? AddReferenceButton;
-        Button? DeleteReferenceButton;
-        Button? MenuButton;
 
         ObservableCollection<Reference> references = new ObservableCollection<Reference>();
 
@@ -54,20 +52,6 @@ namespace Zenref.Ava.Views
                 //Reference randomReference = references[(new Random()).Next(references.Count)];
                 //references.Add(randomReference);
             };
-            DeleteReferenceButton = this.FindControl<Button>("deleteReferenceButton");
-            DeleteReferenceButton.Click += (s, e) =>
-            {
-                if (DataGrid.SelectedIndex != -1)
-                {
-                    references.Remove((Reference)DataGrid.SelectedItem);
-                }
-            };
-            MenuButton = this.FindControl<Button>("menuButton");
-            MenuButton.Click += (s, e) =>
-            {
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.ShowDialog(this);
-            };
         }
 
         private void SearchTextBox_TextInput(object sender, KeyEventArgs e)
@@ -91,7 +75,7 @@ namespace Zenref.Ava.Views
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             Reference? selectedReference = (Reference)((Button)e.Source).DataContext;
-            ExpandReferenceWindow expandReferenceWindow = new ExpandReferenceWindow();
+            ExpandReferenceWindow expandReferenceWindow = new ExpandReferenceWindow(selectedReference);
             expandReferenceWindow.ShowDialog(this);
         }
     }
