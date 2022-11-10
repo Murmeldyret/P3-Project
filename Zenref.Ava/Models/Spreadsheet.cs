@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using ClosedXML.Excel;
 using System.IO;
 
-namespace zenref.Ava.Models.Spreadsheet
+namespace Zenref.Ava.Models.Spreadsheet
 {
     public class Spreadsheet
     {

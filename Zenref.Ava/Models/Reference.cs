@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace zenref.Ava.Models
+namespace Zenref.Ava.Models
 {
     public class Reference
     {
