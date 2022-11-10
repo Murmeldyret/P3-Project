@@ -472,13 +472,14 @@ namespace zenref.Ava.Models.Spreadsheet
         /// </summary>
         /// <param name="index">The index position</param>
         /// <exception cref="ArgumentException">Throws if the reference could not be deleted.</exception>
+        /// <remarks>Deletes the row and shifts latter rows by 1 thus reducing Count by 1</remarks>
         public void RemoveAt(int index)
         {
             if (index > 0 && index <= Count)
             {
                 //Reference itemToBeRemoved = this[index];
                 //Remove(itemToBeRemoved);
-                xLWorksheet.Row(index).Clear();
+                xLWorksheet.Row(index).Delete();
             }
             else
             {
@@ -528,8 +529,13 @@ namespace zenref.Ava.Models.Spreadsheet
         {
             throw new NotImplementedException();
         }
-
-        /// <remarks>Don't use in a loop, ClosedXML alleges poor performance consider using clear</remarks>
+        ///<summary>
+        ///Removes the Reference from the spreadsheet and shifts all rows below it up thus
+        ///</summary>
+        /// <remarks>
+        /// Reduces Count by 1
+        /// 
+        /// Don't use in a loop, ClosedXML alleges poor performance consider using clear</remarks>
         public bool Remove(Reference item)
         {
             if (IndexOf(item) == -1)

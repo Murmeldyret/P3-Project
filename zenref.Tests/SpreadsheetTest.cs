@@ -529,7 +529,7 @@ namespace zenref.Tests
             const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
 
             File.Delete(FILLEDSPREADSHEETNAME);
-          
+
             Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
 
             Reference reference1 = new Reference(
@@ -544,7 +544,7 @@ namespace zenref.Tests
                 );
             Reference reference3 = new Reference(
                 new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
-                "True Winner"
+                "True Winner din far "
                 );
 
             //Act
