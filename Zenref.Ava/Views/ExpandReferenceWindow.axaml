@@ -16,43 +16,46 @@
       <Setter Property="Margin" Value="10"/>
       <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
+	<Style Selector="TextBox">
+        <Setter Property="Width" Value="200"/>
+	</Style>
   </Window.Styles>
   <Grid Name="grid">
     <StackPanel Orientation="Vertical">
       <StackPanel Orientation="Horizontal">
         <TextBlock Text="Uddannelse" Width="150"/>
         <TextBlock Text=":" Width="20"/>
-        <TextBlock Text="test" Width="200"/>
+        <TextBox Name="uddannelseTextBox"/>
       </StackPanel>
       <StackPanel Orientation="Horizontal">
         <TextBlock Text="Uddannelsesinstitution" Width="150"/>
         <TextBlock Text=":" Width="20"/>
-		<TextBlock Text="test" Width="200"/>
+		 <TextBox Name="uddannelsesinstitutionTextBox"/>
       </StackPanel>
       <StackPanel Orientation="Horizontal">
         <TextBlock Text="Semester" Width="150"/>
         <TextBlock Text=":" Width="20"/>
-		<TextBlock Text="test" Width="200"/>
+		 <TextBox Name="semesterTextBox"/>
       </StackPanel>
       <StackPanel Orientation="Horizontal">
         <TextBlock Text="År" Width="150"/>
         <TextBlock Text=":" Width="20"/>
-		<TextBlock Text="test" Width="200"/>
+		<TextBox Name="årTextBox"/>
       </StackPanel>
       <StackPanel Orientation="Horizontal">
         <TextBlock Text="Pensumliste" Width="150"/>
         <TextBlock Text=":" Width="20"/>
-		<TextBlock Text="test" Width="200"/>
+		<TextBox Name="pensumlisteTextBox"/>
       </StackPanel>
       <StackPanel Orientation="Horizontal">
         <TextBlock Text="ID" Width="150"/>
         <TextBlock Text=":" Width="20"/>
-		<TextBlock Text="test" Width="200"/>
+		<TextBox Name="idTextBox"/>
       </StackPanel>
       <StackPanel Orientation="Horizontal">
         <TextBlock Text="Henvisning" Width="150"/>
         <TextBlock Text=":" Width="20"/>
-		<TextBlock Text="test" Width="200"/>
+		<TextBox Name="henvisningTextBox"/>
       </StackPanel>
       <StackPanel Orientation="Horizontal">
         <Button Name="closeButton" Content="Luk" IsDefault="True"/>
