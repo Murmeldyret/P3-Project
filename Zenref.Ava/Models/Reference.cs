@@ -30,7 +30,8 @@ namespace Zenref.Ava.Models
             int _Pages = 0,
             string _Volume = "",
             string _Chapters = "",
-            string _BookTitle = ""
+            string _BookTitle = "",
+            string _OriReference = ""
             )
         {
             Author = _Author;
@@ -54,6 +55,7 @@ namespace Zenref.Ava.Models
             Volume = _Volume;
             Chapters = _Chapters;
             BookTitle = _BookTitle;
+            OriReference = _OriReference;
         }
         [Obsolete("KeyValuePair is deprecated for now")]
         public Reference(
@@ -125,7 +127,7 @@ namespace Zenref.Ava.Models
         public string? Semester { get; set; }
         public string? Language { get; set; }
         public int? YearReport { get; set; }
-        //public string reference { get; set; }
+        public string OriReference { get; set; }
         public double? Match { get; set; }
         public string? Commentary { get; set; }
         public string? Syllabus { get; set; }
