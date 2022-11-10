@@ -1,12 +1,14 @@
-﻿using System;
+﻿using ReactiveUI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Zenref.Ava.Models
 {
-    public class Reference
+    public class Reference : ReactiveObject
     {
         private string uddannelse;
         private string uddannelsesinstitution;
@@ -30,38 +32,38 @@ namespace Zenref.Ava.Models
         public string Uddannelse
         {
             get { return uddannelse; }
-            set { uddannelse = value; }
+            set { this.RaiseAndSetIfChanged(ref uddannelse, value); }
         }
         public string Uddannelsesinstitution
         {
             get { return uddannelsesinstitution; }
-            set { uddannelsesinstitution = value; }
+            set { this.RaiseAndSetIfChanged(ref uddannelsesinstitution, value); }
         }
 
         public string Semester
         {
             get { return semester; }
-            set { semester = value; }
+            set { this.RaiseAndSetIfChanged(ref semester, value); }
         }
         public string År
         {
             get { return år; }
-            set { år = value; }
+            set { this.RaiseAndSetIfChanged(ref år, value); }
         }
         public string Pensumliste
         {
             get { return pensumliste; }
-            set { pensumliste = value; }
+            set { this.RaiseAndSetIfChanged(ref pensumliste, value); }
         }
         public string Id
         {
             get { return id; }
-            set { id = value; }
+            set { this.RaiseAndSetIfChanged(ref id, value); }
         }
         public string Henvisning
         {
             get { return henvisning; }
-            set { henvisning = value; }
+            set { this.RaiseAndSetIfChanged(ref henvisning, value); }
         }
         
     }

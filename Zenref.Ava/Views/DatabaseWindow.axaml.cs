@@ -11,6 +11,9 @@ using Zenref.Ava.Models;
 using Zenref.Ava.ViewModels;
 using DynamicData;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Diagnostics;
 
 namespace Zenref.Ava.Views
 {
@@ -42,7 +45,7 @@ namespace Zenref.Ava.Views
 
             DataGrid = this.FindControl<DataGrid>("dataGrid");
             DataGrid.Items = references;
-
+            
             AddReferenceButton = this.FindControl<Button>("addReferenceButton");
             AddReferenceButton.Click += (s, e) =>
             {
@@ -82,12 +85,12 @@ namespace Zenref.Ava.Views
         }
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            Reference? buttonReference = (Reference)((Button)e.Source).DataContext;
-            references.Remove(buttonReference);
+            Reference? selectedReference = (Reference)((Button)e.Source).DataContext;
+            references.Remove(selectedReference);
         }
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            Reference? buttonReference = (Reference)((Button)e.Source).DataContext;
+            Reference? selectedReference = (Reference)((Button)e.Source).DataContext;
             ExpandReferenceWindow expandReferenceWindow = new ExpandReferenceWindow();
             expandReferenceWindow.ShowDialog(this);
         }
