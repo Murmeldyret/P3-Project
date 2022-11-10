@@ -127,7 +127,7 @@ namespace Zenref.Ava.Models
         public string? Semester { get; set; }
         public string? Language { get; set; }
         public int? YearReport { get; set; }
-        public string OriReference { get; set; }
+        public string? OriReference { get; set; }
         public double? Match { get; set; }
         public string? Commentary { get; set; }
         public string? Syllabus { get; set; }
