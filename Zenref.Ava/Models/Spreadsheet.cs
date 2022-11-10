@@ -440,7 +440,7 @@ namespace zenref.Ava.Models.Spreadsheet
             int indexof = -1;
             for (int i = 0; i < Count; i++)
             {
-                if (this[i].Equals(item))
+                if (this[i].ValueEquals(item))
                 {
                     indexof = i;
                 }
@@ -516,7 +516,7 @@ namespace zenref.Ava.Models.Spreadsheet
             bool doesContain = false;
             foreach (Reference reference in this)
             {
-                if (reference.Equals(item))
+                if (reference.ValueEquals(item))
                 {
                     doesContain = true;
                 }
