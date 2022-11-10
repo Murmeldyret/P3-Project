@@ -544,7 +544,7 @@ namespace zenref.Tests
             File.Delete(FILLEDSPREADSHEETNAME);
         }
 
-        [Fact]  //TODO
+        [Fact]
         public void RemoveRowContent()
         {
             //Arrange
