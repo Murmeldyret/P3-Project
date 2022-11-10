@@ -1,4 +1,8 @@
-namespace zenref.Ava.Models
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace Zenref.Ava.Models
 {
 
     public static class FilterCollection
