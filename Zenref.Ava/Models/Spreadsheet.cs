@@ -191,6 +191,29 @@ namespace zenref.Ava.Models.Spreadsheet
         }
 
         /// <summary>
+        /// Swaps the column position of two reference properties
+        /// </summary>
+        /// <param name="first">The first reference property to swap</param>
+        /// <param name="second">The second reference property to swap</param>
+        public void SwapReference(ReferenceFields first, ReferenceFields second)
+        {
+            if (first == second)
+            {
+                throw new ArgumentException("Cannot swap the position of the same property, first and second are the same.");
+            }
+            else
+            {
+                int firstValue = PositionOfReferencesInSheet[first];
+                int secondValue = PositionOfReferencesInSheet[second];
+                PositionOfReferencesInSheet.Remove(first);
+                PositionOfReferencesInSheet.Remove(second);
+                PositionOfReferencesInSheet.Add(second, firstValue);
+                PositionOfReferencesInSheet.Add(first, secondValue);
+
+            }
+        }
+
+        /// <summary>
         /// Sets the active worksheet to read from or write to. If the sheet does not exist, it creates one.
         /// </summary>
         /// <param name="position">The position of the sheet</param>
