@@ -1,7 +1,9 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using zenref.Ava.Models;
+
+using Zenref.Ava.Models;
+using P3Project.API.APIHelper;
 
 namespace P3Project.API
 {
@@ -75,7 +77,24 @@ namespace P3Project.API
         /// </summary>
         /// <param name="inputReference">The Reference that is to be looked up (usually unidentified)</param>
         /// <returns>A reference with correctly filled fields</returns>
-        public abstract Task<Reference> ReferenceFetch(Reference inputReference, Func<HttpResponseMessage, Reference> referenceParser);
+        public virtual async Task<Reference> ReferenceFetch(Reference inputReference, Func<HttpResponseMessage, Reference> referenceParser)
+        {
+            Uri apiUri = new Uri(_baseURL.ToString() + "&query=" + inputReference.OriReference);  // Compose URI.
+
+            HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(apiUri);       // Request API for ressource.
+
+            // Validation
+            if (!_isHTTPResponseCodeSuccess(response))
+            {
+                throw new HttpRequestException("Was not able to get ressource from server.");
+            }
+
+            // Parse into deligate
+            Reference parsed_reference = referenceParser(response);
+
+            return parsed_reference;
+
+        }
 
         protected void CacheReference(Reference CacheableReference)
         {
@@ -108,8 +127,4 @@ namespace P3Project.API
             }
         }
     }
-
-
-
-
 }

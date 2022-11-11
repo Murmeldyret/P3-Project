@@ -4,11 +4,60 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace zenref.Ava.Models
+namespace Zenref.Ava.Models
 {
     public class Reference
     {
         //constructor with named arguments, where some properties are null by default.
+        public Reference(
+            string _Author = "",
+            string _Title = "",
+            string _PubType = "",
+            string _Publisher = "",
+            int _YearRef = 0,
+            int _ID = 0,
+            string _Edu = "",
+            string _Location = "",
+            string _Semester = "",
+            string _Language = "",
+            int _YearReport = 0,
+            double _Match = 0.0,
+            string _Commentary = "",
+            string _Syllabus = "",
+            string _Season = "",
+            string _ExamEvent = "",
+            string _Source = "",
+            int _Pages = 0,
+            string _Volume = "",
+            string _Chapters = "",
+            string _BookTitle = "",
+            string _OriReference = ""
+            )
+        {
+            Author = _Author;
+            Title = _Title;
+            PubType = _PubType;
+            Publisher = _Publisher;
+            YearRef = _YearRef;
+            ID = _ID;
+            Edu = _Edu;
+            Location = _Location;
+            Semester = _Semester;
+            Language = _Language;
+            YearReport = _YearReport;
+            Match = _Match;
+            Commentary = _Commentary;
+            Syllabus = _Syllabus;
+            Season = _Season;
+            ExamEvent = _ExamEvent;
+            Source = _Source;
+            Pages = _Pages;
+            Volume = _Volume;
+            Chapters = _Chapters;
+            BookTitle = _BookTitle;
+            OriReference = _OriReference;
+        }
+        [Obsolete("KeyValuePair is deprecated for now")]
         public Reference(
             KeyValuePair<_typeOfId, string> _UID,
             string _Author = "",
@@ -57,7 +106,7 @@ namespace zenref.Ava.Models
             Chapters = _Chapters;
             BookTitle = _BookTitle;
         }
-
+        [Obsolete("KeyValuePair is deprecated for now")]
         public enum _typeOfId
         {
             Unknown,
@@ -65,6 +114,7 @@ namespace zenref.Ava.Models
             ISBN,
             ISSN,
         }
+        [Obsolete("KeyValuePair is deprecated for now")]
         public KeyValuePair<_typeOfId, string> UID;
         public string? Author { get; set; }
         public string? Title { get; set; }
@@ -77,7 +127,7 @@ namespace zenref.Ava.Models
         public string? Semester { get; set; }
         public string? Language { get; set; }
         public int? YearReport { get; set; }
-        //public string reference { get; set; }
+        public string? OriReference { get; set; }
         public double? Match { get; set; }
         public string? Commentary { get; set; }
         public string? Syllabus { get; set; }
@@ -89,8 +139,32 @@ namespace zenref.Ava.Models
         public string? Chapters { get; set; }
         public string? BookTitle { get; set; }
 
+        //Method searches through APA ref for DOI.
+        /// <summary>
+        /// Searches a string for the word "doi:" and isolate the doi number for it's own spot.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static string DOISearch(string text)
+        {
+            string[] textsplit = Regex.Split(text, @"(?:doi: |DOI: |Doi: |doi:)");
+            string[] result = textsplit[1].Split(" ");
+            return result[0];
+        }
 
-        //TODO Metode til value equality
+        //Method for percentage of Fastenshtein.
+        /// <summary>
+        /// Converts the number of operations needed to change one string into another,
+        /// into a percentage and allows for better quantification.
+        /// </summary>
+        /// <param name="Shtein"></param>
+        /// <param name="OriginalText"></param>
+        /// <returns></returns>
+        public static double MatchingStrings(int Shtein, string OriginalText)
+        {
+            double result = 1 - ((double)Shtein / (double)OriginalText.Length);
+            return result;
+        }
 
         /// <summary>
         /// Compares each public property of two references and checks if their value is equal
@@ -156,6 +230,16 @@ namespace zenref.Ava.Models
 
             return isEqual;
         }
+        //split sentences into individual words. NOTICE IT ONLY TAKES 1 STRING AS INPUT. NOT A LIST!
+        /// <summary>
+        /// Splits a string of words into a list of strings with each element being a word.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static List<string> NGramiser(string text)
+        {
+            return text.Split(' ').ToList();
+        }
 
         //Based on Levenshteins distance
         public static int Fuzzy(string test, string test2)
@@ -211,18 +295,6 @@ namespace zenref.Ava.Models
                 }
                 // Step 7 
                 return d[n, m];*/
-        }
-
-
-        //split sentences into individual words. NOTICE IT ONLY TAKES 1 STRING AS INPUT. NOT A LIST!
-        /// <summary>
-        /// Splits a string of words into a list of strings with each element being a word.
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        public static List<string> NGramiser(string text)
-        {
-            return text.Split(' ').ToList();
         }
     }
 }

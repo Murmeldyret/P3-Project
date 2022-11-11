@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace zenref.Ava.Models
+namespace Zenref.Ava.Models
 {
 
     public static class FilterCollection

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace zenref.Ava.Models.Spreadsheet
+namespace Zenref.Ava.Models.Spreadsheet
 {
     /// <summary>
     /// Represents an Excel file containing an amount of worksheets

@@ -12,7 +12,7 @@ namespace zenref.Tests
         [Fact]
         public void DatabaseConnection()
         {
-            using DataContext context = new DataContext();
+            using DataContext context = new();
 
             Assert.True(context.Database.CanConnect());
         }
@@ -20,9 +20,9 @@ namespace zenref.Tests
         [Fact]
         public void CreateReference()
         {
-            using DataContext context = new DataContext();
+            using DataContext context = new();
 
-            Reference reference = new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""))
+            Reference reference = new()
             {
                 Title = "Test Title",
                 Author = "Test Author",
@@ -37,9 +37,9 @@ namespace zenref.Tests
         [Fact]
         public void DeleteReference()
         {
-            using DataContext context = new DataContext();
+            using DataContext context = new();
 
-            Reference reference = new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""))
+            Reference reference = new()
             {
                 Title = "Test Title",
                 Author = "Test Author",
@@ -57,9 +57,9 @@ namespace zenref.Tests
         [Fact]
         public void FindReference()
         {
-            using DataContext context = new DataContext();
+            using DataContext context = new();
 
-            Reference reference = new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""))
+            Reference reference = new()
             {
                 Title = "Test Title",
                 Author = "Test Author",
@@ -77,9 +77,9 @@ namespace zenref.Tests
         [Fact]
         public void UpdateReference()
         {
-            using DataContext context = new DataContext();
+            using DataContext context = new();
 
-            Reference reference = new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""))
+            Reference reference = new()
             {
                 Title = "Test Title",
                 Author = "Test Author",
@@ -100,7 +100,7 @@ namespace zenref.Tests
 
         public void Dispose()
         {
-            using DataContext context = new DataContext();
+            using DataContext context = new();
 
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();

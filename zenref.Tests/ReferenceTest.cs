@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Xunit;
-using zenref.Ava.Models;
+using Zenref.Ava.Models;
 
 namespace zenref.Tests
 {
@@ -25,14 +25,14 @@ namespace zenref.Tests
         public void Fuzzy_search_online()
         {
             //Arrange
-            string testString = "hello";
-            string testValue = "hello2";
+            string testString = "Examining py";
+            string testValue =  "Examining ergfsg";
 
             //Act
             int result = Reference.Fuzzy(testString, testValue);
 
             //Assert
-            Assert.True(result == 1);
+            Assert.True(result == 6);
         }
 
         [Fact]
@@ -344,6 +344,32 @@ namespace zenref.Tests
                 "Din mor");
 
             Assert.False(reference.ValueEquals(notTheSameReference));
+        }
+        [Fact]
+        public void Regextest()
+        {
+            //Arrange
+            string DOI = "Fleet A, Che M, MacKay-Lyons M, et. al. Examining the Use of Constraint-Induced Movement Therapy in Canadian Neurological Occupational and Physical Therapy 2014;66(1): 60-71. doi: 10.3138/ptc.2012-61";
+
+            //Act
+            string result = Reference.DOISearch(DOI);
+            
+            //Assert
+            Assert.Equal("10.3138/ptc.2012-61", result);
+        }
+
+        [Fact]
+        public void MatchingStrings()
+        {
+            //Arrange
+            string CorrectText = "Examining py";
+            int ShteinRes = 6;
+        
+            //Act
+            double Result = Reference.MatchingStrings(ShteinRes, CorrectText);
+
+            //Assert
+            Assert.Equal(0.5, Result);
         }
     }
 }
