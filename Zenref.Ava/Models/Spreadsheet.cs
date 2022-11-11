@@ -168,51 +168,6 @@ namespace zenref.Ava.Models.Spreadsheet
             return resDic;
         }
 
-        //TODO SKAL TESTES
-        /// <summary>
-        /// <para>Sets the column position reference properties in the spreadsheet</para>
-        /// <para>The key corresponds to the specific reference property while the value represents the column position of that property</para>
-        /// </summary>
-        /// <param name="inputdic">A sorted dictionary that contains all the properties of a reference</param>
-        /// <param name="deleteOld">Whether or not to delete the current dictionary containing the position, if false, only the values in <paramref name="inputdic"/> will be overwritten</param>
-        public void SetReferencePosition(SortedDictionary<ReferenceFields,int> inputdic, bool deleteOld = true)
-        {
-            if (deleteOld)
-            {
-            PositionOfReferencesInSheet = inputdic;
-            }
-            else
-            {
-                foreach (KeyValuePair<ReferenceFields,int> item in inputdic)
-                {
-                    PositionOfReferencesInSheet[item.Key] = item.Value;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Swaps the column position of two reference properties
-        /// </summary>
-        /// <param name="first">The first reference property to swap</param>
-        /// <param name="second">The second reference property to swap</param>
-        public void SwapReference(ReferenceFields first, ReferenceFields second)
-        {
-            if (first == second)
-            {
-                throw new ArgumentException("Cannot swap the position of the same property, first and second are the same.");
-            }
-            else
-            {
-                int firstValue = PositionOfReferencesInSheet[first];
-                int secondValue = PositionOfReferencesInSheet[second];
-                PositionOfReferencesInSheet.Remove(first);
-                PositionOfReferencesInSheet.Remove(second);
-                PositionOfReferencesInSheet.Add(second, firstValue);
-                PositionOfReferencesInSheet.Add(first, secondValue);
-
-            }
-        }
-
         /// <summary>
         /// Sets the active worksheet to read from or write to. If the sheet does not exist, it creates one.
         /// </summary>
