@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using zenref.Ava.Models;
+using Zenref.Ava.Models;
 
 namespace Zenref.Ava.Models
 {
