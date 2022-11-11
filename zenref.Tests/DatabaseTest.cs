@@ -2,6 +2,8 @@ using System.Linq;
 using Xunit;
 using Zenref.Ava.Models;
 using System;
+using zenref.Ava.Models;
+using System.Collections.Generic;
 
 namespace zenref.Tests
 {

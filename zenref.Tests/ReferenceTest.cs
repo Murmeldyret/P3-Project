@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Xunit;
 using Zenref.Ava.Models;
@@ -56,7 +56,295 @@ namespace zenref.Tests
             //Assert
             Assert.Equal(resultList, returnList);
         }
+        // See https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/how-to-define-value-equality-for-a-type
+        // for further info regarding value equality tests
+        [Fact]
+        public void ValueEqualityOnTwoEqualReferences()
+        {
+            Reference reference = new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "Anders Rask",
+                "titel på noget",
+                "bog",
+                "AAU",
+                2022,
+                12345,
+                "Software",
+                "Aalborg",
+                "Tredje",
+                "Dansk",
+                2021,
+                0.9,
+                "blank",
+                "Det ved jeg ikke",
+                "Efterår",
+                "pas",
+                "ved jeg heller ikke",
+                69,
+                "20th",
+                "16-21",
+                "Din far"),
 
+                other = new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "Anders Rask",
+                "titel på noget",
+                "bog",
+                "AAU",
+                2022,
+                12345,
+                "Software",
+                "Aalborg",
+                "Tredje",
+                "Dansk",
+                2021,
+                0.9,
+                "blank",
+                "Det ved jeg ikke",
+                "Efterår",
+                "pas",
+                "ved jeg heller ikke",
+                69,
+                "20th",
+                "16-21",
+                "Din far");
+
+            Assert.True(reference.ValueEquals(other));
+        }
+        [Fact]
+        public void ValueEqualsReflexsiveProperty()
+        {
+            Reference reference = new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "Anders Rask",
+                "titel på noget",
+                "bog",
+                "AAU",
+                2022,
+                12345,
+                "Software",
+                "Aalborg",
+                "Tredje",
+                "Dansk",
+                2021,
+                0.9,
+                "blank",
+                "Det ved jeg ikke",
+                "Efterår",
+                "pas",
+                "ved jeg heller ikke",
+                69,
+                "20th",
+                "16-21",
+                "Din far");
+
+            Assert.True(reference.ValueEquals(reference));
+        }
+        [Fact]
+        public void ValueEqualsAlsoWorksInReverse()
+        {
+            Reference reference = new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "Anders Rask",
+                "titel på noget",
+                "bog",
+                "AAU",
+                2022,
+                12345,
+                "Software",
+                "Aalborg",
+                "Tredje",
+                "Dansk",
+                2021,
+                0.9,
+                "blank",
+                "Det ved jeg ikke",
+                "Efterår",
+                "pas",
+                "ved jeg heller ikke",
+                69,
+                "20th",
+                "16-21",
+                "Din far"),
+
+                other = new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "Anders Rask",
+                "titel på noget",
+                "bog",
+                "AAU",
+                2022,
+                12345,
+                "Software",
+                "Aalborg",
+                "Tredje",
+                "Dansk",
+                2021,
+                0.9,
+                "blank",
+                "Det ved jeg ikke",
+                "Efterår",
+                "pas",
+                "ved jeg heller ikke",
+                69,
+                "20th",
+                "16-21",
+                "Din far");
+
+            Assert.True(reference.ValueEquals(other) && other.ValueEquals(reference));
+        }
+        [Fact]
+        public void ValueEqualsWhenOtherIsNullReturnsFalse()
+        {
+            Reference reference = new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "Anders Rask",
+                "titel på noget",
+                "bog",
+                "AAU",
+                2022,
+                12345,
+                "Software",
+                "Aalborg",
+                "Tredje",
+                "Dansk",
+                2021,
+                0.9,
+                "blank",
+                "Det ved jeg ikke",
+                "Efterår",
+                "pas",
+                "ved jeg heller ikke",
+                69,
+                "20th",
+                "16-21",
+                "Din far"),
+                other = null;
+
+            Assert.False(reference.ValueEquals(other));
+        }
+        [Fact]
+        public void ValueEqualsTransitive()
+        {
+            Reference reference = new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "Anders Rask",
+                "titel på noget",
+                "bog",
+                "AAU",
+                2022,
+                12345,
+                "Software",
+                "Aalborg",
+                "Tredje",
+                "Dansk",
+                2021,
+                0.9,
+                "blank",
+                "Det ved jeg ikke",
+                "Efterår",
+                "pas",
+                "ved jeg heller ikke",
+                69,
+                "20th",
+                "16-21",
+                "Din far"),
+                second = new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "Anders Rask",
+                "titel på noget",
+                "bog",
+                "AAU",
+                2022,
+                12345,
+                "Software",
+                "Aalborg",
+                "Tredje",
+                "Dansk",
+                2021,
+                0.9,
+                "blank",
+                "Det ved jeg ikke",
+                "Efterår",
+                "pas",
+                "ved jeg heller ikke",
+                69,
+                "20th",
+                "16-21",
+                "Din far"),
+                third = new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "Anders Rask",
+                "titel på noget",
+                "bog",
+                "AAU",
+                2022,
+                12345,
+                "Software",
+                "Aalborg",
+                "Tredje",
+                "Dansk",
+                2021,
+                0.9,
+                "blank",
+                "Det ved jeg ikke",
+                "Efterår",
+                "pas",
+                "ved jeg heller ikke",
+                69,
+                "20th",
+                "16-21",
+                "Din far");
+            //De første to kan bruges hvis testen fejler.
+            bool firstAndSecondEqual = reference.ValueEquals(second);
+            bool secondAndThirdEqual = second.ValueEquals(third);
+            bool firstAndThirdEqual = reference.ValueEquals(third);
+
+
+            Assert.True(firstAndThirdEqual);
+
+        }
+        [Fact]
+        public void ValueEqualsFalseWhenNotEqual()
+        {
+            Reference reference = new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "Anders Rask",
+                "titel på noget",
+                "bog",
+                "AAU",
+                2022,
+                12345,
+                "Software",
+                "Aalborg",
+                "Tredje",
+                "Dansk",
+                2021,
+                0.9,
+                "blank",
+                "Det ved jeg ikke",
+                "Efterår",
+                "pas",
+                "ved jeg heller ikke",
+                69,
+                "20th",
+                "16-21",
+                "Din far"),
+                notTheSameReference = new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "Anders Rask",
+                "Titel på noget andet",
+                "bog",
+                "AAU",
+                2022,
+                12345,
+                "Software",
+                "ålborg",
+                "Tredje",
+                "svensk",
+                2021,
+                0.9,
+                "blank",
+                "Det ved jeg ikke",
+                "Efterår",
+                "pas",
+                "ved jeg heller ikke",
+                420,
+                "20th",
+                "16-21",
+                "Din mor");
+
+            Assert.False(reference.ValueEquals(notTheSameReference));
+        }
         [Fact]
         public void Regextest()
         {

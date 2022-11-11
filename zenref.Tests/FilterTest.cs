@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-
 using Zenref.Ava.Models;
 
 namespace zenref.Tests
