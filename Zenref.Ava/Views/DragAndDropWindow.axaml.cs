@@ -13,7 +13,7 @@ namespace Zenref.Ava.Views
         Button? ImportButton;
         Button? CancelButton;
         Button? NextButton;
-        private TextBlock _TextBlock;
+        private TextBlock FilesTextBlock;
 
         public DragAndDropWindow()
         {
@@ -31,7 +31,7 @@ namespace Zenref.Ava.Views
 
         private void InitializeWindow()
         {
-            _TextBlock = this.FindControl<TextBlock>("fileNameTextBlock");
+            FilesTextBlock = this.FindControl<TextBlock>("fileNameTextBlock");
             ImportButton = this.FindControl<Button>("importButton");
             ImportButton.Click += async (s, e) =>
             {
@@ -46,7 +46,7 @@ namespace Zenref.Ava.Views
                 if (result != null)
                 {
                     string filePath = string.Join(Environment.NewLine, result);
-                    _TextBlock.Text = filePath;
+                    FilesTextBlock.Text = filePath;
                 }
             };
             CancelButton = this.FindControl<Button>("cancelButton");
@@ -57,8 +57,7 @@ namespace Zenref.Ava.Views
             NextButton = this.FindControl<Button>("nextButton");
             NextButton.Click += (s, e) =>
             {
-                ExportWindow exportWindow = new ExportWindow();
-                exportWindow.ShowDialog(this);
+                
             };
         }
 
@@ -74,7 +73,8 @@ namespace Zenref.Ava.Views
         {
             if (e.Data.Contains(DataFormats.FileNames))
             {
-                _TextBlock.Text = string.Join(Environment.NewLine, e.Data.GetFileNames());
+                string filePath = string.Join(Environment.NewLine, e.Data.GetFileNames());
+                FilesTextBlock.Text = filePath;
 
                 //_TextBlock.Text = "";
                 //List<string> fileList = new List<string>(e.Data.GetFileNames());
