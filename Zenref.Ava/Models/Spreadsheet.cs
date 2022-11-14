@@ -103,7 +103,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// Represents the different fields in an Excel worksheet where the key is the column position and the value is the content
         /// </summary>
         /// <remarks>Note: The values should be unique as well, since one Excel cell can only contain one field</remarks>
-        public SortedDictionary<ReferenceFields, int> PositionOfReferencesInSheet = new SortedDictionary<ReferenceFields, int>()
+        public SortedDictionary<ReferenceFields, int> PositionOfReferencesInSheet { get; set; } = new SortedDictionary<ReferenceFields, int>()
         {
             {ReferenceFields.Author, 1},
             {ReferenceFields.Title, 2},
@@ -179,7 +179,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         {
             int firstValue = PositionOfReferencesInSheet[first];
             PositionOfReferencesInSheet[first] = PositionOfReferencesInSheet[second];
-            PositionOfReferencesInSheet[second] = PositionOfReferencesInSheet[first];
+            PositionOfReferencesInSheet[second] = firstValue;
         }
 
         /// <summary>

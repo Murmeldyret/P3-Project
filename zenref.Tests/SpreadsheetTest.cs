@@ -615,5 +615,21 @@ namespace zenref.Tests
 
 
         }
+        [Fact]
+        public void SwapReferencePropertySwaps()
+        {
+            Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
+            SortedDictionary<Spreadsheet.ReferenceFields, int> originalDic = new SortedDictionary<Spreadsheet.ReferenceFields, int>(spreadsheet.PositionOfReferencesInSheet);
+            spreadsheet.SwapReferenceProperty(Spreadsheet.ReferenceFields.Author,Spreadsheet.ReferenceFields.Title);
+
+            SortedDictionary<Spreadsheet.ReferenceFields, int> newDic = spreadsheet.PositionOfReferencesInSheet;
+
+            Tuple<int, int> oldDicValues = new Tuple<int, int>(originalDic[Spreadsheet.ReferenceFields.Author], originalDic[Spreadsheet.ReferenceFields.Title]);
+            Tuple<int, int> newDicValues = new Tuple<int, int>(newDic[Spreadsheet.ReferenceFields.Author], newDic[Spreadsheet.ReferenceFields.Title]);
+
+            Tuple<int, int> newDicReverse = new Tuple<int, int>(newDicValues.Item2, newDicValues.Item1);
+
+            Assert.Equal(oldDicValues, newDicReverse);
+        }
     }
 }
