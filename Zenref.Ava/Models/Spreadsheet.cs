@@ -159,7 +159,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         {
             if (overwrite)
             {
-            PositionOfReferencesInSheet = inputdic;
+                PositionOfReferencesInSheet = inputdic;
             }
             else
             {
