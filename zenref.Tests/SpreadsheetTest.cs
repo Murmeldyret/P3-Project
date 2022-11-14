@@ -241,8 +241,7 @@ namespace zenref.Tests
             wb.SaveAs(FILLEDSPREADSHEETNAME);
 
             //Read reference should be equal to this
-            Reference reference = new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
-                "Anders Rask",
+            Reference reference = new Reference("Anders Rask",
                 "titel på noget",
                 "bog",
                 "AAU",
@@ -338,17 +337,14 @@ namespace zenref.Tests
 
             //Act
             Reference reference1 = new Reference(
-                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
                 "Anders er ikke rask",
                 "wololo"
                 );
 
             Reference reference2 = new Reference(
-                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
                 "True Winner"
                 );
             Reference reference3 = new Reference(
-                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
                 "Med løg på"
                 );
 
@@ -373,17 +369,14 @@ namespace zenref.Tests
             Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
 
             Reference reference1 = new Reference(
-                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
                 "Anders er ikke rask",
                 "wololo"
                 );
 
             Reference reference2 = new Reference(
-                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
                 "True Winner"
                 );
             Reference reference3 = new Reference(
-                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
                 "True Winner"
                 );
 
@@ -411,17 +404,14 @@ namespace zenref.Tests
             Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
 
             Reference reference1 = new Reference(
-                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
                 "Anders er ikke rask",
                 "wololo"
                 );
 
             Reference reference2 = new Reference(
-                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
                 "True Winner"
                 );
             Reference reference3 = new Reference(
-                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
                 "True Winner"
                 );
 
@@ -452,12 +442,10 @@ namespace zenref.Tests
             Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
             
             Reference reference1 = new Reference(
-                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
                 "Anders er ikke rask",
                 "wololo"
                 );
             Reference reference2 = new Reference(
-                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
                 "True Winner"
                 );
 
@@ -482,17 +470,14 @@ namespace zenref.Tests
 
             Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
             Reference reference1 = new Reference(
-                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
                 "Anders er ikke rask",
                 "wololo"
                 );
 
             Reference reference2 = new Reference(
-                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
                 "True Winner"
                 );
             Reference reference3 = new Reference(
-                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
                 "True Winner"
                 );
 
@@ -524,7 +509,6 @@ namespace zenref.Tests
             IXLWorksheet ws2 = wb.AddWorksheet(SHEETNAMETWO);
 
             Reference reference1 = new Reference(
-                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
                 "Anders er ikke rask",
                 "wololo"
                 );
@@ -554,17 +538,14 @@ namespace zenref.Tests
             Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
 
             Reference reference1 = new Reference(
-                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
                 "Anders er ikke rask",
                 "wololo"
                 );
 
             Reference reference2 = new Reference(
-                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
                 "True Winner"
                 );
             Reference reference3 = new Reference(
-                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
                 "True Winner din far "
                 );
 
@@ -594,13 +575,11 @@ namespace zenref.Tests
             Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
 
             Reference reference1 = new Reference(
-                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
                 "Anders er ikke rask",
                 "wololo"
                 );
 
             Reference referencenull = new Reference(
-                new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, "")
                 );
 
             //Act
@@ -624,8 +603,7 @@ namespace zenref.Tests
 
             spreadsheet.Create();
 
-            spreadsheet.AddReference(new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
-                                     _Author: "Din far"),ROWTOINSERTAT);
+            spreadsheet.AddReference(new Reference(_Author: "Din far"),ROWTOINSERTAT);
             spreadsheet.Export(SPREADSHEETTESTNAME);
 
             XLWorkbook wb = new XLWorkbook(SPREADSHEETTESTNAME);

@@ -256,8 +256,7 @@ namespace Zenref.Ava.Models.Spreadsheet
             string chapters = getCell(row, ReferenceFields.Chapters).GetValue<string>();
             string bookTitle = getCell(row, ReferenceFields.BookTitle).GetValue<string>();
 
-            return new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
-                                 author,
+            return new Reference(author,
                                  title,
                                  pubType,
                                  publisher,
