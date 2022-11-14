@@ -89,6 +89,9 @@ namespace Zenref.Ava.Migrations
                     b.Property<int?>("YearReport")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("OriReference")
+                        .HasColumnType("STRING");
+
                     b.HasKey("Id");
 
                     b.ToTable("References");

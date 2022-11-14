@@ -35,7 +35,8 @@ namespace Zenref.Ava.Migrations
                     Pages = table.Column<int>(type: "INTEGER", nullable: true),
                     Volume = table.Column<string>(type: "TEXT", nullable: true),
                     Chapters = table.Column<string>(type: "TEXT", nullable: true),
-                    BookTitle = table.Column<string>(type: "TEXT", nullable: true)
+                    BookTitle = table.Column<string>(type: "TEXT", nullable: true),
+                    OriReference = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
