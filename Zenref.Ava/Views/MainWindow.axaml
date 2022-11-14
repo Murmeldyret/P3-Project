@@ -2,9 +2,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:vm="clr-namespace:Zenref.Ava.ViewModels"
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Zenref.Ava.Views.MainWindow"
         Title="MainWindow">
+	<Window.Content>
+		<vm:TestViewModel/>
+	</Window.Content>
 	<Window.Styles>
 		<Style Selector="Button">
 			<Setter Property="Height" Value="250"/>
@@ -12,7 +16,9 @@
 			<Setter Property="Margin" Value="15"/>
 		</Style>
 	</Window.Styles>
+	
 	<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+		<TextBlock Text="{Binding TestTitle}"/>
 		<Button Name="knownReferencesButton">Kendte kilder</Button>
 		<Button Name="identifyReferencesButton">Identificer kilder</Button>
 	</StackPanel>

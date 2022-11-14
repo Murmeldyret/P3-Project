@@ -7,9 +7,9 @@ namespace Zenref.Ava.Views
 {
     public partial class ExpandReferenceWindow : Window
     {
-        public Reference reference;
+        public Reference2 reference;
         TextBox[] fields = new TextBox[7];
-        public ExpandReferenceWindow(Reference reference)
+        public ExpandReferenceWindow(Reference2 reference)
         {
             InitializeComponent();
             this.reference = reference;

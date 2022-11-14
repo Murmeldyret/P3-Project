@@ -19,7 +19,7 @@ namespace Zenref.Ava
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel(),
+                    DataContext = new TestViewModel(),
                 };
             }
 
