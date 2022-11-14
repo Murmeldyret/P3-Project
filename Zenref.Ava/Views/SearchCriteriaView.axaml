@@ -1,0 +1,65 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="450"
+        Width="700" Height="450"
+        x:Class="Zenref.Ava.Views.SearchCriteriaView">
+
+	<Window.Styles>
+		<Style Selector="TextBox">
+			<Setter Property="Width" Value="150"/>
+			<Setter Property="Margin" Value="10"/>
+			<Setter Property="Watermark" Value="Søge kriterie"/>
+		</Style>
+		<Style Selector="ComboBox">
+			<Setter Property="Width" Value="70"/>
+			<Setter	Property="Margin" Value="10,12"/>
+		</Style>
+		<Style Selector="Button">
+			<Setter Property="HorizontalAlignment" Value="Left"/>
+			<Setter Property="VerticalAlignment" Value="Bottom"/>
+		</Style>
+	</Window.Styles>
+	<Grid>
+		<StackPanel Orientation="Vertical">
+			<StackPanel Orientation="Horizontal">
+				<ComboBox PlaceholderText="Felter">
+				</ComboBox>
+				<TextBox Width="240"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<ComboBox SelectedIndex="0">
+					<ComboBoxItem>OG</ComboBoxItem>
+					<ComboBoxItem>ELLER</ComboBoxItem>
+					<ComboBoxItem>IKKE</ComboBoxItem>
+				</ComboBox>
+				<ComboBox PlaceholderText="Felter">
+				</ComboBox>
+				<TextBox/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<ComboBox SelectedIndex="1">
+					<ComboBoxItem>OG</ComboBoxItem>
+					<ComboBoxItem>ELLER</ComboBoxItem>
+					<ComboBoxItem>IKKE</ComboBoxItem>
+				</ComboBox>
+				<ComboBox PlaceholderText="Felter">
+				</ComboBox>
+				<TextBox/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<ComboBox SelectedIndex="2">
+					<ComboBoxItem>OG</ComboBoxItem>
+					<ComboBoxItem>ELLER</ComboBoxItem>
+					<ComboBoxItem>IKKE</ComboBoxItem>
+				</ComboBox>
+				<ComboBox PlaceholderText="Felter">
+				</ComboBox>
+				<TextBox/>
+			</StackPanel>
+		</StackPanel>
+		<Button Margin="20,10">Tilføj</Button>
+		<Button Margin="80,10">Afbryd</Button>
+	</Grid>
+</Window>
