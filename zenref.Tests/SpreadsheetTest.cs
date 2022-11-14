@@ -7,6 +7,7 @@ using ClosedXML.Excel;
 using System.IO;
 using Zenref.Ava.Models;
 
+
 namespace zenref.Tests
 {
     public class SpreadsheetTest
@@ -619,6 +620,7 @@ namespace zenref.Tests
         public void SwapReferencePropertySwaps()
         {
             Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
+            //Dictionary needs to be copied because of the way reference types work :/
             SortedDictionary<Spreadsheet.ReferenceFields, int> originalDic = new SortedDictionary<Spreadsheet.ReferenceFields, int>(spreadsheet.PositionOfReferencesInSheet);
             spreadsheet.SwapReferenceProperty(Spreadsheet.ReferenceFields.Author,Spreadsheet.ReferenceFields.Title);
 
@@ -630,6 +632,48 @@ namespace zenref.Tests
             Tuple<int, int> newDicReverse = new Tuple<int, int>(newDicValues.Item2, newDicValues.Item1);
 
             Assert.Equal(oldDicValues, newDicReverse);
+        }
+        [Fact]
+        public void SetColumnPositionOverwrite()
+        {
+            Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
+
+            SortedDictionary<Spreadsheet.ReferenceFields, int> originaldic = new(spreadsheet.PositionOfReferencesInSheet);
+
+            SortedDictionary<Spreadsheet.ReferenceFields, int> newDic = new()
+            {
+                {Spreadsheet.ReferenceFields.Author, 22},
+                {Spreadsheet.ReferenceFields.Title, 21},
+                {Spreadsheet.ReferenceFields.PublicationType, 20},
+                {Spreadsheet.ReferenceFields.Publisher, 19},
+                {Spreadsheet.ReferenceFields.YearRef, 18},
+                {Spreadsheet.ReferenceFields.IdRef, 17},
+                {Spreadsheet.ReferenceFields.Education, 16},
+                {Spreadsheet.ReferenceFields.Location, 15},
+                {Spreadsheet.ReferenceFields.Semester, 14},
+                {Spreadsheet.ReferenceFields.Language, 13},
+                {Spreadsheet.ReferenceFields.YearReport, 12},
+                {Spreadsheet.ReferenceFields.OriginalRef, 11},
+                {Spreadsheet.ReferenceFields.Match, 10},
+                {Spreadsheet.ReferenceFields.Comment, 9},
+                {Spreadsheet.ReferenceFields.Syllabus, 8},
+                {Spreadsheet.ReferenceFields.Season, 7},
+                {Spreadsheet.ReferenceFields.ExamEvent, 6},
+                {Spreadsheet.ReferenceFields.Source, 5},
+                {Spreadsheet.ReferenceFields.Pages, 4},
+                {Spreadsheet.ReferenceFields.Volume, 3},
+                {Spreadsheet.ReferenceFields.Chapters, 2},
+                {Spreadsheet.ReferenceFields.BookTitle, 1},
+            };
+            spreadsheet.SetColumnPosition(newDic);
+
+            Assert.Equivalent(newDic, spreadsheet.PositionOfReferencesInSheet, true);
+
+        }
+        [Fact]
+        public void SetColumnPositionNoOverWrite()
+        {
+
         }
     }
 }
