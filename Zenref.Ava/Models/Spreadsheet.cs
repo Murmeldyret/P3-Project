@@ -149,6 +149,39 @@ namespace Zenref.Ava.Models.Spreadsheet
             FilePath = filepath;
         }
 
+        //TODO test
+        /// <summary>
+        /// Sets the column position of reference properties as given by the input dictionary
+        /// </summary>
+        /// <param name="inputdic">The Sorted dictionary where the key is the reference property and the value is the column position associated with the property</param>
+        /// <param name="overwrite">Whether or not to completely overwrite the old dictionary, if true, remember to add a position for every Reference property described in the enum ReferenceFields</param>
+        public void SetColumnPosition(SortedDictionary<ReferenceFields,int> inputdic, bool overwrite = true)
+        {
+            if (overwrite)
+            {
+            PositionOfReferencesInSheet = inputdic;
+            }
+            else
+            {
+                foreach (KeyValuePair<ReferenceFields,int> item in inputdic)
+                {
+                    PositionOfReferencesInSheet.Remove(item.Key);
+                    PositionOfReferencesInSheet.Add(item.Key, item.Value);
+                }
+            }
+        }
+
+        //TODO test
+        /// <summary>
+        /// Swaps the column position of two Reference properties
+        /// </summary>
+        public void SwapReferenceProperty(ReferenceFields first, ReferenceFields second)
+        {
+            int firstValue = PositionOfReferencesInSheet[first];
+            PositionOfReferencesInSheet[first] = PositionOfReferencesInSheet[second];
+            PositionOfReferencesInSheet[second] = PositionOfReferencesInSheet[first];
+        }
+
         /// <summary>
         /// Gets the position and names of all the worksheets in the workbook
         /// </summary>
