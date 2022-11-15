@@ -310,7 +310,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// <param name="row">The row of a worksheet</param>
         /// <param name="field">The field in a row</param>
         /// <returns></returns>
-        private IXLCell GetCell(IXLRow row, ReferenceFields field)
+        private IXLCell getCell(IXLRow row, ReferenceFields field)
         {
             return row.Cell(PositionOfReferencesInSheet[field]);
         }
