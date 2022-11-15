@@ -48,6 +48,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         private IXLWorksheet xLWorksheet { get => _workbook.Worksheet(ActiveSheet); }
         private int _currentRow { get; set; } = 2;
         private const int _MAXROWSINEXCEL = 1048576;
+        private int _REFERENCEFIELDSCOUNT = Enum.GetValues(typeof(ReferenceFields)).Length;
 
         /// <summary>
         /// Returns the total number of references in the active Worksheet.
@@ -96,14 +97,13 @@ namespace Zenref.Ava.Models.Spreadsheet
             Volume,
             Chapters,
             BookTitle,
-            Isbn,
         }
 
         /// <summary>
         /// Represents the different fields in an Excel worksheet where the key is the column position and the value is the content
         /// </summary>
         /// <remarks>Note: The values should be unique as well, since one Excel cell can only contain one field</remarks>
-        public SortedDictionary<ReferenceFields, int> PositionOfReferencesInSheet = new SortedDictionary<ReferenceFields, int>()
+        public SortedDictionary<ReferenceFields, int> PositionOfReferencesInSheet { get; private set; } = new SortedDictionary<ReferenceFields, int>()
         {
             {ReferenceFields.Author, 1},
             {ReferenceFields.Title, 2},
@@ -147,6 +147,32 @@ namespace Zenref.Ava.Models.Spreadsheet
         {
             FileName = fileName;
             FilePath = filepath;
+        }
+
+        //TODO test
+        /// <summary>
+        /// Sets the column position of reference properties as given by the input dictionary
+        /// </summary>
+        /// <param name="inputdic">The Sorted dictionary where the key is the reference property and the value is the column position associated with the property</param>
+        /// <exception cref="ArgumentException"> If the size of input dictionary is not the same as the number of fields in a reference</exception>
+        public void SetColumnPosition(SortedDictionary<ReferenceFields,int> inputdic)
+        {
+            if (inputdic.Count != _REFERENCEFIELDSCOUNT)
+            {
+                throw new ArgumentException("Parameter inputdic must be the same size as the current dictionary " + inputdic.Count + " " + _REFERENCEFIELDSCOUNT);
+            }
+            PositionOfReferencesInSheet = inputdic;
+        }
+
+        //TODO test
+        /// <summary>
+        /// Swaps the column position of two Reference properties
+        /// </summary>
+        public void SwapReferenceProperty(ReferenceFields first, ReferenceFields second)
+        {
+            int firstValue = PositionOfReferencesInSheet[first];
+            PositionOfReferencesInSheet[first] = PositionOfReferencesInSheet[second];
+            PositionOfReferencesInSheet[second] = firstValue;
         }
 
         /// <summary>
@@ -256,8 +282,7 @@ namespace Zenref.Ava.Models.Spreadsheet
             string chapters = getCell(row, ReferenceFields.Chapters).GetValue<string>();
             string bookTitle = getCell(row, ReferenceFields.BookTitle).GetValue<string>();
 
-            return new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
-                                 author,
+            return new Reference(author,
                                  title,
                                  pubType,
                                  publisher,
