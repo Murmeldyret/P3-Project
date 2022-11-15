@@ -16,8 +16,8 @@
 	</Window.Styles>
 
 	<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-		<Button> Kendte kilder</Button>
-		<Button> Identificer kilder</Button>
+		<Button Command="{Binding OpenDatabaseCommand}"> Kendte kilder</Button>
+		<Button Command="{Binding OpenExportCommand}"> Identificer kilder</Button>
 	</StackPanel>
 	
 </Window>

@@ -1,4 +1,8 @@
 using Avalonia.Controls;
+using Avalonia.ReactiveUI;
+using ReactiveUI;
+using System.Threading.Tasks;
+using Zenref.Ava.ViewModels;
 
 namespace Zenref.Ava.Views
 {
@@ -7,6 +11,7 @@ namespace Zenref.Ava.Views
         public MainWindow()
         {
             InitializeComponent();
+
         }
     }
 }
