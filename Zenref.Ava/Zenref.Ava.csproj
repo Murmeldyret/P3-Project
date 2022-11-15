@@ -14,6 +14,7 @@
     <None Remove=".gitignore" />
     <None Remove="Assets\cross.ico" />
     <None Remove="Assets\options.ico" />
+    <None Remove="Assets\upload.ico" />
   </ItemGroup>
   <ItemGroup>
 	<!--This helps with theme dll-s trimming.
