@@ -36,11 +36,15 @@ namespace Zenref.Ava.Models.Spreadsheet
             set => _workbook = value;
         }
         /// <summary>
-        /// The Position of the active worksheet in Excel.
+        /// The Position of the active worksheet in Excel. Default value is 1.
         /// </summary>
         public int ActiveSheet { get; set; } = 1;
         private IXLWorksheet xLWorksheet { get => _workbook.Worksheet(ActiveSheet); }
         private int _currentRow { get; set; } = 2;
+
+        /// <summary>
+        /// The max number of rows in 2007 Excel that can be filled
+        /// </summary>
         private const int _MAXROWSINEXCEL = 1048576;
         private int _REFERENCEFIELDSCOUNT = Enum.GetValues(typeof(ReferenceFields)).Length;
 
@@ -52,6 +56,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// <summary>
         /// Returns the number of rows to the last used row in the active worksheet.
         /// </summary>
+        /// <remarks>Not the same as count, Count returns the total number of references in a spreadsheet whereas length returns the row position of the last reference</remarks>
         public int Length => xLWorksheet.LastRowUsed().RowNumber();
 
         public bool IsReadOnly => _workbook.IsProtected;
@@ -61,7 +66,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// </summary>
         /// <param name="index">An integer greater than 1 (And almost always 2) and less than the total amount of references in the worksheet</param>
         /// <returns>The reference at the given index</returns>
-        /// <remarks>Cannot insert individual Reference properties with the setter</remarks>
+        /// <remarks>Note: Cannot insert individual Reference properties with the setter</remarks>
         public Reference this[int index] { get => GetReference(index); set => Insert(index, value); }
 
         /// <summary>
@@ -153,7 +158,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         {
             if (inputdic.Count != _REFERENCEFIELDSCOUNT)
             {
-                throw new ArgumentException("Parameter inputdic must be the same size as the current dictionary " + inputdic.Count + " " + _REFERENCEFIELDSCOUNT);
+                throw new ArgumentException("Parameter inputdic must be the same size as the current dictionary. inputdic.Count ==" + inputdic.Count + " !=" + _REFERENCEFIELDSCOUNT);
             }
             PositionOfReferencesInSheet = inputdic;
         }
@@ -164,9 +169,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// </summary>
         public void SwapReferenceProperty(ReferenceFields first, ReferenceFields second)
         {
-            int firstValue = PositionOfReferencesInSheet[first];
-            PositionOfReferencesInSheet[first] = PositionOfReferencesInSheet[second];
-            PositionOfReferencesInSheet[second] = firstValue;
+            (PositionOfReferencesInSheet[second], PositionOfReferencesInSheet[first]) = (PositionOfReferencesInSheet[first], PositionOfReferencesInSheet[second]);
         }
 
         /// <summary>
