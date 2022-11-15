@@ -18,11 +18,6 @@ namespace Zenref.Ava.Models.Spreadsheet
         private string FileName { get; }
 
         /// <summary>
-        /// Represents the total amount of rows in a spreadsheet
-        /// </summary>
-        public int ReferenceCount { get; }
-
-        /// <summary>
         /// Represents the path that the file should be read to.
         /// </summary>
         /// <remarks>Should only be used if new Excel files are to be created</remarks>
