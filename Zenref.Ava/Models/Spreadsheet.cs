@@ -169,7 +169,9 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// </summary>
         public void SwapReferenceProperty(ReferenceFields first, ReferenceFields second)
         {
-            (PositionOfReferencesInSheet[second], PositionOfReferencesInSheet[first]) = (PositionOfReferencesInSheet[first], PositionOfReferencesInSheet[second]);
+            int firstValue = PositionOfReferencesInSheet[first];
+            PositionOfReferencesInSheet[first] = PositionOfReferencesInSheet[second];
+            PositionOfReferencesInSheet[second] = firstValue;
         }
 
         /// <summary>
@@ -257,27 +259,27 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// <returns>A Reference from the given row</returns>
         private Reference readRow(IXLRow row)
         {
-            string author = getCell(row, ReferenceFields.Author).GetValue<string>();
-            string title = getCell(row, ReferenceFields.Title).GetValue<string>();
-            string pubType = getCell(row, ReferenceFields.PublicationType).GetValue<string>();
-            string publisher = getCell(row, ReferenceFields.Publisher).GetValue<string>();
-            int? yearOfRef = getCell(row, ReferenceFields.YearRef).GetValue<int?>();
-            int? id = getCell(row, ReferenceFields.IdRef).GetValue<int?>();
-            string edu = getCell(row, ReferenceFields.Education).GetValue<string>();
-            string location = getCell(row, ReferenceFields.Location).GetValue<string>();
-            string semester = getCell(row, ReferenceFields.Semester).GetValue<string>();
-            string language = getCell(row, ReferenceFields.Language).GetValue<string>();
-            int? yearOfReport = getCell(row, ReferenceFields.YearReport).GetValue<int?>();
-            double? match = getCell(row, ReferenceFields.Match).GetValue<double?>();
-            string comment = getCell(row, ReferenceFields.Comment).GetValue<string>();
-            string syllabus = getCell(row, ReferenceFields.Syllabus).GetValue<string>();
-            string season = getCell(row, ReferenceFields.Season).GetValue<string>();
-            string examEvent = getCell(row, ReferenceFields.ExamEvent).GetValue<string>();
-            string source = getCell(row, ReferenceFields.Source).GetValue<string>();
-            int? pages = getCell(row, ReferenceFields.Pages).GetValue<int?>();
-            string volume = getCell(row, ReferenceFields.Volume).GetValue<string>();
-            string chapters = getCell(row, ReferenceFields.Chapters).GetValue<string>();
-            string bookTitle = getCell(row, ReferenceFields.BookTitle).GetValue<string>();
+            string author =         getCell(row, ReferenceFields.Author).GetValue<string>();
+            string title =          getCell(row, ReferenceFields.Title).GetValue<string>();
+            string pubType =        getCell(row, ReferenceFields.PublicationType).GetValue<string>();
+            string publisher =      getCell(row, ReferenceFields.Publisher).GetValue<string>();
+            int? yearOfRef =        getCell(row, ReferenceFields.YearRef).GetValue<int?>();
+            int? id =               getCell(row, ReferenceFields.IdRef).GetValue<int?>();
+            string edu =            getCell(row, ReferenceFields.Education).GetValue<string>();
+            string location =       getCell(row, ReferenceFields.Location).GetValue<string>();
+            string semester =       getCell(row, ReferenceFields.Semester).GetValue<string>();
+            string language =       getCell(row, ReferenceFields.Language).GetValue<string>();
+            int? yearOfReport =     getCell(row, ReferenceFields.YearReport).GetValue<int?>();
+            double? match =         getCell(row, ReferenceFields.Match).GetValue<double?>();
+            string comment =        getCell(row, ReferenceFields.Comment).GetValue<string>();
+            string syllabus =       getCell(row, ReferenceFields.Syllabus).GetValue<string>();
+            string season =         getCell(row, ReferenceFields.Season).GetValue<string>();
+            string examEvent =      getCell(row, ReferenceFields.ExamEvent).GetValue<string>();
+            string source =         getCell(row, ReferenceFields.Source).GetValue<string>();
+            int? pages =            getCell(row, ReferenceFields.Pages).GetValue<int?>();
+            string volume =         getCell(row, ReferenceFields.Volume).GetValue<string>();
+            string chapters =       getCell(row, ReferenceFields.Chapters).GetValue<string>();
+            string bookTitle =      getCell(row, ReferenceFields.BookTitle).GetValue<string>();
 
             return new Reference(author,
                                  title,
