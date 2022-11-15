@@ -48,6 +48,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         private IXLWorksheet xLWorksheet { get => _workbook.Worksheet(ActiveSheet); }
         private int _currentRow { get; set; } = 2;
         private const int _MAXROWSINEXCEL = 1048576;
+        private int _REFERENCEFIELDSCOUNT = Enum.GetValues(typeof(ReferenceFields)).Length;
 
         /// <summary>
         /// Returns the total number of references in the active Worksheet.
@@ -103,7 +104,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// Represents the different fields in an Excel worksheet where the key is the column position and the value is the content
         /// </summary>
         /// <remarks>Note: The values should be unique as well, since one Excel cell can only contain one field</remarks>
-        public SortedDictionary<ReferenceFields, int> PositionOfReferencesInSheet { get; set; } = new SortedDictionary<ReferenceFields, int>()
+        public SortedDictionary<ReferenceFields, int> PositionOfReferencesInSheet { get; private set; } = new SortedDictionary<ReferenceFields, int>()
         {
             {ReferenceFields.Author, 1},
             {ReferenceFields.Title, 2},
@@ -154,21 +155,14 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// Sets the column position of reference properties as given by the input dictionary
         /// </summary>
         /// <param name="inputdic">The Sorted dictionary where the key is the reference property and the value is the column position associated with the property</param>
-        /// <param name="overwrite">Whether or not to completely overwrite the old dictionary, if true, remember to add a position for every Reference property described in the enum ReferenceFields</param>
-        public void SetColumnPosition(SortedDictionary<ReferenceFields,int> inputdic, bool overwrite = true)
+        /// <exception cref="ArgumentException"></exception>
+        public void SetColumnPosition(SortedDictionary<ReferenceFields,int> inputdic)
         {
-            if (overwrite)
+            if (inputdic.Count != _REFERENCEFIELDSCOUNT)
             {
-                PositionOfReferencesInSheet = inputdic;
+                throw new ArgumentException("Parameter inputdic must be the same size as the current dictionary");
             }
-            else
-            {
-                foreach (KeyValuePair<ReferenceFields,int> item in inputdic)
-                {
-                    PositionOfReferencesInSheet.Remove(item.Key);
-                    PositionOfReferencesInSheet.Add(item.Key, item.Value);
-                }
-            }
+            PositionOfReferencesInSheet = inputdic;
         }
 
         //TODO test

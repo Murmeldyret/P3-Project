@@ -670,10 +670,5 @@ namespace zenref.Tests
             Assert.Equivalent(newDic, spreadsheet.PositionOfReferencesInSheet, true);
 
         }
-        [Fact]
-        public void SetColumnPositionNoOverWrite()
-        {
-
-        }
     }
 }
