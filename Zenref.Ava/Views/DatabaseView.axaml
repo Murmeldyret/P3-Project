@@ -1,14 +1,15 @@
-<Window xmlns="https://github.com/avaloniaui"
+<Window x:Class="Zenref.Ava.Views.DatabaseView"
+		x:Name="DBView"
+		xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="600"
-        x:Class="Zenref.Ava.Views.DatabaseView"
-		Title="Database Window">
+        Title="Database Window">
 
 	<Grid Name="grid" RowDefinitions="Auto">
 		<Menu Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Stretch">
-			<Button> Tilføj</Button>
+			<Button Command="{Binding OpenDragAndDropView}" CommandParameter="{Binding ElementName=DBView}"> Tilføj</Button>
 			<TextBox Watermark="Søg" Width="150" FontSize="15"></TextBox>
 		</Menu>
 		<DataGrid Name="dataGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,40"
