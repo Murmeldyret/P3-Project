@@ -44,6 +44,7 @@
 					Command="{Binding OpenFileDialog}"
 					CommandParameter="{Binding ElementName=DADView}">
 				</Button>
+				<TextBlock Text="{Binding FilePath}"/>
 			</StackPanel>
 		</Grid>
 			

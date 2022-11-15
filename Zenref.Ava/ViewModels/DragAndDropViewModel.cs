@@ -1,23 +1,29 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Input;
-using ReactiveUI;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Reactive;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+using Zenref.Ava.Models;
 
 namespace Zenref.Ava.ViewModels
 {
     public class DragAndDropViewModel : ViewModelBase
     {
-
+        private string _filePath;
+        public string FilePath
+        {
+            get
+            {
+                return _filePath;
+            }
+            set
+            {
+                _filePath = value;
+                OnPropertyChanged(nameof(FilePath));
+            }
+        }
         public DragAndDropViewModel()
         {
-            string filePath = "asd";
             //this.OpenFileDialogCommand = ReactiveCommand.Create<Window>(FileDialog);
             //this.CloseWindowCommand = ReactiveCommand.Create<Window>(CloseWindow);
         }
@@ -38,8 +44,8 @@ namespace Zenref.Ava.ViewModels
             string[] result = await openFileDialog.ShowAsync(window);
             if (result != null)
             {
-                string filePath = string.Join(Environment.NewLine, result);
-                Debug.WriteLine(filePath);
+                FilePath = string.Join(Environment.NewLine, result);
+                Debug.WriteLine(FilePath);
             }
         }
         private void CloseWindow (Window window)

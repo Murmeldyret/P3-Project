@@ -12,8 +12,17 @@
 			<Button Command="{Binding OpenDragAndDropView}" CommandParameter="{Binding ElementName=DBView}"> Tilføj</Button>
 			<TextBox Watermark="Søg" Width="150" FontSize="15"></TextBox>
 		</Menu>
-		<DataGrid Name="dataGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,40"
+		<DataGrid Items="{Binding References}" Name="dataGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,40"
 				  RowBackground="LightGray" CanUserResizeColumns="True" Height="500" Width="1000">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Forfatter" Binding="{Binding Author}"/>
+				<DataGridTextColumn Header="Titel" Binding="{Binding Title}"/>
+				<DataGridTextColumn Header="Publikationstype" Binding="{Binding PubType}"/>
+				<DataGridTextColumn Header="Forlag" Binding="{Binding Publisher}"/>
+				<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+				<DataGridTextColumn Header="Uddannelse" Binding="{Binding Edu}"/>
+				<DataGridTextColumn Header="Uddannelsessted" Binding="{Binding Location}"/>
+			</DataGrid.Columns>
 		</DataGrid>
 	</Grid>
 </Window>

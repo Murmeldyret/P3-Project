@@ -5,10 +5,11 @@ namespace Zenref.Ava.Views
 {
     public partial class DatabaseView : Window
     {
+        DatabaseViewModel databaseViewModel = new DatabaseViewModel();
         public DatabaseView()
         {
             InitializeComponent();
-            DataContext = new DatabaseViewModel();
+            DataContext = databaseViewModel;
         }
     }
 }
