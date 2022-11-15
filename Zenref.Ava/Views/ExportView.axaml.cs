@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Zenref.Ava.ViewModels;
 
 namespace Zenref.Ava.Views
 {
@@ -7,6 +8,7 @@ namespace Zenref.Ava.Views
         public ExportView()
         {
             InitializeComponent();
+            DataContext = new ExportViewModel();
         }
     }
 }
