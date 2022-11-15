@@ -97,7 +97,6 @@ namespace Zenref.Ava.Models.Spreadsheet
             Volume,
             Chapters,
             BookTitle,
-            Isbn,
         }
 
         /// <summary>
@@ -155,12 +154,12 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// Sets the column position of reference properties as given by the input dictionary
         /// </summary>
         /// <param name="inputdic">The Sorted dictionary where the key is the reference property and the value is the column position associated with the property</param>
-        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentException"> If the size of input dictionary is not the same as the number of fields in a reference</exception>
         public void SetColumnPosition(SortedDictionary<ReferenceFields,int> inputdic)
         {
             if (inputdic.Count != _REFERENCEFIELDSCOUNT)
             {
-                throw new ArgumentException("Parameter inputdic must be the same size as the current dictionary");
+                throw new ArgumentException("Parameter inputdic must be the same size as the current dictionary " + inputdic.Count + " " + _REFERENCEFIELDSCOUNT);
             }
             PositionOfReferencesInSheet = inputdic;
         }
