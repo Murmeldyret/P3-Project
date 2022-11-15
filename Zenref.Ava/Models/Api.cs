@@ -79,7 +79,7 @@ namespace P3Project.API
         /// </summary>
         /// <param name="inputReference">The Reference that is to be looked up (usually unidentified)</param>
         /// <returns>A reference with correctly filled fields</returns>
-        public virtual async Task<Reference> ReferenceFetch(Reference inputReference, Func<HttpResponseMessage, Reference> referenceParser)
+        public virtual async Task<Reference> ReferenceFetch(Reference inputReference, Func<Reference, HttpResponseMessage, Reference> referenceParser)
         {
             Uri apiUri = BuildUri($"&query={inputReference.OriReference}");
 
@@ -92,7 +92,7 @@ namespace P3Project.API
             }
 
             // Parse into deligate
-            Reference parsed_reference = referenceParser(response);
+            Reference parsed_reference = referenceParser(inputReference, response);
 
             return parsed_reference;
 

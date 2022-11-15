@@ -1,9 +1,10 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using P3Project.API.APIHelper;
 using Zenref.Ava.Models;
-using Newtonsoft.Json;
+
 
 namespace P3Project.API
 {
@@ -22,7 +23,7 @@ namespace P3Project.API
             this.RateLimitInMsecs = RateLimitInMsecs;
         }
 
-        public override async Task<Reference> ReferenceFetch(Reference inputReference, Func<HttpResponseMessage, Reference> referenceParser)
+        public override async Task<Reference> ReferenceFetch(Reference inputReference, Func<Reference, HttpResponseMessage, Reference> referenceParser)
         {
             Uri apiUri = BuildUri($"&query={inputReference.OriReference}");
 
@@ -35,13 +36,79 @@ namespace P3Project.API
             }
 
             // Parse into deligate
-            Reference parsed_reference = referenceParser(response);
+            Reference parsed_reference = referenceParser(inputReference, response);
 
             return parsed_reference;
         }
-        public Reference ReferenceParser(HttpResponseMessage response)
+        public Reference ReferenceParser(Reference inputReference, HttpResponseMessage response)
         {
-            return new Reference();
+            string responseContent = response.Content.ReadAsStringAsync().Result;
+
+            // Parse json in object
+            ScopusResponse scopusResponse = ScopusResponse.FromJson(responseContent);
+
+
+
+            // Split inputReference into substrings
+            string[] inputReferenceSplit = inputReference.OriReference.Split(". ");
+
+
+            // Fuzzy match the substrings with the response
+            int bestMatchIndex = -1;
+            int bestMatchScore = int.MaxValue;
+            double bestMatchScorePercentage = 0;
+            for (int i = 0; i < scopusResponse.SearchResults.Entry.Count; i++)
+            {
+                for (int j = 0; j < inputReferenceSplit.Length; j++)
+                {
+                    int distance = Fastenshtein.Levenshtein.Distance(scopusResponse.SearchResults.Entry[i].DcTitle.ToLower(), inputReferenceSplit[j].ToLower());
+
+                    if (distance < bestMatchScore)
+                    {
+                        bestMatchScore = distance;
+                        bestMatchIndex = i;
+                    }
+                }
+            }
+
+            if (bestMatchIndex == -1)
+            {
+                throw new Exception("Could not find a match");
+            }
+            else
+            {
+                bestMatchScorePercentage = (double)bestMatchScore / (double)scopusResponse.SearchResults.Entry[bestMatchIndex].DcTitle.Length;
+            }
+
+
+
+            // Set the best match as the reference
+            Reference parsed_reference = new Reference(
+                _Author: scopusResponse.SearchResults.Entry[bestMatchIndex].DcCreator,
+                _Title: scopusResponse.SearchResults.Entry[bestMatchIndex].DcTitle,
+                _PubType: scopusResponse.SearchResults.Entry[bestMatchIndex].PrismAggregationType,
+                _Publisher: scopusResponse.SearchResults.Entry[bestMatchIndex].Affiliation[0].Affilname,
+                _YearRef: Int32.Parse(scopusResponse.SearchResults.Entry[bestMatchIndex].PrismCoverDisplayDate.Split(" ")[2]),
+                _ID: (int)inputReference.ID,
+                _Edu: inputReference.Edu,
+                _Location: scopusResponse.SearchResults.Entry[bestMatchIndex].Link[3].Href.ToString(),
+                _Semester: inputReference.Semester,
+                _Language: inputReference.Language,
+                _YearReport: (int)inputReference.YearReport,
+                _Match:bestMatchScorePercentage,
+                _Commentary: inputReference.Commentary,
+                _Syllabus: inputReference.Syllabus,
+                _Season: inputReference.Season,
+                _ExamEvent: inputReference.ExamEvent,
+                _Source: inputReference.Source,
+                _Pages: (int)inputReference.Pages,
+                _Volume: scopusResponse.SearchResults.Entry[bestMatchIndex].PrismVolume.ToString(),
+                _Chapters: inputReference.Chapters,
+                _BookTitle: scopusResponse.SearchResults.Entry[bestMatchIndex].PrismPublicationName,
+                _OriReference: inputReference.OriReference
+            );
+
+            return parsed_reference;
         }
     }
 }

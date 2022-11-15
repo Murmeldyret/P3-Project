@@ -137,7 +137,7 @@ public class ApiTest1 : Api
     //}
 
 
-    public override System.Threading.Tasks.Task<Reference> ReferenceFetch(Reference inputReference, Func<System.Net.Http.HttpResponseMessage, Reference> referenceParser)
+    public override System.Threading.Tasks.Task<Reference> ReferenceFetch(Reference inputReference, Func<Reference, System.Net.Http.HttpResponseMessage, Reference> referenceParser)
     {
         throw new NotImplementedException();
     }
