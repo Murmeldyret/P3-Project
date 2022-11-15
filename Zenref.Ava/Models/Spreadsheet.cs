@@ -1,5 +1,4 @@
 using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -155,7 +154,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// </summary>
         /// <param name="inputdic">The Sorted dictionary where the key is the reference property and the value is the column position associated with the property</param>
         /// <exception cref="ArgumentException"> If the size of input dictionary is not the same as the number of fields in a reference</exception>
-        public void SetColumnPosition(SortedDictionary<ReferenceFields,int> inputdic)
+        public void SetColumnPosition(SortedDictionary<ReferenceFields, int> inputdic)
         {
             if (inputdic.Count != _REFERENCEFIELDSCOUNT)
             {
@@ -342,7 +341,6 @@ namespace Zenref.Ava.Models.Spreadsheet
             {
                 yield return GetReference(i);
             }
-            //throw new NotImplementedException();
         }
 
         /// <summary>
