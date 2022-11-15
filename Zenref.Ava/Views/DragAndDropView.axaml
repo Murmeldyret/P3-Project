@@ -18,7 +18,6 @@
 				<Grid>
 					<Rectangle
 						DragDrop.AllowDrop="True"
-						DragDrop.Drop="FileDrop"
 						Fill="Gainsboro"
 						Height="250"
 						Width="400">
