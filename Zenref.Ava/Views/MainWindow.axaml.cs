@@ -11,7 +11,6 @@ namespace Zenref.Ava.Views
         public MainWindow()
         {
             InitializeComponent();
-
         }
     }
 }
