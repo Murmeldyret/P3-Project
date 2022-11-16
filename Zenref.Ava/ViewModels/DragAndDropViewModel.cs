@@ -1,11 +1,7 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using Zenref.Ava.Models;
 
 namespace Zenref.Ava.ViewModels
 {
@@ -33,7 +29,6 @@ namespace Zenref.Ava.ViewModels
             if (result != null)
             {
                 FilePath = string.Join(Environment.NewLine, result);
-                Debug.WriteLine(FilePath);
             }
         }
         private void CloseWindow (Window window)
