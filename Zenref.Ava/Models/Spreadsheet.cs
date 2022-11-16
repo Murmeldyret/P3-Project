@@ -7,15 +7,9 @@ using System.Linq;
 
 namespace Zenref.Ava.Models.Spreadsheet
 {
-    /// <summary>
-    /// Represents an Excel file containing an amount of worksheets
-    /// </summary>
     public sealed class Spreadsheet : IList<Reference>
     {
         private string FileName { get; }
-        /// <summary>
-        /// The absolute file path to the Excel file excluding the name of the file itself
-        /// </summary>
         private string FilePath { get; }
         public bool DoesExcelFileExist => WorkbookProperty is not null;
         private XLWorkbook? Workbook { get; set; }
@@ -67,10 +61,7 @@ namespace Zenref.Ava.Models.Spreadsheet
                 Insert(index, value);
             }
         }
-
-        /// <summary>
-        /// Represents the different fields that a reference instance contains.
-        /// </summary>
+        
         public enum ReferenceFields
         {
             Author,
