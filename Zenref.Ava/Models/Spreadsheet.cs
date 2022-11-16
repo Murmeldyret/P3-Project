@@ -164,9 +164,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// </summary>
         public void SwapReferenceProperty(ReferenceFields first, ReferenceFields second)
         {
-            int firstValue = PositionOfReferencesInSheet[first];
-            PositionOfReferencesInSheet[first] = PositionOfReferencesInSheet[second];
-            PositionOfReferencesInSheet[second] = firstValue;
+            (PositionOfReferencesInSheet[second], PositionOfReferencesInSheet[first]) = (PositionOfReferencesInSheet[first], PositionOfReferencesInSheet[second]);
         }
 
         /// <summary>
@@ -239,7 +237,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// <summary>
         /// Gets a reference at the specified row
         /// </summary>
-        /// <param name="index">The row index of the ReferenceNote that Excel is 1-indexed, and the 1st row is usually reserved for metadata</param>
+        /// <param name="index">The row index of the ReferenceNote that Excel is 1-indexed, and the first row is usually reserved for metadata</param>
         /// <returns>The Reference at the given row</returns>
         /// <remarks>Note that Excel is 1-indexed, and the 1st row is usually reserved for metadata</remarks>
         public Reference GetReference(int index)
@@ -341,6 +339,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// Checks if <c>FileName</c> is an Excel file
         /// </summary>
         /// <returns><c>true</c> if <c>FileName</c>suffix is .xlsx, <c>false</c> otherwise </returns>
+        /// <remarks>.xlsx refers to 2007 Excel files, if file suffx is .xls, method will return false</remarks>
         public bool IsFileExcel()
         {
             return (Path.GetExtension(FileName) == ".xlsx");
