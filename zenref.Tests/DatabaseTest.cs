@@ -2,7 +2,6 @@ using System.Linq;
 using Xunit;
 using Zenref.Ava.Models;
 using System;
-
 namespace zenref.Tests
 {
     public class DatabaseTest : IDisposable
