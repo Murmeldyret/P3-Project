@@ -398,8 +398,13 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// </summary>
         /// <param name="references">Collection of references to be added</param>
         /// <param name="startRow">The start row from where the references should be inserted. If default, appends to end of list of references</param>
+        /// <exception cref="ArgumentException">Throws if parameter startRow is 0 or less than -1</exception>
         public void AddReference(IEnumerable<Reference> references, int startRow = -1)
         {
+            if (startRow == 0 || startRow < -1)
+            {
+                throw new ArgumentException("Start row cannot be 0 or less than -1");
+            }
             if (startRow == -1) startRow = XlWorksheet.RowsUsed().Count() + 1;
             foreach (Reference reference in references)
             {
