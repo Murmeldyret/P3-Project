@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 using Zenref.Ava.Models;
 using P3Project.API.APIHelper;
+using System.Net;
 
 namespace P3Project.API
 {
@@ -82,7 +83,8 @@ namespace P3Project.API
         /// <returns>A reference with correctly filled fields</returns>
         public virtual async Task<Reference> ReferenceFetch(Reference inputReference, Func<Reference, HttpResponseMessage, Reference> referenceParser)
         {
-            Uri apiUri = BuildUri($"&query={inputReference.OriReference}");
+            string queryString = queryCleaner(inputReference.OriReference);
+            Uri apiUri = BuildUri($"query={queryString}");
 
             HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(apiUri);       // Request API for ressource.
 
@@ -99,6 +101,20 @@ namespace P3Project.API
 
         }
 
+        private string queryCleaner(string? oriReference)
+        {
+            if (oriReference == null)
+            {
+                throw new ArgumentNullException("The original reference is null");
+            }
+            oriReference = oriReference.Replace("(", " ");
+            oriReference = oriReference.Replace(")", " ");
+            oriReference = oriReference.Replace("*", " ");
+
+            return oriReference;
+        }
+
+
         protected Uri BuildUri(string query)
         {
             UriBuilder uriBuilder = new UriBuilder(_baseURL);
@@ -111,6 +127,8 @@ namespace P3Project.API
                 {
                     uriBuilder.Query += $"&{ParametersName[i]}={ParametersValue[i]}";
                 }
+                uriBuilder.Query += "&";
+
             }
 
             uriBuilder.Query += query;
@@ -130,7 +148,23 @@ namespace P3Project.API
         // A function that handles status codes. Should be protected.
         protected bool _isHTTPResponseCodeSuccess(HttpResponseMessage message)
         {
-            throw new NotImplementedException("Fuck dig ikke implementeret");
+            switch (message.StatusCode)
+            {
+                case HttpStatusCode.OK:
+                    return true;
+                case HttpStatusCode.Created:
+                    return true;
+                case HttpStatusCode.Accepted:
+                    return true;
+                case HttpStatusCode.BadRequest:
+                    return false;
+                case HttpStatusCode.Unauthorized:
+                    return false;
+                case HttpStatusCode.NotFound:
+                    return false;
+                default:
+                    return false;
+            }
         }
 
         // A function that returns what fileformat the response is in.
