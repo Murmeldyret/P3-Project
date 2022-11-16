@@ -13,6 +13,9 @@ namespace Zenref.Ava.Models.Spreadsheet
     public sealed class Spreadsheet : IList<Reference>
     {
         private string FileName { get; }
+        /// <summary>
+        /// The absolute file path to the Excel file excluding the name of the file itself
+        /// </summary>
         private string FilePath { get; }
         public bool DoesExcelFileExist => WorkbookProperty is not null;
         private XLWorkbook? Workbook { get; set; }
@@ -46,7 +49,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         public bool IsReadOnly => Workbook.IsProtected;
 
         /// <summary>
-        /// Gets the reference at the given row index
+        /// Gets or sets the reference at the given row index
         /// </summary>
         /// <param name="index">An integer greater than 1 (And almost always 2) and less than the total amount of references in the worksheet</param>
         /// <returns>The reference at the given index</returns>
