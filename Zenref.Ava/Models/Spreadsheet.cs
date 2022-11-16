@@ -318,14 +318,13 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// <exception cref="NotImplementedException"></exception>
         public IEnumerable<Reference> GetReference(uint amount)
         {
-            //ReadRef() in loop with yield return statement
             if (amount + CurrentRow >= MaxRowsInExcel)
             {
                 throw new ArgumentOutOfRangeException(
                     $"Excel does not support more than 1,048,576 rows, tried to read {amount + CurrentRow} rows.");
             }
 
-            int totalrows = amount != 0 ? CurrentRow + (int)amount : XlWorksheet.RowsUsed().Count();
+            int totalrows = amount != 0 ? CurrentRow + (int)amount : Count;
 
             for (int i = CurrentRow; i <= totalrows; i++)
             {
@@ -359,7 +358,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// <param name="row">Optional, adds reference to a given row, possibly overwriting it</param>
         public void AddReference(Reference reference, int row = -1)
         {
-            row = row != -1 ? row : XlWorksheet.RowsUsed().Count() + 1;
+            row = row != -1 ? row : Count + 1;
             IXLRow indexedRow = XlWorksheet.Row(row);
             indexedRow.Clear();
             setReference(reference, indexedRow);
@@ -402,7 +401,7 @@ namespace Zenref.Ava.Models.Spreadsheet
             {
                 throw new ArgumentException("Start row cannot be 0 or less than -1");
             }
-            if (startRow == -1) startRow = XlWorksheet.RowsUsed().Count() + 1;
+            if (startRow == -1) startRow = Count + 1;
             foreach (Reference reference in references)
             {
                 AddReference(reference, startRow++);
