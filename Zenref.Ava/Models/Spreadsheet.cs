@@ -244,7 +244,6 @@ namespace Zenref.Ava.Models.Spreadsheet
         {
             CurrentRow = index;
             IXLRow indexedRow = XlWorksheet.Row(index);
-
             return ReadRow(indexedRow);
         }
 
@@ -323,7 +322,7 @@ namespace Zenref.Ava.Models.Spreadsheet
             if (amount + CurrentRow >= MaxRowsInExcel)
             {
                 throw new ArgumentOutOfRangeException(
-                    $"Excel does not support more than 1,048,576 rows, tried to read {amount + CurrentRow} rows.  ");
+                    $"Excel does not support more than 1,048,576 rows, tried to read {amount + CurrentRow} rows.");
             }
 
             int totalrows = amount != 0 ? CurrentRow + (int)amount : XlWorksheet.RowsUsed().Count();
@@ -345,7 +344,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         }
 
         /// <summary>
-        /// Creates a new, empty workbook, primarily for creating a new spreadsheet with <c>Reference</c>s
+        /// Creates a new, empty workbook, primarily for creating a new spreadsheet with References. Also creates an empty worksheet called Sheet1
         /// </summary>
         public void Create()
         {
@@ -406,7 +405,6 @@ namespace Zenref.Ava.Models.Spreadsheet
             if (startRow == -1) startRow = XlWorksheet.RowsUsed().Count() + 1;
             foreach (Reference reference in references)
             {
-                //AddReference(reference);
                 AddReference(reference, startRow++);
             }
         }
@@ -442,9 +440,6 @@ namespace Zenref.Ava.Models.Spreadsheet
             }
 
             WorkbookProperty?.SaveAs(Path.Join(FilePath + filename));
-            //throw new NotImplementedException();
-            // Export spreadsheet....
-            // Window.close(); 
         }
 
         /// <summary>
@@ -495,8 +490,6 @@ namespace Zenref.Ava.Models.Spreadsheet
         {
             if (index > 0 && index <= Count)
             {
-                //Reference itemToBeRemoved = this[index];
-                //Remove(itemToBeRemoved);
                 XlWorksheet.Row(index).Delete();
             }
             else
@@ -547,6 +540,7 @@ namespace Zenref.Ava.Models.Spreadsheet
             return doesContain;
         }
 
+        [Obsolete]
         public void CopyTo(Reference[] array, int arrayIndex)
         {
             throw new NotImplementedException();
@@ -556,8 +550,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         ///Removes the Reference from the spreadsheet and shifts all rows below it up thus
         ///</summary>
         /// <remarks>
-        /// Reduces Count by 1
-        /// 
+        /// Reduces Count by 1.
         /// Don't use in a loop, ClosedXML alleges poor performance consider using clear</remarks>
         public bool Remove(Reference item)
         {
