@@ -52,6 +52,7 @@ namespace zenref.Tests
             tempWorkbook.AddWorksheet("testsheet");
             tempWorkbook.SaveAs(SPREADSHEETTESTNAME);
             Spreadsheet testSpreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
+            
             //Act
             testSpreadsheet.Import();
 
@@ -109,7 +110,7 @@ namespace zenref.Tests
 
             Dictionary<int, string> sheetDic = spreadsheet.GetWorksheets();
 
-            Assert.Equal<Dictionary<int, string>>(sheetDic, new Dictionary<int, string>()
+            Assert.Equal(sheetDic, new Dictionary<int, string>()
             {
                 {1, TESTSHEET },
                 {2, SECONDTESTSHEET },
@@ -214,8 +215,9 @@ namespace zenref.Tests
 
             for (int i = 0; i < sheet.PositionOfReferencesInSheet.Count; i++)
             {
-                firstrow.Cell(i + 1).SetValue<string>(sheet.PositionOfReferencesInSheet.ElementAt(i).Key.ToString());
+                firstrow.Cell(i + 1).SetValue(sheet.PositionOfReferencesInSheet.ElementAt(i).Key.ToString());
             }
+            
             IXLRow secondrow = ws.Row(2);
             secondrow.Cell(1).SetValue<string>("Anders Rask");
             secondrow.Cell(2).SetValue<string>("titel på noget");
@@ -289,7 +291,7 @@ namespace zenref.Tests
 
             for (int i = 0; i < sheet.PositionOfReferencesInSheet.Count; i++)
             {
-                firstrow.Cell(i + 1).SetValue<string>(sheet.PositionOfReferencesInSheet.ElementAt(i).Key.ToString());
+                firstrow.Cell(i + 1).SetValue(sheet.PositionOfReferencesInSheet.ElementAt(i).Key.ToString());
             }
             IXLRow secondrow = ws.Row(2);
             secondrow.Cell(1).SetValue<string>("Anders Rask");
@@ -315,8 +317,7 @@ namespace zenref.Tests
             secondrow.Cell(21).SetValue<string>("16-21");
             secondrow.Cell(22).SetValue<string>("Din far");
             wb.SaveAs(FILLEDSPREADSHEETNAME);
-
-
+            
             sheet.Import();
 
             Assert.Equal("Software", sheet[2].Edu);
@@ -393,8 +394,7 @@ namespace zenref.Tests
             File.Delete(FILLEDSPREADSHEETNAME);
         }
 
-        [Fact]  //Tar to værdier. index og reference som skal ind.
-                //den overskriver hvis der allerede er en.
+        [Fact]  //Tar to værdier. index og reference som skal ind. - den overskriver hvis der allerede er en.
         public void InsertOnOccupiedRow()
         {
             //Arrange
@@ -613,8 +613,6 @@ namespace zenref.Tests
             bool isEmpty = row.IsEmpty();
 
             Assert.False(isEmpty);
-
-
         }
         [Fact]
         public void SwapReferencePropertySwaps()
@@ -638,7 +636,7 @@ namespace zenref.Tests
         {
             Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
 
-            SortedDictionary<Spreadsheet.ReferenceFields, int> originaldic = new(spreadsheet.PositionOfReferencesInSheet);
+            // SortedDictionary<Spreadsheet.ReferenceFields, int> originaldic = new(spreadsheet.PositionOfReferencesInSheet);
 
             SortedDictionary<Spreadsheet.ReferenceFields, int> newDic = new()
             {
