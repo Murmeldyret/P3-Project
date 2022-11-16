@@ -369,27 +369,27 @@ namespace Zenref.Ava.Models.Spreadsheet
 
         private void setReference(Reference reference, IXLRow indexedRow)
         {
-            getCell(indexedRow, ReferenceFields.Author).SetValue<string>(reference.Author ?? "");
-            getCell(indexedRow, ReferenceFields.Title).SetValue<string>(reference.Title ?? "");
-            getCell(indexedRow, ReferenceFields.PublicationType).SetValue<string>(reference.PubType ?? "");
-            getCell(indexedRow, ReferenceFields.Publisher).SetValue<string>(reference.Publisher ?? "");
-            getCell(indexedRow, ReferenceFields.YearRef).SetValue<int?>(reference.YearRef);
-            getCell(indexedRow, ReferenceFields.IdRef).SetValue<int?>(reference.ID);
-            getCell(indexedRow, ReferenceFields.Education).SetValue<string>(reference.Edu ?? "");
-            getCell(indexedRow, ReferenceFields.Location).SetValue<string>(reference.Location ?? "");
-            getCell(indexedRow, ReferenceFields.Semester).SetValue<string>(reference.Semester ?? "");
-            getCell(indexedRow, ReferenceFields.Language).SetValue<string>(reference.Language ?? "");
-            getCell(indexedRow, ReferenceFields.YearReport).SetValue<int?>(reference.YearReport);
-            getCell(indexedRow, ReferenceFields.Match).SetValue<double?>(reference.Match);
-            getCell(indexedRow, ReferenceFields.Comment).SetValue<string>(reference.Commentary ?? "");
-            getCell(indexedRow, ReferenceFields.Syllabus).SetValue<string>(reference.Syllabus ?? "");
-            getCell(indexedRow, ReferenceFields.Season).SetValue<string>(reference.Season ?? "");
-            getCell(indexedRow, ReferenceFields.ExamEvent).SetValue<string>(reference.ExamEvent ?? "");
-            getCell(indexedRow, ReferenceFields.Source).SetValue<string>(reference.Source ?? "");
-            getCell(indexedRow, ReferenceFields.Pages).SetValue<int?>(reference.Pages);
-            getCell(indexedRow, ReferenceFields.Volume).SetValue<string>(reference.Volume ?? "");
-            getCell(indexedRow, ReferenceFields.Chapters).SetValue<string>(reference.Chapters ?? "");
-            getCell(indexedRow, ReferenceFields.BookTitle).SetValue<string>(reference.BookTitle ?? "");
+            getCell(indexedRow, ReferenceFields.Author).SetValue(reference.Author ?? "");
+            getCell(indexedRow, ReferenceFields.Title).SetValue(reference.Title ?? "");
+            getCell(indexedRow, ReferenceFields.PublicationType).SetValue(reference.PubType ?? "");
+            getCell(indexedRow, ReferenceFields.Publisher).SetValue(reference.Publisher ?? "");
+            getCell(indexedRow, ReferenceFields.YearRef).SetValue(reference.YearRef);
+            getCell(indexedRow, ReferenceFields.IdRef).SetValue(reference.ID);
+            getCell(indexedRow, ReferenceFields.Education).SetValue(reference.Edu ?? "");
+            getCell(indexedRow, ReferenceFields.Location).SetValue(reference.Location ?? "");
+            getCell(indexedRow, ReferenceFields.Semester).SetValue(reference.Semester ?? "");
+            getCell(indexedRow, ReferenceFields.Language).SetValue(reference.Language ?? "");
+            getCell(indexedRow, ReferenceFields.YearReport).SetValue(reference.YearReport);
+            getCell(indexedRow, ReferenceFields.Match).SetValue(reference.Match);
+            getCell(indexedRow, ReferenceFields.Comment).SetValue(reference.Commentary ?? "");
+            getCell(indexedRow, ReferenceFields.Syllabus).SetValue(reference.Syllabus ?? "");
+            getCell(indexedRow, ReferenceFields.Season).SetValue(reference.Season ?? "");
+            getCell(indexedRow, ReferenceFields.ExamEvent).SetValue(reference.ExamEvent ?? "");
+            getCell(indexedRow, ReferenceFields.Source).SetValue(reference.Source ?? "");
+            getCell(indexedRow, ReferenceFields.Pages).SetValue(reference.Pages);
+            getCell(indexedRow, ReferenceFields.Volume).SetValue(reference.Volume ?? "");
+            getCell(indexedRow, ReferenceFields.Chapters).SetValue(reference.Chapters ?? "");
+            getCell(indexedRow, ReferenceFields.BookTitle).SetValue(reference.BookTitle ?? "");
         }
 
         /// <summary>
