@@ -18,8 +18,8 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// </summary>
         private string FilePath { get; }
         public bool DoesExcelFileExist => WorkbookProperty is not null;
-        private XLWorkbook? Workbook { get; set; }
         private IXLWorksheet XlWorksheet => Workbook?.Worksheet(ActiveSheet) ?? throw new InvalidOperationException();
+        private XLWorkbook? Workbook { get; set; }
 
         private XLWorkbook? WorkbookProperty
         {
