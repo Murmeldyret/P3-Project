@@ -30,6 +30,7 @@
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.18" />
 	<PackageReference Include="Avalonia.ReactiveUI" Version="0.10.18" />
 	<PackageReference Include="ClosedXML" Version="0.97.0" />
+	<PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
 	<PackageReference Include="Fastenshtein" Version="1.0.0.8" />
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.10">
 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
