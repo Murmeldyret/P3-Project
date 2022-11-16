@@ -15,9 +15,8 @@
 				<ColumnDefinition/>
 			</Grid.ColumnDefinitions>
 			<StackPanel>
-				<Grid>
+				<Grid DragDrop.AllowDrop="True">
 					<Rectangle
-						DragDrop.AllowDrop="True"
 						Fill="Gainsboro"
 						Height="250"
 						Width="400">
@@ -41,13 +40,13 @@
 					Height="50"
 					Width="150"
 					Margin="10"
-					Command="{Binding OpenFileDialog}"
+					Command="{Binding OpenFileDialogCommand}"
 					CommandParameter="{Binding ElementName=DADView}">
 				</Button>
 				<TextBlock Text="{Binding FilePath}"/>
 			</StackPanel>
 		</Grid>
-			
+		
 		<Button Command="{Binding CloseWindow}" CommandParameter="{Binding ElementName=DADView}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="100,10">Afbryd</Button>
 		<Button VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="20,10">Næste</Button>
 	</Grid>
