@@ -320,14 +320,13 @@ namespace Zenref.Ava.Models.Spreadsheet
         public IEnumerable<Reference> GetReference(uint amount)
         {
             //ReadRef() in loop with yield return statement
-            int totalrows;
             if (amount + CurrentRow >= MaxRowsInExcel)
             {
                 throw new ArgumentOutOfRangeException(
                     $"Excel does not support more than 1,048,576 rows, tried to read {amount + CurrentRow} rows.  ");
             }
 
-            totalrows = amount != 0 ? CurrentRow + (int)amount : XlWorksheet.RowsUsed().Count();
+            int totalrows = amount != 0 ? CurrentRow + (int)amount : XlWorksheet.RowsUsed().Count();
 
             for (int i = CurrentRow; i <= totalrows; i++)
             {
