@@ -13,6 +13,9 @@ namespace Zenref.Ava.Models.Spreadsheet
     public sealed class Spreadsheet : IList<Reference>
     {
         private string FileName { get; }
+        /// <summary>
+        /// The absolute file path to the Excel file excluding the name of the file itself
+        /// </summary>
         private string FilePath { get; }
         public bool DoesExcelFileExist => WorkbookProperty is not null;
         private XLWorkbook? Workbook { get; set; }
@@ -46,7 +49,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         public bool IsReadOnly => Workbook.IsProtected;
 
         /// <summary>
-        /// Gets the reference at the given row index
+        /// Gets or sets the reference at the given row index
         /// </summary>
         /// <param name="index">An integer greater than 1 (And almost always 2) and less than the total amount of references in the worksheet</param>
         /// <returns>The reference at the given index</returns>
@@ -164,9 +167,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// </summary>
         public void SwapReferenceProperty(ReferenceFields first, ReferenceFields second)
         {
-            int firstValue = PositionOfReferencesInSheet[first];
-            PositionOfReferencesInSheet[first] = PositionOfReferencesInSheet[second];
-            PositionOfReferencesInSheet[second] = firstValue;
+            (PositionOfReferencesInSheet[second], PositionOfReferencesInSheet[first]) = (PositionOfReferencesInSheet[first], PositionOfReferencesInSheet[second]);
         }
 
         /// <summary>
@@ -239,7 +240,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// <summary>
         /// Gets a reference at the specified row
         /// </summary>
-        /// <param name="index">The row index of the ReferenceNote that Excel is 1-indexed, and the 1st row is usually reserved for metadata</param>
+        /// <param name="index">The row index of the ReferenceNote that Excel is 1-indexed, and the first row is usually reserved for metadata</param>
         /// <returns>The Reference at the given row</returns>
         /// <remarks>Note that Excel is 1-indexed, and the 1st row is usually reserved for metadata</remarks>
         public Reference GetReference(int index)
@@ -341,6 +342,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// Checks if <c>FileName</c> is an Excel file
         /// </summary>
         /// <returns><c>true</c> if <c>FileName</c>suffix is .xlsx, <c>false</c> otherwise </returns>
+        /// <remarks>.xlsx refers to 2007 Excel files, if file suffx is .xls, method will return false</remarks>
         public bool IsFileExcel()
         {
             return (Path.GetExtension(FileName) == ".xlsx");
