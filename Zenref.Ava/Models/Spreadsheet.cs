@@ -217,12 +217,9 @@ namespace Zenref.Ava.Models.Spreadsheet
 
             if (dic.ContainsValue(sheetname))
             {
-                foreach (KeyValuePair<int, string> pair in dic)
+                foreach (KeyValuePair<int, string> pair in dic.Where(pair => pair.Value == sheetname))
                 {
-                    if (pair.Value == sheetname)
-                    {
-                        outputSheetPos = pair.Key;
-                    }
+                    outputSheetPos = pair.Key;
                 }
             }
             else
