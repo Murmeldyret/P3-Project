@@ -46,7 +46,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// <remarks>Not the same as count, Count returns the total number of references in a spreadsheet whereas length returns the row position of the last reference</remarks>
         public int Length => XlWorksheet.LastRowUsed().RowNumber();
 
-        public bool IsReadOnly => Workbook.IsProtected;
+        public bool IsReadOnly => Workbook!.IsProtected;
 
         /// <summary>
         /// Gets or sets the reference at the given row index
@@ -179,7 +179,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         {
             Dictionary<int, string> resDic = new Dictionary<int, string>();
             
-            for (int i = 1; i <= Workbook.Worksheets.Count; i++)
+            for (int i = 1; i <= Workbook!.Worksheets.Count; i++)
             {
                 IXLWorksheet worksheet = Workbook.Worksheet(i);
                 resDic.Add(worksheet.Position, worksheet.Name);
@@ -414,7 +414,6 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// <exception cref="FileNotFoundException">Throws if the file cannot be found</exception>
         public void Import()
         {
-            //throw new NotImplementedException();
             try
             {
                 WorkbookProperty = new XLWorkbook(FileName);
