@@ -400,7 +400,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// <exception cref="ArgumentException">Throws if parameter startRow is 0 or less than -1</exception>
         public void AddReference(IEnumerable<Reference> references, int startRow = -1)
         {
-            if (startRow == 0 || startRow < -1)
+            if (startRow is 0 or < -1)
             {
                 throw new ArgumentException("Start row cannot be 0 or less than -1");
             }
