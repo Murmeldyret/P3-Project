@@ -145,7 +145,6 @@ namespace Zenref.Ava.Models.Spreadsheet
             FilePath = filepath;
         }
 
-        //TODO test
         /// <summary>
         /// Sets the column position of reference properties as given by the input dictionary
         /// </summary>
@@ -160,7 +159,6 @@ namespace Zenref.Ava.Models.Spreadsheet
                     $"Parameter inputdic must be the same size as the current dictionary. inputdic.Count =={inputdic.Count} !={_referenceFieldsCount}");
         }
 
-        //TODO test
         /// <summary>
         /// Swaps the column position of two Reference properties
         /// </summary>
@@ -400,7 +398,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// </summary>
         /// <param name="references">Collection of references to be added</param>
         /// <param name="startRow">The start row from where the references should be inserted. If default, appends to end of list of references</param>
-        private void AddReference(IEnumerable<Reference> references, int startRow = -1)
+        public void AddReference(IEnumerable<Reference> references, int startRow = -1)
         {
             if (startRow == -1) startRow = XlWorksheet.RowsUsed().Count() + 1;
             foreach (Reference reference in references)
