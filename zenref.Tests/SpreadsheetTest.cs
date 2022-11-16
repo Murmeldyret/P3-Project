@@ -13,50 +13,51 @@ namespace zenref.Tests
     public class SpreadsheetTest
     {
         const string SPREADSHEETTESTNAME = "test.xlsx";
+        const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
+
+        XLWorkbook workbook = new XLWorkbook();
+        Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
+        Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
+
+        Reference reference1 = new Reference(
+            "Anders er ikke rask",
+            "wololo"
+            );
+
+        Reference reference2 = new Reference(
+            "True Winner"
+            );
+        Reference reference3 = new Reference(
+            "Med løg på"
+            );
+
         [Fact]
         public void CheckFilename()
         {
             //Arrange
-            XLWorkbook workbook = new XLWorkbook();
             workbook.AddWorksheet("Temp");
             workbook.SaveAs(SPREADSHEETTESTNAME);
-            Spreadsheet testSpreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
 
             //Act
-            testSpreadsheet.Import();
-            bool result = testSpreadsheet.IsFileExcel();
+            spreadsheet.Import();
+            bool result = spreadsheet.IsFileExcel();
 
             //Assert
             Assert.True(result);
             File.Delete(SPREADSHEETTESTNAME);
         }
 
-        //[Fact]
-        //public void ReadRefTest()
-        //{
-        //    //Arrange
-        //    Spreadsheet testSpreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
-
-        //    //Act
-        //    Reference result = testSpreadsheet.ReadRef();
-
-        //    //Assert
-        //    Assert.NotNull(result);
-        //}
-
         [Fact]
         public void ImportTestWhenFileFound()
         {
             //Arrange
-            XLWorkbook tempWorkbook = new XLWorkbook();
-            tempWorkbook.AddWorksheet("testsheet");
-            tempWorkbook.SaveAs(SPREADSHEETTESTNAME);
-            Spreadsheet testSpreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
+            workbook.AddWorksheet("testsheet");
+            workbook.SaveAs(SPREADSHEETTESTNAME);
             //Act
-            testSpreadsheet.Import();
+            spreadsheet.Import();
 
             //Assert
-            Assert.True(testSpreadsheet.DoesExcelFileExist);
+            Assert.True(spreadsheet.DoesExcelFileExist);
             File.Delete(SPREADSHEETTESTNAME);
         }
         [Fact]
@@ -74,11 +75,10 @@ namespace zenref.Tests
         public void ExportTestWhenNotNull()
         {
             //Arrange
-            Spreadsheet testSpreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
             File.Delete(SPREADSHEETTESTNAME);
 
             //Act
-            Action exportNullWorkbook = () => testSpreadsheet.Export(SPREADSHEETTESTNAME);
+            Action exportNullWorkbook = () => spreadsheet.Export(SPREADSHEETTESTNAME);
 
             //Assert
             Assert.Throws<FileNotFoundException>(exportNullWorkbook);
@@ -86,9 +86,7 @@ namespace zenref.Tests
         }
         [Fact]
         public void CreateEmptySheet()
-        {
-            Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
-
+        { 
             spreadsheet.Create();
 
             Assert.True(spreadsheet.DoesExcelFileExist);
@@ -98,12 +96,10 @@ namespace zenref.Tests
         {
             const string TESTSHEET = "testsheet";
             const string SECONDTESTSHEET = "secondtestsheet";
-            Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
 
-            XLWorkbook tempWorkbook = new XLWorkbook();
-            tempWorkbook.AddWorksheet(TESTSHEET);
-            tempWorkbook.AddWorksheet(SECONDTESTSHEET);
-            tempWorkbook.SaveAs(SPREADSHEETTESTNAME);
+            workbook.AddWorksheet(TESTSHEET);
+            workbook.AddWorksheet(SECONDTESTSHEET);
+            workbook.SaveAs(SPREADSHEETTESTNAME);
 
             spreadsheet.Import();
 
@@ -122,10 +118,8 @@ namespace zenref.Tests
         {
             const string SHEETNAME = "test";
             File.Delete(SPREADSHEETTESTNAME);
-            XLWorkbook workbook = new XLWorkbook();
             workbook.AddWorksheet(SHEETNAME, 1);
             workbook.SaveAs(SPREADSHEETTESTNAME);
-            Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
             spreadsheet.Import();
             Dictionary<int, string> sheetdic = spreadsheet.GetWorksheets();
 
@@ -138,20 +132,17 @@ namespace zenref.Tests
         public void SetActiveSheetIntNonExistentSheet()
         {
             File.Delete(SPREADSHEETTESTNAME);
-            XLWorkbook workbook = new XLWorkbook();
             workbook.AddWorksheet(1);
             workbook.SaveAs(SPREADSHEETTESTNAME);
 
-            Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
             spreadsheet.Import();
 
             spreadsheet.SetActiveSheet(2);
             Dictionary<int, string> sheetdic = spreadsheet.GetWorksheets();
-            string sheet2Name = sheetdic[2]; //FIXME Test giver ikke mening
+            string sheet2Name = sheetdic[1];
 
-            Assert.True(sheetdic[2] == sheet2Name);
+            Assert.False(sheetdic[2] == sheet2Name);
             File.Delete(SPREADSHEETTESTNAME);
-
         }
         [Fact]
         public void SetActiveSheetStringExistingSheet()
@@ -159,11 +150,9 @@ namespace zenref.Tests
             const string SHEETNAME = "test";
 
             File.Delete(SPREADSHEETTESTNAME);
-            XLWorkbook workbook = new XLWorkbook();
             workbook.AddWorksheet(SHEETNAME);
             workbook.SaveAs(SPREADSHEETTESTNAME);
 
-            Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
             spreadsheet.Import();
 
 
@@ -182,11 +171,9 @@ namespace zenref.Tests
             const string SHEETNAME = "test";
 
             File.Delete(SPREADSHEETTESTNAME);
-            XLWorkbook workbook = new XLWorkbook();
             workbook.AddWorksheet("A bad sheetname");
             workbook.SaveAs(SPREADSHEETTESTNAME);
 
-            Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
             spreadsheet.Import();
 
             spreadsheet.SetActiveSheet(SHEETNAME);
@@ -200,15 +187,11 @@ namespace zenref.Tests
         [Fact]
         public void ReadRefReadsFieldsCorrectly()
         {
-            const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
             const string SHEETNAME = "test";
 
             File.Delete(FILLEDSPREADSHEETNAME);
 
-            XLWorkbook wb = new XLWorkbook();
-            Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
-
-            IXLWorksheet ws = wb.AddWorksheet(SHEETNAME);
+            IXLWorksheet ws = workbook.AddWorksheet(SHEETNAME);
             IXLRow firstrow = ws.Row(1);
             //IXLRange firstrow = ws.Range(1, 1, 1, 22);
 
@@ -239,7 +222,7 @@ namespace zenref.Tests
             secondrow.Cell(20).SetValue<string>("20th");
             secondrow.Cell(21).SetValue<string>("16-21");
             secondrow.Cell(22).SetValue<string>("Din far");
-            wb.SaveAs(FILLEDSPREADSHEETNAME);
+            workbook.SaveAs(FILLEDSPREADSHEETNAME);
 
             //Read reference should be equal to this
             Reference reference = new Reference("Anders Rask",
@@ -275,15 +258,11 @@ namespace zenref.Tests
         [Fact]
         public void IListIndexerGetterWorks()
         {
-            const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
             const string SHEETNAME = "test";
 
             File.Delete(FILLEDSPREADSHEETNAME);
 
-            XLWorkbook wb = new XLWorkbook();
-            Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
-
-            IXLWorksheet ws = wb.AddWorksheet(SHEETNAME);
+            IXLWorksheet ws = workbook.AddWorksheet(SHEETNAME);
             IXLRow firstrow = ws.Row(1);
             //IXLRange firstrow = ws.Range(1, 1, 1, 22);
 
@@ -314,8 +293,7 @@ namespace zenref.Tests
             secondrow.Cell(20).SetValue<string>("20th");
             secondrow.Cell(21).SetValue<string>("16-21");
             secondrow.Cell(22).SetValue<string>("Din far");
-            wb.SaveAs(FILLEDSPREADSHEETNAME);
-
+            workbook.SaveAs(FILLEDSPREADSHEETNAME);
 
             sheet.Import();
 
@@ -328,26 +306,9 @@ namespace zenref.Tests
         public void IndexOf()
         {
             //Arrange
-            const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
-
-
             File.Delete(FILLEDSPREADSHEETNAME);
 
-            Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
-
-
             //Act
-            Reference reference1 = new Reference(
-                "Anders er ikke rask",
-                "wololo"
-                );
-
-            Reference reference2 = new Reference(
-                "True Winner"
-                );
-            Reference reference3 = new Reference(
-                "Med løg på"
-                );
 
             sheet.Create();
             sheet.AddReference(new List<Reference>() { reference1, reference2, reference3 });
@@ -356,30 +317,14 @@ namespace zenref.Tests
             int index = sheet.IndexOf(reference2);
 
             Assert.Equal(2, index);
-            //File.Delete(FILLEDSPREADSHEETNAME);
+            File.Delete(FILLEDSPREADSHEETNAME);
         }
 
         [Fact]  //Tar to værdier. index og reference som skal ind.
         public void InsertUnoccupiedRow()
         {
             //Arrange
-            const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
-
             File.Delete(FILLEDSPREADSHEETNAME);
-
-            Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
-
-            Reference reference1 = new Reference(
-                "Anders er ikke rask",
-                "wololo"
-                );
-
-            Reference reference2 = new Reference(
-                "True Winner"
-                );
-            Reference reference3 = new Reference(
-                "True Winner"
-                );
 
             //Act
             sheet.Create();
@@ -398,23 +343,7 @@ namespace zenref.Tests
         public void InsertOnOccupiedRow()
         {
             //Arrange
-            const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
-
             File.Delete(FILLEDSPREADSHEETNAME);
-
-            Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
-
-            Reference reference1 = new Reference(
-                "Anders er ikke rask",
-                "wololo"
-                );
-
-            Reference reference2 = new Reference(
-                "True Winner"
-                );
-            Reference reference3 = new Reference(
-                "True Winner"
-                );
 
             //Act
             sheet.Create();
@@ -436,19 +365,7 @@ namespace zenref.Tests
         public void Add()
         {
             //Arrange
-            const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
-
             File.Delete(FILLEDSPREADSHEETNAME);
-
-            Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
-            
-            Reference reference1 = new Reference(
-                "Anders er ikke rask",
-                "wololo"
-                );
-            Reference reference2 = new Reference(
-                "True Winner"
-                );
 
             //Act
             sheet.Create();
@@ -465,22 +382,7 @@ namespace zenref.Tests
         public void RemoveAt()
         {
             //Arrange
-            const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
-
             File.Delete(FILLEDSPREADSHEETNAME);
-
-            Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
-            Reference reference1 = new Reference(
-                "Anders er ikke rask",
-                "wololo"
-                );
-
-            Reference reference2 = new Reference(
-                "True Winner"
-                );
-            Reference reference3 = new Reference(
-                "True Winner"
-                );
 
             //Act
             sheet.Create();
@@ -497,22 +399,11 @@ namespace zenref.Tests
         public void ClearWorksheet()
         {
             //Arrange
-            const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
             const string SHEETNAME = "test";
-            const string SHEETNAMETWO = "test1";
 
             File.Delete(FILLEDSPREADSHEETNAME);
 
-            XLWorkbook wb = new XLWorkbook();
-            Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
-
-            IXLWorksheet ws = wb.AddWorksheet(SHEETNAME);
-            IXLWorksheet ws2 = wb.AddWorksheet(SHEETNAMETWO);
-
-            Reference reference1 = new Reference(
-                "Anders er ikke rask",
-                "wololo"
-                );
+            IXLWorksheet ws = workbook.AddWorksheet(SHEETNAME);
 
             //Act
             sheet.Create();
@@ -523,7 +414,6 @@ namespace zenref.Tests
             //Assert
             sheet.Export(FILLEDSPREADSHEETNAME);
             Assert.Empty(sheet);
-            //Assert.Equal(0, sheet.Count);
 
             File.Delete(FILLEDSPREADSHEETNAME);
         }
@@ -532,23 +422,7 @@ namespace zenref.Tests
         public void RemoveRowContent()
         {
             //Arrange
-            const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
-
             File.Delete(FILLEDSPREADSHEETNAME);
-
-            Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
-
-            Reference reference1 = new Reference(
-                "Anders er ikke rask",
-                "wololo"
-                );
-
-            Reference reference2 = new Reference(
-                "True Winner"
-                );
-            Reference reference3 = new Reference(
-                "True Winner din far "
-                );
 
             //Act
             sheet.Create();
@@ -560,28 +434,16 @@ namespace zenref.Tests
 
             //Assert
             sheet.Export(FILLEDSPREADSHEETNAME);
-            //Assert.Equivalent(reff, reference2);
             Assert.False(res);
-            //File.Delete(FILLEDSPREADSHEETNAME);
+            File.Delete(FILLEDSPREADSHEETNAME);
         }
 
         [Fact]
         public void CountNotNullRows()
         {
             //Arrange
-            const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
-
             File.Delete(FILLEDSPREADSHEETNAME);
-
-            Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
-
-            Reference reference1 = new Reference(
-                "Anders er ikke rask",
-                "wololo"
-                );
-
-            Reference referencenull = new Reference(
-                );
+            Reference referencenull = new Reference();
 
             //Act
             sheet.Create();
@@ -600,7 +462,6 @@ namespace zenref.Tests
         {
             const int ROWTOINSERTAT = 4;
             File.Delete(SPREADSHEETTESTNAME);
-            Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
 
             spreadsheet.Create();
 
@@ -613,13 +474,10 @@ namespace zenref.Tests
             bool isEmpty = row.IsEmpty();
 
             Assert.False(isEmpty);
-
-
         }
         [Fact]
         public void SwapReferencePropertySwaps()
         {
-            Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
             //Dictionary needs to be copied because of the way reference types work :/
             SortedDictionary<Spreadsheet.ReferenceFields, int> originalDic = new SortedDictionary<Spreadsheet.ReferenceFields, int>(spreadsheet.PositionOfReferencesInSheet);
             spreadsheet.SwapReferenceProperty(Spreadsheet.ReferenceFields.Author,Spreadsheet.ReferenceFields.Title);
@@ -636,8 +494,6 @@ namespace zenref.Tests
         [Fact]
         public void SetColumnPositionOverwrite()
         {
-            Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
-
             SortedDictionary<Spreadsheet.ReferenceFields, int> originaldic = new(spreadsheet.PositionOfReferencesInSheet);
 
             SortedDictionary<Spreadsheet.ReferenceFields, int> newDic = new()
@@ -668,7 +524,6 @@ namespace zenref.Tests
             spreadsheet.SetColumnPosition(newDic);
 
             Assert.Equivalent(newDic, spreadsheet.PositionOfReferencesInSheet, true);
-
         }
     }
 }
