@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 using Zenref.Ava.Models;
 using P3Project.API.APIHelper;
@@ -12,6 +13,8 @@ namespace P3Project.API
     /// </summary>
     public abstract class Api
     {
+        public List<string> ParametersName { get; set; }
+        public List<string> ParametersValue { get; set; }
         protected string _apiKey { get; init; }
         protected Uri _baseURL { get; init; }
         protected bool _isApiKeyValid { get; set; } = true;
@@ -77,9 +80,9 @@ namespace P3Project.API
         /// </summary>
         /// <param name="inputReference">The Reference that is to be looked up (usually unidentified)</param>
         /// <returns>A reference with correctly filled fields</returns>
-        public virtual async Task<Reference> ReferenceFetch(Reference inputReference, Func<HttpResponseMessage, Reference> referenceParser)
+        public virtual async Task<Reference> ReferenceFetch(Reference inputReference, Func<Reference, HttpResponseMessage, Reference> referenceParser)
         {
-            Uri apiUri = new Uri(_baseURL.ToString() + "&query=" + inputReference.OriReference);  // Compose URI.
+            Uri apiUri = BuildUri($"&query={inputReference.OriReference}");
 
             HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(apiUri);       // Request API for ressource.
 
@@ -90,10 +93,32 @@ namespace P3Project.API
             }
 
             // Parse into deligate
-            Reference parsed_reference = referenceParser(response);
+            Reference parsed_reference = referenceParser(inputReference, response);
 
             return parsed_reference;
 
+        }
+
+        protected Uri BuildUri(string query)
+        {
+            UriBuilder uriBuilder = new UriBuilder(_baseURL);
+
+            // Add all parameters to the query
+            if (ParametersName != null && ParametersValue != null && ParametersName.Count == ParametersValue.Count)
+            {
+                uriBuilder.Query = ParametersName[0] + "=" + ParametersValue[0];
+                for (int i = 1; i < ParametersName.Count; i++)
+                {
+                    uriBuilder.Query += $"&{ParametersName[i]}={ParametersValue[i]}";
+                }
+            }
+
+            uriBuilder.Query += query;
+
+            // Add API key to query
+            uriBuilder.Query += $"&apikey={_apiKey}";
+
+            return uriBuilder.Uri;
         }
 
         protected void CacheReference(Reference CacheableReference)

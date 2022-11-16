@@ -1,0 +1,1725 @@
+{
+    "search-results": {
+        "opensearch:totalResults": "121",
+        "opensearch:startIndex": "0",
+        "opensearch:itemsPerPage": "25",
+        "opensearch:Query": {
+            "@role": "request",
+            "@searchTerms": "improvement AND of AND cloud AND computing AND medical AND data AND protection AND technology AND based AND on AND symmetric AND encryption AND algorithm",
+            "@startPage": "0"
+        },
+        "link": [
+            {
+                "@_fa": "true",
+                "@ref": "self",
+                "@href": "https://api.elsevier.com/content/search/scopus?start=0&count=25&query=improvement+AND+of+AND+cloud+AND+computing+AND+medical+AND+data+AND+protection+AND+technology+AND+based+AND+on+AND+symmetric+AND+encryption+AND+algorithm&apiKey=09b41dfa7be4e8d0e383aa92495d16c0",
+                "@type": "application/json"
+            },
+            {
+                "@_fa": "true",
+                "@ref": "first",
+                "@href": "https://api.elsevier.com/content/search/scopus?start=0&count=25&query=improvement+AND+of+AND+cloud+AND+computing+AND+medical+AND+data+AND+protection+AND+technology+AND+based+AND+on+AND+symmetric+AND+encryption+AND+algorithm&apiKey=09b41dfa7be4e8d0e383aa92495d16c0",
+                "@type": "application/json"
+            },
+            {
+                "@_fa": "true",
+                "@ref": "next",
+                "@href": "https://api.elsevier.com/content/search/scopus?start=25&count=25&query=improvement+AND+of+AND+cloud+AND+computing+AND+medical+AND+data+AND+protection+AND+technology+AND+based+AND+on+AND+symmetric+AND+encryption+AND+algorithm&apiKey=09b41dfa7be4e8d0e383aa92495d16c0",
+                "@type": "application/json"
+            },
+            {
+                "@_fa": "true",
+                "@ref": "last",
+                "@href": "https://api.elsevier.com/content/search/scopus?start=96&count=25&query=improvement+AND+of+AND+cloud+AND+computing+AND+medical+AND+data+AND+protection+AND+technology+AND+based+AND+on+AND+symmetric+AND+encryption+AND+algorithm&apiKey=09b41dfa7be4e8d0e383aa92495d16c0",
+                "@type": "application/json"
+            }
+        ],
+        "entry": [
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85123443793"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85123443793?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85123443793&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85123443793&origin=inward"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85123443793",
+                "dc:identifier": "SCOPUS_ID:85123443793",
+                "eid": "2-s2.0-85123443793",
+                "dc:title": "Improvement of Cloud Computing Medical Data Protection Technology Based on Symmetric Encryption Algorithm",
+                "dc:creator": "Zhao N.",
+                "prism:publicationName": "Journal of Testing and Evaluation",
+                "prism:issn": "00903973",
+                "prism:volume": "52",
+                "prism:issueIdentifier": "1",
+                "prism:pageRange": null,
+                "prism:coverDate": "2024-01-01",
+                "prism:coverDisplayDate": "1 January 2024",
+                "prism:doi": "10.1520/JTE2021-0456",
+                "citedby-count": "0",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "Guangdong Ocean University",
+                        "affiliation-city": "Zhanjiang",
+                        "affiliation-country": "China"
+                    }
+                ],
+                "prism:aggregationType": "Journal",
+                "subtype": "ar",
+                "subtypeDescription": "Article",
+                "source-id": "21205",
+                "openaccess": "0",
+                "openaccessFlag": false
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85138439838"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85138439838?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85138439838&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85138439838&origin=inward"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85138439838",
+                "dc:identifier": "SCOPUS_ID:85138439838",
+                "eid": "2-s2.0-85138439838",
+                "dc:title": "Cloud Computing Threats, Vulnerabilities and Countermeasures: A State-of-the-Art",
+                "dc:creator": "Pericherla S.S.",
+                "prism:publicationName": "ISeCure",
+                "prism:issn": "20082045",
+                "prism:eIssn": "20083076",
+                "prism:volume": "15",
+                "prism:issueIdentifier": "1",
+                "prism:pageRange": "55-112",
+                "prism:coverDate": "2023-01-01",
+                "prism:coverDisplayDate": "January 2023",
+                "prism:doi": "10.22042/isecure.2022.312328.718",
+                "citedby-count": "0",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "Vishnu Institute of Technology",
+                        "affiliation-city": "Kovvada",
+                        "affiliation-country": "India"
+                    }
+                ],
+                "prism:aggregationType": "Journal",
+                "subtype": "ar",
+                "subtypeDescription": "Article",
+                "source-id": "21101073952",
+                "openaccess": "0",
+                "openaccessFlag": false
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85137256781"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85137256781?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85137256781&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85137256781&origin=inward"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85137256781",
+                "dc:identifier": "SCOPUS_ID:85137256781",
+                "eid": "2-s2.0-85137256781",
+                "dc:title": "Design and implementation of a new lightweight chaos-based cryptosystem to secure IoT communications",
+                "dc:creator": "Kifouche A.",
+                "prism:publicationName": "International Journal of Information Security",
+                "prism:issn": "16155262",
+                "prism:eIssn": "16155270",
+                "prism:volume": "21",
+                "prism:issueIdentifier": "6",
+                "prism:pageRange": "1247-1262",
+                "prism:coverDate": "2022-12-01",
+                "prism:coverDisplayDate": "December 2022",
+                "prism:doi": "10.1007/s10207-022-00609-3",
+                "citedby-count": "0",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "Ecole Militaire Polytechnique",
+                        "affiliation-city": "Algiers",
+                        "affiliation-country": "Algeria"
+                    }
+                ],
+                "prism:aggregationType": "Journal",
+                "subtype": "ar",
+                "subtypeDescription": "Article",
+                "source-id": "145326",
+                "openaccess": "0",
+                "openaccessFlag": false
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85136093399"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85136093399?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85136093399&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85136093399&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "full-text",
+                        "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S1084804522001126"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85136093399",
+                "dc:identifier": "SCOPUS_ID:85136093399",
+                "eid": "2-s2.0-85136093399",
+                "dc:title": "Revealing the landscape of privacy-enhancing technologies in the context of data markets for the IoT: A systematic literature review",
+                "dc:creator": "Garrido G.M.",
+                "prism:publicationName": "Journal of Network and Computer Applications",
+                "prism:issn": "10848045",
+                "prism:eIssn": "10958592",
+                "prism:volume": "207",
+                "prism:pageRange": null,
+                "prism:coverDate": "2022-11-01",
+                "prism:coverDisplayDate": "November 2022",
+                "prism:doi": "10.1016/j.jnca.2022.103465",
+                "pii": "S1084804522001126",
+                "citedby-count": "2",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "Fakultät für Informatik, Technische Universität München",
+                        "affiliation-city": "Garching bei Munchen",
+                        "affiliation-country": "Germany"
+                    }
+                ],
+                "prism:aggregationType": "Journal",
+                "subtype": "re",
+                "subtypeDescription": "Review",
+                "article-number": "103465",
+                "source-id": "27277",
+                "openaccess": "0",
+                "openaccessFlag": false,
+                "freetoread": {
+                    "value": [
+                        {
+                            "$": "all"
+                        },
+                        {
+                            "$": "repository"
+                        },
+                        {
+                            "$": "repositoryam"
+                        }
+                    ]
+                },
+                "freetoreadLabel": {
+                    "value": [
+                        {
+                            "$": "All Open Access"
+                        },
+                        {
+                            "$": "Green"
+                        }
+                    ]
+                }
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85133690883"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85133690883?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85133690883&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85133690883&origin=inward"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85133690883",
+                "dc:identifier": "SCOPUS_ID:85133690883",
+                "eid": "2-s2.0-85133690883",
+                "dc:title": "An Authentication Protocol for Next Generation of Constrained IoT Systems",
+                "dc:creator": "Rostampour S.",
+                "prism:publicationName": "IEEE Internet of Things Journal",
+                "prism:eIssn": "23274662",
+                "prism:volume": "9",
+                "prism:issueIdentifier": "21",
+                "prism:pageRange": "21493-21504",
+                "prism:coverDate": "2022-11-01",
+                "prism:coverDisplayDate": "1 November 2022",
+                "prism:doi": "10.1109/JIOT.2022.3184293",
+                "citedby-count": "0",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "CÉGEP Vanier College",
+                        "affiliation-city": "Montreal",
+                        "affiliation-country": "Canada"
+                    }
+                ],
+                "prism:aggregationType": "Journal",
+                "subtype": "ar",
+                "subtypeDescription": "Article",
+                "source-id": "21100338350",
+                "openaccess": "0",
+                "openaccessFlag": false
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85139571572"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85139571572?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85139571572&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85139571572&origin=inward"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85139571572",
+                "dc:identifier": "SCOPUS_ID:85139571572",
+                "eid": "2-s2.0-85139571572",
+                "dc:title": "Computer cyberspace security mechanism supported by cloud computing",
+                "dc:creator": "Fu Z.Y.",
+                "prism:publicationName": "PLoS ONE",
+                "prism:eIssn": "19326203",
+                "prism:volume": "17",
+                "prism:issueIdentifier": "10 October",
+                "prism:pageRange": null,
+                "prism:coverDate": "2022-10-01",
+                "prism:coverDisplayDate": "October 2022",
+                "prism:doi": "10.1371/journal.pone.0271546",
+                "citedby-count": "0",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "Wuhan University",
+                        "affiliation-city": "Wuhan",
+                        "affiliation-country": "China"
+                    }
+                ],
+                "pubmed-id": "36206264",
+                "prism:aggregationType": "Journal",
+                "subtype": "ar",
+                "subtypeDescription": "Article",
+                "article-number": "e0271546",
+                "source-id": "10600153309",
+                "openaccess": "1",
+                "openaccessFlag": true,
+                "freetoread": {
+                    "value": [
+                        {
+                            "$": "all"
+                        },
+                        {
+                            "$": "publisherfullgold"
+                        },
+                        {
+                            "$": "repository"
+                        },
+                        {
+                            "$": "repositoryvor"
+                        }
+                    ]
+                },
+                "freetoreadLabel": {
+                    "value": [
+                        {
+                            "$": "All Open Access"
+                        },
+                        {
+                            "$": "Gold"
+                        },
+                        {
+                            "$": "Green"
+                        }
+                    ]
+                }
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85139249675"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85139249675?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85139249675&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85139249675&origin=inward"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85139249675",
+                "dc:identifier": "SCOPUS_ID:85139249675",
+                "eid": "2-s2.0-85139249675",
+                "dc:title": "A survey on cryptographic techniques for protecting big data security: present and forthcoming",
+                "dc:creator": "Lu S.",
+                "prism:publicationName": "Science China Information Sciences",
+                "prism:issn": "1674733X",
+                "prism:eIssn": "18691919",
+                "prism:volume": "65",
+                "prism:issueIdentifier": "10",
+                "prism:pageRange": null,
+                "prism:coverDate": "2022-10-01",
+                "prism:coverDisplayDate": "October 2022",
+                "prism:doi": "10.1007/s11432-021-3393-x",
+                "citedby-count": "0",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "Information Engineering University China",
+                        "affiliation-city": "Zhengzhou",
+                        "affiliation-country": "China"
+                    },
+                    {
+                        "@_fa": "true",
+                        "affilname": "Henan Key Laboratory of Network Cryptography Technology",
+                        "affiliation-city": "Zhengzhou",
+                        "affiliation-country": "China"
+                    }
+                ],
+                "prism:aggregationType": "Journal",
+                "subtype": "re",
+                "subtypeDescription": "Review",
+                "article-number": "201301",
+                "source-id": "19600161832",
+                "openaccess": "0",
+                "openaccessFlag": false
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85098771248"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85098771248?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85098771248&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85098771248&origin=inward"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85098771248",
+                "dc:identifier": "SCOPUS_ID:85098771248",
+                "eid": "2-s2.0-85098771248",
+                "dc:title": "DAAC: Digital asset access control in a unified blockchain based e-health system",
+                "dc:creator": "Biswas S.",
+                "prism:publicationName": "IEEE Transactions on Big Data",
+                "prism:eIssn": "23327790",
+                "prism:volume": "8",
+                "prism:issueIdentifier": "5",
+                "prism:pageRange": "1273-1287",
+                "prism:coverDate": "2022-10-01",
+                "prism:coverDisplayDate": "1 October 2022",
+                "prism:doi": "10.1109/TBDATA.2020.3037914",
+                "citedby-count": "7",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "Beijing Institute of Technology",
+                        "affiliation-city": "Beijing",
+                        "affiliation-country": "China"
+                    }
+                ],
+                "prism:aggregationType": "Journal",
+                "subtype": "ar",
+                "subtypeDescription": "Article",
+                "source-id": "21101019393",
+                "openaccess": "0",
+                "openaccessFlag": false
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85138330610"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85138330610?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85138330610&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85138330610&origin=inward"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85138330610",
+                "dc:identifier": "SCOPUS_ID:85138330610",
+                "eid": "2-s2.0-85138330610",
+                "dc:title": "A Novel QKD Approach to Enhance IIOT Privacy and Computational Knacks",
+                "dc:creator": "Singamaneni K.K.",
+                "prism:publicationName": "Sensors",
+                "prism:issn": "14248220",
+                "prism:volume": "22",
+                "prism:issueIdentifier": "18",
+                "prism:pageRange": null,
+                "prism:coverDate": "2022-09-01",
+                "prism:coverDisplayDate": "September 2022",
+                "prism:doi": "10.3390/s22186741",
+                "citedby-count": "0",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "Gandhi Institute of Technology and Management, Visakhapatnam",
+                        "affiliation-city": "Visakhapatnam",
+                        "affiliation-country": "India"
+                    }
+                ],
+                "pubmed-id": "36146089",
+                "prism:aggregationType": "Journal",
+                "subtype": "ar",
+                "subtypeDescription": "Article",
+                "article-number": "6741",
+                "source-id": "130124",
+                "openaccess": "1",
+                "openaccessFlag": true,
+                "freetoread": {
+                    "value": [
+                        {
+                            "$": "all"
+                        },
+                        {
+                            "$": "publisherfullgold"
+                        },
+                        {
+                            "$": "repository"
+                        },
+                        {
+                            "$": "repositoryvor"
+                        }
+                    ]
+                },
+                "freetoreadLabel": {
+                    "value": [
+                        {
+                            "$": "All Open Access"
+                        },
+                        {
+                            "$": "Gold"
+                        },
+                        {
+                            "$": "Green"
+                        }
+                    ]
+                }
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85137249452"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85137249452?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85137249452&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85137249452&origin=inward"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85137249452",
+                "dc:identifier": "SCOPUS_ID:85137249452",
+                "eid": "2-s2.0-85137249452",
+                "dc:title": "AI Makes Crypto Evolve",
+                "dc:creator": "Zolfaghari B.",
+                "prism:publicationName": "Applied System Innovation",
+                "prism:eIssn": "25715577",
+                "prism:volume": "5",
+                "prism:issueIdentifier": "4",
+                "prism:pageRange": null,
+                "prism:coverDate": "2022-08-01",
+                "prism:coverDisplayDate": "August 2022",
+                "prism:doi": "10.3390/asi5040075",
+                "citedby-count": "0",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "University of Guelph",
+                        "affiliation-city": "Guelph",
+                        "affiliation-country": "Canada"
+                    }
+                ],
+                "prism:aggregationType": "Journal",
+                "subtype": "re",
+                "subtypeDescription": "Review",
+                "article-number": "75",
+                "source-id": "21101024218",
+                "openaccess": "1",
+                "openaccessFlag": true,
+                "freetoread": {
+                    "value": [
+                        {
+                            "$": "all"
+                        },
+                        {
+                            "$": "publisherfullgold"
+                        }
+                    ]
+                },
+                "freetoreadLabel": {
+                    "value": [
+                        {
+                            "$": "All Open Access"
+                        },
+                        {
+                            "$": "Gold"
+                        }
+                    ]
+                }
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85133278733"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85133278733?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85133278733&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85133278733&origin=inward"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85133278733",
+                "dc:identifier": "SCOPUS_ID:85133278733",
+                "eid": "2-s2.0-85133278733",
+                "dc:title": "The Dichotomy of Neural Networks and Cryptography: War and Peace",
+                "dc:creator": "Zolfaghari B.",
+                "prism:publicationName": "Applied System Innovation",
+                "prism:eIssn": "25715577",
+                "prism:volume": "5",
+                "prism:issueIdentifier": "4",
+                "prism:pageRange": null,
+                "prism:coverDate": "2022-08-01",
+                "prism:coverDisplayDate": "August 2022",
+                "prism:doi": "10.3390/asi5040061",
+                "citedby-count": "1",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "University of Guelph",
+                        "affiliation-city": "Guelph",
+                        "affiliation-country": "Canada"
+                    }
+                ],
+                "prism:aggregationType": "Journal",
+                "subtype": "re",
+                "subtypeDescription": "Review",
+                "article-number": "61",
+                "source-id": "21101024218",
+                "openaccess": "1",
+                "openaccessFlag": true,
+                "freetoread": {
+                    "value": [
+                        {
+                            "$": "all"
+                        },
+                        {
+                            "$": "publisherfullgold"
+                        }
+                    ]
+                },
+                "freetoreadLabel": {
+                    "value": [
+                        {
+                            "$": "All Open Access"
+                        },
+                        {
+                            "$": "Gold"
+                        }
+                    ]
+                }
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85135126944"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85135126944?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85135126944&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85135126944&origin=inward"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85135126944",
+                "dc:identifier": "SCOPUS_ID:85135126944",
+                "eid": "2-s2.0-85135126944",
+                "dc:title": "A Comparative Analysis on Blockchain versus Centralized Authentication Architectures for IoT-Enabled Smart Devices in Smart Cities: A Comprehensive Review, Recent Advances, and Future Research Directions",
+                "dc:creator": "Khalil U.",
+                "prism:publicationName": "Sensors",
+                "prism:issn": "14248220",
+                "prism:volume": "22",
+                "prism:issueIdentifier": "14",
+                "prism:pageRange": null,
+                "prism:coverDate": "2022-07-01",
+                "prism:coverDisplayDate": "July 2022",
+                "prism:doi": "10.3390/s22145168",
+                "citedby-count": "1",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "Universiti Brunei Darussalam",
+                        "affiliation-city": "Bandar Seri Begawan",
+                        "affiliation-country": "Brunei Darussalam"
+                    }
+                ],
+                "pubmed-id": "35890848",
+                "prism:aggregationType": "Journal",
+                "subtype": "re",
+                "subtypeDescription": "Review",
+                "article-number": "5168",
+                "source-id": "130124",
+                "openaccess": "1",
+                "openaccessFlag": true,
+                "freetoread": {
+                    "value": [
+                        {
+                            "$": "all"
+                        },
+                        {
+                            "$": "publisherfullgold"
+                        },
+                        {
+                            "$": "repository"
+                        },
+                        {
+                            "$": "repositoryvor"
+                        }
+                    ]
+                },
+                "freetoreadLabel": {
+                    "value": [
+                        {
+                            "$": "All Open Access"
+                        },
+                        {
+                            "$": "Gold"
+                        },
+                        {
+                            "$": "Green"
+                        }
+                    ]
+                }
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85125713502"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85125713502?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85125713502&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85125713502&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "full-text",
+                        "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S1110866522000135"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85125713502",
+                "dc:identifier": "SCOPUS_ID:85125713502",
+                "eid": "2-s2.0-85125713502",
+                "dc:title": "An improved random bit-stuffing technique with a modified RSA algorithm for resisting attacks in information security (RBMRSA)",
+                "dc:creator": "Mojisola F.O.",
+                "prism:publicationName": "Egyptian Informatics Journal",
+                "prism:issn": "11108665",
+                "prism:volume": "23",
+                "prism:issueIdentifier": "2",
+                "prism:pageRange": "291-301",
+                "prism:coverDate": "2022-07-01",
+                "prism:coverDisplayDate": "July 2022",
+                "prism:doi": "10.1016/j.eij.2022.02.001",
+                "pii": "S1110866522000135",
+                "citedby-count": "0",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "Federal University of Agriculture, Abeokuta",
+                        "affiliation-city": "Abeokuta",
+                        "affiliation-country": "Nigeria"
+                    }
+                ],
+                "prism:aggregationType": "Journal",
+                "subtype": "ar",
+                "subtypeDescription": "Article",
+                "source-id": "19700182731",
+                "openaccess": "1",
+                "openaccessFlag": true,
+                "freetoread": {
+                    "value": [
+                        {
+                            "$": "all"
+                        },
+                        {
+                            "$": "publisherfullgold"
+                        }
+                    ]
+                },
+                "freetoreadLabel": {
+                    "value": [
+                        {
+                            "$": "All Open Access"
+                        },
+                        {
+                            "$": "Gold"
+                        }
+                    ]
+                }
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85120311396"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85120311396?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85120311396&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85120311396&origin=inward"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85120311396",
+                "dc:identifier": "SCOPUS_ID:85120311396",
+                "eid": "2-s2.0-85120311396",
+                "dc:title": "Image lossless encoding and encryption method of EBCOT Tier1 based on 4D hyperchaos",
+                "dc:creator": "Xiao Y.",
+                "prism:publicationName": "Multimedia Systems",
+                "prism:issn": "09424962",
+                "prism:eIssn": "14321882",
+                "prism:volume": "28",
+                "prism:issueIdentifier": "3",
+                "prism:pageRange": "727-748",
+                "prism:coverDate": "2022-06-01",
+                "prism:coverDisplayDate": "June 2022",
+                "prism:doi": "10.1007/s00530-021-00868-5",
+                "citedby-count": "1",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "Harbin Institute of Technology",
+                        "affiliation-city": "Harbin",
+                        "affiliation-country": "China"
+                    }
+                ],
+                "prism:aggregationType": "Journal",
+                "subtype": "ar",
+                "subtypeDescription": "Article",
+                "source-id": "25626",
+                "openaccess": "0",
+                "openaccessFlag": false
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85128405416"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85128405416?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85128405416&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85128405416&origin=inward"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85128405416",
+                "dc:identifier": "SCOPUS_ID:85128405416",
+                "eid": "2-s2.0-85128405416",
+                "dc:title": "RAFI: Robust Authentication Framework for IoT-Based RFID Infrastructure",
+                "dc:creator": "Kumar V.",
+                "prism:publicationName": "Sensors",
+                "prism:issn": "14248220",
+                "prism:volume": "22",
+                "prism:issueIdentifier": "9",
+                "prism:pageRange": null,
+                "prism:coverDate": "2022-05-01",
+                "prism:coverDisplayDate": "May-1 2022",
+                "prism:doi": "10.3390/s22093110",
+                "citedby-count": "2",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "S.S.V. College",
+                        "affiliation-city": "Hapur",
+                        "affiliation-country": "India"
+                    }
+                ],
+                "pubmed-id": "35590800",
+                "prism:aggregationType": "Journal",
+                "subtype": "ar",
+                "subtypeDescription": "Article",
+                "article-number": "3110",
+                "source-id": "130124",
+                "openaccess": "1",
+                "openaccessFlag": true,
+                "freetoread": {
+                    "value": [
+                        {
+                            "$": "all"
+                        },
+                        {
+                            "$": "publisherfullgold"
+                        },
+                        {
+                            "$": "repository"
+                        },
+                        {
+                            "$": "repositoryvor"
+                        }
+                    ]
+                },
+                "freetoreadLabel": {
+                    "value": [
+                        {
+                            "$": "All Open Access"
+                        },
+                        {
+                            "$": "Gold"
+                        },
+                        {
+                            "$": "Green"
+                        }
+                    ]
+                }
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85126957126"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85126957126?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85126957126&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85126957126&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "full-text",
+                        "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S221421262200028X"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85126957126",
+                "dc:identifier": "SCOPUS_ID:85126957126",
+                "eid": "2-s2.0-85126957126",
+                "dc:title": "Exploiting LSB Self-quantization for Plaintext-related Image Encryption in the Zero-trust Cloud",
+                "dc:creator": "Liu S.",
+                "prism:publicationName": "Journal of Information Security and Applications",
+                "prism:issn": "22142134",
+                "prism:eIssn": "22142126",
+                "prism:volume": "66",
+                "prism:pageRange": null,
+                "prism:coverDate": "2022-05-01",
+                "prism:coverDisplayDate": "May 2022",
+                "prism:doi": "10.1016/j.jisa.2022.103138",
+                "pii": "S221421262200028X",
+                "citedby-count": "0",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "Hainan University",
+                        "affiliation-city": "Haikou",
+                        "affiliation-country": "China"
+                    }
+                ],
+                "prism:aggregationType": "Journal",
+                "subtype": "ar",
+                "subtypeDescription": "Article",
+                "article-number": "103138",
+                "source-id": "21100332403",
+                "openaccess": "0",
+                "openaccessFlag": false
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85128470726"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85128470726?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85128470726&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85128470726&origin=inward"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85128470726",
+                "dc:identifier": "SCOPUS_ID:85128470726",
+                "eid": "2-s2.0-85128470726",
+                "dc:title": "Robust 4-D Hyperchaotic DNA Framework for Medical Image Encryption",
+                "dc:creator": "Alqazzaz S.F.",
+                "prism:publicationName": "International Journal of Computer Network and Information Security",
+                "prism:issn": "20749090",
+                "prism:eIssn": "20749104",
+                "prism:volume": "14",
+                "prism:issueIdentifier": "2",
+                "prism:pageRange": "67-76",
+                "prism:coverDate": "2022-04-01",
+                "prism:coverDisplayDate": "Apr 2022",
+                "prism:doi": "10.5815/ijcnis.2022.02.06",
+                "citedby-count": "0",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "Al-Azhar University",
+                        "affiliation-city": "Nasr City",
+                        "affiliation-country": "Egypt"
+                    }
+                ],
+                "prism:aggregationType": "Journal",
+                "subtype": "ar",
+                "subtypeDescription": "Article",
+                "source-id": "21100985663",
+                "openaccess": "1",
+                "openaccessFlag": true,
+                "freetoread": {
+                    "value": [
+                        {
+                            "$": "all"
+                        },
+                        {
+                            "$": "publisherfree2read"
+                        }
+                    ]
+                },
+                "freetoreadLabel": {
+                    "value": [
+                        {
+                            "$": "All Open Access"
+                        },
+                        {
+                            "$": "Bronze"
+                        }
+                    ]
+                }
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85122657090"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85122657090?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85122657090&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85122657090&origin=inward"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85122657090",
+                "dc:identifier": "SCOPUS_ID:85122657090",
+                "eid": "2-s2.0-85122657090",
+                "dc:title": "Protection of image ROI using chaos-based encryption and DCNN-based object detection",
+                "dc:creator": "Song W.",
+                "prism:publicationName": "Neural Computing and Applications",
+                "prism:issn": "09410643",
+                "prism:eIssn": "14333058",
+                "prism:volume": "34",
+                "prism:issueIdentifier": "7",
+                "prism:pageRange": "5743-5756",
+                "prism:coverDate": "2022-04-01",
+                "prism:coverDisplayDate": "April 2022",
+                "prism:doi": "10.1007/s00521-021-06725-w",
+                "citedby-count": "6",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "College of Computer Science and Engineering, Northeastern University",
+                        "affiliation-city": "Shenyang",
+                        "affiliation-country": "China"
+                    }
+                ],
+                "prism:aggregationType": "Journal",
+                "subtype": "ar",
+                "subtypeDescription": "Article",
+                "source-id": "24800",
+                "openaccess": "0",
+                "openaccessFlag": false
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85120051679"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85120051679?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85120051679&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85120051679&origin=inward"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85120051679",
+                "dc:identifier": "SCOPUS_ID:85120051679",
+                "eid": "2-s2.0-85120051679",
+                "dc:title": "Role of Digital Watermarking in Wireless Sensor Network",
+                "dc:creator": "Kumar S.",
+                "prism:publicationName": "Recent Advances in Computer Science and Communications",
+                "prism:issn": "26662558",
+                "prism:eIssn": "26662566",
+                "prism:volume": "15",
+                "prism:issueIdentifier": "2",
+                "prism:pageRange": "215-228",
+                "prism:coverDate": "2022-02-01",
+                "prism:coverDisplayDate": "February 2022",
+                "prism:doi": "10.2174/2666255813999200730230731",
+                "citedby-count": "1",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "National Institute of Technology Jamshedpur",
+                        "affiliation-city": "Jamshedpur",
+                        "affiliation-country": "India"
+                    }
+                ],
+                "prism:aggregationType": "Journal",
+                "subtype": "re",
+                "subtypeDescription": "Review",
+                "source-id": "21100979315",
+                "openaccess": "0",
+                "openaccessFlag": false
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85103157880"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85103157880?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85103157880&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85103157880&origin=inward"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85103157880",
+                "dc:identifier": "SCOPUS_ID:85103157880",
+                "eid": "2-s2.0-85103157880",
+                "dc:title": "Robotics cyber security: vulnerabilities, attacks, countermeasures, and recommendations",
+                "dc:creator": "Yaacoub J.P.A.",
+                "prism:publicationName": "International Journal of Information Security",
+                "prism:issn": "16155262",
+                "prism:eIssn": "16155270",
+                "prism:volume": "21",
+                "prism:issueIdentifier": "1",
+                "prism:pageRange": "115-158",
+                "prism:coverDate": "2022-02-01",
+                "prism:coverDisplayDate": "February 2022",
+                "prism:doi": "10.1007/s10207-021-00545-8",
+                "citedby-count": "15",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "American University of Beirut",
+                        "affiliation-city": "Beirut",
+                        "affiliation-country": "Lebanon"
+                    }
+                ],
+                "prism:aggregationType": "Journal",
+                "subtype": "ar",
+                "subtypeDescription": "Article",
+                "source-id": "145326",
+                "openaccess": "1",
+                "openaccessFlag": true,
+                "freetoread": {
+                    "value": [
+                        {
+                            "$": "all"
+                        },
+                        {
+                            "$": "publisherfree2read"
+                        },
+                        {
+                            "$": "repository"
+                        },
+                        {
+                            "$": "repositoryvor"
+                        }
+                    ]
+                },
+                "freetoreadLabel": {
+                    "value": [
+                        {
+                            "$": "All Open Access"
+                        },
+                        {
+                            "$": "Bronze"
+                        },
+                        {
+                            "$": "Green"
+                        }
+                    ]
+                }
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85139493374"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85139493374?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85139493374&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85139493374&origin=inward"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85139493374",
+                "dc:identifier": "SCOPUS_ID:85139493374",
+                "eid": "2-s2.0-85139493374",
+                "dc:title": "Perfect Secrecy in IoT A Hybrid Combinatorial-Boolean Approach",
+                "dc:creator": "Zolfaghari B.",
+                "prism:publicationName": "Signals and Communication Technology",
+                "prism:issn": "18604862",
+                "prism:eIssn": "18604870",
+                "prism:pageRange": "1-115",
+                "prism:coverDate": "2022-01-01",
+                "prism:coverDisplayDate": "2022",
+                "citedby-count": "0",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "University of Guelph",
+                        "affiliation-city": "Guelph",
+                        "affiliation-country": "Canada"
+                    }
+                ],
+                "prism:aggregationType": "Book Series",
+                "subtype": "ch",
+                "subtypeDescription": "Book Chapter",
+                "source-id": "21100901476",
+                "openaccess": "0",
+                "openaccessFlag": false
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85138673034"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85138673034?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85138673034&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85138673034&origin=inward"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85138673034",
+                "dc:identifier": "SCOPUS_ID:85138673034",
+                "eid": "2-s2.0-85138673034",
+                "dc:title": "A plain-image correlative semi-selective medical image encryption algorithm using enhanced 2D-logistic map",
+                "dc:creator": "Zhang B.",
+                "prism:publicationName": "Multimedia Tools and Applications",
+                "prism:issn": "13807501",
+                "prism:eIssn": "15737721",
+                "prism:pageRange": null,
+                "prism:coverDate": "2022-01-01",
+                "prism:coverDisplayDate": "2022",
+                "prism:doi": "10.1007/s11042-022-13744-9",
+                "citedby-count": "0",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "Universiti Pendidikan Sultan Idris",
+                        "affiliation-city": "Tanjong Malim",
+                        "affiliation-country": "Malaysia"
+                    },
+                    {
+                        "@_fa": "true",
+                        "affilname": "Baoji University of Arts and Sciences",
+                        "affiliation-city": "Baoji",
+                        "affiliation-country": "China"
+                    }
+                ],
+                "prism:aggregationType": "Journal",
+                "subtype": "ar",
+                "subtypeDescription": "Article",
+                "source-id": "25627",
+                "openaccess": "1",
+                "openaccessFlag": true,
+                "freetoread": {
+                    "value": [
+                        {
+                            "$": "all"
+                        },
+                        {
+                            "$": "publisherfree2read"
+                        },
+                        {
+                            "$": "repository"
+                        },
+                        {
+                            "$": "repositoryvor"
+                        }
+                    ]
+                },
+                "freetoreadLabel": {
+                    "value": [
+                        {
+                            "$": "All Open Access"
+                        },
+                        {
+                            "$": "Bronze"
+                        },
+                        {
+                            "$": "Green"
+                        }
+                    ]
+                }
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85138169518"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85138169518?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85138169518&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85138169518&origin=inward"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85138169518",
+                "dc:identifier": "SCOPUS_ID:85138169518",
+                "eid": "2-s2.0-85138169518",
+                "dc:title": "Analysis of Various Visual Cryptographic Techniques and Their Issues Based on Optimization Algorithms",
+                "dc:creator": "Sajitha A.S.",
+                "prism:publicationName": "International Journal of Image and Graphics",
+                "prism:issn": "02194678",
+                "prism:pageRange": null,
+                "prism:coverDate": "2022-01-01",
+                "prism:coverDisplayDate": "2022",
+                "prism:doi": "10.1142/S0219467823500596",
+                "citedby-count": "0",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "Karunya Institute of Technology and Sciences",
+                        "affiliation-city": "Coimbatore",
+                        "affiliation-country": "India"
+                    },
+                    {
+                        "@_fa": "true",
+                        "affilname": "Nehru College of Engineering and Research Centre",
+                        "affiliation-city": "Pampady",
+                        "affiliation-country": "India"
+                    }
+                ],
+                "prism:aggregationType": "Journal",
+                "subtype": "ar",
+                "subtypeDescription": "Article",
+                "article-number": "2350059",
+                "source-id": "21100869464",
+                "openaccess": "0",
+                "openaccessFlag": false
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85138147541"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85138147541?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85138147541&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85138147541&origin=inward"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85138147541",
+                "dc:identifier": "SCOPUS_ID:85138147541",
+                "eid": "2-s2.0-85138147541",
+                "dc:title": "DPC <sup> 2</sup> -CD: a secure architecture and methods for distributed processing and concurrency control in cloud databases",
+                "dc:creator": "Yadav A.K.",
+                "prism:publicationName": "Cluster Computing",
+                "prism:issn": "13867857",
+                "prism:eIssn": "15737543",
+                "prism:pageRange": null,
+                "prism:coverDate": "2022-01-01",
+                "prism:coverDisplayDate": "2022",
+                "prism:doi": "10.1007/s10586-022-03744-7",
+                "citedby-count": "0",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "ITM University Gwalior",
+                        "affiliation-city": "Gwalior",
+                        "affiliation-country": "India"
+                    },
+                    {
+                        "@_fa": "true",
+                        "affilname": "Uttarakhand Technical University",
+                        "affiliation-city": "Dehradun",
+                        "affiliation-country": "India"
+                    }
+                ],
+                "prism:aggregationType": "Journal",
+                "subtype": "ar",
+                "subtypeDescription": "Article",
+                "source-id": "24596",
+                "openaccess": "0",
+                "openaccessFlag": false
+            },
+            {
+                "@_fa": "true",
+                "link": [
+                    {
+                        "@_fa": "true",
+                        "@ref": "self",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85137974737"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "author-affiliation",
+                        "@href": "https://api.elsevier.com/content/abstract/scopus_id/85137974737?field=author,affiliation"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus",
+                        "@href": "https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b&scp=85137974737&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "scopus-citedby",
+                        "@href": "https://www.scopus.com/inward/citedby.uri?partnerID=HzOxMe3b&scp=85137974737&origin=inward"
+                    },
+                    {
+                        "@_fa": "true",
+                        "@ref": "full-text",
+                        "@href": "https://api.elsevier.com/content/article/eid/1-s2.0-S2666603022000033"
+                    }
+                ],
+                "prism:url": "https://api.elsevier.com/content/abstract/scopus_id/85137974737",
+                "dc:identifier": "SCOPUS_ID:85137974737",
+                "eid": "2-s2.0-85137974737",
+                "dc:title": "A Novel Effective Lightweight Homomorphic Cryptographic Algorithm for data security in cloud computing",
+                "dc:creator": "Thabit F.",
+                "prism:publicationName": "International Journal of Intelligent Networks",
+                "prism:eIssn": "26666030",
+                "prism:volume": "3",
+                "prism:pageRange": "16-30",
+                "prism:coverDate": "2022-01-01",
+                "prism:coverDisplayDate": "January 2022",
+                "prism:doi": "10.1016/j.ijin.2022.04.001",
+                "pii": "S2666603022000033",
+                "citedby-count": "0",
+                "affiliation": [
+                    {
+                        "@_fa": "true",
+                        "affilname": "Ege Üniversitesi",
+                        "affiliation-city": "Izmir",
+                        "affiliation-country": "Turkey"
+                    }
+                ],
+                "prism:aggregationType": "Journal",
+                "subtype": "ar",
+                "subtypeDescription": "Article",
+                "source-id": "21101101955",
+                "openaccess": "1",
+                "openaccessFlag": true,
+                "freetoread": {
+                    "value": [
+                        {
+                            "$": "all"
+                        },
+                        {
+                            "$": "publisherfullgold"
+                        }
+                    ]
+                },
+                "freetoreadLabel": {
+                    "value": [
+                        {
+                            "$": "All Open Access"
+                        },
+                        {
+                            "$": "Gold"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
