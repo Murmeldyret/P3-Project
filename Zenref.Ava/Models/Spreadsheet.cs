@@ -535,8 +535,11 @@ namespace Zenref.Ava.Models.Spreadsheet
         public bool Contains(Reference item)
         {
             bool doesContain = false;
-            foreach (Reference reference in this)
+            
+            // Forloop giver bedre performance end foreach 
+            for (int index = 0; index < this.Count; index++)
             {
+                Reference reference = this[index];
                 if (reference.ValueEquals(item))
                 {
                     doesContain = true;
@@ -577,9 +580,11 @@ namespace Zenref.Ava.Models.Spreadsheet
                 //Hvis count er 0 så bliver GetEnumerator kaldt rekursivt uden en stop case, idk why
                 yield break;
             }
-
-            foreach (Reference item in this)
+            
+            // Forloop giver bedre performance end foreach i NET6.0
+            for (int index = 0; index < Count; index++)
             {
+                Reference item = this[index];
                 yield return item;
             }
         }
