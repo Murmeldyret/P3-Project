@@ -37,7 +37,7 @@ namespace Zenref.Ava.Models
         public static List<Reference> FromDBToMemory()
         {
             DataContext context = new();
-            int ONEGB = 1000000000;
+            const int ONEGB = 1000000000;
             var BasePath = AppDomain.CurrentDomain.BaseDirectory;
             var dbPath = Path.Combine(BasePath, "zenref.db");
             FileInfo DB = new FileInfo(dbPath);
