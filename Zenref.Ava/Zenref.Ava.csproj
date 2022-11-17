@@ -9,7 +9,6 @@
     <!-- <GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles> -->
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
     <None Remove="Assets\cross.ico" />

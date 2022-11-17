@@ -1,9 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Input;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
-using Zenref.Ava.Models;
 using Zenref.Ava.ViewModels;
 
 namespace Zenref.Ava.Views
