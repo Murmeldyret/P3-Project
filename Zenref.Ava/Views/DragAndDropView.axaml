@@ -14,12 +14,11 @@
 				<ColumnDefinition/>
 				<ColumnDefinition/>
 			</Grid.ColumnDefinitions>
-			<StackPanel>
-				<Grid DragDrop.AllowDrop="True">
+			<StackPanel Grid.Column="0">
+				<Grid DragDrop.AllowDrop="True" ColumnDefinitions="*,Auto">
 					<Rectangle
 						Fill="Gainsboro"
-						Height="250"
-						Width="400">
+						Height="300">
 					</Rectangle>
 					<StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
 						<Image
@@ -43,11 +42,38 @@
 					Command="{Binding OpenFileDialogCommand}"
 					CommandParameter="{Binding ElementName=DADView}">
 				</Button>
-				<TextBlock Text="{Binding FilePath}"/>
 			</StackPanel>
+				<Button 
+					Content="Afbryd"
+					Command="{Binding CloseWindow}" 
+					CommandParameter="{Binding ElementName=DADView}" 
+					VerticalAlignment="Bottom" 
+					HorizontalAlignment="Left"
+					Margin="10"/>
+				<Button 
+					Content="Næste"
+					VerticalAlignment="Bottom" 
+					HorizontalAlignment="Right"
+					Margin="10"/>
+			<!--<StackPanel Grid.Column="1" Width="350">-->
+				<!--<TextBlock Text="Filer Tilføjet" FontSize="20"/>-->
+				<ListBox Items="{Binding Files}" Grid.Column="1">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<StackPanel>
+								<TextBlock Text="{Binding FullName}"/>
+								<TextBlock Text="{Binding Name}"/>
+								<TextBlock Text="{Binding Length}"/>
+							</StackPanel>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+					<ListBox.ItemsPanel>
+						<ItemsPanelTemplate>
+							<WrapPanel Orientation="Vertical"/>
+						</ItemsPanelTemplate>
+					</ListBox.ItemsPanel>
+				</ListBox>
+			<!--</StackPanel>-->
 		</Grid>
-		
-		<Button Command="{Binding CloseWindow}" CommandParameter="{Binding ElementName=DADView}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="100,10">Afbryd</Button>
-		<Button VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="20,10">Næste</Button>
 	</Grid>
 </Window>
