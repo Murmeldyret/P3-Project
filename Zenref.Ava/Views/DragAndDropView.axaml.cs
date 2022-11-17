@@ -1,8 +1,8 @@
 using Avalonia.Controls;
 using Avalonia.Input;
-using System.Diagnostics;
-using System;
 using Zenref.Ava.ViewModels;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Zenref.Ava.Views
 {
@@ -29,9 +29,12 @@ namespace Zenref.Ava.Views
         {
             if (e.Data.Contains(DataFormats.FileNames))
             {
-                string filePath = string.Join(Environment.NewLine, e.Data.GetFileNames());
-                dragAndDropViewModel.FilePath = filePath;
-                Debug.WriteLine(filePath);
+                List<string> filePaths = (List<string>)e.Data.GetFileNames();
+                foreach (string filePath in filePaths)
+                {
+                    FileInfo fileInfo = new FileInfo(filePath);
+                    dragAndDropViewModel.Files.Add(fileInfo);
+                }
             }
         }
     }
