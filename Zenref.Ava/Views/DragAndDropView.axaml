@@ -55,8 +55,6 @@
 					VerticalAlignment="Bottom" 
 					HorizontalAlignment="Right"
 					Margin="10"/>
-			<!--<StackPanel Grid.Column="1" Width="350">-->
-				<!--<TextBlock Text="Filer Tilføjet" FontSize="20"/>-->
 				<ListBox Items="{Binding Files}" Grid.Column="1">
 					<ListBox.ItemTemplate>
 						<DataTemplate>
@@ -73,7 +71,6 @@
 						</ItemsPanelTemplate>
 					</ListBox.ItemsPanel>
 				</ListBox>
-			<!--</StackPanel>-->
 		</Grid>
 	</Grid>
 </Window>
