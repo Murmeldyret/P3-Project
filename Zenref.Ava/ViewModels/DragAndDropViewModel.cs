@@ -25,7 +25,6 @@ namespace Zenref.Ava.ViewModels
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                Directory = @"C:\",
                 Title = "Browse for excel file",
                 AllowMultiple = true,
             };
