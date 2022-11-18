@@ -10,11 +10,11 @@
     <UserSecretsId>41062a39-62fd-4e5b-9ca7-08b3e749986d</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
     <None Remove="Assets\cross.ico" />
     <None Remove="Assets\options.ico" />
+    <None Remove="Assets\upload.ico" />
   </ItemGroup>
   <ItemGroup>
 	<!--This helps with theme dll-s trimming.
@@ -30,6 +30,7 @@
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.18" />
 	<PackageReference Include="Avalonia.ReactiveUI" Version="0.10.18" />
 	<PackageReference Include="ClosedXML" Version="0.97.0" />
+	<PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
 	<PackageReference Include="Fastenshtein" Version="1.0.0.8" />
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.10">
 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

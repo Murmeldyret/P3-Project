@@ -1,9 +1,10 @@
-<Window xmlns="https://github.com/avaloniaui"
+<Window x:Class="Zenref.Ava.Views.MainWindow"
+		x:Name="MainView"
+		xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="Zenref.Ava.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="Zenref.Ava">
 
@@ -16,8 +17,9 @@
 	</Window.Styles>
 
 	<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-		<Button> Kendte kilder</Button>
-		<Button> Identificer kilder</Button>
+		<Button Command="{Binding OpenDatabaseView}" CommandParameter="{Binding ElementName=MainView}"> Kendte kilder</Button>
+		<Button Command="{Binding OpenExportView}" CommandParameter="{Binding ElementName=MainView}"> Identificer kilder</Button>
 	</StackPanel>
 	
 </Window>
+
