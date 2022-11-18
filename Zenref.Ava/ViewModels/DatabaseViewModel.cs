@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Zenref.Ava.Models;
 using Zenref.Ava.Views;
+using System.Linq;
+using Zenref.Ava.Models.Spreadsheet;
 
 namespace Zenref.Ava.ViewModels
 {
@@ -45,6 +47,23 @@ namespace Zenref.Ava.ViewModels
         {
             DragAndDropView dragAndDropView = new DragAndDropView();
             dragAndDropView.ShowDialog(window);
+        }
+
+        private void ReadAllReferences()
+        {
+            //TODO get dragAndDrop filepath strings
+            List<string> filePathStrings = new List<string>();
+            List<Reference> references = new List<Reference>();
+
+            foreach (string path in filePathStrings)
+            {
+                Spreadsheet spreadsheet = new Spreadsheet("PLACEHOLDER",path);
+                spreadsheet.Import();
+                IEnumerable<Reference> referencesInSheet = spreadsheet.GetReference(0u);
+                referencesInSheet.ToList();
+                references.Concat(referencesInSheet);
+            }
+
         }
 
     }
