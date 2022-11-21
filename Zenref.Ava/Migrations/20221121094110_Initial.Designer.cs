@@ -11,8 +11,8 @@ using Zenref.Ava.Models;
 namespace Zenref.Ava.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221031094136_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20221121094110_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace Zenref.Ava.Migrations
 
             modelBuilder.Entity("Zenref.Ava.Models.Reference", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -37,16 +37,10 @@ namespace Zenref.Ava.Migrations
                     b.Property<string>("Commentary")
                         .HasColumnType("TEXT");
 
-                    b.Property<string?>("DOI")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Edu")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ExamEvent")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string?>("ISBN")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Language")
@@ -56,7 +50,10 @@ namespace Zenref.Ava.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<double?>("Match")
-                        .HasColumnType("DOUBLE");
+                        .HasColumnType("REAL");
+
+                    b.Property<string>("OriReference")
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("Pages")
                         .HasColumnType("INTEGER");
@@ -91,20 +88,9 @@ namespace Zenref.Ava.Migrations
                     b.Property<int?>("YearReport")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.ToTable("References");
-                });
-
-            modelBuilder.Entity("Zenref.Ava.Models.Spreadsheet", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Spreadsheets");
+                    b.ToTable("Reference", (string)null);
                 });
 #pragma warning restore 612, 618
         }
