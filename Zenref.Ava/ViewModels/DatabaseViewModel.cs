@@ -15,7 +15,6 @@ namespace Zenref.Ava.ViewModels
 {
     public partial class DatabaseViewModel : ObservableRecipient, IRecipient<FilePathsMessage>
     {
-        //IMessenger messenger;
 
         [ObservableProperty]
         private ObservableCollection<Reference> references;
