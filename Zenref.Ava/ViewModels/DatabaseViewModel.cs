@@ -7,18 +7,28 @@ using Zenref.Ava.Models;
 using Zenref.Ava.Views;
 using System.Linq;
 using Zenref.Ava.Models.Spreadsheet;
+using CommunityToolkit.Mvvm.Messaging;
+using System.Diagnostics;
+using System.IO;
 
 namespace Zenref.Ava.ViewModels
 {
-    public partial class DatabaseViewModel : ObservableObject
+    public partial class DatabaseViewModel : ObservableRecipient, IRecipient<FilePathsMessage>
     {
+        //IMessenger messenger;
+
         [ObservableProperty]
         private ObservableCollection<Reference> references;
         [ObservableProperty]
         private IEnumerable<Reference> filteredReferences;
+        private List<FileInfo> filePaths;
 
-        public DatabaseViewModel()
+        public DatabaseViewModel() : base(WeakReferenceMessenger.Default)
         {
+            Messenger.Register<FilePathsMessage>(this, (r,m) =>
+            {
+                Receive(m);
+            });
             // FOR TESTING DATAGRID DISPLAYING REFERENCES
             //references = new ObservableCollection<Reference>();
             //for (int i = 0; i < 15; i++)
@@ -32,6 +42,12 @@ namespace Zenref.Ava.ViewModels
             //    references.Add(new Reference(s[0], s[1], s[2], s[3], i, i, s[4], s[5], s[6], s[7], i, d, s[8], s[9], s[10], s[11], s[12], i, s[13], s[14], s[15], s[16]));
             //}
             //filteredReferences = references;
+        }
+
+        public void Receive(FilePathsMessage message)
+        {
+            filePaths = message.FilePaths;
+            Debug.WriteLine(filePaths[0]);
         }
 
         // FOR TESTING DATAGRID DISPLAYING REFERENCES
@@ -52,16 +68,16 @@ namespace Zenref.Ava.ViewModels
         private void ReadAllReferences()
         {
             //TODO get dragAndDrop filepath strings
-            List<string> filePathStrings = new List<string>();
             List<Reference> references = new List<Reference>();
 
-            foreach (string path in filePathStrings)
+            foreach (FileInfo path in filePaths)
             {
-                Spreadsheet spreadsheet = new Spreadsheet("PLACEHOLDER",path);
-                spreadsheet.Import();
-                IEnumerable<Reference> referencesInSheet = spreadsheet.GetReference(0u);
-                referencesInSheet.ToList();
-                references.Concat(referencesInSheet);
+                
+                //Spreadsheet spreadsheet = new Spreadsheet("PLACEHOLDER",path);
+                //spreadsheet.Import();
+                //IEnumerable<Reference> referencesInSheet = spreadsheet.GetReference(0u);
+                //referencesInSheet.ToList();
+                //references.Concat(referencesInSheet);
             }
 
         }

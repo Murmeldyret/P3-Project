@@ -52,6 +52,8 @@
 					Margin="10"/>
 				<Button 
 					Content="Næste"
+					Command="{Binding ConfirmFileChoices}"
+					CommandParameter="{Binding ElementName=DADView}"
 					VerticalAlignment="Bottom" 
 					HorizontalAlignment="Right"
 					Margin="10"/>
