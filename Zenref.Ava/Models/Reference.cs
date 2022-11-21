@@ -9,13 +9,15 @@ namespace Zenref.Ava.Models
     public class Reference
     {
         //constructor with named arguments, where some properties are null by default.
+
+        public Reference() { }
         public Reference(
             string _Author = "",
             string _Title = "",
             string _PubType = "",
             string _Publisher = "",
             int? _YearRef = null,
-            int?_ID = null,
+            int? _ID = null,
             string _Edu = "",
             string _Location = "",
             string _Semester = "",
