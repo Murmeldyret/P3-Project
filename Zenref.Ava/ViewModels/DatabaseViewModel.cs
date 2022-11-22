@@ -1,6 +1,9 @@
 ﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MessageBox.Avalonia.DTO;
+using MessageBox.Avalonia.Models;
+using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,6 +25,7 @@ namespace Zenref.Ava.ViewModels
         {
             // FOR TESTING DATAGRID DISPLAYING REFERENCES
             references = new ObservableCollection<Reference>();
+            references.Add(new Reference("J.K. Rowling", "Harry Potter and the Philosopher's Stone", "Bog", "Bloomsbury", 1997, 10256358, "How to magic", "Hogwarts", "5. Semester", "Engelsk", 2022, 0.8, "Magi", "How to wave a wand", "Forår", "Magic for beginners", "DanBib", 223, "Hvem ved", "Quidditch", "Harry Potter and the Philosopher's Stone", "Rowling, J. K. (1997). Harry Potter and the Philosopher’s Stone (1st ed.). Bloomsbury."));
             for (int i = 0; i < 20; i++)
             {
                 List<string> s = new List<string>();
@@ -52,18 +56,29 @@ namespace Zenref.Ava.ViewModels
         [RelayCommand]
         private void EditReference(Reference selectedReference)
         {
-            selectedReference.Author = "testAuthor";
-            selectedReference.Title = "testTitle";
-            selectedReference.PubType = "test";
-            selectedReference.Publisher = "test";
-            selectedReference.ID = 8342;
-            selectedReference.Edu = "test";
-            selectedReference.Location = "test";
         }
         [RelayCommand]
-        private void DeleteReference(Reference selectedReference)
+        private async void DeleteReference(Reference selectedReference)
         {
-            references.Remove(selectedReference);
+            if(selectedReference != null)
+            {
+                var messageBoxCustomWindow = MessageBox.Avalonia.MessageBoxManager.GetMessageBoxCustomWindow(
+                    new MessageBoxCustomParams
+                    {
+                        ContentTitle = "Test MessageBox",
+                        ContentMessage = "Er du sikker på, at du vil slette referencen?",
+                        WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                        ButtonDefinitions = new[]
+                        {
+                            new ButtonDefinition { Name = "Nej", IsCancel = true },
+                            new ButtonDefinition { Name = "Ja", IsDefault = true }
+                        },
+                    });
+                if(await messageBoxCustomWindow.Show() == "Ja")
+                {
+                    references.Remove(selectedReference);
+                }
+            } 
         }
     }
 }
