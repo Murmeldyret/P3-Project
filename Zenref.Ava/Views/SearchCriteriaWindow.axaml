@@ -3,64 +3,72 @@
 		xmlns:viewModels="using:Zenref.Ava.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:controls="clr-namespace:Zenref.Ava.Views"
         mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="450"
         Width="700" Height="450"
         x:Class="Zenref.Ava.Views.SearchCriteriaWindow">
 
 	<Window.Styles>
+
+		<!--Grid-->
+
+		<!--Every TextBox-->
 		<Style Selector="TextBox">
-			<Setter Property="Width" Value="150"/>
-			<Setter Property="Margin" Value="10"/>
-			<Setter Property="Watermark" Value="Søge kriterie"/>
+			<Setter	Property="Margin" Value="0,10,25,10"/>
 		</Style>
+
+		<!--ComboBox-->
 		<Style Selector="ComboBox">
-			<Setter Property="Width" Value="70"/>
-			<Setter	Property="Margin" Value="10,12"/>
+			<Setter	Property="VerticalAlignment" Value="Center"/>
 		</Style>
+
+		<!--ComboBox with Categories-->
+		<Style Selector="ComboBox.FirstCategory">
+			<Setter	Property="Margin" Value="10"/>
+		</Style>
+		<Style Selector="ComboBox.SecondCategory">
+			<Setter	Property="Margin" Value="0,10"/>
+		</Style>
+
+		<!--ComboBox with Operators-->
+		<Style Selector="ComboBox.Operator">
+			<Setter Property="Background" Value="Blue" />
+			<Setter Property="VerticalAlignment" Value="Center" />
+			<Setter	Property="Margin" Value="10, 0, 10, 0"/>
+		</Style>
+
+		<!--Buttons-->
 		<Style Selector="Button">
 			<Setter Property="HorizontalAlignment" Value="Left"/>
 			<Setter Property="VerticalAlignment" Value="Bottom"/>
 		</Style>
+
 	</Window.Styles>
-	<Grid Name="grid">
-		<StackPanel Orientation="Vertical">
-			<StackPanel Orientation="Horizontal">
-				<ComboBox PlaceholderText="Felter">
-				</ComboBox>
-				<TextBox Width="240"/>
-			</StackPanel>
-			<StackPanel Orientation="Horizontal">
-				<ComboBox SelectedIndex="0">
-					<ComboBoxItem>OG</ComboBoxItem>
-					<ComboBoxItem>ELLER</ComboBoxItem>
-					<ComboBoxItem>IKKE</ComboBoxItem>
-				</ComboBox>
-				<ComboBox PlaceholderText="Felter">
-				</ComboBox>
-				<TextBox/>
-			</StackPanel>
-			<StackPanel Orientation="Horizontal">
-				<ComboBox SelectedIndex="1">
-					<ComboBoxItem>OG</ComboBoxItem>
-					<ComboBoxItem>ELLER</ComboBoxItem>
-					<ComboBoxItem>IKKE</ComboBoxItem>
-				</ComboBox>
-				<ComboBox PlaceholderText="Felter">
-				</ComboBox>
-				<TextBox/>
-			</StackPanel>
-			<StackPanel Orientation="Horizontal">
-				<ComboBox SelectedIndex="2">
-					<ComboBoxItem>OG</ComboBoxItem>
-					<ComboBoxItem>ELLER</ComboBoxItem>
-					<ComboBoxItem>IKKE</ComboBoxItem>
-				</ComboBox>
-				<ComboBox PlaceholderText="Felter">
-				</ComboBox>
-				<TextBox/>
-			</StackPanel>
-		</StackPanel>
-		<Button Name="addButton" Margin="20,10">Tilføj</Button>
-		<Button Name="cancelButton" Margin="80,10">Afbryd</Button>
+
+	<Grid RowDefinitions="Auto,Auto,*">
+		<Grid ColumnDefinitions="2*, 6.8*" Grid.Row="0">
+			<ComboBox Grid.Column="0" Classes="FirstCategory" PlaceholderText="Felter" Items="{Binding SearchOption[0].sField}"/>
+			<TextBox Grid.Column="1" Watermark="Søg"/>
+		</Grid>
+		<ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" MaxHeight="350">
+			<ItemsControl Grid.Column="0" Items="{Binding SearchOption}">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<Grid ColumnDefinitions="1.5*, 2*, 6*">
+							<ComboBox Grid.Column="0" Classes="SecondCategory Operator" SelectedItem="{Binding SearchSelectOperand}" PlaceholderText="Operator" Items="{Binding Path=Operand}" />
+							<ComboBox Grid.Column="1" Classes="SecondCategory" SelectedItem="{Binding SearchSelectField}" PlaceholderText="Felter" Items="{Binding Path=Field}"/>
+							<TextBox Grid.Column="2" Watermark="Søg" Text="{Binding SearchTerm}" />
+						</Grid>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</ScrollViewer>
+		<Grid Grid.Row="2" ColumnDefinitions="0.15*,0.1*,0.1*,0.1*,0.5*">
+			<Button Name="addButton" Grid.Column="0" Command="{Binding AddCommand}" Margin="20,10">Tilføj</Button>
+			<Button Name="deleteButton" Grid.Column="1" Command="{Binding DeleteCommand}" Margin="20,10,0,10">Slet</Button>
+			<Button Name="deleteAllButton" Grid.Column="2" Command="{Binding DeleteAllCommand}" Margin="10,10,0,10">Ryd</Button>
+			<Button Name="searchButton" Grid.Column="3" Command="{Binding SearchCommand}" Margin="10,10,0,10">Search</Button>
+			<Button Name="cancelButton" Grid.Column="4" HorizontalAlignment="Right" Margin="80,10,20,10">Afbryd</Button>
+		</Grid>
 	</Grid>
 </Window>
