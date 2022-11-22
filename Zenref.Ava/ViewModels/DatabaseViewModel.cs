@@ -68,13 +68,12 @@ namespace Zenref.Ava.ViewModels
 
         private void ReadAllReferences()
         {
-            //TODO get dragAndDrop filepath strings
             List<Reference> references = new List<Reference>();
 
             foreach (FileInfo path in filePaths)
             {
-                
-                Spreadsheet spreadsheet = new Spreadsheet(path.Name,path.DirectoryName);
+
+                Spreadsheet spreadsheet = new Spreadsheet(path.Name, path.DirectoryName);
                 Debug.WriteLine($"FileName: {path.Name} Path: {path.DirectoryName}");
                 spreadsheet.Import();
                 Debug.WriteLine($"SPREADSHEET count: {spreadsheet.Count}");
@@ -82,7 +81,8 @@ namespace Zenref.Ava.ViewModels
                 references.Add(referencesInSheet);
                 references.Concat(referencesInSheet);
             }
-            Debug.WriteLine(references.Count);
+            Debug.WriteLine($"Found {references.Count} Reference(s)");
+
 
         }
 
