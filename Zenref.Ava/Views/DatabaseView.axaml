@@ -5,24 +5,56 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="600"
+		Width="1200" Height="600"
         Title="Database Window">
+	<Window.Styles>
+		<Style Selector="TextBox.box1">
+			<Setter Property="Width" Value="140"/>
+			<Setter Property="TextWrapping" Value="WrapWithOverflow"/>
+		</Style>
+		<Style Selector="TextBlock.block1">
+			<Setter Property="FontSize" Value="15"/>
+		</Style>
+	</Window.Styles>
 
 	<Grid Name="grid" RowDefinitions="Auto">
 		<Menu Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Stretch">
 			<Button Command="{Binding OpenDragAndDropView}" CommandParameter="{Binding ElementName=DBView}"> Tilføj</Button>
 			<TextBox KeyUp="SearchFilter" Watermark="Søg" Width="150" FontSize="15"></TextBox>
 		</Menu>
-		<DataGrid Items="{Binding FilteredReferences}" Name="dataGrid" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,40"
-				  RowBackground="LightGray" CanUserResizeColumns="True" Height="500" Width="850">
-			<DataGrid.Columns>
-				<DataGridTextColumn Header="Forfatter" Binding="{Binding Author}"/>
-				<DataGridTextColumn Header="Titel" Binding="{Binding Title}"/>
-				<DataGridTextColumn Header="Publikationstype" Binding="{Binding PubType}"/>
-				<DataGridTextColumn Header="Forlag" Binding="{Binding Publisher}"/>
-				<DataGridTextColumn Header="Id" Binding="{Binding ID}"/>
-				<DataGridTextColumn Header="Uddannelse" Binding="{Binding Edu}"/>
-				<DataGridTextColumn Header="Uddannelsessted" Binding="{Binding Location}"/>
-			</DataGrid.Columns>
-		</DataGrid>
+		<StackPanel Orientation="Horizontal">
+			<DataGrid x:Name="myDataGrid" Items="{Binding FilteredReferences}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,40"
+				  RowBackground="LightGray" CanUserResizeColumns="True" RowHeight="30" Width="800" Height="500">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Forfatter" Binding="{Binding Author}"/>	
+					<DataGridTextColumn Header="Titel" Binding="{Binding Title}"/>
+					<DataGridTextColumn Header="Publikationstype" Binding="{Binding PubType}"/>
+					<DataGridTextColumn Header="Forlag" Binding="{Binding Publisher}"/>
+					<DataGridTextColumn Header="Id" Binding="{Binding ID}"/>
+					<DataGridTextColumn Header="Uddannelse" Binding="{Binding Edu}"/>
+					<DataGridTextColumn Header="Uddannelsessted" Binding="{Binding Location}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+			<StackPanel Orientation="Horizontal" Margin="20,40" VerticalAlignment="Stretch" HorizontalAlignment="Right">
+				<StackPanel Orientation="Vertical">
+					<TextBlock Classes="block1" Text="Forfatter"/>
+					<TextBox Classes="box1" Text="{Binding SelectedItem.Author, ElementName=myDataGrid}"/>
+					<TextBlock Classes="block1" Text="Titel"/>
+					<TextBox Classes="box1" Text="{Binding SelectedItem.Title, ElementName=myDataGrid}"/>
+					<TextBlock Classes="block1" Text="Publikationstype"/>
+					<TextBox Classes="box1" Text="{Binding SelectedItem.PubType, ElementName=myDataGrid}"/>
+					<TextBlock Classes="block1" Text="Forlag"/>
+					<TextBox Classes="box1" Text="{Binding SelectedItem.Publisher, ElementName=myDataGrid}"/>
+					<TextBlock Classes="block1" Text="Id"/>
+					<TextBox Classes="box1" Text="{Binding SelectedItem.ID, ElementName=myDataGrid}"/>
+					<TextBlock Classes="block1" Text="Uddannelse"/>
+					<TextBox Classes="box1" Text="{Binding SelectedItem.Edu, ElementName=myDataGrid}"/>
+					<TextBlock Classes="block1" Text="Uddannelsessted"/>
+					<TextBox Classes="box1" Text="{Binding SelectedItem.Location, ElementName=myDataGrid}"/>
+				</StackPanel>
+			</StackPanel>
+		</StackPanel>
+		<Button Command="{Binding EditReference}" CommandParameter="{Binding SelectedItem, ElementName=myDataGrid}" Content="Rediger" Margin="60,0" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+		<Button Command="{Binding DeleteReference}" CommandParameter="{Binding SelectedItem, ElementName=myDataGrid}" Content="Slet" Margin="10,0" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
 	</Grid>
 </Window>
