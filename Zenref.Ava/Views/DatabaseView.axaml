@@ -30,12 +30,27 @@
 					<DataGridTextColumn Header="Titel" Binding="{Binding Title}"/>
 					<DataGridTextColumn Header="Publikationstype" Binding="{Binding PubType}"/>
 					<DataGridTextColumn Header="Forlag" Binding="{Binding Publisher}"/>
+					<DataGridTextColumn Header="År (Reference)" Binding="{Binding YearRef}"/>
 					<DataGridTextColumn Header="Id" Binding="{Binding ID}"/>
 					<DataGridTextColumn Header="Uddannelse" Binding="{Binding Edu}"/>
 					<DataGridTextColumn Header="Uddannelsessted" Binding="{Binding Location}"/>
+					<DataGridTextColumn Header="Semester" Binding="{Binding Semester}"/>
+					<DataGridTextColumn Header="Sprog" Binding="{Binding Language}"/>
+					<DataGridTextColumn Header="År (Rapport)" Binding="{Binding YearReport}"/>
+					<DataGridTextColumn Header="Match" Binding="{Binding Match}"/>
+					<DataGridTextColumn Header="Kommentar" Binding="{Binding Commentary}"/>
+					<DataGridTextColumn Header="Pensum" Binding="{Binding Syllabus}"/>
+					<DataGridTextColumn Header="Sæson" Binding="{Binding Season}"/>
+					<DataGridTextColumn Header="Eksamensbegivenhed" Binding="{Binding ExamEvent}"/>
+					<DataGridTextColumn Header="Kilde" Binding="{Binding Source}"/>
+					<DataGridTextColumn Header="Sidetal" Binding="{Binding Pages}"/>
+					<DataGridTextColumn Header="Bind" Binding="{Binding Volume}"/>
+					<DataGridTextColumn Header="Kapitler" Binding="{Binding Chapters}"/>
+					<DataGridTextColumn Header="Bogtitel" Binding="{Binding BookTitle}"/>
+					<DataGridTextColumn Header="Henvisning" Binding="{Binding OriReference}"/>
 				</DataGrid.Columns>
 			</DataGrid>
-			<StackPanel Orientation="Horizontal" Margin="20,40" VerticalAlignment="Stretch" HorizontalAlignment="Right">
+			<!--<StackPanel Orientation="Horizontal" Margin="20,40" VerticalAlignment="Stretch" HorizontalAlignment="Right">
 				<StackPanel Orientation="Vertical">
 					<TextBlock Classes="block1" Text="Forfatter"/>
 					<TextBox Classes="box1" Text="{Binding SelectedItem.Author, ElementName=myDataGrid}"/>
@@ -52,7 +67,7 @@
 					<TextBlock Classes="block1" Text="Uddannelsessted"/>
 					<TextBox Classes="box1" Text="{Binding SelectedItem.Location, ElementName=myDataGrid}"/>
 				</StackPanel>
-			</StackPanel>
+			</StackPanel>-->
 		</StackPanel>
 		<Button Command="{Binding EditReference}" CommandParameter="{Binding SelectedItem, ElementName=myDataGrid}" Content="Rediger" Margin="60,0" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
 		<Button Command="{Binding DeleteReference}" CommandParameter="{Binding SelectedItem, ElementName=myDataGrid}" Content="Slet" Margin="10,0" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
