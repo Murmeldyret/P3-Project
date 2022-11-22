@@ -10,6 +10,7 @@ using Zenref.Ava.Models.Spreadsheet;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Diagnostics;
 using System.IO;
+using DynamicData;
 
 namespace Zenref.Ava.ViewModels
 {
@@ -27,6 +28,7 @@ namespace Zenref.Ava.ViewModels
             Messenger.Register<FilePathsMessage>(this, (r,m) =>
             {
                 Receive(m);
+                ReadAllReferences();
             });
             // FOR TESTING DATAGRID DISPLAYING REFERENCES
             //references = new ObservableCollection<Reference>();
@@ -72,12 +74,15 @@ namespace Zenref.Ava.ViewModels
             foreach (FileInfo path in filePaths)
             {
                 
-                //Spreadsheet spreadsheet = new Spreadsheet("PLACEHOLDER",path);
-                //spreadsheet.Import();
-                //IEnumerable<Reference> referencesInSheet = spreadsheet.GetReference(0u);
-                //referencesInSheet.ToList();
-                //references.Concat(referencesInSheet);
+                Spreadsheet spreadsheet = new Spreadsheet(path.Name,path.DirectoryName);
+                Debug.WriteLine($"FileName: {path.Name} Path: {path.DirectoryName}");
+                spreadsheet.Import();
+                Debug.WriteLine($"SPREADSHEET count: {spreadsheet.Count}");
+                IEnumerable<Reference> referencesInSheet = spreadsheet.GetReference(0u);
+                references.Add(referencesInSheet);
+                references.Concat(referencesInSheet);
             }
+            Debug.WriteLine(references.Count);
 
         }
 

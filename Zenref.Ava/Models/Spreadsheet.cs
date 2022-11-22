@@ -407,7 +407,8 @@ namespace Zenref.Ava.Models.Spreadsheet
         {
             try
             {
-                WorkbookProperty = new XLWorkbook(FileName);
+                WorkbookProperty = new XLWorkbook(Path.Combine(FilePath ?? "",FileName));
+                //WorkbookProperty = new XLWorkbook(FileName);
             }
             catch (ArgumentException ex)
             {
