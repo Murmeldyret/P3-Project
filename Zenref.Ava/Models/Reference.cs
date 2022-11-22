@@ -1,3 +1,4 @@
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace Zenref.Ava.Models
 {
-    public class Reference
+    public class Reference : ReactiveObject
     {
         //constructor with named arguments, where some properties are null by default.
         public Reference(
