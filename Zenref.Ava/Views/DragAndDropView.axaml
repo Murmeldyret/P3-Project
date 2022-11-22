@@ -4,9 +4,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="500"
-		Width="700" Height="500"
+		xmlns:local="clr-namespace:Zenref.Ava.Models;assembly=Zenref.Ava"
+        mc:Ignorable="d" d:DesignWidth="850" d:DesignHeight="500"
+		Width="850" Height="500"
         Title="Drag and drop window">
+	<Window.Resources>
+		<local:ByteConverter x:Key="ByteConverter"/>
+	</Window.Resources>
+	
 	
 	<Grid>
 		<Grid>
@@ -55,22 +60,22 @@
 					VerticalAlignment="Bottom" 
 					HorizontalAlignment="Right"
 					Margin="10"/>
-				<ListBox Items="{Binding Files}" Grid.Column="1">
-					<ListBox.ItemTemplate>
-						<DataTemplate>
-							<StackPanel>
-								<TextBlock Text="{Binding FullName}"/>
-								<TextBlock Text="{Binding Name}"/>
-								<TextBlock Text="{Binding Length}"/>	
-							</StackPanel>
-						</DataTemplate>
-					</ListBox.ItemTemplate>
-					<ListBox.ItemsPanel>
-						<ItemsPanelTemplate>
-							<WrapPanel Orientation="Vertical"/>
-						</ItemsPanelTemplate>
-					</ListBox.ItemsPanel>
-				</ListBox>
+			<ListBox Items="{Binding Files}" Grid.Column="1">
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<StackPanel>
+							<TextBlock Text="{Binding FullName}"/>
+							<TextBlock Text="{Binding Name}"/>
+							<TextBlock Text="{Binding Length, Converter={StaticResource ByteConverter}}"/>	
+						</StackPanel>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+				<ListBox.ItemsPanel>
+					<ItemsPanelTemplate>
+						<WrapPanel Orientation="Vertical"/>
+					</ItemsPanelTemplate>
+				</ListBox.ItemsPanel>
+			</ListBox>
 		</Grid>
 	</Grid>
 </Window>
