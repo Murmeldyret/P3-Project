@@ -4,6 +4,7 @@ using Zenref.Ava.ViewModels;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Zenref.Ava.Views
 {
@@ -20,8 +21,9 @@ namespace Zenref.Ava.Views
 
         private void DragOver(object sender, DragEventArgs e)
         {
+            List<string> fileList = (List<string>)e.Data.GetFileNames();
             e.DragEffects = e.DragEffects & DragDropEffects.Copy;
-            if (!e.Data.Contains(DataFormats.FileNames))
+            if (!e.Data.Contains(DataFormats.FileNames) || !fileList.All(c => c.Contains("xlsx")))
             {
                 e.DragEffects = DragDropEffects.None;
             }
