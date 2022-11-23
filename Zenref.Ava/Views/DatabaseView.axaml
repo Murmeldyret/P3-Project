@@ -21,6 +21,7 @@
 		<Menu Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Stretch">
 			<Button Command="{Binding OpenDragAndDropView}" CommandParameter="{Binding ElementName=DBView}"> Tilføj</Button>
 			<TextBox KeyUp="SearchFilter" Watermark="Søg" Width="150" FontSize="15"></TextBox>
+			<Button Command="{Binding DeleteReference}" CommandParameter="{Binding SelectedItem, ElementName=myDataGrid}" Content="Slet"/>
 		</Menu>
 		<StackPanel Orientation="Horizontal">
 			<DataGrid x:Name="myDataGrid" Items="{Binding FilteredReferences}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,40"
@@ -69,7 +70,5 @@
 				</StackPanel>
 			</StackPanel>-->
 		</StackPanel>
-		<Button Command="{Binding EditReference}" CommandParameter="{Binding SelectedItem, ElementName=myDataGrid}" Content="Rediger" Margin="60,0" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
-		<Button Command="{Binding DeleteReference}" CommandParameter="{Binding SelectedItem, ElementName=myDataGrid}" Content="Slet" Margin="10,0" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
 	</Grid>
 </Window>
