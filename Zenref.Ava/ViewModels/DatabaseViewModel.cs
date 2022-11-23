@@ -1,14 +1,15 @@
 ﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MessageBox.Avalonia.BaseWindows.Base;
 using MessageBox.Avalonia.DTO;
 using MessageBox.Avalonia.Models;
-using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
+using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Zenref.Ava.Models;
 using Zenref.Ava.Views;
 
@@ -53,10 +54,7 @@ namespace Zenref.Ava.ViewModels
             DragAndDropView dragAndDropView = new DragAndDropView();
             dragAndDropView.ShowDialog(window);
         }
-        [RelayCommand]
-        private void EditReference(Reference selectedReference)
-        {
-        }
+
         [RelayCommand]
         private async void DeleteReference(Reference selectedReference)
         {
@@ -76,9 +74,49 @@ namespace Zenref.Ava.ViewModels
                     });
                 if(await messageBoxCustomWindow.Show() == "Ja")
                 {
-                    references.Remove(selectedReference);
+                        references.Remove(selectedReference);
                 }
             } 
+        }
+        public void OnWindowClosing(object sender, CancelEventArgs e)
+        {
+            var messageBoxCustomWindow = MessageBox.Avalonia.MessageBoxManager.GetMessageBoxCustomWindow(
+            new MessageBoxCustomParams
+            {
+                ContentTitle = "Test MessageBox",
+                ContentMessage = "Du har ugemte ændringer\nVil du lukke uden at gemme?",
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                ButtonDefinitions = new[]
+                {
+                                    new ButtonDefinition { Name = "Nej", IsCancel = true },
+                                    new ButtonDefinition { Name = "Ja", IsDefault = true }
+                },
+            });
+
+            var task = MethodAync(messageBoxCustomWindow);
+            var result = task.Result;
+            if (result == "Nej")
+            {
+                e.Cancel = true;
+            }
+
+            //e.Cancel = true;
+
+            //Window? a = sender as Window;
+            //if (messageBoxCustomWindow.ShowDialog(a).Result == "Nej")
+            //{
+            //    e.Cancel = true;
+            //}
+
+            //if (await messageBoxCustomWindow.Show() == "Nej")
+            //{
+            //    e.Cancel = false;
+            //}
+
+        }
+        private async Task<string> MethodAync(IMsBoxWindow<string> msBoxWindow)
+        {
+            return await Task.Run(async () => { return await msBoxWindow.Show(); });
         }
     }
 }

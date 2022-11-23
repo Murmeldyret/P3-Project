@@ -16,8 +16,9 @@ namespace Zenref.Ava.Views
         {
             InitializeComponent();
             DataContext = databaseViewModel;
+            Closing += databaseViewModel.OnWindowClosing;
         }
-
+        
         private void SearchFilter(object sender, KeyEventArgs e)
         {
             TextBox? textBox = sender as TextBox;
