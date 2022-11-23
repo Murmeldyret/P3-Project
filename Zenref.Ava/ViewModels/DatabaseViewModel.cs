@@ -68,7 +68,7 @@ namespace Zenref.Ava.ViewModels
 
         private void ReadAllReferences()
         {
-            List<Reference> references = new List<Reference>();
+            ObservableCollection<Reference> referencesInSheets = new ObservableCollection<Reference>();
 
             foreach (FileInfo path in filePaths)
             {
@@ -76,13 +76,13 @@ namespace Zenref.Ava.ViewModels
                 Spreadsheet spreadsheet = new Spreadsheet(path.Name, path.DirectoryName);
                 Debug.WriteLine($"FileName: {path.Name} Path: {path.DirectoryName}");
                 spreadsheet.Import();
+                //spreadsheet.SetActiveSheet("Tidligere henvisninger");
                 Debug.WriteLine($"SPREADSHEET count: {spreadsheet.Count}");
                 IEnumerable<Reference> referencesInSheet = spreadsheet.GetReference(0u);
-                references.Add(referencesInSheet);
-                references.Concat(referencesInSheet);
+                referencesInSheets.Add(referencesInSheet);
             }
+            References = referencesInSheets;
             Debug.WriteLine($"Found {references.Count} Reference(s)");
-
 
         }
 

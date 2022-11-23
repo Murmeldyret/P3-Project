@@ -24,8 +24,6 @@ namespace Zenref.Ava.ViewModels
     }
     public partial class DragAndDropViewModel : ObservableObject
     {
-        WeakReferenceMessenger messenger = new WeakReferenceMessenger();
-
 
         [ObservableProperty]
         private List<string> filePath;
@@ -68,8 +66,8 @@ namespace Zenref.Ava.ViewModels
         }
         private void ConfirmFileChoices(Window window)
         {
-            WeakReferenceMessenger.Default.Send<FilePathsMessage>(new FilePathsMessage(files.ToList()));
             CloseWindow(window);
+            WeakReferenceMessenger.Default.Send<FilePathsMessage>(new FilePathsMessage(files.ToList()));
         }
     }
 }
