@@ -25,8 +25,8 @@ namespace zenref.Tests
 
             Filter searchFilters = new Filter(filters, category);
 
-            Assert.Equal(filters, searchFilters.returnFilterQueries());
-            Assert.Equal(category, searchFilters.returnFilterCategory());
+            Assert.Equal(filters, searchFilters.ReturnFilterQueries());
+            Assert.Equal(category, searchFilters.ReturnFilterCategory());
         }
 
         [Fact]
@@ -42,14 +42,14 @@ namespace zenref.Tests
 
             Filter searchFilters = new Filter(filters, category);
 
-            searchFilters.addFilterQuery("TV");
+            searchFilters.AddFilterQuery("TV");
 
             Assert.Equal(new List<string>()
             {
                 "Podcast",
                 "Radio",
                 "TV",
-            }, searchFilters.returnFilterQueries());
+            }, searchFilters.ReturnFilterQueries());
         }
 
         [Fact]
@@ -66,13 +66,13 @@ namespace zenref.Tests
 
             Filter searchFilters = new Filter(filters, category);
 
-            searchFilters.removeFilterQuery("Radio");
+            searchFilters.RemoveFilterQuery("Radio");
 
             Assert.Equal(new List<string>()
             {
                 "Podcast",
                 "TV",
-            }, searchFilters.returnFilterQueries());
+            }, searchFilters.ReturnFilterQueries());
         }
     }
 
@@ -134,8 +134,8 @@ namespace zenref.Tests
             Filter result = filters.FindFilter("Video");
 
             // Assert
-            Assert.Equal(filterQuery2, result.returnFilterQueries());
-            Assert.Equal(categoryName2, result.returnFilterCategory());
+            Assert.Equal(filterQuery2, result.ReturnFilterQueries());
+            Assert.Equal(categoryName2, result.ReturnFilterCategory());
         }
 
         [Fact]
@@ -210,11 +210,10 @@ namespace zenref.Tests
             filters.Add(new Filter(filterQuery3, categoryName3));
 
             // Act
-            filters.Remove(filters.FindFilter("Video"));
+            bool result = filters.Remove(filters.FindFilter("Video"));
 
             // Assert
-            Assert.Null(filters.FindFilter("Video").returnFilterQueries());
-            Assert.Null(filters.FindFilter("Video").returnFilterCategory());
+            Assert.True(result);
         }
     }
 }
