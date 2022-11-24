@@ -8,8 +8,8 @@
 		Width="700" Height="500"
         Title="Drag and drop window">
 
-	<Grid>
-		<Grid>
+	<Grid ColumnDefinitions="Auto,Auto,Auto">
+		<Grid Grid.Column="0">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition/>
 				<ColumnDefinition/>
@@ -57,7 +57,8 @@
 					VerticalAlignment="Bottom" 
 					HorizontalAlignment="Right"
 					Margin="10"/>
-				<ListBox Items="{Binding Files}" Grid.Column="1">
+		</Grid>
+				<ListBox Items="{Binding Files}" Grid.Column="1" Width="300">
 					<ListBox.ItemTemplate>
 						<DataTemplate>
 							<StackPanel>
@@ -73,6 +74,13 @@
 						</ItemsPanelTemplate>
 					</ListBox.ItemsPanel>
 				</ListBox>
-		</Grid>
+				<StackPanel Grid.Column="2">
+					<DataGrid IsReadOnly="False" Items="{Binding ColumnName}">
+						<DataGrid.Columns>
+							<DataGridTextColumn IsReadOnly="True" Header="Key" Binding="{Binding ColumnName}"/>
+							<DataGridTextColumn IsReadOnly="False" Header="Value" Binding="{Binding ColumnPos}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</StackPanel>
 	</Grid>
 </Window>

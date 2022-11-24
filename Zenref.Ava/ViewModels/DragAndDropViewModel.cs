@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.IO;
+using Zenref.Ava.Models.Spreadsheet;
 
 namespace Zenref.Ava.ViewModels
 {
@@ -31,6 +32,85 @@ namespace Zenref.Ava.ViewModels
         [ObservableProperty]
         private ObservableCollection<FileInfo> files;
 
+        private HashSet<int> position = new HashSet<int>();
+        [ObservableProperty]
+        private ObservableCollection<KeyValuePair<Spreadsheet.ReferenceFields, int>> columnPositions = new ObservableCollection<KeyValuePair<Spreadsheet.ReferenceFields, int>>()
+        {
+            { new KeyValuePair<Spreadsheet.ReferenceFields,int>( Spreadsheet.ReferenceFields.Author, 1 )},
+            { new KeyValuePair<Spreadsheet.ReferenceFields,int>( Spreadsheet.ReferenceFields.Title, 2 )},
+            { new KeyValuePair<Spreadsheet.ReferenceFields,int>( Spreadsheet.ReferenceFields.PublicationType, 3 )},
+            { new KeyValuePair<Spreadsheet.ReferenceFields,int>( Spreadsheet.ReferenceFields.Publisher, 4 )},
+            { new KeyValuePair<Spreadsheet.ReferenceFields,int>( Spreadsheet.ReferenceFields.YearRef, 5 )},
+            { new KeyValuePair<Spreadsheet.ReferenceFields,int>( Spreadsheet.ReferenceFields.IdRef, 6 )},
+            { new KeyValuePair<Spreadsheet.ReferenceFields,int>( Spreadsheet.ReferenceFields.Education, 7 )},
+            { new KeyValuePair<Spreadsheet.ReferenceFields,int>( Spreadsheet.ReferenceFields.Location, 8 )},
+            { new KeyValuePair<Spreadsheet.ReferenceFields,int>( Spreadsheet.ReferenceFields.Semester, 9 )},
+            { new KeyValuePair<Spreadsheet.ReferenceFields,int>( Spreadsheet.ReferenceFields.Language, 10 )},
+            { new KeyValuePair<Spreadsheet.ReferenceFields,int>( Spreadsheet.ReferenceFields.YearReport, 11 )},
+            { new KeyValuePair<Spreadsheet.ReferenceFields,int>( Spreadsheet.ReferenceFields.OriginalRef, 12 )},
+            { new KeyValuePair<Spreadsheet.ReferenceFields,int>( Spreadsheet.ReferenceFields.Match, 13 )},
+            { new KeyValuePair<Spreadsheet.ReferenceFields,int>( Spreadsheet.ReferenceFields.Comment, 14 )},
+            { new KeyValuePair<Spreadsheet.ReferenceFields,int>( Spreadsheet.ReferenceFields.Syllabus, 15 )},
+            { new KeyValuePair<Spreadsheet.ReferenceFields,int>( Spreadsheet.ReferenceFields.Season, 16 )},
+            { new KeyValuePair<Spreadsheet.ReferenceFields,int>( Spreadsheet.ReferenceFields.ExamEvent, 17 )},
+            { new KeyValuePair<Spreadsheet.ReferenceFields,int>( Spreadsheet.ReferenceFields.Source, 18 )},
+            { new KeyValuePair<Spreadsheet.ReferenceFields,int>( Spreadsheet.ReferenceFields.Pages, 19 )},
+            { new KeyValuePair<Spreadsheet.ReferenceFields,int>( Spreadsheet.ReferenceFields.Volume, 20 )},
+            { new KeyValuePair<Spreadsheet.ReferenceFields,int>( Spreadsheet.ReferenceFields.Chapters, 21 )},
+            { new KeyValuePair<Spreadsheet.ReferenceFields,int>( Spreadsheet.ReferenceFields.BookTitle, 22 )},
+        };
+        [ObservableProperty]
+        private ObservableCollection<string> columnName = new ObservableCollection<string>()
+        {
+            Spreadsheet.ReferenceFields.Author.ToString(),
+            Spreadsheet.ReferenceFields.Title.ToString(),
+            Spreadsheet.ReferenceFields.PublicationType.ToString(),
+            Spreadsheet.ReferenceFields.Publisher.ToString(),
+            Spreadsheet.ReferenceFields.YearRef.ToString(),
+            Spreadsheet.ReferenceFields.IdRef.ToString(),
+            Spreadsheet.ReferenceFields.Education.ToString(),
+            Spreadsheet.ReferenceFields.Location.ToString(),
+            Spreadsheet.ReferenceFields.Semester.ToString(),
+            Spreadsheet.ReferenceFields.Language.ToString(),
+            Spreadsheet.ReferenceFields.YearReport.ToString(),
+            Spreadsheet.ReferenceFields.OriginalRef.ToString(),
+            Spreadsheet.ReferenceFields.Match.ToString(),
+            Spreadsheet.ReferenceFields.Comment.ToString(),
+            Spreadsheet.ReferenceFields.Syllabus.ToString(),
+            Spreadsheet.ReferenceFields.Season.ToString(),
+            Spreadsheet.ReferenceFields.ExamEvent.ToString(),
+            Spreadsheet.ReferenceFields.Source.ToString(),
+            Spreadsheet.ReferenceFields.Pages.ToString(),
+            Spreadsheet.ReferenceFields.Volume.ToString(),
+            Spreadsheet.ReferenceFields.Chapters.ToString(),
+            Spreadsheet.ReferenceFields.BookTitle.ToString(),
+        };
+        private ObservableCollection<int> columnPos = new ObservableCollection<int>()
+        {
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+
+        };
         public DragAndDropViewModel()
         {
             files = new ObservableCollection<FileInfo>();
@@ -55,6 +135,10 @@ namespace Zenref.Ava.ViewModels
                 }
             }
             filePath = filePaths.ToList();
+        }
+        private void AdjustColumnPositions() 
+        {
+
         }
 
         private void CloseWindow (Window window)
