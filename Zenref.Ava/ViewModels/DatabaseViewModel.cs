@@ -1,13 +1,17 @@
 ﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.Wordprocessing;
 using MessageBox.Avalonia.BaseWindows.Base;
 using MessageBox.Avalonia.DTO;
 using MessageBox.Avalonia.Models;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Zenref.Ava.Models;
@@ -80,6 +84,7 @@ namespace Zenref.Ava.ViewModels
         }
         public void OnWindowClosing(object sender, CancelEventArgs e)
         {
+  
             var messageBoxCustomWindow = MessageBox.Avalonia.MessageBoxManager.GetMessageBoxCustomWindow(
             new MessageBoxCustomParams
             {
@@ -92,31 +97,7 @@ namespace Zenref.Ava.ViewModels
                                     new ButtonDefinition { Name = "Ja", IsDefault = true }
                 },
             });
-
-            var task = MethodAync(messageBoxCustomWindow);
-            var result = task.Result;
-            if (result == "Nej")
-            {
-                e.Cancel = true;
-            }
-
-            //e.Cancel = true;
-
-            //Window? a = sender as Window;
-            //if (messageBoxCustomWindow.ShowDialog(a).Result == "Nej")
-            //{
-            //    e.Cancel = true;
-            //}
-
-            //if (await messageBoxCustomWindow.Show() == "Nej")
-            //{
-            //    e.Cancel = false;
-            //}
-
-        }
-        private async Task<string> MethodAync(IMsBoxWindow<string> msBoxWindow)
-        {
-            return await Task.Run(async () => { return await msBoxWindow.Show(); });
+            messageBoxCustomWindow.Show();
         }
     }
 }

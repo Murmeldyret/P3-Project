@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Input;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
