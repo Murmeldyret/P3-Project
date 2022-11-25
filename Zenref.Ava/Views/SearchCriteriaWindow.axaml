@@ -32,7 +32,6 @@
 
 		<!--ComboBox with Operators-->
 		<Style Selector="ComboBox.Operator">
-			<Setter Property="Background" Value="Blue" />
 			<Setter Property="VerticalAlignment" Value="Center" />
 			<Setter	Property="Margin" Value="10, 0, 10, 0"/>
 		</Style>
@@ -47,7 +46,7 @@
 
 	<Grid RowDefinitions="Auto,Auto,*">
 		<Grid ColumnDefinitions="2*, 6.8*" Grid.Row="0">
-			<ComboBox Grid.Column="0" Classes="FirstCategory" PlaceholderText="Felter" Items="{Binding SearchOption[0].sField}"/>
+			<ComboBox Grid.Column="0" Classes="FirstCategory" PlaceholderText="Felter" Items="{Binding SearchOption[0].Field}"/>
 			<TextBox Grid.Column="1" Watermark="Søg"/>
 		</Grid>
 		<ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" MaxHeight="350">

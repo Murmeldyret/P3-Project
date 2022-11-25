@@ -1,18 +1,33 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Markup.Xaml;
+using Zenref.Ava.ViewModels;
 
 namespace Zenref.Ava.Views
 {
     public partial class ExportWindow : Window
     {
+        /*
         Button? MenuButton;
         Button? StartButton;
         Button? ExportButton;
+        */
         public ExportWindow()
         {
             InitializeComponent();
             InitializeWindow();
         }
+        private void InitializeComponent()
+        {
+            AvaloniaXamlLoader.Load(this);
+        }
+
+        private void InitializeWindow()
+        {
+
+        }
+
+        /*
         private void InitializeWindow()
         {
             MenuButton = this.FindControl<Button>("menuButton");
@@ -32,5 +47,6 @@ namespace Zenref.Ava.Views
 
             };
         }
+        */
     }
 }

@@ -4,64 +4,50 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
         x:Class="Zenref.Ava.Views.ExportWindow"
+		x:Name="MainView"
         Title="ExportWindow">
 	<Window.Styles>
 		<Style Selector="Border">
 			<Setter Property="BorderThickness" Value="1"/>
 			<Setter Property="BorderBrush" Value="Black"/>
 		</Style>
+		<Style Selector="Border.Left">
+			<Setter Property="HorizontalAlignment" Value="Left"/>
+			<Setter Property="Padding" Value="10"/>
+		</Style>
 		<Style Selector="TextBox">
 			<Setter Property="Width" Value="150"/>	
 			<Setter Property="FontSize" Value="12"/>
 		</Style>
-		<Style Selector="Button.b1">
+		<Style Selector="Button.Options Button.Cross">
 			<Setter Property="Width" Value="25"/>
 			<Setter Property="Height" Value="25"/>
 		</Style>
 	</Window.Styles>
-	<Grid>
-		<StackPanel Orientation="Horizontal" Spacing="50" Margin="20" VerticalAlignment="Top">
-		<Border HorizontalAlignment="Left" Width="250" Height="300" Padding="10">
-			<StackPanel Orientation="Vertical">
-				<StackPanel Orientation="Horizontal">
-					<TextBox>Tidsskrifte</TextBox>
-					<Button Classes="b1">
-						<Image Source="/Assets/options.ico"/>
-					</Button>
-					<Button Classes="b1">
-						<Image Source="/Assets/cross.ico"/>
-					</Button>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal">
-					<TextBox>Antologibidrag</TextBox>
-					<Button Classes="b1">
-						<Image Source="/Assets/options.ico"/>
-					</Button>
-					<Button Classes="b1">
-						<Image Source="/Assets/cross.ico"/>
-					</Button>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal">
-					<TextBox>Bøger</TextBox>
-					<Button Classes="b1">
-						<Image Source="/Assets/options.ico"/>
-					</Button>
-					<Button Classes="b1">
-						<Image Source="/Assets/cross.ico"/>
-					</Button>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal">
-					<TextBox Watermark="Indsæt publikationstype"></TextBox>
-					<Button Classes="b1">
-						<Image Source="/Assets/options.ico"/>
-					</Button>
-					<Button Classes="b1">
-						<Image Source="/Assets/cross.ico"/>
-					</Button>
-				</StackPanel>
-				
-			</StackPanel>
-		</Border>
+	<Grid ColumnDefinitions="Auto, Auto">
+		<StackPanel Grid.Column="0">
+			<Border Classes="Left">
+				<ScrollViewer MaxHeight="400">
+					<ItemsControl Items="{Binding PublicationTypes}" Name="PubType">
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<Grid ColumnDefinitions="*,Auto,Auto">
+									<TextBox Text="{Binding Name}" Grid.Column="0" Name="PubName" />
+									<Button Grid.Column="1" Classes="Options" Command="{Binding ElementName=MainView, Path=DataContext.EditPublicationTypeCommand}" CommandParameter="{Binding ElementName=MainView, Path=DataContext.PublicationTypes}">
+									<!-- CommandParameter="{Binding ElementName=MainView}-->
+										<Image Source="avares://Zenref.Ava/Assets/options.ico" />
+									</Button>
+									<Button Grid.Column="2" Classes="Cross" Command="{Binding ElementName=MainView, Path=DataContext.DeletePublicationTypeCommand}" CommandParameter="{Binding Name}">
+										<Image Source="avares://Zenref.Ava/Assets/cross.ico" />
+									</Button>
+								</Grid>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+				</ScrollViewer>
+			</Border>
+		</StackPanel>
+		<StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="50" Margin="20" VerticalAlignment="Top">
 		<Border Width="250" Height="300" Padding="10">
 			<StackPanel Orientation="Vertical" Spacing="3">
 				<StackPanel Orientation="Horizontal" Spacing="10">
@@ -82,7 +68,7 @@
 			</StackPanel>
 		</Border>
 	</StackPanel>
-		<Button Name="menuButton" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="100" Margin="10">Menu</Button>
+		<Button Name="menuButton" Command="{Binding OpenSearchCriteriaCommand}" CommandParameter="{Binding ElementName=MainView}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="100" Margin="10">Menu</Button>
 		<Button Name="startButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Margin="125,10">Start</Button>
 		<Button Name="exportButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Margin="10,10">Exporter</Button>
 	</Grid>

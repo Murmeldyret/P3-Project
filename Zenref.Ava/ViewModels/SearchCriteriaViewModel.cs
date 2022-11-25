@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Dynamic;
+using System.Linq;
 using System.Threading.Channels;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -11,7 +13,30 @@ using Zenref.Ava.Models;
 
 namespace Zenref.Ava.ViewModels
 {
-    public partial class SearchCriteriaViewModel : ObservableObject
+    
+    /*
+    public class SearchTermMessage
+    {
+        public List<SearchPublicationType> SearchCollection { get; init; }
+
+        public SearchTermMessage(List<SearchPublicationType> searchCollection)
+        {
+            SearchCollection = searchCollection;
+        }
+    }*/
+    
+    
+    public partial class SearchTermMessage : ObservableObject
+    {
+        public ObservableCollection<PublicationType> SearchPubCollection { get; init; }
+
+        public SearchTermMessage(ObservableCollection<PublicationType> searchOption)
+        {
+            SearchPubCollection = searchOption;
+        }
+    }
+
+    public partial class SearchCriteriaViewModel : ObservableRecipient, IRecipient<SearchTermMessage>
     {
         /// <summary>
         /// An observable collection of SearchPublicationType. It keeps track of the different search terms.
@@ -29,6 +54,13 @@ namespace Zenref.Ava.ViewModels
         [NotifyCanExecuteChangedFor(nameof(DeleteAllCommand))]
         private ObservableCollection<SearchPublicationType> searchOption = new ObservableCollection<SearchPublicationType>();
 
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(AddCommand))]
+        [NotifyCanExecuteChangedFor(nameof(SearchCommand))]
+        [NotifyCanExecuteChangedFor(nameof(DeleteCommand))]
+        [NotifyCanExecuteChangedFor(nameof(DeleteAllCommand))]
+        private ObservableCollection<PublicationType> pubTypes = new ObservableCollection<PublicationType>();
+
         /// <summary>
         /// Public strings that keeps track of the different selected search options from the view
         /// </summary>
@@ -42,16 +74,26 @@ namespace Zenref.Ava.ViewModels
             SearchOption.Clear();
         }
 
+        public SearchCriteriaViewModel(ObservableCollection<SearchPublicationType> searchOption)
+        {
+            SearchOption.Clear();
+            SearchOption = searchOption;
+        }
+
+
+
 
         /// <summary>
         /// The RelayCommand makes it into a new command, and is in relation to the NotifyCanExecuteChangedFor
         /// with the same name but "Command" as prefix
         /// 
-        /// Combines all the search terms into one search
+        /// Sends the observable collection of search terms to the ExpandViewModel
         /// </summary>
         [RelayCommand]
         private void Search()
         {
+            pubTypes.Add(new PublicationType("Indsæt titel", SearchOption));
+            WeakReferenceMessenger.Default.Send<SearchTermMessage>(new SearchTermMessage(PubTypes));
         }
 
         /// <summary>
@@ -60,11 +102,12 @@ namespace Zenref.Ava.ViewModels
         [RelayCommand]
         private void Add()
         {
+
             SearchOption.Add(new SearchPublicationType(
                 searchTerm: SearchTextString, 
                 searchSelectOperand: SearchOperand, 
                 searchSelectField: SearchField));
-            Debug.WriteLine(SearchOption[0].Operand[0]);
+
         }
 
         /// <summary>
@@ -84,6 +127,11 @@ namespace Zenref.Ava.ViewModels
         private void DeleteAll()
         {
             SearchOption.Clear();
+        }
+
+        public void Receive(SearchTermMessage message)
+        {
+            Debug.WriteLine(message.SearchPubCollection);
         }
     }
 }
