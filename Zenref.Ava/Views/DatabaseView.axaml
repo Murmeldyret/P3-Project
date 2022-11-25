@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="600"
-		Width="1200" Height="600"
+		MinWidth="1200" MinHeight="600"
         Title="Database Window">
 	<Window.Styles>
 		<Style Selector="TextBox.box1">
@@ -17,15 +17,14 @@
 		</Style>
 	</Window.Styles>
 
-	<Grid Name="grid" RowDefinitions="Auto">
-		<Menu Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+	<Grid Name="grid" RowDefinitions="Auto, Auto">
+		<Menu Background="Gray" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Stretch">
 			<Button Command="{Binding OpenDragAndDropView}" CommandParameter="{Binding ElementName=DBView}"> Tilføj</Button>
 			<TextBox KeyUp="SearchFilter" Watermark="Søg" Width="150" FontSize="15"></TextBox>
 			<Button Command="{Binding DeleteReference}" CommandParameter="{Binding SelectedItem, ElementName=myDataGrid}" Content="Slet"/>
 		</Menu>
-		<StackPanel Orientation="Horizontal">
-			<DataGrid x:Name="myDataGrid" Items="{Binding FilteredReferences}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,40"
-				  RowBackground="LightGray" CanUserResizeColumns="True" RowHeight="30" Width="800" Height="500">
+			<DataGrid x:Name="myDataGrid" Items="{Binding FilteredReferences}" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+				  RowBackground="LightGray" CanUserResizeColumns="True" RowHeight="30" Width="1200" Height="550">
 				<DataGrid.Columns>
 					<DataGridTextColumn Header="Forfatter" Binding="{Binding Author}"/>	
 					<DataGridTextColumn Header="Titel" Binding="{Binding Title}"/>
@@ -69,6 +68,5 @@
 					<TextBox Classes="box1" Text="{Binding SelectedItem.Location, ElementName=myDataGrid}"/>
 				</StackPanel>
 			</StackPanel>-->
-		</StackPanel>
 	</Grid>
 </Window>
