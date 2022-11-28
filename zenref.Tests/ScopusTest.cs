@@ -1,16 +1,11 @@
 using Xunit;
-using P3Project.API;
-
 using System;
 using System.IO;
-
-using Zenref.Ava.Models;
-
-using Microsoft.Extensions.Configuration;
-using P3Project.API.APIHelper;
-using Moq;
-using System.Net.Http;
 using System.Net;
+using Zenref.Ava.Models;
+using Microsoft.Extensions.Configuration;
+using System.Net.Http;
+using zenref.Core.API;
 
 namespace zenref.Tests
 {
@@ -23,8 +18,11 @@ namespace zenref.Tests
             HttpResponseMessage response = new HttpResponseMessage((HttpStatusCode)200);
             Reference inputReference = new Reference(_OriReference: "Zhao, Nannan. (2024). Improvement of Cloud Computing Medical Data Protection Technology Based on Symmetric Encryption Algorithm");
 
-            // Load test response json file
-            string testResponse = File.ReadAllText("../../../testResponse.json");
+            // Load test response json file TODO: Move the tesresponse.json to the debug folder and load it from there
+            string currentDirectory = Directory.GetCurrentDirectory();
+            string testResponse = File.ReadAllText(currentDirectory + "\\testResponse.json");
+            
+            // string testResponse = File.ReadAllText("../../../testResponse.json");
 
             // Set response content
             response.Content = new StringContent(testResponse);
@@ -43,11 +41,11 @@ namespace zenref.Tests
         {
             // New reference
             Reference inputReference = new Reference(_OriReference: "Zhao, Nannan. (2024). Improvement of Cloud Computing Medical Data Protection Technology Based on Symmetric Encryption Algorithm");
+            
             // Get secret key
             var configuration = new ConfigurationBuilder()
             .AddUserSecrets<Settings>()
             .Build();
-
             
             Scopus scopus = new Scopus(configuration["ScopusApiKey"], new Uri("https://api.elsevier.com/content/search/scopus"));
 
@@ -62,7 +60,7 @@ namespace zenref.Tests
         }
     }
 
-    internal class Settings
+    internal abstract class Settings
     {
         string apiKey { get; set; }
     }

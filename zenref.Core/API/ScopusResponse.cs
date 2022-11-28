@@ -6,7 +6,7 @@
 //
 //    var scopusResponse = ScopusResponse.FromJson(jsonString);
 
-namespace P3Project.API
+namespace zenref.Core.API
 {
     using System;
     using System.Collections.Generic;
@@ -200,12 +200,12 @@ namespace P3Project.API
 
     public partial class ScopusResponse
     {
-        public static ScopusResponse FromJson(string json) => JsonConvert.DeserializeObject<ScopusResponse>(json, P3Project.API.Converter.Settings);
+        public static ScopusResponse FromJson(string json) => JsonConvert.DeserializeObject<ScopusResponse>(json, zenref.Core.API.Converter.Settings);
     }
 
     public static class Serialize
     {
-        public static string ToJson(this ScopusResponse self) => JsonConvert.SerializeObject(self, P3Project.API.Converter.Settings);
+        public static string ToJson(this ScopusResponse self) => JsonConvert.SerializeObject(self, zenref.Core.API.Converter.Settings);
     }
 
     internal static class Converter

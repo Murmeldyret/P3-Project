@@ -1,16 +1,15 @@
 ﻿using Xunit;
 using System;
-using P3Project.API;
-using P3Project;
 using Zenref.Ava.Models;
 using Moq;
+using zenref.Core.API;
+using System.Net.Http;
 
 namespace zenref.Tests;
 
 // For testing public methods
 public class ApiTest
 {
-    //Test IsApiKeyValid
     [Fact]
     public void ApiIsApiKeyValidThrowsNotImplemented()
     {
@@ -18,27 +17,24 @@ public class ApiTest
 
         Assert.Throws<NotImplementedException>(api.Object.IsApiKeyValid);
     }
-
-    //End Test IsApiKeyValid
+    
     [Fact]
-    //Test ReferenceFetch
     public void ReferenceFetchUnsuccesful()
     {
         string url = "https://averywrong.url";
 
-        Reference response_reference = null;
+        Reference? responseReference = null;
 
-        Assert.Null(response_reference);
+        if (responseReference == null) throw new ArgumentNullException(nameof(responseReference));
+
+        Assert.Null(responseReference);
     }
+
     [Fact]
     public void ReferenceFetchSuccesful()
     {
         //
     }
-    //End Test ReferenceFetch
-    //Test fileformatResponse
-
-    // End Test fileformatResponse
 }
 
 // For testing protected methods.
@@ -52,13 +48,13 @@ public class ApiTest1 : Api
     public void isHTTPResponseCodeSuccessFailOnCode4xx(int value)
     {
         // Arrange
-        System.Net.Http.HttpResponseMessage response = new System.Net.Http.HttpResponseMessage((System.Net.HttpStatusCode)value);
+        HttpResponseMessage response = new((System.Net.HttpStatusCode)value);
 
         // Act
-        bool response_failure = _isHTTPResponseCodeSuccess(response);
+        bool responseFailure = _isHTTPResponseCodeSuccess(response);
 
         // Assert
-        Assert.Equal(false, response_failure);
+        Assert.False(responseFailure);
     }
 
 
@@ -68,14 +64,13 @@ public class ApiTest1 : Api
     public void httpResponseCodeSuccessOn2xx(int value)
     {
         // Arrange
-        System.Net.Http.HttpResponseMessage response = new System.Net.Http.HttpResponseMessage((System.Net.HttpStatusCode)value);
+        HttpResponseMessage response = new((System.Net.HttpStatusCode)value);
 
         // Act
-        bool response_success = _isHTTPResponseCodeSuccess(response);
+        bool responseSuccess = _isHTTPResponseCodeSuccess(response);
 
         // Assert
-        Assert.Equal(true, response_success);
-
+        Assert.True(responseSuccess);
     }
     //End Test _isHTTPResponseCodeSuccess
 
@@ -135,11 +130,9 @@ public class ApiTest1 : Api
     //        Assert.IsType<NullReferenceException>(e);
     //    }
     //}
-
-
-    public override System.Threading.Tasks.Task<Reference> ReferenceFetch(Reference inputReference, Func<Reference, System.Net.Http.HttpResponseMessage, Reference> referenceParser)
+    public override System.Threading.Tasks.Task<Reference> ReferenceFetch(Reference inputReference,
+        Func<Reference, HttpResponseMessage, Reference> referenceParser)
     {
         throw new NotImplementedException();
     }
-
 }

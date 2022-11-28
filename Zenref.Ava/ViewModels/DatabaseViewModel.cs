@@ -1,9 +1,9 @@
 ﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Zenref.Ava.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using zenref.Core.Models;
 using Zenref.Ava.Views;
 
 namespace Zenref.Ava.ViewModels

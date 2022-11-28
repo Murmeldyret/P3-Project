@@ -1,25 +1,19 @@
-using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using P3Project.API.APIHelper;
 using Zenref.Ava.Models;
 
-
-namespace P3Project.API
+namespace zenref.Core.API
 {
     public class Scopus : Api
     {
         public Scopus(string apiKey, Uri URI) : base(apiKey, URI)
         {
-            this._apiKey = apiKey;
-            this._baseURL = URI;
+            _apiKey = apiKey;
+            _baseURL = URI;
         }
 
         public Scopus(string apiKey, Uri URI, uint RateLimitInMsecs) : base(apiKey, URI, RateLimitInMsecs)
         {
-            this._apiKey = apiKey;
-            this._baseURL = URI;
+            _apiKey = apiKey;
+            _baseURL = URI;
             this.RateLimitInMsecs = RateLimitInMsecs;
         }
 
@@ -56,6 +50,7 @@ namespace P3Project.API
             // Fuzzy match the substrings with the response
             int bestMatchIndex = -1;
             int bestMatchScore = int.MaxValue;
+            
             double bestMatchScorePercentage = 0;
             for (int i = 0; i < scopusResponse.SearchResults.Entry.Count; i++)
             {
@@ -63,11 +58,10 @@ namespace P3Project.API
                 {
                     int distance = Fastenshtein.Levenshtein.Distance(scopusResponse.SearchResults.Entry[i].DcTitle.ToLower(), inputReferenceSplit[j].ToLower());
 
-                    if (distance < bestMatchScore)
-                    {
-                        bestMatchScore = distance;
-                        bestMatchIndex = i;
-                    }
+                    if (distance >= bestMatchScore) continue;
+                    
+                    bestMatchScore = distance;
+                    bestMatchIndex = i;
                 }
             }
 
@@ -75,12 +69,8 @@ namespace P3Project.API
             {
                 throw new Exception("Could not find a match");
             }
-            else
-            {
-                bestMatchScorePercentage = 1 - ((double)bestMatchScore / (double)scopusResponse.SearchResults.Entry[bestMatchIndex].DcTitle.Length);
-            }
 
-
+            bestMatchScorePercentage = 1 - (double)bestMatchScore / (double)scopusResponse.SearchResults.Entry[bestMatchIndex].DcTitle.Length;
 
             // Set the best match as the reference
                 inputReference.Author = scopusResponse.SearchResults.Entry[bestMatchIndex].DcCreator;

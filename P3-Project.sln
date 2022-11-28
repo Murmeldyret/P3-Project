@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "zenref.Tests", "zenref.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenref.Ava", "Zenref.Ava\Zenref.Ava.csproj", "{9676D14F-D681-461E-A55F-BA29CD6CCA23}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "zenref.Core", "zenref.Core\zenref.Core.csproj", "{1737BAFE-868C-48CB-914A-CE9C44B458FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{9676D14F-D681-461E-A55F-BA29CD6CCA23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9676D14F-D681-461E-A55F-BA29CD6CCA23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9676D14F-D681-461E-A55F-BA29CD6CCA23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1737BAFE-868C-48CB-914A-CE9C44B458FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1737BAFE-868C-48CB-914A-CE9C44B458FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1737BAFE-868C-48CB-914A-CE9C44B458FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1737BAFE-868C-48CB-914A-CE9C44B458FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

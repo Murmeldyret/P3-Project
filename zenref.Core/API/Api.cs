@@ -1,21 +1,15 @@
-using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-
 using Zenref.Ava.Models;
-using P3Project.API.APIHelper;
 using System.Net;
 
-namespace P3Project.API
+namespace zenref.Core.API
 {
     /// <summary>
     /// Represents a RESTful WebApi
     /// </summary>
     public abstract class Api
     {
-        public List<string> ParametersName { get; set; }
-        public List<string> ParametersValue { get; set; }
+        private List<string> ParametersName { get; set; }
+        private List<string> ParametersValue { get; set; }
         protected string _apiKey { get; init; }
         protected Uri _baseURL { get; init; }
         protected bool _isApiKeyValid { get; set; } = true;
@@ -45,8 +39,8 @@ namespace P3Project.API
         /// <param name="URI">The URI that the client should fetch data from.</param>
         public Api(string apiKey, Uri URI)
         {
-            this._apiKey = apiKey;
-            this._baseURL = URI;
+            _apiKey = apiKey;
+            _baseURL = URI;
         }
 
         /// <summary>
@@ -63,8 +57,8 @@ namespace P3Project.API
         /// <param name="RateLimitInMsecs">The rate limit entered in milliseconds, to prevent overloading the API. Must be 0 or greater.</param>
         public Api(string apiKey, Uri URI, uint RateLimitInMsecs)
         {
-            this._apiKey = apiKey;
-            this._baseURL = URI;
+            _apiKey = apiKey;
+            _baseURL = URI;
             this.RateLimitInMsecs = RateLimitInMsecs;
         }
 
@@ -86,7 +80,7 @@ namespace P3Project.API
             string queryString = queryCleaner(inputReference.OriReference);
             Uri apiUri = BuildUri($"query={queryString}");
 
-            HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(apiUri);       // Request API for ressource.
+            HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(apiUri); // Request API for ressource.
 
             // Validation
             if (!_isHTTPResponseCodeSuccess(response))

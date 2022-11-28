@@ -1,46 +1,44 @@
 using System.Linq;
 using Xunit;
-using Zenref.Ava.Models;
+using zenref.Core.Models;
 using System;
+using zenref.Core.Factories;
+
 namespace zenref.Tests
 {
-    public class DatabaseTest : IDisposable
+    public sealed class DatabaseTest : IDisposable
     {
         [Fact]
         public void DatabaseConnection()
         {
-            using DataContext context = new();
-
+            using ApplicationContext context = new();
             Assert.True(context.Database.CanConnect());
         }
 
         [Fact]
-        public void CreateReference()
+        public void CreateBookReference()
         {
-            using DataContext context = new();
+            // Arrange
+            using ApplicationContext context = new();
 
-            Reference reference = new()
-            {
-                Title = "Test Title",
-                Author = "Test Author",
-            };
-
-            context.References.Add(reference);
+            ReferenceFactory referenceFactory = new();
+            Reference book = referenceFactory.CreateReference();
+            
+            // Act
+            context.References.Add(book);
             context.SaveChanges();
 
+            // Assert
             Assert.True(context.References.Any());
         }
 
         [Fact]
         public void DeleteReference()
         {
-            using DataContext context = new();
+            using ApplicationContext context = new();
 
-            Reference reference = new()
-            {
-                Title = "Test Title",
-                Author = "Test Author",
-            };
+            ReferenceFactory referenceFactory = new();
+            Reference reference = referenceFactory.CreateReference();
 
             context.References.Add(reference);
             context.SaveChanges();
@@ -54,13 +52,10 @@ namespace zenref.Tests
         [Fact]
         public void FindReference()
         {
-            using DataContext context = new();
+            using ApplicationContext context = new();
 
-            Reference reference = new()
-            {
-                Title = "Test Title",
-                Author = "Test Author",
-            };
+            ReferenceFactory referenceFactory = new();
+            Reference reference = referenceFactory.CreateReference();
 
             context.References.Add(reference);
             context.SaveChanges();
@@ -74,13 +69,10 @@ namespace zenref.Tests
         [Fact]
         public void UpdateReference()
         {
-            using DataContext context = new();
+            using ApplicationContext context = new();
 
-            Reference reference = new()
-            {
-                Title = "Test Title",
-                Author = "Test Author",
-            };
+            ReferenceFactory referenceFactory = new();
+            Reference reference = referenceFactory.CreateReference();
 
             context.References.Add(reference);
             context.SaveChanges();
@@ -97,7 +89,7 @@ namespace zenref.Tests
 
         public void Dispose()
         {
-            using DataContext context = new();
+            using ApplicationContext context = new();
 
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
