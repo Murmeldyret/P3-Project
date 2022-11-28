@@ -76,10 +76,10 @@
 					</ListBox.ItemsPanel>
 				</ListBox>
 				<StackPanel Grid.Column="2" Orientation="Horizontal">
-					<DataGrid IsReadOnly="True" AutoGenerateColumns="True" Items="{Binding ColumnName}"></DataGrid>
-					<DataGrid IsReadOnly="False" AutoGenerateColumns="False" Width="100" Items="{Binding ColumnPos, Mode=TwoWay}">
+					<DataGrid IsReadOnly="False" AutoGenerateColumns="False" Items="{Binding ColumnPositions}">
 						<DataGrid.Columns>
-							<DataGridTextColumn Header="Value" Binding="{Binding}"/>
+							<DataGridTextColumn IsReadOnly="True" Header="Name" Binding="{Binding ColumnName}"/>
+							<DataGridTextColumn IsReadOnly="False" Header="Value" Binding="{Binding ColumnPos, Mode=TwoWay}"/>
 						</DataGrid.Columns>
 					</DataGrid>
 				</StackPanel>
