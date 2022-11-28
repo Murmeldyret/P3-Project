@@ -13,7 +13,6 @@
 		<local:ByteConverter x:Key="ByteConverter"/>
 	</Window.Resources>
 	
-	
 	<Grid>
 		<Grid>
 			<Grid.ColumnDefinitions>
@@ -68,7 +67,7 @@
 							<TextBlock Text="{Binding FullName}"/>
 							<TextBlock Text="{Binding Name}"/>
 							<TextBlock Text="{Binding Length, Converter={StaticResource ByteConverter}}"/>	
-							<Button Content="Slet" Command="{Binding DeleteFile}" CommandParameter="{Binding Name}"/>
+							<Button Content="Slet" Command="{Binding DeleteFile}"/>
 						</StackPanel>
 					</DataTemplate>
 				</ListBox.ItemTemplate>
