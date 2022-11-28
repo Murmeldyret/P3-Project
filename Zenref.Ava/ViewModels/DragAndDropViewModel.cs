@@ -29,13 +29,24 @@ namespace Zenref.Ava.ViewModels
     public partial class DragAndDropViewModel : ObservableObject
     {
         [ObservableObject]
-       public partial class ColumnPositionHandler
+        public partial class ColumnPositionHandler
         {
-            public ColumnPositionHandler(string name, int value)
+            public ColumnPositionHandler(string name, int value, Action<DragAndDropViewModel> action, DragAndDropViewModel viewModel)
             {
                 columnName = name;
                 columnPos = value;
+                this.PropertyChanged += ColumnPositionHandler_PropertyChanged;
+                Action = action;
+                ViewModel = viewModel;
             }
+
+            private void ColumnPositionHandler_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+            {
+                Action.Invoke(ViewModel);
+            }
+
+            private Action<DragAndDropViewModel> Action;
+            private DragAndDropViewModel ViewModel;
             [ObservableProperty]
             public string columnName;
             //public ObservableCollection<string> columnName = new ObservableCollection<string>()
@@ -92,32 +103,15 @@ namespace Zenref.Ava.ViewModels
 
             //};
         }
-        [ObservableProperty]
-        private ObservableCollection<ColumnPositionHandler> columnPositions = new ObservableCollection<ColumnPositionHandler>()
+
+        private Action<DragAndDropViewModel> action = (x) =>
         {
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Author.ToString(),1),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Title.ToString(),2),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.PublicationType.ToString(),3),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Publisher.ToString(),4),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.YearRef.ToString(),5),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.IdRef.ToString(),6),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Education.ToString(),7),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Location.ToString(),8),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Semester.ToString(),9),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Language.ToString(),10),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.YearReport.ToString(),11),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.OriginalRef.ToString(),12),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Match.ToString(),13),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Comment.ToString(),14),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Syllabus.ToString(),15),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Season.ToString(),16),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.ExamEvent.ToString(),17),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Source.ToString(),18),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Pages.ToString(),19),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Volume.ToString(),20),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Chapters.ToString(),21),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.BookTitle.ToString(),22),
+            Debug.WriteLine("Column Position Changed");
+            x.IsNextButtonEnabled = x.CanProceed();
         };
+        [ObservableProperty]
+        private ObservableCollection<ColumnPositionHandler> columnPositions;
+
         [ObservableProperty]
         private bool isNextButtonEnabled;
 
@@ -127,24 +121,38 @@ namespace Zenref.Ava.ViewModels
         [ObservableProperty]
         private ObservableCollection<FileInfo> files;
 
+        
         public DragAndDropViewModel()
         {
             Debug.WriteLine("DragAndDropView constructor Called");
             isNextButtonEnabled = false;
             files = new ObservableCollection<FileInfo>();
-            //columnPos.CollectionChanged += ColumnPosChangedEventHandler;
+            columnPositions = new ObservableCollection<ColumnPositionHandler>()
+            {
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Author.ToString(),1, action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Title.ToString(),2,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.PublicationType.ToString(),3,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Publisher.ToString(),4,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.YearRef.ToString(),5,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.IdRef.ToString(),6,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Education.ToString(),7,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Location.ToString(),8,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Semester.ToString(),9,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Language.ToString(),10,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.YearReport.ToString(),11,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.OriginalRef.ToString(),12,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Match.ToString(),13,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Comment.ToString(),14,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Syllabus.ToString(),15,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Season.ToString(),16,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.ExamEvent.ToString(),17,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Source.ToString(),18,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Pages.ToString(),19,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Volume.ToString(),20,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Chapters.ToString(),21,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.BookTitle.ToString(),22,action,this),
+            };
         }
-        partial void OnColumnPositionsChanged(ObservableCollection<ColumnPositionHandler> value)
-        {
-            Debug.WriteLine("ColumnPos changed");
-            IsNextButtonEnabled = CanProceed();
-        }
-
-        //private void ColumnPosChangedEventHandler(object source, EventArgs e)
-        //{
-        //    Debug.WriteLine("Column Positions changed at DragAndDropView.");
-        //    isNextButtonEnabled = CanProceed();
-        //}
 
         /// <summary>
         /// Determines whether or not the user can press the next button by checking that any file is chosen, and that the column position is correctly filled

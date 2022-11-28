@@ -76,7 +76,7 @@
 					</ListBox.ItemsPanel>
 				</ListBox>
 				<StackPanel Grid.Column="2" Orientation="Horizontal">
-					<DataGrid IsReadOnly="False" AutoGenerateColumns="False" Items="{Binding ColumnPositions}">
+					<DataGrid IsReadOnly="False" AutoGenerateColumns="False" Items="{Binding ColumnPositions, Mode=TwoWay}">
 						<DataGrid.Columns>
 							<DataGridTextColumn IsReadOnly="True" Header="Name" Binding="{Binding ColumnName}"/>
 							<DataGridTextColumn IsReadOnly="False" Header="Value" Binding="{Binding ColumnPos, Mode=TwoWay}"/>
