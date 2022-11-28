@@ -8,6 +8,8 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using System.IO;
 using Zenref.Ava.Models.Spreadsheet;
+using System.Collections.Specialized;
+using System.Diagnostics;
 
 namespace Zenref.Ava.ViewModels
 {
@@ -25,6 +27,8 @@ namespace Zenref.Ava.ViewModels
     }
     public partial class DragAndDropViewModel : ObservableObject
     {
+        [ObservableProperty]
+        private bool isNextButtonEnabled;
 
         [ObservableProperty]
         private List<string> filePath;
@@ -85,6 +89,7 @@ namespace Zenref.Ava.ViewModels
             Spreadsheet.ReferenceFields.Chapters.ToString(),
             Spreadsheet.ReferenceFields.BookTitle.ToString(),
         };
+        [ObservableProperty]
         private ObservableCollection<int> columnPos = new ObservableCollection<int>()
         {
             1,
@@ -113,9 +118,32 @@ namespace Zenref.Ava.ViewModels
         };
         public DragAndDropViewModel()
         {
+            Debug.WriteLine("DragAndDropView constructor Called");
+            isNextButtonEnabled = false;
             files = new ObservableCollection<FileInfo>();
+            columnPos.CollectionChanged += ColumnPosChangedEventHandler;
         }
 
+        private void ColumnPosChangedEventHandler(object source, EventArgs e)
+        {
+            Debug.WriteLine("Column Positions changed at DragAndDropView.");
+            isNextButtonEnabled = CanProceed();
+        }
+
+        /// <summary>
+        /// Determines whether or not the user can press the next button by checking that any file is chosen, and that the column position is correctly filled
+        /// </summary>
+        /// <returns>True if the user can proceed, false otherwise</returns>
+        private bool CanProceed()
+        {
+            int distinctColumnPosValues = columnPos.Where(x => x is > 0 and <= 22).Distinct().Count();
+
+            bool isColumnPosFilled = distinctColumnPosValues == columnPos.Count;
+            bool anyFileChosen = files.Count() != 0;
+
+            Debug.WriteLine($"CanProceed evaluates to {isColumnPosFilled && anyFileChosen}");
+            return isColumnPosFilled && anyFileChosen;
+        }
         [RelayCommand]
         private async void OpenFileDialog (Window window)
         {

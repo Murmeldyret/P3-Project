@@ -50,7 +50,8 @@
 					VerticalAlignment="Bottom" 
 					HorizontalAlignment="Left"
 					Margin="10"/>
-				<Button 
+				<Button
+					IsEnabled="{Binding IsNextButtonEnabled}" 
 					Content="Næste"
 					Command="{Binding ConfirmFileChoices}"
 					CommandParameter="{Binding ElementName=DADView}"
@@ -74,11 +75,11 @@
 						</ItemsPanelTemplate>
 					</ListBox.ItemsPanel>
 				</ListBox>
-				<StackPanel Grid.Column="2">
-					<DataGrid IsReadOnly="False" Items="{Binding ColumnName}">
+				<StackPanel Grid.Column="2" Orientation="Horizontal">
+					<DataGrid IsReadOnly="True" AutoGenerateColumns="True" Items="{Binding ColumnName}"></DataGrid>
+					<DataGrid IsReadOnly="False" AutoGenerateColumns="False" Width="100" Items="{Binding ColumnPos, Mode=TwoWay}">
 						<DataGrid.Columns>
-							<DataGridTextColumn IsReadOnly="True" Header="Key" Binding="{Binding ColumnName}"/>
-							<DataGridTextColumn IsReadOnly="False" Header="Value" Binding="{Binding ColumnPos}"/>
+							<DataGridTextColumn Header="Value" Binding="{Binding}"/>
 						</DataGrid.Columns>
 					</DataGrid>
 				</StackPanel>
