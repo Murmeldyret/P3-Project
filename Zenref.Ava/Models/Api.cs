@@ -86,7 +86,7 @@ namespace P3Project.API
             string queryString = queryCleaner(inputReference.OriReference);
             Uri apiUri = BuildUri($"query={queryString}");
 
-            HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(apiUri);       // Request API for ressource.
+            HttpResponseMessage response = await ApiClient.getInstance().GetAsync(apiUri);       // Request API for ressource.
 
             // Validation
             if (!_isHTTPResponseCodeSuccess(response))
