@@ -127,6 +127,7 @@ namespace Zenref.Ava.ViewModels
             Debug.WriteLine("DragAndDropView constructor Called");
             isNextButtonEnabled = false;
             files = new ObservableCollection<FileInfo>();
+            Files.CollectionChanged += Files_CollectionChanged;
             columnPositions = new ObservableCollection<ColumnPositionHandler>()
             {
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Author.ToString(),1, action,this),
@@ -152,6 +153,12 @@ namespace Zenref.Ava.ViewModels
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Chapters.ToString(),21,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.BookTitle.ToString(),22,action,this),
             };
+        }
+
+        private void Files_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            Debug.WriteLine("File was chosen");
+            IsNextButtonEnabled = CanProceed();
         }
 
         /// <summary>
@@ -190,10 +197,6 @@ namespace Zenref.Ava.ViewModels
                 }
             }
             filePath = filePaths.ToList();
-        }
-        private void AdjustColumnPositions() 
-        {
-
         }
 
         private void CloseWindow (Window window)
