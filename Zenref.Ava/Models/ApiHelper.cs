@@ -6,50 +6,58 @@ namespace P3Project.API.APIHelper
 {
     /// <summary>
     /// Represents a singleton where the HTTP client can be accessed.
-    /// </summary>
-    /// 
-    public interface ISingleton
-    {
-        HttpClient getInstance();
-    }
-
-    /// <summary>
-    /// Represents a singleton where the HTTP client can be accessed.
     /// Class <c>ApiClient</c> is a partial class that can be extended with additional configuration
-    public partial class ApiClient : ISingleton
+    public class ApiClient
     {
-        private HttpClient _ApiClient { get; set; }
+		private static HttpClient? _ApiClient { get; set; }
 
-        partial void CustomInit();
         private ApiClient()
         {
             _ApiClient = new HttpClient();
-            initializeClient();
+
+			ApiClientConfiguration apiConfiguration = new ApiClientConfiguration();
+            apiConfiguration.initializeClient(_ApiClient);
         }
 
-        private void initializeClient()
+        /// <summary>
+        /// Returns the HTTP client instance and makes sure that it is initialized.
+        /// </summary>
+        /// <returns>The Initialized HTTP client instance.</returns>
+        public static HttpClient getInstance()
+        {
+            if (_ApiClient == null)
+            {
+                new ApiClient();
+            }
+
+            return _ApiClient;
+        }
+    }
+
+    partial class ApiClientConfiguration
+    {
+        /// <summary>
+        /// Represents a partial method that can be implemented to extend the default initialization of the HTTP client.
+        /// </summary>
+        partial void CustomInit(HttpClient _ApiClient);
+
+        public void initializeClient(HttpClient _ApiClient)
         {
             _ApiClient.DefaultRequestHeaders.Accept.Clear();
-            
-            defaultInitialization();
-            CustomInit();
+
+            defaultInitialization(_ApiClient);           // Can be overwriten by partial method by clearing the headers.
+            CustomInit(_ApiClient);                     // The default initialization can be extended by implementing a partial method.
         }
 
-        private void defaultInitialization()
+
+        /// <summary>
+        /// Represents the default initialization of the HTTP client.
+        /// </summary>
+        private void defaultInitialization(HttpClient _ApiClient)
         {
             _ApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             _ApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
             _ApiClient.Timeout = TimeSpan.FromMinutes(2);
-        }
-
-        public HttpClient getInstance()
-        {
-            if (_ApiClient == null)
-            {
-                initializeClient();
-            }
-
-            return _ApiClient;
         }
     }
 }
