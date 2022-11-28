@@ -1,19 +1,15 @@
 ﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DocumentFormat.OpenXml.InkML;
-using DocumentFormat.OpenXml.Wordprocessing;
 using MessageBox.Avalonia.BaseWindows.Base;
 using MessageBox.Avalonia.DTO;
 using MessageBox.Avalonia.Models;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using MessageBox.Avalonia.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Zenref.Ava.Models;
 using Zenref.Ava.Views;
 
@@ -25,6 +21,11 @@ namespace Zenref.Ava.ViewModels
         private ObservableCollection<Reference> references;
         [ObservableProperty]
         private IEnumerable<Reference> filteredReferences;
+        [ObservableProperty]
+        private bool saveChanges = true;
+        [ObservableProperty]
+        private string[] propertyArray = { "Forfatter", "Titel", "Publikationstype", "Forlag", "År (Reference)", "Id", "Uddannelse", "Uddannelsessted", "Semester", "Sprog", "År (Rapport)", "Match", "Kommentar", "Pensum", "Sæson", "Eksamensbegivenhed", "Kilde", "Sidetal", "Bind", "Kapitler", "Bogtitel", "Henvisning" };
+
 
         public DatabaseViewModel()
         {
@@ -64,7 +65,7 @@ namespace Zenref.Ava.ViewModels
         {
             if(selectedReference != null)
             {
-                var messageBoxCustomWindow = MessageBox.Avalonia.MessageBoxManager.GetMessageBoxCustomWindow(
+                IMsBoxWindow<string> messageBoxCustomWindow = MessageBox.Avalonia.MessageBoxManager.GetMessageBoxCustomWindow(
                     new MessageBoxCustomParams
                     {
                         ContentTitle = "Test MessageBox",
@@ -78,14 +79,13 @@ namespace Zenref.Ava.ViewModels
                     });
                 if(await messageBoxCustomWindow.Show() == "Ja")
                 {
-                        references.Remove(selectedReference);
+                    references.Remove(selectedReference);
                 }
             } 
         }
-        public void OnWindowClosing(object sender, CancelEventArgs e)
+        public async void OnWindowClosing(object sender, CancelEventArgs e)
         {
-  
-            var messageBoxCustomWindow = MessageBox.Avalonia.MessageBoxManager.GetMessageBoxCustomWindow(
+            IMsBoxWindow<string> messageBoxCustomWindow = MessageBox.Avalonia.MessageBoxManager.GetMessageBoxCustomWindow(
             new MessageBoxCustomParams
             {
                 ContentTitle = "Test MessageBox",
@@ -93,11 +93,10 @@ namespace Zenref.Ava.ViewModels
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
                 ButtonDefinitions = new[]
                 {
-                                    new ButtonDefinition { Name = "Nej", IsCancel = true },
-                                    new ButtonDefinition { Name = "Ja", IsDefault = true }
+                    new ButtonDefinition { Name = "Nej", IsCancel = true },
+                    new ButtonDefinition { Name = "Ja", IsDefault = true }
                 },
             });
-            messageBoxCustomWindow.Show();
         }
     }
 }
