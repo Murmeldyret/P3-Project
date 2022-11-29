@@ -11,6 +11,8 @@ using CommunityToolkit.Mvvm.Messaging;
 using System.Diagnostics;
 using System.IO;
 using DynamicData;
+using MessageBox.Avalonia.BaseWindows.Base;
+using MessageBox.Avalonia.Enums;
 
 namespace Zenref.Ava.ViewModels
 {
@@ -80,21 +82,30 @@ namespace Zenref.Ava.ViewModels
                 positionInSheet.Add(referenceFields++,columnPositions[i]);
             }
 
-            foreach (FileInfo path in filePaths)
+            try
             {
+                foreach (FileInfo path in filePaths)
+                {
 
-                Spreadsheet spreadsheet = new Spreadsheet(path.Name, path.DirectoryName);
-                Debug.WriteLine($"FileName: {path.Name} Path: {path.DirectoryName}");
-                spreadsheet.SetColumnPosition(positionInSheet);
-                spreadsheet.Import();
-                spreadsheet.SetActiveSheet(activeSheet);
-                Debug.WriteLine($"SPREADSHEET count: {spreadsheet.Count}");
-                IEnumerable<Reference> referencesInSheet = spreadsheet.GetReference(0u);
-                referencesInSheets.Add(referencesInSheet);
+                    Spreadsheet spreadsheet = new Spreadsheet(path.Name, path.DirectoryName);
+                    Debug.WriteLine($"FileName: {path.Name} Path: {path.DirectoryName}");
+                    spreadsheet.SetColumnPosition(positionInSheet);
+                    spreadsheet.Import();
+                    spreadsheet.SetActiveSheet(activeSheet);
+                    Debug.WriteLine($"SPREADSHEET count: {spreadsheet.Count}");
+                    IEnumerable<Reference> referencesInSheet = spreadsheet.GetReference(0u);
+                    referencesInSheets.Add(referencesInSheet);
+                }
+                References = referencesInSheets;
+                Debug.WriteLine($"Found {references.Count} Reference(s)");
             }
-            References = referencesInSheets;
-            Debug.WriteLine($"Found {references.Count} Reference(s)");
-
+            catch (Exception e)
+            {
+                IMsBoxWindow<ButtonResult> messageBoxStandardView = MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow("Error", "Error in reading References from spreadsheet");
+                messageBoxStandardView.Show();
+                Debug.WriteLine("Error in reading references.");
+            }
         }
 
     }
