@@ -12,6 +12,7 @@ namespace Zenref.Ava.Models
         public int FindFilterIndex(string filter);
         public void SaveFilters();
         public void LoadFilters();
+        public string categorize(Reference reference);
     }
 
     public interface IFilter
@@ -21,7 +22,7 @@ namespace Zenref.Ava.Models
         public List<string> ReturnFilterQueries();
         public string ReturnFilterCategory();
         public bool ContainsQuery(string query);
-        
+
 
     }
 
@@ -99,7 +100,59 @@ namespace Zenref.Ava.Models
         {
             throw new NotImplementedException();
         }
+
+        public string categorize(Reference reference)
+        {
+            // Format reference to a list of strings.
+            List<string> referenceList = ReferenceFormatter(reference);
+
+            // Loop through each filter.
+            foreach (Filter filter in Filters)
+            {
+                // Loop through each query in the filter.
+                foreach (string filterQueries in filter.ReturnFilterQueries())
+                {
+                    // Loop through each word in the reference.
+                    foreach (string text in referenceList)
+                    {
+                        // Splits the query into words.
+                        string[] textWords = text.Split(' ');
+                        // Match every word in the query to the reference.
+
+                        foreach (string queryWord in textWords)
+                        {
+                            if (filterQueries == queryWord)
+                            {
+                                return filter.ReturnFilterCategory();
+                            }
+                        }
+                    }
+                }
+            }
+
+            return "Uncategorized";
+
+        }
+
+        private List<string> ReferenceFormatter(Reference reference)
+        {
+            // Format reference to a large string with space for sep
+            // and return a list of strings.
+            List<string> formattedReference = new List<string>()
+            {
+                reference.Author,
+                reference.Title,
+                reference.PubType,
+                reference.Publisher,
+                reference.Location,
+                reference.Source,
+                reference.BookTitle,
+            };
+
+            return formattedReference;
+        }
     }
+
 
 
 
@@ -160,24 +213,6 @@ namespace Zenref.Ava.Models
         public string ReturnFilterCategory()
         {
             return this.categoryName;
-        }
-
-        public string editFilter()
-        {
-            throw new NotImplementedException();
-        }
-
-        // Search filter query for a specific string.
-        public string searchFilter(string query)
-        {
-            //something something, leder efter en bestemt streng eller et bestemt felt
-            throw new NotImplementedException();
-        }
-
-        public string categorize()
-        {
-            //something something, tager searching metoden og på hits sætter den referencen over i den nye fane
-            throw new NotImplementedException();
         }
 
         public IEnumerator GetEnumerator()

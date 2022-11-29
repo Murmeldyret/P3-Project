@@ -74,6 +74,40 @@ namespace zenref.Tests
                 "TV",
             }, searchFilters.ReturnFilterQueries());
         }
+
+        [Fact]
+        public void FilterContainsInList()
+        {
+            List<string> filters = new List<string>()
+            {
+                "Podcast",
+                "Radio",
+                "TV",
+            };
+
+            string category = "Podcast";
+
+            Filter searchFilters = new Filter(filters, category);
+
+            Assert.True(searchFilters.ContainsQuery("Radio"));
+        }
+
+        [Fact]
+        public void FilterDoesNotContainInList()
+        {
+            List<string> filters = new List<string>()
+            {
+                "Podcast",
+                "Radio",
+                "TV",
+            };
+
+            string category = "Podcast";
+
+            Filter searchFilters = new Filter(filters, category);
+
+            Assert.False(searchFilters.ContainsQuery("Music"));
+        }
     }
 
     public class FilterCollectionTest
@@ -214,6 +248,56 @@ namespace zenref.Tests
 
             // Assert
             Assert.True(result);
+        }
+
+        [Fact]
+        public void filterCategorisation()
+        {
+            FilterCollection filters = new FilterCollection();
+            // Filter 1
+            List<string> filterQuery1 = new List<string>()
+            {
+                "Podcast",
+                "Radio",
+            };
+            string categoryName1 = "Podcast";
+
+            // Add the filter to the collection
+            filters.Add(new Filter(filterQuery1, categoryName1));
+
+            // Test reference that matches the filter.
+            Reference reference = new Reference("Zenref Author", "Radio, Building a reference metadata scraper", "Podcast", "Gruppe 6", 2022, 2, "Software");
+
+            // Act
+            string result = filters.categorize(reference);
+
+            // Assert
+            Assert.Equal(categoryName1, result);
+        }
+
+        [Fact]
+        public void filterCategorisationOnlyInTitle()
+        {
+            FilterCollection filters = new FilterCollection();
+            // Filter 1
+            List<string> filterQuery1 = new List<string>()
+            {
+                "Podcast",
+                "Radio",
+            };
+            string categoryName1 = "Podcast";
+
+            // Add the filter to the collection
+            filters.Add(new Filter(filterQuery1, categoryName1));
+
+            // Test reference that matches the filter.
+            Reference reference = new Reference("Zenref Author", "Radio, Building a reference metadata scraper", "Something else", "Gruppe 6", 2022, 2, "Software");
+
+            // Act
+            string result = filters.categorize(reference);
+
+            // Assert
+            Assert.Equal(categoryName1, result);
         }
     }
 }
