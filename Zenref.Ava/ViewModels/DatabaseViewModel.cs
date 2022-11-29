@@ -22,6 +22,8 @@ namespace Zenref.Ava.ViewModels
         [ObservableProperty]
         private IEnumerable<Reference> filteredReferences;
         private List<FileInfo> filePaths;
+        private List<int> columnPositions;
+        private int activeSheet;
 
         public DatabaseViewModel() : base(WeakReferenceMessenger.Default)
         {
@@ -48,7 +50,9 @@ namespace Zenref.Ava.ViewModels
         public void Receive(FilePathsMessage message)
         {
             filePaths = message.FilePaths;
-            Debug.WriteLine(filePaths[0]);
+            columnPositions = message.ColumnPositions;
+            activeSheet = message.ActiveSheet;
+            Debug.WriteLine("Received FilepathsMessage.");
         }
 
         // FOR TESTING DATAGRID DISPLAYING REFERENCES
@@ -69,14 +73,21 @@ namespace Zenref.Ava.ViewModels
         private void ReadAllReferences()
         {
             ObservableCollection<Reference> referencesInSheets = new ObservableCollection<Reference>();
+            SortedDictionary<Spreadsheet.ReferenceFields, int> positionInSheet = new SortedDictionary<Spreadsheet.ReferenceFields, int>();
+            Spreadsheet.ReferenceFields referenceFields = (Spreadsheet.ReferenceFields)0;
+            for (int i = 0; i < columnPositions.Count; i++)
+            {
+                positionInSheet.Add(referenceFields++,columnPositions[i]);
+            }
 
             foreach (FileInfo path in filePaths)
             {
 
                 Spreadsheet spreadsheet = new Spreadsheet(path.Name, path.DirectoryName);
                 Debug.WriteLine($"FileName: {path.Name} Path: {path.DirectoryName}");
+                spreadsheet.SetColumnPosition(positionInSheet);
                 spreadsheet.Import();
-                //spreadsheet.SetActiveSheet("Tidligere henvisninger");
+                spreadsheet.SetActiveSheet(activeSheet);
                 Debug.WriteLine($"SPREADSHEET count: {spreadsheet.Count}");
                 IEnumerable<Reference> referencesInSheet = spreadsheet.GetReference(0u);
                 referencesInSheets.Add(referencesInSheet);

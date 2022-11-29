@@ -18,11 +18,15 @@ namespace Zenref.Ava.ViewModels
     /// </summary>
     public class FilePathsMessage
     {
-        public List<FileInfo> FilePaths { get; init; }
-
-        public FilePathsMessage (List<FileInfo> filePaths)
+        public List<FileInfo> FilePaths { get; }
+        public  List<int> ColumnPositions { get; }
+        public  int ActiveSheet { get; } 
+        
+        public FilePathsMessage (List<FileInfo> filePaths, List<int> columnPositions, int activeSheet)
         {
             FilePaths = filePaths;
+            ColumnPositions = columnPositions;
+            ActiveSheet = activeSheet;
         }
     }
 
@@ -120,7 +124,8 @@ namespace Zenref.Ava.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<FileInfo> files;
-
+        [ObservableProperty] 
+        private int activeSheet = 1;
         
         public DragAndDropViewModel()
         {
@@ -167,8 +172,6 @@ namespace Zenref.Ava.ViewModels
         /// <returns>True if the user can proceed, false otherwise</returns>
         private bool CanProceed()
         {
-
-
             bool anyFileChosen = files.Count() != 0;
             IEnumerable<int> ints = columnPositions.Where(x => x.columnPos is > 0 and <= 22).Select(x => x.columnPos);
             int distinctColumnPosValues = ints.Distinct().Count();
@@ -186,7 +189,7 @@ namespace Zenref.Ava.ViewModels
                 Title = "Browse for excel file",
                 AllowMultiple = true,
             };
-            openFileDialog.Filters.Add(new FileDialogFilter() { Name = "Excel", Extensions = { "xlsx", "xlsm" } });
+            openFileDialog.Filters!.Add(new FileDialogFilter() { Name = "Excel", Extensions = { "xlsx", "xlsm" } });
             string[] filePaths = await openFileDialog.ShowAsync(window);
             if (filePaths != null)
             {
@@ -208,8 +211,9 @@ namespace Zenref.Ava.ViewModels
         }
         private void ConfirmFileChoices(Window window)
         {
+            List<int> ints = columnPositions.Select(x => x.columnPos).ToList();
             CloseWindow(window);
-            WeakReferenceMessenger.Default.Send<FilePathsMessage>(new FilePathsMessage(files.ToList()));
+            WeakReferenceMessenger.Default.Send<FilePathsMessage>(new FilePathsMessage(files.ToList(),ints, activeSheet));
         }
     }
 }
