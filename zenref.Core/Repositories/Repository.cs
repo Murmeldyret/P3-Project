@@ -7,7 +7,7 @@ public class Repository<TEntitiy> : IRepository<TEntitiy> where TEntitiy : class
     private readonly ApplicationContext _context;
 
     /// <summary>
-    /// 
+    /// Here we initialise the ApplicationContext
     /// </summary>
     /// <param name="context"></param>
     protected Repository(ApplicationContext context)
@@ -30,6 +30,19 @@ public class Repository<TEntitiy> : IRepository<TEntitiy> where TEntitiy : class
         catch (Exception e)
         {
             throw new Exception($"Could not retrieve entities: {e.Message}");
+        }
+    }
+    
+    public async Task<TEntitiy> GetByIdAsync(int id)
+    {
+        try
+        {
+            return await _context.Set<TEntitiy>().FindAsync(id);
+        }
+        catch (Exception e)
+        {
+            throw new Exception($"Could not retrieve entities: {e.Message}");
+
         }
     }
 
@@ -83,6 +96,26 @@ public class Repository<TEntitiy> : IRepository<TEntitiy> where TEntitiy : class
         catch (Exception e)
         {
             throw new ArgumentNullException($"{nameof(UpdateAsync)} Could not be updated in the database : {e.Message}");
+        }
+    }
+
+    public async Task<TEntitiy> DeleteAsync(TEntitiy entity)
+    {
+        if (entity == null)
+        {
+            throw new ArgumentNullException($"{nameof(DeleteAsync)} the entity cannot be null");
+        }
+
+        try
+        {
+            _context.Remove(entity);
+            await _context.SaveChangesAsync();
+            
+            return entity;
+        }
+        catch (Exception e)
+        {
+            throw new ArgumentNullException($"{nameof(DeleteAsync)} Could not be deleted from the database : {e.Message}");
         }
     }
 }

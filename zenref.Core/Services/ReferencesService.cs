@@ -1,31 +1,29 @@
 ﻿using zenref.Core.Models;
+using zenref.Core.Repositories;
 
 namespace zenref.Core.Services;
 
 public sealed class ReferencesService : IReferencesService
 {
-    public Task<Reference> GetReferenceAsync(int id)
+    private readonly IReferencesRepository _referencesRepository;
+    
+    public async Task<Reference> GetReferenceByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        return await _referencesRepository.GetReferenceByIdAsync(id);
     }
 
-    public Task<IEnumerable<Reference>> GetReferencesAsync()
+    public async Task<Reference> AddReferenceAsync(Reference reference)
     {
-        throw new NotImplementedException();
+        return await _referencesRepository.AddReferenceAsync(reference);
     }
 
-    public Task<Reference> AddReferenceAsync(Reference reference)
+    public async Task<Reference> UpdateReferenceAsync(Reference reference)
     {
-        throw new NotImplementedException();
+        return await _referencesRepository.UpdateReferenceAsync(reference);
     }
 
-    public Task<Reference> UpdateReferenceAsync(Reference reference)
+    public async Task<Reference> DeleteReferenceAsync(Reference reference)
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<Reference> DeleteReferenceAsync(int id)
-    {
-        throw new NotImplementedException();
+        return await _referencesRepository.DeleteReferenceAsync(reference);
     }
 }

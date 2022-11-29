@@ -21,4 +21,6 @@ public interface IRepository<TEntity> where TEntity : class, new()
     /// <param name="entity"></param>
     /// <returns></returns>
     Task<TEntity> UpdateAsync(TEntity entity);
+    
+    Task<TEntity> DeleteAsync(TEntity entity);
 }

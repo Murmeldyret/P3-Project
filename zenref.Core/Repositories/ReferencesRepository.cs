@@ -28,4 +28,18 @@ public class ReferencesRepository : Repository<Reference>, IReferencesRepository
         return await GetAll().ToListAsync();
     }
     
+    public async Task<Reference> AddReferenceAsync(Reference reference)
+    {
+        return await AddAsync(reference);
+    }
+    
+    public async Task<Reference> UpdateReferenceAsync(Reference reference)
+    {
+        return await UpdateAsync(reference);
+    }
+    
+    public async Task<Reference> DeleteReferenceAsync(Reference reference)
+    {
+        return await DeleteAsync(reference);
+    }
 }
