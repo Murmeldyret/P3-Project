@@ -1,5 +1,9 @@
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Themes.Fluent;
+using Avalonia.Themes.Fluent.Controls;
+using DocumentFormat.OpenXml.Wordprocessing;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -98,7 +102,6 @@ namespace Zenref.Ava.Views
                     default:
                         break;
                 }
-                //IEnumerable<Reference> filteredList = databaseViewModel.References.Where(x => x.Author.ToLower().Contains(textBox.Text.ToLower()));
                 databaseViewModel.FilteredReferences = filteredList;
             }
             else

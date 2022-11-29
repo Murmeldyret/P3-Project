@@ -46,13 +46,6 @@ namespace Zenref.Ava.ViewModels
             }    
         }
 
-        private void DeleteFile()
-        {
-            //files.Remove(files.Where(f => f.Name == fileName));
-            Debug.WriteLine("1");
-            Debug.WriteLine("2");
-        }
-
         private void CloseWindow (Window window)
         {
             if (window != null)

@@ -68,7 +68,7 @@ namespace Zenref.Ava.ViewModels
                 IMsBoxWindow<string> messageBoxCustomWindow = MessageBox.Avalonia.MessageBoxManager.GetMessageBoxCustomWindow(
                     new MessageBoxCustomParams
                     {
-                        ContentTitle = "Test MessageBox",
+                        ContentTitle = "Slet reference",
                         ContentMessage = "Er du sikker på, at du vil slette referencen?",
                         WindowStartupLocation = WindowStartupLocation.CenterScreen,
                         ButtonDefinitions = new[]
