@@ -1,3 +1,4 @@
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
@@ -15,16 +16,20 @@ namespace Zenref.Ava.Views
         public ExportWindow()
         {
             InitializeComponent();
+
             InitializeWindow();
         }
         private void InitializeComponent()
         {
+#if DEBUG
+            if (true)
+                this.AttachDevTools();
+#endif
             AvaloniaXamlLoader.Load(this);
         }
 
         private void InitializeWindow()
         {
-
         }
 
         /*

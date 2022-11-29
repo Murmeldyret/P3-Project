@@ -6,6 +6,7 @@
 		Width="700" Height="500"
         x:Class="Zenref.Ava.Views.DragAndDropWindow"
         Title="Drag and drop window">
+	<!--
 	<Grid>
 		<Border Name="CopyTarget"
 					VerticalAlignment="Top"
@@ -24,4 +25,5 @@
 		<Button Name="cancelButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="100,10">Afbryd</Button>
 		<Button Name="nextButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="20,10">Næste</Button>
 	</Grid>
+	-->
 </Window>

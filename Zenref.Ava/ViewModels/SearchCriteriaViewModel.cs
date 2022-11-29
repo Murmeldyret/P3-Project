@@ -36,7 +36,7 @@ namespace Zenref.Ava.ViewModels
         }
     }
 
-    public partial class SearchCriteriaViewModel : ObservableRecipient, IRecipient<SearchTermMessage>
+    public partial class SearchCriteriaViewModel : ObservableObject
     {
         /// <summary>
         /// An observable collection of SearchPublicationType. It keeps track of the different search terms.
@@ -67,6 +67,7 @@ namespace Zenref.Ava.ViewModels
         public string? SearchTextString;
         public string? SearchOperand;
         public string? SearchField;
+        public string SearchEdit = "Search";
         
 
         public SearchCriteriaViewModel()
@@ -92,6 +93,7 @@ namespace Zenref.Ava.ViewModels
         [RelayCommand]
         private void Search()
         {
+            
             pubTypes.Add(new PublicationType("Indsæt titel", SearchOption));
             WeakReferenceMessenger.Default.Send<SearchTermMessage>(new SearchTermMessage(PubTypes));
         }
@@ -129,9 +131,5 @@ namespace Zenref.Ava.ViewModels
             SearchOption.Clear();
         }
 
-        public void Receive(SearchTermMessage message)
-        {
-            Debug.WriteLine(message.SearchPubCollection);
-        }
     }
 }

@@ -33,9 +33,18 @@
 							<DataTemplate>
 								<Grid ColumnDefinitions="*,Auto,Auto">
 									<TextBox Text="{Binding Name}" Grid.Column="0" Name="PubName" />
-									<Button Grid.Column="1" Classes="Options" Command="{Binding ElementName=MainView, Path=DataContext.EditPublicationTypeCommand}" CommandParameter="{Binding ElementName=MainView, Path=DataContext.PublicationTypes}">
-									<!-- CommandParameter="{Binding ElementName=MainView}-->
+									<Button Grid.Column="1" Classes="Options" Command="{Binding ElementName=MainView, Path=DataContext.EditPublicationTypeCommand}" CommandParameter="{Binding ElementName=MainView}">
+										<!-- CommandParameter="{Binding ElementName=MainView}-->
+										<!--<Image Source="avares://Zenref.Ava/Assets/options.ico" />-->
 										<Image Source="avares://Zenref.Ava/Assets/options.ico" />
+										<!--
+										<Button.CommandParameter>
+											<MultiBinding>
+												<Binding ElementName="MainView"/>
+												<Binding Path="Name"/>
+											</MultiBinding>
+										</Button.CommandParameter>
+										-->
 									</Button>
 									<Button Grid.Column="2" Classes="Cross" Command="{Binding ElementName=MainView, Path=DataContext.DeletePublicationTypeCommand}" CommandParameter="{Binding Name}">
 										<Image Source="avares://Zenref.Ava/Assets/cross.ico" />

@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Zenref.Ava.Models;
 using Zenref.Ava.Views;
 
@@ -36,10 +37,13 @@ namespace Zenref.Ava.ViewModels
         [NotifyCanExecuteChangedFor(nameof(DeletePublicationTypeCommand))]
         [NotifyCanExecuteChangedFor(nameof(EditPublicationTypeCommand))]
         private ObservableCollection<PublicationType> publicationTypes = new ObservableCollection<PublicationType>();
+        
+        public ICommand EditPublicationTypeCommmand { get; set; }
 
         public ExportViewModel() 
             : base(WeakReferenceMessenger.Default)
         {
+            //EditPublicationTypeCommmand = new RelayCommand(EditPublicationType);
             searchTest.Add(new SearchPublicationType(searchTerm: "hello", searchSelectOperand: "OG", searchSelectField: "Titel"));
             PublicationTypes.Add(new PublicationType("Bog", searchTest));
             PublicationTypes.Add(new PublicationType("Artikel", searchTest));
@@ -54,8 +58,20 @@ namespace Zenref.Ava.ViewModels
             searchCriteria = message.SearchPubCollection;
             foreach(PublicationType s in searchCriteria)
             {
-                
-                PublicationTypes.Add(new PublicationType(s.Name, s.searchPublicationTypes));
+                foreach (PublicationType p in PublicationTypes)
+                {
+                    if (p.Name == s.Name)
+                    {
+                        Console.WriteLine($"equal - p:{p.Name} ::::: s:{s.Name}");
+                    }
+                    //p.searchPublicationTypes = s.searchPublicationTypes;
+                    else
+                    {
+                        Console.WriteLine($"Not equal   p:{p.Name} - s:{s.Name}");
+                    }
+                        //Console.WriteLine($"p: {p.searchPublicationTypes} and s: {s.searchPublicationTypes}");
+                        //PublicationTypes.Add(new PublicationType(s.Name, s.searchPublicationTypes));
+                }
             }
         }
 
@@ -82,19 +98,14 @@ namespace Zenref.Ava.ViewModels
         }
 
 
+        
         [RelayCommand]
-        private void EditPublicationType(ObservableCollection<PublicationType> window)
+        private void EditPublicationType(Window window)
         {
-
-            for(int i = 0; i < window.Count; i++)
-            {
-                Debug.WriteLine(window[i].Name);
-            }
-            /*
+            
             SearchCriteriaWindow SearchView = new SearchCriteriaWindow();
             SearchView.DataContext = new SearchCriteriaViewModel(searchTest);
-            SearchView.ShowDialog(window);
-            */
+            SearchView.Show(window);
             
             //window.ShowDialog(SearchView);
         }
