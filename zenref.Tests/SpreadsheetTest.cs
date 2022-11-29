@@ -20,14 +20,16 @@ namespace zenref.Tests
         Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
 
         Reference reference1 = new Reference(
-            "Anders er ikke rask",
+            "",
             "wololo"
             );
 
         Reference reference2 = new Reference(
+            "",
             "True Winner"
             );
         Reference reference3 = new Reference(
+            "",
             "Med løg på"
             );
 
@@ -225,7 +227,7 @@ namespace zenref.Tests
             workbook.SaveAs(FILLEDSPREADSHEETNAME);
 
             //Read reference should be equal to this
-            Reference reference = new Reference("Anders Rask",
+            Reference reference = new Reference("",
                 "titel på noget",
                 "bog",
                 "AAU",
@@ -243,7 +245,7 @@ namespace zenref.Tests
                 "pas",
                 "ved jeg heller ikke",
                 69,
-                "20th",
+                "",
                 "16-21",
                 "Din far");
 

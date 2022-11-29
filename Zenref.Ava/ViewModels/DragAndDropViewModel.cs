@@ -133,30 +133,29 @@ namespace Zenref.Ava.ViewModels
             isNextButtonEnabled = false;
             files = new ObservableCollection<FileInfo>();
             Files.CollectionChanged += Files_CollectionChanged;
+            int defaultColumnPositions = 1;
             columnPositions = new ObservableCollection<ColumnPositionHandler>()
             {
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Author.ToString(),1, action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Title.ToString(),2,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.PublicationType.ToString(),3,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Publisher.ToString(),4,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.YearRef.ToString(),5,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.IdRef.ToString(),6,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Education.ToString(),7,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Location.ToString(),8,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Semester.ToString(),9,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Language.ToString(),10,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.YearReport.ToString(),11,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.OriginalRef.ToString(),12,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Match.ToString(),13,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Comment.ToString(),14,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Syllabus.ToString(),15,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Season.ToString(),16,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.ExamEvent.ToString(),17,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Source.ToString(),18,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Pages.ToString(),19,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Volume.ToString(),20,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Chapters.ToString(),21,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.BookTitle.ToString(),22,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Title.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.PublicationType.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Publisher.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.YearRef.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.IdRef.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Education.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Location.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Semester.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Language.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.YearReport.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.OriginalRef.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Match.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Comment.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Syllabus.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Season.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.ExamEvent.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Source.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Pages.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Chapters.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.BookTitle.ToString(),defaultColumnPositions++,action,this),
             };
         }
 
@@ -173,8 +172,13 @@ namespace Zenref.Ava.ViewModels
         private bool CanProceed()
         {
             bool anyFileChosen = files.Count() != 0;
-            IEnumerable<int> ints = columnPositions.Where(x => x.columnPos is > 0 and <= 22).Select(x => x.columnPos);
-            int distinctColumnPosValues = ints.Distinct().Count();
+            IEnumerable<int> ints = columnPositions
+                .Where(x => x.columnPos is > 0)
+                .Select(x => x.columnPos);
+            
+            int distinctColumnPosValues = ints
+                .Distinct()
+                .Count();
             bool isColumnPosFilled = distinctColumnPosValues == ints.Count();
             Debug.WriteLine($"CanProceed evaluates to {isColumnPosFilled && anyFileChosen}");
 

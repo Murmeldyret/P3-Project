@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace Zenref.Ava.Models.Spreadsheet
 {
@@ -117,6 +118,10 @@ namespace Zenref.Ava.Models.Spreadsheet
             { ReferenceFields.Chapters, 21 },
             { ReferenceFields.BookTitle, 22 },
         };
+
+        // public Dictionary<ReferenceFields, int> PositionOfReferencesInSheetIn = PositionOfReferencesInSheet
+        //     .Where(x => x.Key != ReferenceFields.Author || x.Key != ReferenceFields.Volume)
+        // .ToDictionary(x => x.Key, x => x.Value); 
 
         /// <summary>
         /// Represents a spreadsheet existing in the same current working directory as the program
@@ -245,7 +250,8 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// <returns>A Reference from the given row</returns>
         private Reference ReadRow(IXLRow row)
         {
-            string author =         getCell(row, ReferenceFields.Author).GetValue<string>();
+            // string author =         getCell(row, ReferenceFields.Author).GetValue<string>();
+            string author = "";
             string title =          getCell(row, ReferenceFields.Title).GetValue<string>();
             string pubType =        getCell(row, ReferenceFields.PublicationType).GetValue<string>();
             string publisher =      getCell(row, ReferenceFields.Publisher).GetValue<string>();
@@ -263,7 +269,8 @@ namespace Zenref.Ava.Models.Spreadsheet
             string examEvent =      getCell(row, ReferenceFields.ExamEvent).GetValue<string>();
             string source =         getCell(row, ReferenceFields.Source).GetValue<string>();
             int? pages =            getCell(row, ReferenceFields.Pages).GetValue<int?>();
-            string volume =         getCell(row, ReferenceFields.Volume).GetValue<string>();
+            // string volume =         getCell(row, ReferenceFields.Volume).GetValue<string>();
+            string volume = "";
             string chapters =       getCell(row, ReferenceFields.Chapters).GetValue<string>();
             string bookTitle =      getCell(row, ReferenceFields.BookTitle).GetValue<string>();
 
