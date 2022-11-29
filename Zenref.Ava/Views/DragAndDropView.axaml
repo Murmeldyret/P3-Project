@@ -4,6 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		WindowStartupLocation="CenterOwner"
 		xmlns:local="clr-namespace:Zenref.Ava.Models;assembly=Zenref.Ava"
         mc:Ignorable="d" d:DesignWidth="850" d:DesignHeight="500"
 		Width="850" Height="500"
@@ -59,7 +60,7 @@
 					Content="Næste"
 					VerticalAlignment="Bottom" 
 					HorizontalAlignment="Right"
-					Margin="10"/>
+					Margin="10"/>					
 			<ListBox Items="{Binding Files}" Grid.Column="1">
 				<ListBox.ItemTemplate>
 					<DataTemplate>
@@ -67,7 +68,7 @@
 							<TextBlock Text="{Binding FullName}"/>
 							<TextBlock Text="{Binding Name}"/>
 							<TextBlock Text="{Binding Length, Converter={StaticResource ByteConverter}}"/>	
-							<Button Content="Slet" Command="{Binding DeleteFile}"/>
+							<Button Content="Fjern" Click="RemoveFile"/>
 						</StackPanel>
 					</DataTemplate>
 				</ListBox.ItemTemplate>

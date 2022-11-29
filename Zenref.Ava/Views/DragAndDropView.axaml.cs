@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Diagnostics;
+using Avalonia.Interactivity;
 
 namespace Zenref.Ava.Views
 {
@@ -38,6 +39,15 @@ namespace Zenref.Ava.Views
                     FileInfo fileInfo = new FileInfo(filePath);
                     dragAndDropViewModel.Files.Add(fileInfo);
                 }
+            }
+        }
+        private void RemoveFile(object sender, RoutedEventArgs e)
+        {
+            Button removeFileButton = sender as Button;
+            if (removeFileButton.DataContext is FileInfo)
+            {
+                FileInfo file = (FileInfo)removeFileButton.DataContext;
+                dragAndDropViewModel.Files.Remove(file);
             }
         }
     }
