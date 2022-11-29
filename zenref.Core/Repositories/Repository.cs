@@ -33,19 +33,6 @@ public class Repository<TEntitiy> : IRepository<TEntitiy> where TEntitiy : class
         }
     }
     
-    public async Task<TEntitiy> GetByIdAsync(int id)
-    {
-        try
-        {
-            return await _context.Set<TEntitiy>().FindAsync(id);
-        }
-        catch (Exception e)
-        {
-            throw new Exception($"Could not retrieve entities: {e.Message}");
-
-        }
-    }
-
     /// <summary>
     /// Generic method that accepts an entity of type TEntitiy and returns a Task of type TEntitiy.
     /// Used to add an entity to the database.

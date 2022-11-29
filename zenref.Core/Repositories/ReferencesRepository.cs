@@ -13,9 +13,9 @@ public class ReferencesRepository : Repository<Reference>, IReferencesRepository
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public async Task<Reference> GetReferenceByIdAsync(int id)
+    public Task<Reference> GetReferenceByIdAsync(int id)
     {
-        return await GetAll().FirstOrDefaultAsync(x => x.Id == id) ?? throw new InvalidOperationException();
+        return GetAll().FirstOrDefaultAsync(x => x.Id == id);
     }
     
     /// <summary>
@@ -28,18 +28,18 @@ public class ReferencesRepository : Repository<Reference>, IReferencesRepository
         return await GetAll().ToListAsync();
     }
     
-    public async Task<Reference> AddReferenceAsync(Reference reference)
-    {
-        return await AddAsync(reference);
-    }
-    
-    public async Task<Reference> UpdateReferenceAsync(Reference reference)
-    {
-        return await UpdateAsync(reference);
-    }
-    
-    public async Task<Reference> DeleteReferenceAsync(Reference reference)
-    {
-        return await DeleteAsync(reference);
-    }
+    // public async Task<Reference> AddReferenceAsync(Reference reference)
+    // {
+    //     return await AddAsync(reference);
+    // }
+    //
+    // public async Task<Reference> UpdateReferenceAsync(Reference reference)
+    // {
+    //     return await UpdateAsync(reference);
+    // }
+    //
+    // public async Task<Reference> DeleteReferenceAsync(Reference reference)
+    // {
+    //     return await DeleteAsync(reference);
+    // }
 }

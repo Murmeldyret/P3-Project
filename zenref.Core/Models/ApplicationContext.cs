@@ -13,8 +13,8 @@ public sealed class ApplicationContext : DbContext
     /// </summary>
     public ApplicationContext()
     {
-        var basePath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-        DbPath = Path.Combine(basePath, "references.db3");
+        //var basePath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+        DbPath = Path.Combine(Environment.CurrentDirectory, "references.db3");
     }
     
     /// <summary>
