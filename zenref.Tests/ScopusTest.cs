@@ -48,11 +48,9 @@ namespace zenref.Tests
             .AddUserSecrets<Settings>()
             .Build();
 
-            
+
             Scopus scopus = new Scopus(configuration["ScopusApiKey"], new Uri("https://api.elsevier.com/content/search/scopus"));
 
-            // Initialize client
-            ApiHelper.InitializeClient();
 
             // Act
             Reference reference = await scopus.ReferenceFetch(inputReference, scopus.ReferenceParser);

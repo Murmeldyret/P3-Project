@@ -11,25 +11,20 @@ namespace zenref.Tests
 		[Fact]
 		public static void InitializeComponentClientNotNull()
 		{
-			ApiHelper.InitializeClient();
-			Assert.NotNull(ApiHelper.ApiClient);
+			Assert.NotNull(ApiClient.getInstance());
 		}
 		//Test that client accepts content types
 		[Fact]
 		public static void ClientAcceptsContentTypeJSON()
 		{
-			ApiHelper.InitializeClient();
-
-			bool apiHelperAcceptsJSON = ApiHelper.ApiClient.DefaultRequestHeaders.Accept.Contains(new MediaTypeWithQualityHeaderValue("application/json"));
+			bool apiHelperAcceptsJSON = ApiClient.getInstance().DefaultRequestHeaders.Accept.Contains(new MediaTypeWithQualityHeaderValue("application/json"));
 
 			Assert.True(apiHelperAcceptsJSON);
 		}
 		[Fact]
 		public static void ClientAcceptsContentTypeXML()
 		{
-            ApiHelper.InitializeClient();
-
-            bool apiHelperAcceptsXML = ApiHelper.ApiClient.DefaultRequestHeaders.Accept.Contains(new MediaTypeWithQualityHeaderValue("application/xml"));
+            bool apiHelperAcceptsXML = ApiClient.getInstance().DefaultRequestHeaders.Accept.Contains(new MediaTypeWithQualityHeaderValue("application/xml"));
 
 			Assert.True(apiHelperAcceptsXML);
         }
