@@ -5,7 +5,19 @@ using System.Linq;
 
 namespace Zenref.Ava.Models
 {
+    public interface ISingleton
+    {
+        public static FilterCollection? instance { get; set;}
+        public static FilterCollection GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new FilterCollection();
+            }
+            return instance;
+        }
 
+    }
     public interface IFilterCollection
     {
         public Filter FindFilter(string filter);
@@ -121,7 +133,13 @@ namespace Zenref.Ava.Models
 
                         foreach (string queryWord in textWords)
                         {
-                            if (filterQueries == queryWord)
+                            // Using the Levenshtein distance algorithm to determine if the filter query is similar to the reference.
+                            int distance = Fastenshtein.Levenshtein.Distance(queryWord, filterQueries);
+                            // Calculating the percentage certainty of the match.
+                            double certainty = 1 - (double)distance / Math.Max(queryWord.Length, filterQueries.Length);
+
+                            // If the certainty is greater than the global percent, return the filter category.
+                            if (certainty > 0.7)              //! Replace this with a global variable.
                             {
                                 return filter.ReturnFilterCategory();
                             }
