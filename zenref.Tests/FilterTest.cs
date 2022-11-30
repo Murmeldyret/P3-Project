@@ -115,7 +115,6 @@ namespace zenref.Tests
         [Fact]
         public void filterCreation()
         {
-            FilterCollection filters = new FilterCollection();
             List<string> filterQuery = new List<string>()
             {
                 "Podcast",
@@ -126,17 +125,15 @@ namespace zenref.Tests
 
             Filter filter = new Filter(filterQuery, categoryName);
 
-            filters.Add(filter);
+            IFilterCollection.GetInstance().Add(filter);
 
-            Assert.True(filters.Contains(filter));
+            Assert.True(IFilterCollection.GetInstance().Contains(filter));
         }
 
         [Fact]
         public void filterSearching()
         {
             // Arrange
-
-            FilterCollection filters = new FilterCollection();
             // Filter 1
             List<string> filterQuery1 = new List<string>()
             {
@@ -160,12 +157,12 @@ namespace zenref.Tests
             };
             string categoryName3 = "Journal";
 
-            filters.Add(new Filter(filterQuery1, categoryName1));
-            filters.Add(new Filter(filterQuery2, categoryName2));
-            filters.Add(new Filter(filterQuery3, categoryName3));
+            IFilterCollection.GetInstance().Add(new Filter(filterQuery1, categoryName1));
+            IFilterCollection.GetInstance().Add(new Filter(filterQuery2, categoryName2));
+            IFilterCollection.GetInstance().Add(new Filter(filterQuery3, categoryName3));
 
             // Act
-            Filter result = filters.FindFilter("Video");
+            Filter result = IFilterCollection.GetInstance().FindFilter("Video");
 
             // Assert
             Assert.Equal(filterQuery2, result.ReturnFilterQueries());
@@ -176,7 +173,6 @@ namespace zenref.Tests
         public void filterIndexSearching()
         {
             // Arrange
-            FilterCollection filters = new FilterCollection();
             // Filter 1
             List<string> filterQuery1 = new List<string>()
             {
@@ -200,12 +196,12 @@ namespace zenref.Tests
             };
             string categoryName3 = "Journal";
 
-            filters.Add(new Filter(filterQuery1, categoryName1));
-            filters.Add(new Filter(filterQuery2, categoryName2));
-            filters.Add(new Filter(filterQuery3, categoryName3));
+            IFilterCollection.GetInstance().Add(new Filter(filterQuery1, categoryName1));
+            IFilterCollection.GetInstance().Add(new Filter(filterQuery2, categoryName2));
+            IFilterCollection.GetInstance().Add(new Filter(filterQuery3, categoryName3));
 
             // Act
-            int result = filters.FindFilterIndex("Video");
+            int result = IFilterCollection.GetInstance().FindFilterIndex("Video");
 
             // Assert
             Assert.Equal(1, result);
@@ -215,7 +211,6 @@ namespace zenref.Tests
         public void filterDeletion()
         {
             // Arrange
-            FilterCollection filters = new FilterCollection();
             // Filter 1
             List<string> filterQuery1 = new List<string>()
             {
@@ -239,12 +234,12 @@ namespace zenref.Tests
             };
             string categoryName3 = "Journal";
 
-            filters.Add(new Filter(filterQuery1, categoryName1));
-            filters.Add(new Filter(filterQuery2, categoryName2));
-            filters.Add(new Filter(filterQuery3, categoryName3));
+            IFilterCollection.GetInstance().Add(new Filter(filterQuery1, categoryName1));
+            IFilterCollection.GetInstance().Add(new Filter(filterQuery2, categoryName2));
+            IFilterCollection.GetInstance().Add(new Filter(filterQuery3, categoryName3));
 
             // Act
-            bool result = filters.Remove(filters.FindFilter("Video"));
+            bool result = IFilterCollection.GetInstance().Remove(IFilterCollection.GetInstance().FindFilter("Video"));
 
             // Assert
             Assert.True(result);
@@ -253,7 +248,6 @@ namespace zenref.Tests
         [Fact]
         public void filterCategorisation()
         {
-            FilterCollection filters = new FilterCollection();
             // Filter 1
             List<string> filterQuery1 = new List<string>()
             {
@@ -263,13 +257,13 @@ namespace zenref.Tests
             string categoryName1 = "Podcast";
 
             // Add the filter to the collection
-            filters.Add(new Filter(filterQuery1, categoryName1));
+            IFilterCollection.GetInstance().Add(new Filter(filterQuery1, categoryName1));
 
             // Test reference that matches the filter.
             Reference reference = new Reference("Zenref Author", "Radio, Building a reference metadata scraper", "Podcast", "Gruppe 6", 2022, 2, "Software");
 
             // Act
-            string result = filters.categorize(reference);
+            string result = IFilterCollection.GetInstance().categorize(reference);
 
             // Assert
             Assert.Equal(categoryName1, result);
@@ -278,7 +272,6 @@ namespace zenref.Tests
         [Fact]
         public void filterCategorisationOnlyInTitle()
         {
-            FilterCollection filters = new FilterCollection();
             // Filter 1
             List<string> filterQuery1 = new List<string>()
             {
@@ -288,13 +281,13 @@ namespace zenref.Tests
             string categoryName1 = "Podcast";
 
             // Add the filter to the collection
-            filters.Add(new Filter(filterQuery1, categoryName1));
+            IFilterCollection.GetInstance().Add(new Filter(filterQuery1, categoryName1));
 
             // Test reference that matches the filter.
             Reference reference = new Reference("Zenref Author", "Radio, Building a reference metadata scraper", "Something else", "Gruppe 6", 2022, 2, "Software");
 
             // Act
-            string result = filters.categorize(reference);
+            string result = IFilterCollection.GetInstance().categorize(reference);
 
             // Assert
             Assert.Equal(categoryName1, result);

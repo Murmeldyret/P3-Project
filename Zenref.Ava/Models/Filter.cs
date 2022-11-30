@@ -18,7 +18,7 @@ namespace Zenref.Ava.Models
         }
 
     }
-    public interface IFilterCollection
+    public interface IFilterCollection : ISingleton
     {
         public Filter FindFilter(string filter);
         public int FindFilterIndex(string filter);
