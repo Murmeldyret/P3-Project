@@ -3,111 +3,157 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Microsoft.CodeAnalysis;
 
 namespace Zenref.Ava.Models
 {
-    public class Reference
+    public class Reference : RawReference
     {
         //constructor with named arguments, where some properties are null by default.
 
-        public Reference() { }
-        public Reference(
-            string _Author = "",
-            string _Title = "",
-            string _PubType = "",
-            string _Publisher = "",
-            int? _YearRef = null,
-            int? _ID = null,
-            string _Edu = "",
-            string _Location = "",
-            string _Semester = "",
-            string _Language = "",
-            int? _YearReport = null,
-            double? _Match = null,
-            string _Commentary = "",
-            string _Syllabus = "",
-            string _Season = "",
-            string _ExamEvent = "",
-            string _Source = "",
-            int? _Pages = null,
-            string _Volume = "",
-            string _Chapters = "",
-            string _BookTitle = "",
-            string _OriReference = ""
-            )
+        public Reference(RawReference rawReference, DateTimeOffset? time = null ):base(rawReference)
         {
-            Author = _Author;
-            Title = _Title;
-            PubType = _PubType;
-            Publisher = _Publisher;
-            YearRef = _YearRef;
-            ID = _ID;
-            Edu = _Edu;
-            Location = _Location;
-            Semester = _Semester;
-            Language = _Language;
-            YearReport = _YearReport;
-            Match = _Match;
-            Commentary = _Commentary;
-            Syllabus = _Syllabus;
-            Season = _Season;
-            ExamEvent = _ExamEvent;
-            Source = _Source;
-            Pages = _Pages;
-            Volume = _Volume;
-            Chapters = _Chapters;
-            BookTitle = _BookTitle;
-            OriReference = _OriReference;
+            if (time is not null)
+            {
+                TimeOfCreation = (DateTimeOffset)time;
+            }
         }
-        [Obsolete("KeyValuePair is deprecated for now")]
-        public Reference(
-            KeyValuePair<_typeOfId, string> _UID,
-            string _Author = "",
-            string _Title = "",
-            string _PubType = "",
-            string _Publisher = "",
-            int? _YearRef = null,
-            int? _ID = null,
-            string _Edu = "",
-            string _Location = "",
-            string _Semester = "",
-            string _Language = "",
-            int? _YearReport = null,
-            double? _Match = null,
-            string _Commentary = "",
-            string _Syllabus = "",
-            string _Season = "",
-            string _ExamEvent = "",
-            string _Source = "",
-            int? _Pages = null,
-            string _Volume = "",
-            string _Chapters = "",
-            string _BookTitle = ""
-            )
+
+        public Reference(RawReference rawReference,
+            string author = "",
+            string title = "",
+            string pubType = "",
+            string publisher = "",
+            int? yearRef = null,
+            string language = "",
+            int? yearReport = null,
+            double? match = null,
+            string comment = "",
+            string syllabus = "",
+            string season = "",
+            string examEvent = "",
+            string source = "",
+            int? pages = null,
+            string volume = "",
+            string chapters = "",
+            string bookTitle = "",
+            DateTimeOffset? time = null
+        ) : this(rawReference,time)
         {
-            UID = _UID;
-            Author = _Author;
-            Title = _Title;
-            PubType = _PubType;
-            Publisher = _Publisher;
-            YearRef = _YearRef;
-            ID = _ID;
-            Edu = _Edu;
-            Location = _Location;
-            Semester = _Semester;
-            Language = _Language;
-            YearReport = _YearReport;
-            Match = _Match;
-            Commentary = _Commentary;
-            Syllabus = _Syllabus;
-            Season = _Season;
-            ExamEvent = _ExamEvent;
-            Source = _Source;
-            Pages = _Pages;
-            Volume = _Volume;
-            Chapters = _Chapters;
-            BookTitle = _BookTitle;
+            Author = author;
+            Title = title;
+            PubType = pubType;
+            Publisher = publisher;
+            YearRef = yearRef;
+            Language = language;
+            YearReport = yearReport;
+            Match = match;
+            Commentary = comment;
+            Syllabus = syllabus;
+            Season = season;
+            ExamEvent = examEvent;
+            Source = source;
+            Pages = pages;
+            Volume = volume;
+            Chapters = chapters;
+            BookTitle = bookTitle;
         }
+        // public Reference() { }
+        // public Reference(
+        //     string _Author = "",
+        //     string _Title = "",
+        //     string _PubType = "",
+        //     string _Publisher = "",
+        //     int? _YearRef = null,
+        //     int? _ID = null,
+        //     string _Edu = "",
+        //     string _Location = "",
+        //     string _Semester = "",
+        //     string _Language = "",
+        //     int? _YearReport = null,
+        //     double? _Match = null,
+        //     string _Commentary = "",
+        //     string _Syllabus = "",
+        //     string _Season = "",
+        //     string _ExamEvent = "",
+        //     string _Source = "",
+        //     int? _Pages = null,
+        //     string _Volume = "",
+        //     string _Chapters = "",
+        //     string _BookTitle = "",
+        //     string _OriReference = ""
+        //     )
+        // {
+        //     Author = _Author;
+        //     Title = _Title;
+        //     PubType = _PubType;
+        //     Publisher = _Publisher;
+        //     YearRef = _YearRef;
+        //     ID = _ID;
+        //     Edu = _Edu;
+        //     Language = _Language;
+        //     YearReport = _YearReport;
+        //     Match = _Match;
+        //     Commentary = _Commentary;
+        //     Syllabus = _Syllabus;
+        //     Season = _Season;
+        //     ExamEvent = _ExamEvent;
+        //     Source = _Source;
+        //     Pages = _Pages;
+        //     Volume = _Volume;
+        //     Chapters = _Chapters;
+        //     BookTitle = _BookTitle;
+        // }
+        
+        // [Obsolete("KeyValuePair is deprecated for now")]
+        // public Reference(
+        //     KeyValuePair<_typeOfId, string> _UID,
+        //     string _Author = "",
+        //     string _Title = "",
+        //     string _PubType = "",
+        //     string _Publisher = "",
+        //     int? _YearRef = null,
+        //     int? _ID = null,
+        //     string _Edu = "",
+        //     string _Location = "",
+        //     string _Semester = "",
+        //     string _Language = "",
+        //     int? _YearReport = null,
+        //     double? _Match = null,
+        //     string _Commentary = "",
+        //     string _Syllabus = "",
+        //     string _Season = "",
+        //     string _ExamEvent = "",
+        //     string _Source = "",
+        //     int? _Pages = null,
+        //     string _Volume = "",
+        //     string _Chapters = "",
+        //     string _BookTitle = ""
+        //     )
+        // {
+        //     UID = _UID;
+        //     Author = _Author;
+        //     Title = _Title;
+        //     PubType = _PubType;
+        //     Publisher = _Publisher;
+        //     YearRef = _YearRef;
+        //     ID = _ID;
+        //     Edu = _Edu;
+        //     Location = _Location;
+        //     Semester = _Semester;
+        //     Language = _Language;
+        //     YearReport = _YearReport;
+        //     Match = _Match;
+        //     Commentary = _Commentary;
+        //     Syllabus = _Syllabus;
+        //     Season = _Season;
+        //     ExamEvent = _ExamEvent;
+        //     Source = _Source;
+        //     Pages = _Pages;
+        //     Volume = _Volume;
+        //     Chapters = _Chapters;
+        //     BookTitle = _BookTitle;
+        // }
         [Obsolete("KeyValuePair is deprecated for now")]
         public enum _typeOfId
         {
@@ -118,18 +164,18 @@ namespace Zenref.Ava.Models
         }
         [Obsolete("KeyValuePair is deprecated for now")]
         public KeyValuePair<_typeOfId, string> UID;
+        /// <summary>
+        /// Contains a value if this reference has been returned by an API response.
+        /// </summary>
+        public Optional<DateTimeOffset> TimeOfCreation { get; }
         public string? Author { get; set; }
         public string? Title { get; set; }
         public string? PubType { get; set; }
         public string? Publisher { get; set; }
         public int? YearRef { get; set; }
         public int? ID { get; set; }
-        public string? Edu { get; set; }
-        public string? Location { get; set; }
-        public string? Semester { get; set; }
         public string? Language { get; set; }
         public int? YearReport { get; set; }
-        public string? OriReference { get; set; }
         public double? Match { get; set; }
         public string? Commentary { get; set; }
         public string? Syllabus { get; set; }
