@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 using Xunit;
 using Zenref.Ava.Models;
 
@@ -291,6 +292,71 @@ namespace zenref.Tests
 
             // Assert
             Assert.Equal(categoryName1, result);
+        }
+
+        [Fact]
+        public void loadFilterFileExists()
+        {
+            // Arrange
+            // Save test file to disk.
+            StreamWriter writer = new StreamWriter("Filters.csv");
+            try
+            {
+                writer.WriteLine("Podcast,Podcast,Radio\nVideo,Video,Movie\nJournal,Journal");
+            }
+            finally
+            {
+                // Close the writer regardless of what happens...
+                writer.Close();
+            }
+
+            // Create assert filters that matches the test file.
+            List<string> filterQuery1 = new List<string>()
+            {
+                "Podcast",
+                "Radio",
+            };
+            string categoryName1 = "Podcast";
+            List<string> filterQuery2 = new List<string>()
+            {
+                "Video",
+                "Movie",
+            };
+            string categoryName2 = "Video";
+            List<string> filterQuery3 = new List<string>()
+            {
+                "Journal",
+            };
+            string categoryName3 = "Journal";
+
+            // Act
+            IFilterCollection.GetInstance().LoadFilters();
+
+            // Assert
+            Assert.Equal(filterQuery1, IFilterCollection.GetInstance().FindFilter("Podcast").ReturnFilterQueries());
+            Assert.Equal(categoryName1, IFilterCollection.GetInstance().FindFilter("Podcast").ReturnFilterCategory());
+            Assert.Equal(filterQuery2, IFilterCollection.GetInstance().FindFilter("Video").ReturnFilterQueries());
+            Assert.Equal(categoryName2, IFilterCollection.GetInstance().FindFilter("Video").ReturnFilterCategory());
+            Assert.Equal(filterQuery3, IFilterCollection.GetInstance().FindFilter("Journal").ReturnFilterQueries());
+            Assert.Equal(categoryName3, IFilterCollection.GetInstance().FindFilter("Journal").ReturnFilterCategory());
+
+            // Delete the test file.
+            File.Delete("Filters.csv");
+        }
+
+        [Fact]
+        public void loadFilterFileDoesNotExist()
+        {
+            // Arrange
+            // Delete the test file.
+            File.Delete("Filters.csv");
+
+            // Act
+            IFilterCollection.GetInstance().LoadFilters();
+
+            // Assert
+            // Assert that the collection is empty.
+            Assert.Equal(IFilterCollection.GetInstance().Count, 0);
         }
     }
 }

@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 namespace Zenref.Ava.Models
 {
     public interface ISingleton
     {
-        public static FilterCollection? instance { get; set;}
+        public static FilterCollection? instance { get; set; }
         public static FilterCollection GetInstance()
         {
             if (instance == null)
@@ -110,7 +111,30 @@ namespace Zenref.Ava.Models
 
         public void LoadFilters()
         {
-            throw new NotImplementedException();
+            // Clear the current filter collection.
+            Filters.Clear();
+
+            // Check if file exists.
+            if (File.Exists("Filters.csv"))
+            {
+                // Load the filters from the file.
+                using (StreamReader sr = new StreamReader("Filters.csv"))
+                {
+
+                    // Read all lines from the file.
+                    while (!sr.EndOfStream)
+                    {
+                        string line = sr.ReadLine()!;
+                        string[] values = line.Split(',');
+                        Filter filter = new Filter(values[0]);
+                        for (int i = 1; i < values.Length; i++)
+                        {
+                            filter.AddFilterQuery(values[i]);
+                        }
+                        Filters.Add(filter);
+                    }
+                }
+            }
         }
 
         public string categorize(Reference reference)
