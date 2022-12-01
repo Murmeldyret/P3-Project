@@ -104,9 +104,26 @@ namespace Zenref.Ava.Models
             return -1;
         }
 
+        // <summary>
+        // Saves the filters to a file
+        // </summary>
         public void SaveFilters()
         {
-            throw new NotImplementedException();
+            // Create a new write stream.
+            using (StreamWriter writer = new StreamWriter("Filters.csv"))
+            {
+                // Write the filterCollction to the file.
+                foreach (Filter filter in Filters)
+                {
+                    writer.Write(filter.ReturnFilterCategory());
+                    foreach (string query in filter.ReturnFilterQueries())
+                    {
+                        writer.Write(",");
+                        writer.Write(query);
+                    }
+                    writer.WriteLine();
+                }
+            }
         }
 
         public void LoadFilters()
@@ -127,6 +144,7 @@ namespace Zenref.Ava.Models
                         string line = sr.ReadLine()!;
                         string[] values = line.Split(',');
                         Filter filter = new Filter(values[0]);
+                        // Add all queries to the filter.
                         for (int i = 1; i < values.Length; i++)
                         {
                             filter.AddFilterQuery(values[i]);

@@ -358,5 +358,74 @@ namespace zenref.Tests
             // Assert that the collection is empty.
             Assert.Equal(IFilterCollection.GetInstance().Count, 0);
         }
+
+        [Fact]
+        public void saveFilterCollectionExists()
+        {
+            // Arrange
+            // Add filters to filtercollection.
+            // Filter 1
+            List<string> filterQuery1 = new List<string>()
+            {
+                "Podcast",
+                "Radio",
+            };
+            string categoryName1 = "Podcast";
+
+            // Filter 2
+            List<string> filterQuery2 = new List<string>()
+            {
+                "Video",
+                "Movie",
+            };
+            string categoryName2 = "Video";
+
+            // Filter 3
+            List<string> filterQuery3 = new List<string>()
+            {
+                "Journal",
+            };
+            string categoryName3 = "Journal";
+
+            IFilterCollection.GetInstance().Add(new Filter(filterQuery1, categoryName1));
+            IFilterCollection.GetInstance().Add(new Filter(filterQuery2, categoryName2));
+            IFilterCollection.GetInstance().Add(new Filter(filterQuery3, categoryName3));
+
+            // Act
+            IFilterCollection.GetInstance().SaveFilters();
+
+            // Assert
+            // Read the file and assert that it matches the filters.
+            using (StreamReader reader = new StreamReader("Filters.csv"))
+            {
+                string line = reader.ReadLine();
+                Assert.Equal("Podcast,Podcast,Radio", line);
+                line = reader.ReadLine();
+                Assert.Equal("Video,Video,Movie", line);
+                line = reader.ReadLine();
+                Assert.Equal("Journal,Journal", line);
+            }
+        }
+
+        [Fact]
+        public void saveFilterCollectionDoesNotExist()
+        {
+            // Arrange
+            // Delete the test file.
+            File.Delete("Filters.csv");
+
+            IFilterCollection filterCollection = IFilterCollection.GetInstance();
+
+            // Act
+            filterCollection.SaveFilters();
+
+            // Assert
+            // Check that the file is empty.
+            using (StreamReader reader = new StreamReader("Filters.csv"))
+            {
+                string line = reader.ReadLine();
+                Assert.Null(line);
+            }
+        }
     }
 }
