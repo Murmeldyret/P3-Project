@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis;
 
 namespace Zenref.Ava.Models
 {
-    public class Reference : RawReference
+    public class Reference : RawReference, IEquatable<Reference>
     {
         //constructor with named arguments, where some properties are null by default.
 
@@ -173,7 +173,6 @@ namespace Zenref.Ava.Models
         public string? PubType { get; set; }
         public string? Publisher { get; set; }
         public int? YearRef { get; set; }
-        public int? ID { get; set; }
         public string? Language { get; set; }
         public int? YearReport { get; set; }
         public double? Match { get; set; }
@@ -220,13 +219,9 @@ namespace Zenref.Ava.Models
         /// <param name="other">The other reference to compare</param>
         /// <returns><c>true</c> if all properties are the same, <c>false</c> otherwise.</returns>
         /// <remarks>If other public properties are added, this method will need to be updated.</remarks>
-        public bool ValueEquals(Reference other)
+        public bool Equals(Reference? other)
         {
             bool isEqual = false;
-            if (this is null)
-            {
-                throw new ArgumentNullException("Reference calling ValueEquals is null");
-            }
             if (other is null)
             {
                 return false;
@@ -237,8 +232,8 @@ namespace Zenref.Ava.Models
             bool PubTypeEquals = this.PubType == other.PubType;
             bool PublisherEquals = this.Publisher == other.Publisher;
             bool YearRefEquals = this.YearRef == other.YearRef;
-            bool IDEquals = this.ID == other.ID;
-            bool EduEquals = this.Edu == other.Edu;
+            bool IdEquals = this.Id == other.Id;
+            bool EduEquals = this.Education == other.Education;
             bool LocationEquals = this.Location == other.Location;
             bool SemesterEquals = this.Semester == other.Semester;
             bool LanguageEquals = this.Language == other.Language;
@@ -259,7 +254,6 @@ namespace Zenref.Ava.Models
                       && PubTypeEquals
                       && PublisherEquals
                       && YearRefEquals
-                      && IDEquals
                       && EduEquals
                       && LocationEquals
                       && SemesterEquals
@@ -386,55 +380,7 @@ namespace Zenref.Ava.Models
         {
             int levenshteinDistance = Fastenshtein.Levenshtein.Distance(test, test2);
             return levenshteinDistance;
-            /*
-            /// <summary>
-            /// Compute the distance between two strings.
-            /// This is done through the processes of Replacing, Inserting or Deleting.
-            /// The lower the integer, the closer the strings are to each other.
-            /// </summary>
-            
-                int n = test.Length;
-                int m = test2.Length;
-                int[,] d = new int[n + 1, m + 1];
-
-                // Step 1
-                if (n == 0)
-                {
-                    return m;
-                }
-
-                if (m == 0)
-                {
-                    return n;
-                }
-
-                // Step 2 Initialization of a matrix
-                for (int i = 0; i <= n; d[i, 0] = i++)
-                {
-                }
-
-                for (int j = 0; j <= m; d[0, j] = j++)
-                {
-                }
-
-                // Step 3
-                for (int i = 1; i <= n; i++)
-                {
-                    //Step 4
-                    for (int j = 1; j <= m; j++)
-                    {
-                        // Step 5
-                        int cost = (test2[j - 1] == test[i - 1]) ? 0 : 1;
-
-                        // Step 6 finds the lowest number of operations to change the string
-                        // throughout the string comparisons
-                        d[i, j] = Math.Min(
-                            Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
-                            d[i - 1, j - 1] + cost);
-                    }
-                }
-                // Step 7 
-                return d[n, m];*/
         }
+        
     }
 }

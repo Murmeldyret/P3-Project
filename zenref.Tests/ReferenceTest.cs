@@ -109,10 +109,10 @@ namespace zenref.Tests
                 "16-21",
                 "Din far");
 
-            Assert.True(reference.ValueEquals(other));
+            Assert.True(reference.Equals(other));
         }
         [Fact]
-        public void ValueEqualsReflexsiveProperty()
+        public void ValueEqualsReflexiveProperty()
         {
             Reference reference = new Reference(
                 "Anders Rask",
@@ -137,7 +137,7 @@ namespace zenref.Tests
                 "16-21",
                 "Din far");
 
-            Assert.True(reference.ValueEquals(reference));
+            Assert.True(reference.Equals(reference));
         }
         [Fact]
         public void ValueEqualsAlsoWorksInReverse()
@@ -188,7 +188,7 @@ namespace zenref.Tests
                 "16-21",
                 "Din far");
 
-            Assert.True(reference.ValueEquals(other) && other.ValueEquals(reference));
+            Assert.True(reference.Equals(other) && other.Equals(reference));
         }
         [Fact]
         public void ValueEqualsWhenOtherIsNullReturnsFalse()
@@ -217,7 +217,7 @@ namespace zenref.Tests
                 "Din far"),
                 other = null;
 
-            Assert.False(reference.ValueEquals(other));
+            Assert.False(reference.Equals(other));
         }
         [Fact]
         public void ValueEqualsTransitive()
@@ -289,9 +289,9 @@ namespace zenref.Tests
                 "16-21",
                 "Din far");
             //De første to kan bruges hvis testen fejler.
-            bool firstAndSecondEqual = reference.ValueEquals(second);
-            bool secondAndThirdEqual = second.ValueEquals(third);
-            bool firstAndThirdEqual = reference.ValueEquals(third);
+            bool firstAndSecondEqual = reference.Equals(second);
+            bool secondAndThirdEqual = second.Equals(third);
+            bool firstAndThirdEqual = reference.Equals(third);
 
 
             Assert.True(firstAndThirdEqual);
@@ -345,7 +345,7 @@ namespace zenref.Tests
                 "16-21",
                 "Din mor");
 
-            Assert.False(reference.ValueEquals(notTheSameReference));
+            Assert.False(reference.Equals(notTheSameReference));
         }
         [Fact]
         public void Regextest()
