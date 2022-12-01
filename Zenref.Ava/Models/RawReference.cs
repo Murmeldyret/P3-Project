@@ -105,10 +105,9 @@ public class RawReference : IEquatable<RawReference>
     }
     
     /// <summary>
-    /// Finds a doi identifier in a reference if one is present
+    /// Finds a doi identifier in a reference if one is present.
     /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
+    /// <returns>A doi identifies, if one is found, otherwise an empty string.</returns>
     public string DoiSearch()
     {
         string[] textSplit = Regex.Split(OriReference, @"(?:doi: |DOI: |Doi: |doi:|doi.org/)");
@@ -119,7 +118,7 @@ public class RawReference : IEquatable<RawReference>
     /// Splits a string of words into a list of strings with each element being a word.
     /// </summary>
     /// <param name="text"></param>
-    /// <returns></returns>
+    /// <returns>A list where each element is a word.</returns>
     public List<string> NGramizer(string text)
     {
         return text.Split(' ').ToList();
@@ -168,7 +167,6 @@ public class RawReference : IEquatable<RawReference>
         // Reference reference = new();
         string author, title, source;
         int? yearRef;
-        
         //first case = Correctly inserted reference APA style.
         string[] textAuthor = Regex.Split(OriReference, @"(?:\. \(|\.\()");
 
