@@ -415,6 +415,7 @@ namespace zenref.Tests
             File.Delete("Filters.csv");
 
             IFilterCollection filterCollection = IFilterCollection.GetInstance();
+            filterCollection.Clear();
 
             // Act
             filterCollection.SaveFilters();
@@ -429,3 +430,4 @@ namespace zenref.Tests
         }
     }
 }
+

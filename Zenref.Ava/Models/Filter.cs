@@ -26,6 +26,7 @@ namespace Zenref.Ava.Models
         public void SaveFilters();
         public void LoadFilters();
         public string categorize(Reference reference);
+        public void Clear();
     }
 
     public interface IFilter
@@ -318,7 +319,7 @@ namespace Zenref.Ava.Models
         {
             return this.filterQuery;
         }
-
+        
         /// <summary>
         /// A method that returns the category name of the filter.
         /// </summary>
