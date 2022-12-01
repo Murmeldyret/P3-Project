@@ -213,31 +213,6 @@ namespace Zenref.Ava.Models
         }
     }
 
-
-
-
-    /*
-    private List<Filter> Filters = new List<Filter>();
-
-    public void deleteFilter(int filterIndex)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Filter findFilter(string categoryName)
-    {
-        throw new NotImplementedException();
-    }
-
-    public int findFilterIndex(string categoryName)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void createFilter(List<string> filters, string categoryName)
-    {
-        throw new NotImplementedException();
-    }*/
     public class Filter : IFilter, IEnumerable
     {
         protected List<string> filterQuery;
@@ -289,4 +264,3 @@ namespace Zenref.Ava.Models
 
 
 }
-
