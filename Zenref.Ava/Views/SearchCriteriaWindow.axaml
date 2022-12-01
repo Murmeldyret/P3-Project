@@ -63,12 +63,13 @@
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
 		</ScrollViewer>
-		<Grid Grid.Row="2" ColumnDefinitions="0.15*,0.1*,0.1*,0.1*,0.5*">
+		<Grid Grid.Row="2" ColumnDefinitions="0.15*,0.1*,0.1*,0.1*,0.1*,0.5*">
 			<Button Name="addButton" Grid.Column="0" Command="{Binding AddCommand}" Margin="20,10">Tilføj</Button>
 			<Button Name="deleteButton" Grid.Column="1" Command="{Binding DeleteCommand}" Margin="20,10,0,10">Slet</Button>
 			<Button Name="deleteAllButton" Grid.Column="2" Command="{Binding DeleteAllCommand}" Margin="10,10,0,10">Ryd</Button>
-			<Button Name="searchButton" Grid.Column="3" Content="{Binding Path=SearchEdit}" Command="{Binding SearchCommand}" Margin="10,10,0,10" />
-			<Button Name="cancelButton" Grid.Column="4" HorizontalAlignment="Right" Margin="80,10,20,10">Afbryd</Button>
+			<Button Name="searchButton" Grid.Column="3" Command="{Binding SearchCommand}" Margin="10,10,0,10">Ny Publikation</Button>
+			<Button Name="EditButton" Grid.Column="4" Command="{Binding EditCommand}" Margin="10,10,0,10">Ændre Publikation</Button>
+			<Button Name="cancelButton" Grid.Column="5" HorizontalAlignment="Right" Margin="80,10,20,10">Afbryd</Button>
 		</Grid>
 	</Grid>
 </Window>

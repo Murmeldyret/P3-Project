@@ -52,6 +52,7 @@ namespace Zenref.Ava.ViewModels
         [NotifyCanExecuteChangedFor(nameof(SearchCommand))]
         [NotifyCanExecuteChangedFor(nameof(DeleteCommand))]
         [NotifyCanExecuteChangedFor(nameof(DeleteAllCommand))]
+        [NotifyCanExecuteChangedFor(nameof(EditCommand))]
         private ObservableCollection<SearchPublicationType> searchOption = new ObservableCollection<SearchPublicationType>();
 
         [ObservableProperty]
@@ -59,6 +60,7 @@ namespace Zenref.Ava.ViewModels
         [NotifyCanExecuteChangedFor(nameof(SearchCommand))]
         [NotifyCanExecuteChangedFor(nameof(DeleteCommand))]
         [NotifyCanExecuteChangedFor(nameof(DeleteAllCommand))]
+        [NotifyCanExecuteChangedFor(nameof(EditCommand))]
         private ObservableCollection<PublicationType> pubTypes = new ObservableCollection<PublicationType>();
 
         /// <summary>
@@ -67,18 +69,18 @@ namespace Zenref.Ava.ViewModels
         public string? SearchTextString;
         public string? SearchOperand;
         public string? SearchField;
-        public string SearchEdit = "Search";
-        
+        public string PubName = "";
 
         public SearchCriteriaViewModel()
         {
             SearchOption.Clear();
         }
 
-        public SearchCriteriaViewModel(ObservableCollection<SearchPublicationType> searchOption)
+        public SearchCriteriaViewModel(ObservableCollection<SearchPublicationType> searchOption, string pubName)
         {
             SearchOption.Clear();
             SearchOption = searchOption;
+            PubName += pubName;
         }
 
 
@@ -95,6 +97,14 @@ namespace Zenref.Ava.ViewModels
         {
             
             pubTypes.Add(new PublicationType("Indsæt titel", SearchOption));
+            WeakReferenceMessenger.Default.Send<SearchTermMessage>(new SearchTermMessage(PubTypes));
+        }
+
+        [RelayCommand]
+        private void Edit()
+        {
+            PubTypes.Clear();
+            pubTypes.Add(new PublicationType(PubName, SearchOption));
             WeakReferenceMessenger.Default.Send<SearchTermMessage>(new SearchTermMessage(PubTypes));
         }
 

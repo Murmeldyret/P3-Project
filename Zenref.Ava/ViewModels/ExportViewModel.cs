@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -12,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Zenref.Ava.Models;
+using Zenref.Ava.ViewModels.Commands;
 using Zenref.Ava.Views;
 
 namespace Zenref.Ava.ViewModels
@@ -31,10 +33,10 @@ namespace Zenref.Ava.ViewModels
     {
         private ObservableCollection<PublicationType> searchCriteria = new ObservableCollection<PublicationType>();
         private ObservableCollection<SearchPublicationType> searchTest = new ObservableCollection<SearchPublicationType>();
+        private ObservableCollection<SearchPublicationType> searchTest2 = new ObservableCollection<SearchPublicationType>();
         //private List<SearchPublicationType> searchCriteria = new List<SearchPublicationType>();
 
-        [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(DeletePublicationTypeCommand))]
+        [ObservableProperty] 
         [NotifyCanExecuteChangedFor(nameof(EditPublicationTypeCommand))]
         private ObservableCollection<PublicationType> publicationTypes = new ObservableCollection<PublicationType>();
         
@@ -43,10 +45,16 @@ namespace Zenref.Ava.ViewModels
         public ExportViewModel() 
             : base(WeakReferenceMessenger.Default)
         {
-            //EditPublicationTypeCommmand = new RelayCommand(EditPublicationType);
             searchTest.Add(new SearchPublicationType(searchTerm: "hello", searchSelectOperand: "OG", searchSelectField: "Titel"));
+            searchTest2.Add(new SearchPublicationType(searchTerm: "hello2vuu", searchSelectOperand: "OG", searchSelectField: "Titel"));
             PublicationTypes.Add(new PublicationType("Bog", searchTest));
-            PublicationTypes.Add(new PublicationType("Artikel", searchTest));
+            PublicationTypes.Add(new PublicationType("Artikel", searchTest2));
+
+            foreach (PublicationType t in PublicationTypes)
+            {
+                Console.WriteLine(t.Name);
+            }
+            
             Messenger.Register<SearchTermMessage>(this, (r, m) =>
             {
                 Receive(m);
@@ -56,22 +64,15 @@ namespace Zenref.Ava.ViewModels
         public void Receive(SearchTermMessage message)
         {
             searchCriteria = message.SearchPubCollection;
-            foreach(PublicationType s in searchCriteria)
+            Console.WriteLine(searchCriteria.Count);
+            
+            foreach(PublicationType s in PublicationTypes)
             {
-                foreach (PublicationType p in PublicationTypes)
+                if (s.Name == searchCriteria[0].Name)
                 {
-                    if (p.Name == s.Name)
-                    {
-                        Console.WriteLine($"equal - p:{p.Name} ::::: s:{s.Name}");
-                    }
-                    //p.searchPublicationTypes = s.searchPublicationTypes;
-                    else
-                    {
-                        Console.WriteLine($"Not equal   p:{p.Name} - s:{s.Name}");
-                    }
-                        //Console.WriteLine($"p: {p.searchPublicationTypes} and s: {s.searchPublicationTypes}");
-                        //PublicationTypes.Add(new PublicationType(s.Name, s.searchPublicationTypes));
+                    s.searchPublicationTypes = searchCriteria[0].searchPublicationTypes;
                 }
+
             }
         }
 
@@ -79,35 +80,40 @@ namespace Zenref.Ava.ViewModels
         private void OpenSearchCriteria(Window window)
         {
             SearchCriteriaWindow SearchView = new SearchCriteriaWindow();
-            SearchView.ShowDialog(window);
+            SearchView.Show();
         }
 
         [RelayCommand]
-        private void DeletePublicationType(string text)
+        private void DeletePublicationType(object msg)
         {
-            Debug.WriteLine(PublicationTypes.Count);
+            Console.WriteLine(PublicationTypes.Count);
             //PublicationTypes.RemoveAt(PublicationTypes.Count - 1);
+            string text = (string)msg;
+            
             for (int i = 0; i < PublicationTypes.Count; i++)
             {
                 if (text == PublicationTypes[i].Name)
                 {
-                    Debug.WriteLine($"text: {text} == {publicationTypes[i].Name}");
+                    Console.WriteLine($"text: {text} == {publicationTypes[i].Name}");
                     PublicationTypes.RemoveAt(i);
                 }
             }
+            
         }
-
 
         
         [RelayCommand]
-        private void EditPublicationType(Window window)
+        private void EditPublicationType(string msg)
         {
-            
-            SearchCriteriaWindow SearchView = new SearchCriteriaWindow();
-            SearchView.DataContext = new SearchCriteriaViewModel(searchTest);
-            SearchView.Show(window);
-            
-            //window.ShowDialog(SearchView);
+            for (int i = 0; i < PublicationTypes.Count; i++)
+            {
+                if (PublicationTypes[i].Name == msg)
+                {
+                    SearchCriteriaWindow SearchView = new SearchCriteriaWindow();
+                    SearchView.DataContext = new SearchCriteriaViewModel(PublicationTypes[i].searchPublicationTypes, msg);
+                    SearchView.Show();
+                }
+            }
         }
     }
 }
