@@ -146,27 +146,30 @@ public class RawReference : IEquatable<RawReference>
     /// <returns></returns>
     public (string, int?, string, string) CorrectAPACategorizer(string text)
     {
-        Reference reference = new();
+        // Reference reference = new();
+        string author, title, source;
+        int? yearRef;
+        
         //first case = Correctly inserted reference APA style.
         string[] textAuthor = Regex.Split(text, @"(?:\. \(|\.\()");
 
-        reference.Author = textAuthor[0] + ".";
+        author = textAuthor[0] + ".";
         string[] textYear = Regex.Split(textAuthor[1], @"(\)(.*))");
         //or (?:\)) but make sure to unite the string afterwards
         bool check = Int32.TryParse(textYear[0], out int year);
         if (check)
         {
-            reference.YearRef = year;
+            yearRef = year;
         } else 
         {
-            reference.YearRef = null;
+            yearRef = null;
         }
         string[] textTitle = Regex.Split(textYear[1], @"(?:\. )");
-        reference.Title = textTitle[1] + ".";
-        reference.Source = textTitle[2];
+        title = textTitle[1] + ".";
+        source = textTitle[2];
         //Should there be a need for more details a more advanced method needs to be called.
 
-        return (reference.Author, reference.YearRef, reference.Title, reference.Source);
+        return (author, yearRef, title, source);
     }
 
     /// <summary>
