@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using DocumentFormat.OpenXml.Office2013.Drawing.ChartStyle;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace Zenref.Ava.Models;
 //TODO Erik skal dokumentere metoder :)))))
@@ -82,7 +84,24 @@ public class RawReference : IEquatable<RawReference>
     /// <returns>An enriched reference with filled fields</returns>
     public Reference ExtractData()
     {
-        
+        (string author, string title, int? yearRef) ucnRefAuthorTitleYearRef = UCNRefAuthorTitleYearRef();
+        string doi = DoiSearch();
+        (string pubType, string source) ucnRefLinks = UCNRefLinks();
+
+        return new Reference(this,
+            ucnRefAuthorTitleYearRef.author,
+            ucnRefAuthorTitleYearRef.title,
+            ucnRefLinks.source,
+            "",
+            ucnRefAuthorTitleYearRef.yearRef,
+            "",
+            null, 
+            null, 
+            "", 
+            "", 
+            "", 
+            "", 
+            ucnRefLinks.source);
     }
     
     /// <summary>
@@ -90,9 +109,9 @@ public class RawReference : IEquatable<RawReference>
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
-    public string DoiSearch(string text)
+    public string DoiSearch()
     {
-        string[] textSplit = Regex.Split(text, @"(?:doi: |DOI: |Doi: |doi:|doi.org/)");
+        string[] textSplit = Regex.Split(OriReference, @"(?:doi: |DOI: |Doi: |doi:|doi.org/)");
         string[] result = textSplit[1].Split(" ");
         return result[0];
     }
@@ -110,48 +129,48 @@ public class RawReference : IEquatable<RawReference>
     /// Method for manipulating a raw UCN reference string into smaller, but correct pieces the right places.
     /// This method is not for Antologies or Websites
     /// </summary>
-    /// <param name="text"></param>
     /// <returns></returns>
-    public (string Author, string Title, int? YearRef) UCNRefAuthorTitleYearRef(string text)
+    public (string Author, string Title, int? YearRef) UCNRefAuthorTitleYearRef()
     {
-        Reference reference = new();
+        string author, title;
+        int? yearRef;
+        
         //Last "(?!.*[A-Z+l]\.)" part below takes the last instance in the search
-        string[] textAuthor = Regex.Split(text, @"(?:[A-Z+l]\.)(?! &)(?! et)(?!.*[A-Z+l]\.)");
-        reference.Author = text.Substring(0, textAuthor[0].Length + 2);
-
+        string[] textAuthor = Regex.Split(OriReference, @"(?:[A-Z+l]\.)(?! &)(?! et)(?!.*[A-Z+l]\.)");
+        author = OriReference.Substring(0, textAuthor[0].Length + 2);
+        
         //IF THE YEAR DISAPPEARS IT'S BECAUSE I'VE EXCLUDED THE "^" SYMBOL BEFORE THE REGEX STRING!!
         Match m = Regex.Match(textAuthor[1], @"^(?: \([0-9]\d{3}\))");
         if (m.Success)
         {
-            (string Author, int? YearRef, string Title, string Source) reference1 = CorrectAPACategorizer(text);
+            (string Author, int? YearRef, string Title, string Source) reference1 = CorrectAPACategorizer();
             return (reference1.Author, reference1.Title, reference1.YearRef);
         }
         else
         {
             string[] textTitleB = Regex.Split(textAuthor[1], @"(?:\.)");
-            reference.Title = textTitleB[0].Substring(1, textTitleB[0].Length - 1) + ".";
+            title = textTitleB[0].Substring(1, textTitleB[0].Length - 1) + ".";
             //Excludes ISSN and year intervals, remove (?<!-) to undo this.
             Regex yearExpression = new Regex(@"(?<!-)(?:[1][9][5-9][0-9]|[2][0][0-3][0-9])(?!-)");
-            MatchCollection yearFound = yearExpression.Matches(text);
-            reference.YearRef = int.Parse(yearFound[0].Value);
+            MatchCollection yearFound = yearExpression.Matches(OriReference);
+            yearRef = int.Parse(yearFound[0].Value);
 
-            return (reference.Author, reference.Title, reference.YearRef);
+            return (author, title, yearRef);
         }
     }
 
     /// <summary>
     /// Theoretical correct string manipulation APA style
     /// </summary>
-    /// <param name="text"></param>
     /// <returns></returns>
-    public (string, int?, string, string) CorrectAPACategorizer(string text)
+    public (string Author, int? yearRef, string Title, string Source) CorrectAPACategorizer()
     {
         // Reference reference = new();
         string author, title, source;
         int? yearRef;
         
         //first case = Correctly inserted reference APA style.
-        string[] textAuthor = Regex.Split(text, @"(?:\. \(|\.\()");
+        string[] textAuthor = Regex.Split(OriReference, @"(?:\. \(|\.\()");
 
         author = textAuthor[0] + ".";
         string[] textYear = Regex.Split(textAuthor[1], @"(\)(.*))");
@@ -178,30 +197,30 @@ public class RawReference : IEquatable<RawReference>
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
-    public (string?, string?) UCNRefLinks(string text)
+    public (string? pubType, string? source) UCNRefLinks()
     {
-        Reference reference = new();
-        string[] textSource = Regex.Split(text, @"(?:https://)|(?:http://)");
+        string pubType, source;
+        string[] textSource = Regex.Split(OriReference, @"(?:https://)|(?:http://)");
         if (textSource[1].EndsWith("."))
         {
             string textSourceNoDot = textSource[1].Substring(0, textSource[1].Length - 1);
-            reference.Source = textSourceNoDot;
+            source = textSourceNoDot;
         } else
         {
-            reference.Source = textSource[1];
+            source = textSource[1];
         }
             
-        if(reference.Source != null)
+        if(!string.IsNullOrEmpty(source))
         {
-            reference.PubType = "Website";
+            pubType = "Website";
         } else
         {
-            reference.PubType = null;
+            pubType = null;
         }
 
-        return (reference.PubType, reference.Source);
+        return (pubType, source);
     }
-    public int Fuzzy(string test, string test2)
+    private int Fuzzy(string test, string test2)
     {
         int levenshteinDistance = Fastenshtein.Levenshtein.Distance(test, test2);
         return levenshteinDistance;
@@ -211,12 +230,13 @@ public class RawReference : IEquatable<RawReference>
     /// Converts the number of operations needed to change one string into another,
     /// into a percentage and allows for better quantification.
     /// </summary>
-    /// <param name="shtein"></param>
+    /// <param name="newText"></param>
     /// <param name="originalText"></param>
     /// <returns></returns>
-    public double MatchingStrings(int shtein, string originalText)
+    public double MatchingStrings(string newText, string originalText)
     {
-        double result = 1 - ((double)shtein / (double)originalText.Length);
+        int fuzzy = Fuzzy(newText, originalText);   
+        double result = 1 - ((double)fuzzy / (double)originalText.Length);
         return result;
     }
 }
