@@ -308,18 +308,18 @@ namespace zenref.Tests
 
             Assert.False(reference.Equals(notTheSameReference));
         }
-        // [Fact]
-        // public void Regextest()
-        // {
-        //     //Arrange
-        //     string stringWithDOI = "Fleet A, Che M, MacKay-Lyons M, et. al. Examining the Use of Constraint-Induced Movement Therapy in Canadian Neurological Occupational and Physical Therapy 2014;66(1): 60-71. doi: 10.3138/ptc.2012-61";
-        //     RawReference raw = new RawReference(null, null, null, null, stringWithDOI);
-        //     //Act
-        //     Reference result = raw.ExtractData();
-        //     
-        //     //Assert
-        //     Assert.Equal("10.3138/ptc.2012-61", result);
-        // }
+         [Fact]
+         public void Regextest()
+         {
+             //Arrange
+             string stringWithDOI = "Fleet A, Che M, MacKay-Lyons M, et. al. Examining the Use of Constraint-Induced Movement Therapy in Canadian Neurological Occupational and Physical Therapy 2014;66(1): 60-71. doi: 10.3138/ptc.2012-61";
+             RawReference raw = new RawReference(null, null, null, null, stringWithDOI);
+             //Act
+             Reference result = raw.ExtractData();
+             
+             //Assert
+             Assert.Equal("10.3138/ptc.2012-61", result.Commentary);
+         }
 
         [Fact]
         public void MatchingStrings()

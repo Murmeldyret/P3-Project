@@ -84,8 +84,8 @@ public class RawReference : IEquatable<RawReference>
     /// <returns>An enriched reference with filled fields</returns>
     public Reference ExtractData()
     {
-        (string author, string title, int? yearRef) ucnRefAuthorTitleYearRef = UCNRefAuthorTitleYearRef();
         string doi = DoiSearch();
+        (string author, string title, int? yearRef) ucnRefAuthorTitleYearRef = UCNRefAuthorTitleYearRef();
         (string pubType, string source) ucnRefLinks = UCNRefLinks();
 
         return new Reference(this,
@@ -97,7 +97,7 @@ public class RawReference : IEquatable<RawReference>
             "",
             null, 
             null, 
-            "", 
+            doi, 
             "", 
             "", 
             "", 
@@ -110,9 +110,12 @@ public class RawReference : IEquatable<RawReference>
     /// <returns>A doi identifies, if one is found, otherwise an empty string.</returns>
     public string DoiSearch()
     {
+        string Commentary;
+
         string[] textSplit = Regex.Split(OriReference, @"(?:doi: |DOI: |Doi: |doi:|doi.org/)");
         string[] result = textSplit[1].Split(" ");
-        return result[0];
+        Commentary = result[0];
+        return Commentary;
     }
     /// <summary>
     /// Splits a string of words into a list of strings with each element being a word.
@@ -198,25 +201,37 @@ public class RawReference : IEquatable<RawReference>
     public (string? pubType, string? source) UCNRefLinks()
     {
         string pubType, source;
-        string[] textSource = Regex.Split(OriReference, @"(?:https://)|(?:http://)");
-        if (textSource[1].EndsWith("."))
+        if (OriReference.Contains("[internet]")||OriReference.Contains("[Internet]"))
         {
-            string textSourceNoDot = textSource[1].Substring(0, textSource[1].Length - 1);
-            source = textSourceNoDot;
-        } else
-        {
-            source = textSource[1];
+            string[] textSource = Regex.Split(OriReference, @"(?:https://)|(?:http://)");
+            if (textSource[1].EndsWith("."))
+            {
+                string textSourceNoDot = textSource[1].Substring(0, textSource[1].Length - 1);
+                source = textSourceNoDot;
+            }
+            else
+            {
+                source = textSource[1];
+            }
+
+            if (!string.IsNullOrEmpty(source))
+            {
+                pubType = "Website";
+            }
+            else
+            {
+                pubType = null;
+            }
+
+            return (pubType, source);
         }
-            
-        if(!string.IsNullOrEmpty(source))
-        {
-            pubType = "Website";
-        } else
+        else
         {
             pubType = null;
-        }
+            source = null;
 
-        return (pubType, source);
+            return (pubType, source);
+        }
     }
     private int Fuzzy(string test, string test2)
     {
