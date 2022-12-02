@@ -194,29 +194,25 @@ namespace zenref.Tests
         [Fact]
         public void ValueEqualsWhenOtherIsNullReturnsFalse()
         {
-            Reference reference = new Reference(
+            Reference reference = new Reference(rawReference,
                 "Anders Rask",
-                "titel på noget",
+                "Titel på noget",
                 "bog",
                 "AAU",
                 2022,
-                12345,
-                "Software",
-                "Aalborg",
-                "Tredje",
                 "Dansk",
                 2021,
                 0.9,
-                "blank",
-                "Det ved jeg ikke",
+                "Smart kommentar",
+                "ingen idé",
                 "Efterår",
-                "pas",
-                "ved jeg heller ikke",
-                69,
+                "en god eksamen",
+                "pure opspind",
+                21,
                 "20th",
                 "16-21",
-                "Din far"),
-                other = null;
+                "Very good book");
+            Reference? other = null;
 
             Assert.False(reference.Equals(other));
         }
@@ -349,14 +345,14 @@ namespace zenref.Tests
         public void MatchingStrings()
         {
             //Arrange
-            string CorrectText = "Examining py";
-            int ShteinRes = 6;
+            const string CORRECT_TEXT = "Examining py";
+            string badText = "Examining ergfsg";
         
             //Act
-            double Result = Reference.MatchingStrings(ShteinRes, CorrectText);
+            double result = rawReference.MatchingStrings(badText, CORRECT_TEXT);
 
             //Assert
-            Assert.Equal(0.5, Result);
+            Assert.Equal(0.5, result);
         }
 
         [Fact]
