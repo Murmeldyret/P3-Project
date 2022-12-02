@@ -14,28 +14,28 @@ namespace zenref.Tests
         public void Fuzzy_search_locally()
         {
             //Arrange
-            string testString = "hello";
-            string testValue = "hello2";
+            
+            string testValue = "Din fare";
 
             //Act
-            int result = Reference.Fuzzy(testString, testValue);
+            double result = rawReference.MatchingStrings(rawReference.OriReference, testValue);
 
             //Assert
-            Assert.True(result == 1);
+            Assert.Equal(0.875, result);
         }
 
         [Fact]
         public void Fuzzy_search_online()
         {
             //Arrange
-            string testString = "Examining py";
-            string testValue =  "Examining ergfsg";
+
+            string testValue = "Din fareridtsr";
 
             //Act
-            int result = Reference.Fuzzy(testString, testValue);
+            double result = rawReference.MatchingStrings(rawReference.OriReference, testValue);
 
             //Assert
-            Assert.True(result == 6);
+            Assert.Equal(0.5, result);
         }
 
         [Fact]
@@ -54,7 +54,7 @@ namespace zenref.Tests
             };
 
             //Act
-            List<string> returnList = Reference.NGramizer(someString);
+            List<string> returnList = rawReference.NGramizer(someString);
 
             //Assert
             Assert.Equal(resultList, returnList);
@@ -64,159 +64,135 @@ namespace zenref.Tests
         [Fact]
         public void ValueEqualityOnTwoEqualReferences()
         {
-            Reference reference = new Reference(
+            Reference reference = new Reference(rawReference,
                 "Anders Rask",
                 "titel på noget",
                 "bog",
                 "AAU",
                 2022,
-                12345,
-                "Software",
-                "Aalborg",
-                "Tredje",
                 "Dansk",
-                2021,
+                2020,
                 0.9,
-                "blank",
-                "Det ved jeg ikke",
-                "Efterår",
-                "pas",
-                "ved jeg heller ikke",
-                69,
-                "20th",
-                "16-21",
-                "Din far"),
-
-                other = new Reference(new KeyValuePair<Reference._typeOfId, string>(Reference._typeOfId.Unknown, ""),
+                "No Comment",
+                "Syllabus",
+                "Vinter",
+                "skriftlig",
+                "jeg skal kilde dig skal jeg",
+                20,
+                "Massive",
+                "Argon",
+                "Det samme som din bog");
+                
+                Reference other = new Reference(rawReference,
                 "Anders Rask",
                 "titel på noget",
                 "bog",
                 "AAU",
                 2022,
-                12345,
-                "Software",
-                "Aalborg",
-                "Tredje",
                 "Dansk",
-                2021,
+                2020,
                 0.9,
-                "blank",
-                "Det ved jeg ikke",
-                "Efterår",
-                "pas",
-                "ved jeg heller ikke",
-                69,
-                "20th",
-                "16-21",
-                "Din far");
+                "No Comment",
+                "Syllabus",
+                "Vinter",
+                "skriftlig",
+                "jeg skal kilde dig skal jeg",
+                20,
+                "Massive",
+                "Argon",
+                "Det samme som din bog");
 
             Assert.True(reference.Equals(other));
         }
         [Fact]
         public void ValueEqualsReflexiveProperty()
         {
-            Reference reference = new Reference(
+            Reference reference = new Reference(rawReference,
                 "Anders Rask",
                 "titel på noget",
                 "bog",
                 "AAU",
                 2022,
-                12345,
-                "Software",
-                "Aalborg",
-                "Tredje",
                 "Dansk",
-                2021,
+                2020,
                 0.9,
-                "blank",
-                "Det ved jeg ikke",
-                "Efterår",
-                "pas",
-                "ved jeg heller ikke",
-                69,
-                "20th",
-                "16-21",
-                "Din far");
+                "No Comment",
+                "Syllabus",
+                "Vinter",
+                "skriftlig",
+                "jeg skal kilde dig skal jeg",
+                20,
+                "Massive",
+                "Argon",
+                "Det samme som din bog");
 
             Assert.True(reference.Equals(reference));
         }
         [Fact]
         public void ValueEqualsAlsoWorksInReverse()
         {
-            Reference reference = new Reference(
+            Reference reference = new Reference(rawReference,
                 "Anders Rask",
                 "titel på noget",
                 "bog",
                 "AAU",
                 2022,
-                12345,
-                "Software",
-                "Aalborg",
-                "Tredje",
                 "Dansk",
-                2021,
+                2020,
                 0.9,
-                "blank",
-                "Det ved jeg ikke",
-                "Efterår",
-                "pas",
-                "ved jeg heller ikke",
-                69,
-                "20th",
-                "16-21",
-                "Din far"),
+                "No Comment",
+                "Syllabus",
+                "Vinter",
+                "skriftlig",
+                "jeg skal kilde dig skal jeg",
+                20,
+                "Massive",
+                "Argon",
+                "Det samme som din bog");
 
-                other = new Reference(
+            Reference other = new Reference(rawReference,
                 "Anders Rask",
                 "titel på noget",
                 "bog",
                 "AAU",
                 2022,
-                12345,
-                "Software",
-                "Aalborg",
-                "Tredje",
                 "Dansk",
-                2021,
+                2020,
                 0.9,
-                "blank",
-                "Det ved jeg ikke",
-                "Efterår",
-                "pas",
-                "ved jeg heller ikke",
-                69,
-                "20th",
-                "16-21",
-                "Din far");
+                "No Comment",
+                "Syllabus",
+                "Vinter",
+                "skriftlig",
+                "jeg skal kilde dig skal jeg",
+                20,
+                "Massive",
+                "Argon",
+                "Det samme som din bog");
 
             Assert.True(reference.Equals(other) && other.Equals(reference));
         }
         [Fact]
         public void ValueEqualsWhenOtherIsNullReturnsFalse()
         {
-            Reference reference = new Reference(
+            Reference reference = new Reference(rawReference,
                 "Anders Rask",
                 "titel på noget",
                 "bog",
                 "AAU",
                 2022,
-                12345,
-                "Software",
-                "Aalborg",
-                "Tredje",
                 "Dansk",
-                2021,
+                2020,
                 0.9,
-                "blank",
-                "Det ved jeg ikke",
-                "Efterår",
-                "pas",
-                "ved jeg heller ikke",
-                69,
-                "20th",
-                "16-21",
-                "Din far"),
-                other = null;
+                "No Comment",
+                "Syllabus",
+                "Vinter",
+                "skriftlig",
+                "jeg skal kilde dig skal jeg",
+                20,
+                "Massive",
+                "Argon",
+                "Det samme som din bog");
+            Reference other = null;
 
             Assert.False(reference.Equals(other));
         }
@@ -349,14 +325,14 @@ namespace zenref.Tests
         public void MatchingStrings()
         {
             //Arrange
-            string CorrectText = "Examining py";
-            int ShteinRes = 6;
-        
+            const string CORRECT_TEXT = "Examining py";
+            string badText = "Examining ergfsg";
+
             //Act
-            double Result = Reference.MatchingStrings(ShteinRes, CorrectText);
+            double result = rawReference.MatchingStrings(badText, CORRECT_TEXT);
 
             //Assert
-            Assert.Equal(0.5, Result);
+            Assert.Equal(0.5, result);
         }
 
         [Fact]
