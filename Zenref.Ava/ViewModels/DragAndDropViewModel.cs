@@ -1,10 +1,12 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -24,7 +26,9 @@ namespace Zenref.Ava.ViewModels
         {
             files = new ObservableCollection<FileInfo>();
         }
-
+        /// <summary>
+        /// Opens a file dialog to select excel files and adds these to a collection.
+        /// </summary>
         [RelayCommand]
         private async void OpenFileDialog (Window window)
         {
@@ -44,6 +48,33 @@ namespace Zenref.Ava.ViewModels
                     files.Add(fileInfo);
                 }
             }    
+        }
+        /// <summary>
+        /// Event fired when object is dragged over element. It limits what types of objects can be dropped in the drop element.
+        /// </summary>
+        public void DragOver(object sender, DragEventArgs e)
+        {
+            List<string> fileList = (List<string>)e.Data.GetFileNames();
+            e.DragEffects = e.DragEffects & DragDropEffects.Copy;
+            if (!e.Data.Contains(DataFormats.FileNames) || !fileList.All(f => f.Contains("xlsx")))
+            {
+                e.DragEffects = DragDropEffects.None;
+            }
+        }
+        /// <summary>
+        /// Event fired when object is dropped in drop element. It determines if the dropped object is a file and adds the dropped file to a collection.
+        /// </summary>
+        public void FileDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.Contains(DataFormats.FileNames))
+            {
+                List<string> filePaths = (List<string>)e.Data.GetFileNames();
+                foreach (string filePath in filePaths)
+                {
+                    FileInfo fileInfo = new FileInfo(filePath);
+                    files.Add(fileInfo);
+                }
+            }
         }
 
         private void CloseWindow (Window window)
