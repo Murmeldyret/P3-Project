@@ -164,7 +164,7 @@ namespace Zenref.Ava.Models
         [Obsolete("KeyValuePair is deprecated for now")]
         public KeyValuePair<_typeOfId, string> UID;
         /// <summary>
-        /// Contains a value if this reference has been returned by an API response.
+        /// The time at which this object returned by API response if present.
         /// </summary>
         public Optional<DateTimeOffset> TimeOfCreation { get; }
         public string? Author { get; set; }

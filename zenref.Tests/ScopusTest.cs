@@ -21,7 +21,11 @@ namespace zenref.Tests
         {
             // Arrange
             HttpResponseMessage response = new HttpResponseMessage((HttpStatusCode)200);
-            Reference inputReference = new Reference(_OriReference: "Zhao, Nannan. (2024). Improvement of Cloud Computing Medical Data Protection Technology Based on Symmetric Encryption Algorithm");
+            RawReference inputReference = new RawReference("lige meget",
+                "lige meget",
+                "lige meget",
+                "lige meget",
+                "Zhao, Nannan. (2024). Improvement of Cloud Computing Medical Data Protection Technology Based on Symmetric Encryption Algorithm");
 
             // Load test response json file
             string testResponse = File.ReadAllText("../../../testResponse.json");
@@ -42,7 +46,11 @@ namespace zenref.Tests
         public async void ReferenceFetchTest()
         {
             // New reference
-            Reference inputReference = new Reference(_OriReference: "Zhao, Nannan. (2024). Improvement of Cloud Computing Medical Data Protection Technology Based on Symmetric Encryption Algorithm");
+            RawReference inputReference = new RawReference("lige meget",
+                "lige meget",
+                "lige meget",
+                "lige meget",
+                "Zhao, Nannan. (2024). Improvement of Cloud Computing Medical Data Protection Technology Based on Symmetric Encryption Algorithm");
             // Get secret key
             var configuration = new ConfigurationBuilder()
             .AddUserSecrets<Settings>()

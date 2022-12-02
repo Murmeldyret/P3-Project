@@ -81,7 +81,7 @@ namespace P3Project.API
         /// </summary>
         /// <param name="inputReference">The Reference that is to be looked up (usually unidentified)</param>
         /// <returns>A reference with correctly filled fields</returns>
-        public virtual async Task<Reference> ReferenceFetch(Reference inputReference, Func<Reference, HttpResponseMessage, Reference> referenceParser)
+        public virtual async Task<Reference> ReferenceFetch(RawReference inputReference, Func<RawReference, HttpResponseMessage, Reference> referenceParser)
         {
             string queryString = queryCleaner(inputReference.OriReference);
             Uri apiUri = BuildUri($"query={queryString}");

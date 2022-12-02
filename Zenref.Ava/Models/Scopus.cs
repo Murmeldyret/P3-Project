@@ -41,7 +41,7 @@ namespace P3Project.API
 
             return parsed_reference;
         }*/
-        public Reference ReferenceParser(Reference inputReference, HttpResponseMessage response)
+        public Reference ReferenceParser(RawReference inputReference, HttpResponseMessage response)
         {
             string responseContent = response.Content.ReadAsStringAsync().Result;
 
@@ -80,21 +80,20 @@ namespace P3Project.API
                 bestMatchScorePercentage = 1 - ((double)bestMatchScore / (double)scopusResponse.SearchResults.Entry[bestMatchIndex].DcTitle.Length);
             }
 
-
-
+            Reference outputReference = new Reference(inputReference, DateTimeOffset.Now);
             // Set the best match as the reference
-                inputReference.Author = scopusResponse.SearchResults.Entry[bestMatchIndex].DcCreator;
-                inputReference.Title = scopusResponse.SearchResults.Entry[bestMatchIndex].DcTitle;
-                inputReference.PubType = scopusResponse.SearchResults.Entry[bestMatchIndex].PrismAggregationType;
-                inputReference.Publisher = scopusResponse.SearchResults.Entry[bestMatchIndex].Affiliation[0].Affilname;
-                inputReference.YearRef = Int32.Parse(scopusResponse.SearchResults.Entry[bestMatchIndex].PrismCoverDisplayDate.Split(" ")[2]);
-                inputReference.Location = scopusResponse.SearchResults.Entry[bestMatchIndex].Link[2].Href.ToString();
-                inputReference.Match = bestMatchScorePercentage;
-                inputReference.Volume = scopusResponse.SearchResults.Entry[bestMatchIndex].PrismVolume.ToString();
-                inputReference.BookTitle = scopusResponse.SearchResults.Entry[bestMatchIndex].PrismPublicationName;
+                outputReference.Author = scopusResponse.SearchResults.Entry[bestMatchIndex].DcCreator;
+                outputReference.Title = scopusResponse.SearchResults.Entry[bestMatchIndex].DcTitle;
+                outputReference.PubType = scopusResponse.SearchResults.Entry[bestMatchIndex].PrismAggregationType;
+                outputReference.Publisher = scopusResponse.SearchResults.Entry[bestMatchIndex].Affiliation[0].Affilname;
+                outputReference.YearRef = Int32.Parse(scopusResponse.SearchResults.Entry[bestMatchIndex].PrismCoverDisplayDate.Split(" ")[2]);
+                outputReference.Source = scopusResponse.SearchResults.Entry[bestMatchIndex].Link[2].Href.ToString();
+                outputReference.Match = bestMatchScorePercentage;
+                outputReference.Volume = scopusResponse.SearchResults.Entry[bestMatchIndex].PrismVolume.ToString();
+                outputReference.BookTitle = scopusResponse.SearchResults.Entry[bestMatchIndex].PrismPublicationName;
             
 
-            return inputReference;
+            return outputReference;
         }
     }
 }
