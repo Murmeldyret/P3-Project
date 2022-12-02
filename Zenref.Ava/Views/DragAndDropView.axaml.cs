@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Diagnostics;
 using Avalonia.Interactivity;
+using System;
 
 namespace Zenref.Ava.Views
 {
@@ -16,31 +17,13 @@ namespace Zenref.Ava.Views
         {
             InitializeComponent();
             DataContext = dragAndDropViewModel;
-            AddHandler(DragDrop.DropEvent, FileDrop);
-            AddHandler(DragDrop.DragOverEvent, DragOver);
+            AddHandler(DragDrop.DropEvent, dragAndDropViewModel.FileDrop);
+            AddHandler(DragDrop.DragOverEvent, dragAndDropViewModel.DragOver);
         }
 
-        private void DragOver(object sender, DragEventArgs e)
-        {
-            List<string> fileList = (List<string>)e.Data.GetFileNames();
-            e.DragEffects = e.DragEffects & DragDropEffects.Copy;
-            if (!e.Data.Contains(DataFormats.FileNames) || !fileList.All(c => c.Contains("xlsx")))
-            {
-                e.DragEffects = DragDropEffects.None;
-            }
-        }
-        private void FileDrop(object sender, DragEventArgs e)
-        {
-            if (e.Data.Contains(DataFormats.FileNames))
-            {
-                List<string> filePaths = (List<string>)e.Data.GetFileNames();
-                foreach (string filePath in filePaths)
-                {
-                    FileInfo fileInfo = new FileInfo(filePath);
-                    dragAndDropViewModel.Files.Add(fileInfo);
-                }
-            }
-        }
+        /// <summary>
+        /// Method called from a button click. The method removes the associated file from the files collection.
+        /// </summary>
         private void RemoveFile(object sender, RoutedEventArgs e)
         {
             Button removeFileButton = sender as Button;

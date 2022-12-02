@@ -1,15 +1,9 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
-using Avalonia.Themes.Fluent;
-using Avalonia.Themes.Fluent.Controls;
-using DocumentFormat.OpenXml.Wordprocessing;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
-using System.Reflection;
 using Zenref.Ava.Models;
 using Zenref.Ava.ViewModels;
 
@@ -25,7 +19,9 @@ namespace Zenref.Ava.Views
             DataContext = databaseViewModel;
             Closing += databaseViewModel.OnWindowClosing;
         }
-        
+        /// <summary>
+        /// Method raised by the 'KeyUp' event. Makes it possible for the user to search database with different search terms in the different fields.
+        /// </summary>
         private void SearchFilter(object sender, KeyEventArgs e)
         {
             TextBox? textBox = sender as TextBox;
