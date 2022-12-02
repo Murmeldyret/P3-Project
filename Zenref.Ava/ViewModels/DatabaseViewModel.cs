@@ -4,11 +4,9 @@ using CommunityToolkit.Mvvm.Input;
 using MessageBox.Avalonia.BaseWindows.Base;
 using MessageBox.Avalonia.DTO;
 using MessageBox.Avalonia.Models;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using Zenref.Ava.Models;
 using Zenref.Ava.Views;
 

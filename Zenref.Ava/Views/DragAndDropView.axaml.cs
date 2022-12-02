@@ -1,12 +1,8 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 using Zenref.Ava.ViewModels;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Diagnostics;
 using Avalonia.Interactivity;
-using System;
 
 namespace Zenref.Ava.Views
 {
