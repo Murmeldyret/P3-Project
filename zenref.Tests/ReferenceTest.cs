@@ -176,23 +176,23 @@ namespace zenref.Tests
         {
             Reference reference = new Reference(rawReference,
                 "Anders Rask",
-                "titel på noget",
+                "Titel på noget",
                 "bog",
                 "AAU",
                 2022,
                 "Dansk",
                 2020,
                 0.9,
-                "No Comment",
-                "Syllabus",
-                "Vinter",
-                "skriftlig",
-                "jeg skal kilde dig skal jeg",
-                20,
-                "Massive",
-                "Argon",
-                "Det samme som din bog");
-            Reference other = null;
+                "Smart kommentar",
+                "ingen idé",
+                "Efterår",
+                "en god eksamen",
+                "pure opspind",
+                21,
+                "20th",
+                "16-21",
+                "Very good book");
+            Reference? other = null;
 
             Assert.False(reference.Equals(other));
         }
@@ -327,7 +327,7 @@ namespace zenref.Tests
             //Arrange
             const string CORRECT_TEXT = "Examining py";
             string badText = "Examining ergfsg";
-
+        
             //Act
             double result = rawReference.MatchingStrings(badText, CORRECT_TEXT);
 
