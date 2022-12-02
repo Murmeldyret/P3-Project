@@ -18,8 +18,8 @@
 	</Window.Styles>
 
 	<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-		<Button Command="{Binding OpenDatabaseView}" CommandParameter="{Binding ElementName=MainView}"> Kendte kilder</Button>
-		<Button Command="{Binding OpenExportView}" CommandParameter="{Binding ElementName=MainView}"> Identificer kilder</Button>
+		<Button Content="Kendte kilder" Command="{Binding OpenDatabaseView}" CommandParameter="{Binding ElementName=MainView}"/>
+		<Button Content="Identificer kilder" Command="{Binding OpenExportView}" CommandParameter="{Binding ElementName=MainView}"/>
 	</StackPanel>
 	
 </Window>
