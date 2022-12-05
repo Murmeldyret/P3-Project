@@ -1,19 +1,77 @@
+
 <Window x:Class="Zenref.Ava.Views.DatabaseView"
 		x:Name="DBView"
 		xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		WindowStartupLocation="CenterOwner"
         mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="600"
+		MinWidth="1200" MinHeight="600"
         Title="Database Window">
+		
+	<Window.Styles>
+		<!--<Style Selector="TextBox.box1">
+			<Setter Property="Width" Value="140"/>
+			<Setter Property="TextWrapping" Value="WrapWithOverflow"/>
+		</Style>
+		<Style Selector="TextBlock.block1">
+			<Setter Property="FontSize" Value="15"/>
+		</Style>-->
+	</Window.Styles>
 
-	<Grid Name="grid" RowDefinitions="Auto">
-		<Menu Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Stretch">
-			<Button Command="{Binding OpenDragAndDropView}" CommandParameter="{Binding ElementName=DBView}"> Tilføj</Button>
-			<TextBox KeyUp="SearchFilter" Watermark="Søg" Width="150" FontSize="15"></TextBox>
+	<Grid Name="grid" RowDefinitions="Auto, Auto">
+		<Menu Background="Gray" Grid.Row="0">
+			<Button Command="{Binding OpenDragAndDropView}" CommandParameter="{Binding ElementName=DBView}" Content="Tilføj"/>
+			<TextBox KeyUp="SearchFilter" Watermark="Søg" Width="150" FontSize="15"/>
+			<ComboBox Name="myCombobox" Items="{Binding PropertyArray}" SelectedIndex="1"/>
+			<Button Command="{Binding DeleteReference}" CommandParameter="{Binding SelectedItem, ElementName=myDataGrid}" Content="Slet"/>
+			<CheckBox IsChecked="{Binding SaveChanges}" Content="Gem ændringer automatisk"/>
 		</Menu>
-		<DataGrid AutoGenerateColumns="True" Items="{Binding References}" Name="dataGrid" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,40"
-				  RowBackground="LightGray" CanUserResizeColumns="True" Height="500">
-		</DataGrid>
+			<DataGrid x:Name="myDataGrid" Items="{Binding FilteredReferences}" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+				  RowBackground="LightGray" CanUserResizeColumns="True" RowHeight="30" Width="1200" Height="550">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Forfatter" Binding="{Binding Author}"/>	
+					<DataGridTextColumn Header="Titel" Binding="{Binding Title}"/>
+					<DataGridTextColumn Header="Publikationstype" Binding="{Binding PubType}"/>
+					<DataGridTextColumn Header="Forlag" Binding="{Binding Publisher}"/>
+					<DataGridTextColumn Header="År (Reference)" Binding="{Binding YearRef}"/>
+					<DataGridTextColumn Header="Id" Binding="{Binding ID}"/>
+					<DataGridTextColumn Header="Uddannelse" Binding="{Binding Edu}"/>
+					<DataGridTextColumn Header="Uddannelsessted" Binding="{Binding Location}"/>
+					<DataGridTextColumn Header="Semester" Binding="{Binding Semester}"/>
+					<DataGridTextColumn Header="Sprog" Binding="{Binding Language}"/>
+					<DataGridTextColumn Header="År (Rapport)" Binding="{Binding YearReport}"/>
+					<DataGridTextColumn Header="Match" Binding="{Binding Match}"/>
+					<DataGridTextColumn Header="Kommentar" Binding="{Binding Commentary}"/>
+					<DataGridTextColumn Header="Pensum" Binding="{Binding Syllabus}"/>
+					<DataGridTextColumn Header="Sæson" Binding="{Binding Season}"/>
+					<DataGridTextColumn Header="Eksamensbegivenhed" Binding="{Binding ExamEvent}"/>
+					<DataGridTextColumn Header="Kilde" Binding="{Binding Source}"/>
+					<DataGridTextColumn Header="Sidetal" Binding="{Binding Pages}"/>
+					<DataGridTextColumn Header="Bind" Binding="{Binding Volume}"/>
+					<DataGridTextColumn Header="Kapitler" Binding="{Binding Chapters}"/>
+					<DataGridTextColumn Header="Bogtitel" Binding="{Binding BookTitle}"/>
+					<DataGridTextColumn Header="Henvisning" Binding="{Binding OriReference}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+			<!--<StackPanel Orientation="Horizontal" Margin="20,40" VerticalAlignment="Stretch" HorizontalAlignment="Right">
+				<StackPanel Orientation="Vertical">
+					<TextBlock Classes="block1" Text="Forfatter"/>
+					<TextBox Classes="box1" Text="{Binding SelectedItem.Author, ElementName=myDataGrid}"/>
+					<TextBlock Classes="block1" Text="Titel"/>
+					<TextBox Classes="box1" Text="{Binding SelectedItem.Title, ElementName=myDataGrid}"/>
+					<TextBlock Classes="block1" Text="Publikationstype"/>
+					<TextBox Classes="box1" Text="{Binding SelectedItem.PubType, ElementName=myDataGrid}"/>
+					<TextBlock Classes="block1" Text="Forlag"/>
+					<TextBox Classes="box1" Text="{Binding SelectedItem.Publisher, ElementName=myDataGrid}"/>
+					<TextBlock Classes="block1" Text="Id"/>
+					<TextBox Classes="box1" Text="{Binding SelectedItem.ID, ElementName=myDataGrid}"/>
+					<TextBlock Classes="block1" Text="Uddannelse"/>
+					<TextBox Classes="box1" Text="{Binding SelectedItem.Edu, ElementName=myDataGrid}"/>
+					<TextBlock Classes="block1" Text="Uddannelsessted"/>
+					<TextBox Classes="box1" Text="{Binding SelectedItem.Location, ElementName=myDataGrid}"/>
+				</StackPanel>
+			</StackPanel>-->
 	</Grid>
 </Window>

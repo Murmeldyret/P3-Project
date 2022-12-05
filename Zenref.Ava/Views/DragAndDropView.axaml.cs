@@ -1,8 +1,8 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 using Zenref.Ava.ViewModels;
-using System.Collections.Generic;
 using System.IO;
+using Avalonia.Interactivity;
 
 namespace Zenref.Ava.Views
 {
@@ -13,28 +13,20 @@ namespace Zenref.Ava.Views
         {
             InitializeComponent();
             DataContext = dragAndDropViewModel;
-            AddHandler(DragDrop.DropEvent, FileDrop);
-            AddHandler(DragDrop.DragOverEvent, DragOver);
+            AddHandler(DragDrop.DropEvent, dragAndDropViewModel.FileDrop);
+            AddHandler(DragDrop.DragOverEvent, dragAndDropViewModel.DragOver);
         }
 
-        private void DragOver(object sender, DragEventArgs e)
+        /// <summary>
+        /// Method called from a button click. The method removes the associated file from the files collection.
+        /// </summary>
+        private void RemoveFile(object sender, RoutedEventArgs e)
         {
-            e.DragEffects = e.DragEffects & DragDropEffects.Copy;
-            if (!e.Data.Contains(DataFormats.FileNames))
+            Button removeFileButton = sender as Button;
+            if (removeFileButton.DataContext is FileInfo)
             {
-                e.DragEffects = DragDropEffects.None;
-            }
-        }
-        private void FileDrop(object sender, DragEventArgs e)
-        {
-            if (e.Data.Contains(DataFormats.FileNames))
-            {
-                List<string> filePaths = (List<string>)e.Data.GetFileNames();
-                foreach (string filePath in filePaths)
-                {
-                    FileInfo fileInfo = new FileInfo(filePath);
-                    dragAndDropViewModel.Files.Add(fileInfo);
-                }
+                FileInfo file = (FileInfo)removeFileButton.DataContext;
+                dragAndDropViewModel.Files.Remove(file);
             }
         }
     }

@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Zenref.Ava.ViewModels;
 
 namespace Zenref.Ava.Views
 {
@@ -6,7 +7,9 @@ namespace Zenref.Ava.Views
     {
         public SearchCriteriaView()
         {
+            SearchCriteriaViewModel searchCriteriaViewModel = new SearchCriteriaViewModel();
             InitializeComponent();
+            DataContext = searchCriteriaViewModel;
         }
     }
 }

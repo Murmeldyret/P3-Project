@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Zenref.Ava.Models;
 using Zenref.Ava.ViewModels;
 
 namespace Zenref.Ava.Views
@@ -10,6 +11,5 @@ namespace Zenref.Ava.Views
             InitializeComponent();
             DataContext = new ExpandReferenceViewModel();
         }
-
     }
 }
