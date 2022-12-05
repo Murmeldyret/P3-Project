@@ -26,6 +26,10 @@ namespace Zenref.Ava.ViewModels
         [NotifyCanExecuteChangedFor(nameof(StartCommand))]
         private int identifiedNumberCounter = 0;
 
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(StartCommand))]
+        private int unIdentifiedNumberCounter = 0;
+
         /// <summary>
         /// Property that hold the information from creating a new publicatino type
         /// </summary>
@@ -121,11 +125,10 @@ namespace Zenref.Ava.ViewModels
         private void Start()
         {
             IdentifiedNumberCounter = 0;
-            for (int i = 0; i < 100; i++)
-            {
-                IdentifiedNumberCounter++;
-                Console.WriteLine(IdentifiedNumberCounter);
-            }
+            UnIdentifiedNumberCounter = 0;
+
+            
+
         }
 
         /// <summary>

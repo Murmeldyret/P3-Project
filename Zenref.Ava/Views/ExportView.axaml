@@ -80,7 +80,7 @@
 				<StackPanel Orientation="Horizontal" Spacing="10">
 					<TextBlock Text="Uidentificeret" Width="125"/>
 					<TextBlock Text=":"/>
-					<TextBlock Text="0"/>
+					<TextBlock Text="{Binding ElementName=MainView, Path=DataContext.UnidentifiedNumberCounter}"/>
 				</StackPanel>
 			</StackPanel>
 		</Border>
