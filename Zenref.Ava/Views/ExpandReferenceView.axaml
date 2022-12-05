@@ -26,39 +26,39 @@
 	<Grid Name="grid">
 		<StackPanel Orientation="Vertical">
 			<StackPanel Orientation="Horizontal">
+				<TextBlock Text="Forfatter" Width="150"/>
+				<TextBlock Text=":" Width="20"/>
+				<TextBox Text="{Binding Author}"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Text="Titel" Width="150"/>
+				<TextBlock Text=":" Width="20"/>
+				<TextBox Text="{Binding Title}"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Text="Publikationstype" Width="150"/>
+				<TextBlock Text=":" Width="20"/>
+				<TextBox Text="{Binding PubType}"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Text="Forlag" Width="150"/>
+				<TextBlock Text=":" Width="20"/>
+				<TextBox Text="{Binding Publisher}"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Text="Id" Width="150"/>
+				<TextBlock Text=":" Width="20"/>
+				<TextBox Text="{Binding ID}"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
 				<TextBlock Text="Uddannelse" Width="150"/>
 				<TextBlock Text=":" Width="20"/>
-				<TextBox/>
+				<TextBox Text="{Binding Edu}"/>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
-				<TextBlock Text="Uddannelsesinstitution" Width="150"/>
+				<TextBlock Text="Uddannelsessted" Width="150"/>
 				<TextBlock Text=":" Width="20"/>
-				<TextBox/>
-			</StackPanel>
-			<StackPanel Orientation="Horizontal">
-				<TextBlock Text="Semester" Width="150"/>
-				<TextBlock Text=":" Width="20"/>
-				<TextBox/>
-			</StackPanel>
-			<StackPanel Orientation="Horizontal">
-				<TextBlock Text="År" Width="150"/>
-				<TextBlock Text=":" Width="20"/>
-				<TextBox/>
-			</StackPanel>
-			<StackPanel Orientation="Horizontal">
-				<TextBlock Text="Pensumliste" Width="150"/>
-				<TextBlock Text=":" Width="20"/>
-				<TextBox/>
-			</StackPanel>
-			<StackPanel Orientation="Horizontal">
-				<TextBlock Text="ID" Width="150"/>
-				<TextBlock Text=":" Width="20"/>
-				<TextBox/>
-			</StackPanel>
-			<StackPanel Orientation="Horizontal">
-				<TextBlock Text="Henvisning" Width="150"/>
-				<TextBlock Text=":" Width="20"/>
-				<TextBox/>
+				<TextBox Text="{Binding Location}"/>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
 				<Button Content="Luk"/>

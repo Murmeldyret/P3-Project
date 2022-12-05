@@ -4,10 +4,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="500"
-		Width="700" Height="500"
+		WindowStartupLocation="CenterOwner"
+		xmlns:local="clr-namespace:Zenref.Ava.Models;assembly=Zenref.Ava"
+        mc:Ignorable="d" d:DesignWidth="850" d:DesignHeight="500"
+		Width="850" Height="500"
+		MinWidth="850" MinHeight="500"
         Title="Drag and drop window">
-
+	<Window.Resources>
+		<local:ByteConverter x:Key="ByteConverter"/>
+	</Window.Resources>
 	<Grid ColumnDefinitions="Auto,Auto,Auto">
 		<Grid Grid.Column="0">
 			<Grid.ColumnDefinitions>
@@ -67,7 +72,8 @@
 							<StackPanel>
 								<TextBlock Text="{Binding FullName}"/>
 								<TextBlock Text="{Binding Name}"/>
-								<TextBlock Text="{Binding Length}"/>
+							<TextBlock Text="{Binding Length, Converter={StaticResource ByteConverter}}"/>	
+							<Button Content="Fjern" Click="RemoveFile"/>
 							</StackPanel>
 						</DataTemplate>
 					</ListBox.ItemTemplate>
