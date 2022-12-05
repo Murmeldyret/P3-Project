@@ -13,7 +13,7 @@ using Zenref.Ava.Models;
 
 namespace Zenref.Ava.ViewModels
 {
-    public partial class SearchTermMessage : ObservableObject
+    public class SearchTermMessage
     {
         public ObservableCollection<PublicationType> SearchPubCollection { get; init; }
 
