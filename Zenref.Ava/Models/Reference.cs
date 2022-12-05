@@ -161,6 +161,7 @@ namespace Zenref.Ava.Models
             ISBN,
             ISSN,
         }
+        
         [Obsolete("KeyValuePair is deprecated for now")]
         public KeyValuePair<_typeOfId, string> UID;
         /// <summary>
@@ -185,6 +186,49 @@ namespace Zenref.Ava.Models
         public string? Chapters { get; set; }
         public string? BookTitle { get; set; }
 
+        /// <summary>
+        /// Represents the minimum percentage match for a reference to be considered properly identified.
+        /// </summary>
+        private const double MINIMUMMATCHTHRESHOLD = 0.60;
+        
+        [Flags]
+        private enum identificationState
+        {
+            None = 0,
+            Raw = 1,
+            NotFound = 1 << 1, // 2
+            LowMatchThreshold = 1 << 2, // 4
+            HighMatchThreshold = 1 << 3, // 8
+            FoundInApi = 1 << 4, // 16
+            FoundInDataBase = 1 << 5, // 32
+            
+            // ManualReview = Raw | NotFound | (FoundInApi & LowMatchThreshold),
+            // Identified = (FoundInApi & HighMatchThreshold) | FoundInDataBase,
+        }
+
+        
+        /// <summary>
+        /// Determines whether or not a Reference is considered identified
+        /// </summary>
+        /// <returns>True if the Reference is identified, false if not and needs to be reviewed manually</returns>
+        private bool isIdentified()
+        {
+            identificationState state = identificationState.None;
+            identificationState identified = (identificationState.FoundInApi & identificationState.HighMatchThreshold) |
+                                             identificationState.FoundInDataBase;
+            if (TimeOfCreation.HasValue || TimeOfCreation.Value != null)
+            {
+                state |= identificationState.FoundInApi;
+                state |= Match >= MINIMUMMATCHTHRESHOLD
+                    ? identificationState.HighMatchThreshold
+                    : identificationState.LowMatchThreshold;
+            }
+
+
+            return state == identified;
+            // return ((state & identificationState.Identified) == identificationState.Identified);
+
+        }
         /// <summary>
         /// Compares each public property of two references and checks if their value is equal
         /// </summary>

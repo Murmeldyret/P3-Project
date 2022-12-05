@@ -21,6 +21,8 @@ namespace Zenref.Ava.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<Reference> references;
+        [ObservableProperty] 
+        private ObservableCollection<RawReference> rawReferences;
         [ObservableProperty]
         private IEnumerable<Reference> filteredReferences;
         private List<FileInfo> filePaths;
@@ -32,7 +34,7 @@ namespace Zenref.Ava.ViewModels
             Messenger.Register<FilePathsMessage>(this, (r,m) =>
             {
                 Receive(m);
-                ReadAllReferences();
+                // ReadAllReferences();
             });
             // FOR TESTING DATAGRID DISPLAYING REFERENCES
             //references = new ObservableCollection<Reference>();
@@ -74,38 +76,38 @@ namespace Zenref.Ava.ViewModels
 
         private void ReadAllReferences()
         {
-            ObservableCollection<Reference> referencesInSheets = new ObservableCollection<Reference>();
-            SortedDictionary<Spreadsheet.ReferenceFields, int> positionInSheet = new SortedDictionary<Spreadsheet.ReferenceFields, int>();
-            Spreadsheet.ReferenceFields referenceFields = (Spreadsheet.ReferenceFields)0;
-            for (int i = 0; i < columnPositions.Count; i++)
-            {
-                positionInSheet.Add(referenceFields++,columnPositions[i]);
-            }
-
-            try
-            {
-                foreach (FileInfo path in filePaths)
-                {
-
-                    Spreadsheet spreadsheet = new Spreadsheet(path.Name, path.DirectoryName);
-                    Debug.WriteLine($"FileName: {path.Name} Path: {path.DirectoryName}");
-                    spreadsheet.SetColumnPosition(positionInSheet);
-                    spreadsheet.Import();
-                    spreadsheet.SetActiveSheet(activeSheet);
-                    Debug.WriteLine($"SPREADSHEET count: {spreadsheet.Count}");
-                    IEnumerable<Reference> referencesInSheet = spreadsheet.GetReference(0u);
-                    referencesInSheets.Add(referencesInSheet);
-                }
-                References = referencesInSheets;
-                Debug.WriteLine($"Found {references.Count} Reference(s)");
-            }
-            catch (Exception e)
-            {
-                IMsBoxWindow<ButtonResult> messageBoxStandardView = MessageBox.Avalonia.MessageBoxManager
-                    .GetMessageBoxStandardWindow("Error", "Error in reading References from spreadsheet");
-                messageBoxStandardView.Show();
-                Debug.WriteLine("Error in reading references.");
-            }
+        //     ObservableCollection<RawReference> referencesInSheets = new ObservableCollection<RawReference>();
+        //     SortedDictionary<Spreadsheet.ReferenceFields, int> positionInSheet = new SortedDictionary<Spreadsheet.ReferenceFields, int>();
+        //     Spreadsheet.ReferenceFields referenceFields = (Spreadsheet.ReferenceFields)0;
+        //     for (int i = 0; i < columnPositions.Count; i++)
+        //     {
+        //         positionInSheet.Add(referenceFields++,columnPositions[i]);
+        //     }
+        //
+        //     try
+        //     {
+        //         foreach (FileInfo path in filePaths)
+        //         {
+        //
+        //             Spreadsheet spreadsheet = new Spreadsheet(path.Name, path.DirectoryName);
+        //             Debug.WriteLine($"FileName: {path.Name} Path: {path.DirectoryName}");
+        //             spreadsheet.SetColumnPosition(positionInSheet);
+        //             spreadsheet.Import();
+        //             spreadsheet.SetActiveSheet(activeSheet);
+        //             Debug.WriteLine($"SPREADSHEET count: {spreadsheet.Count}");
+        //             IEnumerable<RawReference> referencesInSheet = spreadsheet.GetReference(0u);
+        //             referencesInSheets.Add(referencesInSheet);
+        //         }
+        //         RawReferences = referencesInSheets;
+        //         Debug.WriteLine($"Found {references.Count} Reference(s)");
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         IMsBoxWindow<ButtonResult> messageBoxStandardView = MessageBox.Avalonia.MessageBoxManager
+        //             .GetMessageBoxStandardWindow("Error", "Error in reading References from spreadsheet");
+        //         messageBoxStandardView.Show();
+        //         Debug.WriteLine("Error in reading references.");
+        //     }
         }
 
     }

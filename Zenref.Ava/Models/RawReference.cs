@@ -91,7 +91,7 @@ public class RawReference : IEquatable<RawReference>
         return new Reference(this,
             ucnRefAuthorTitleYearRef.author,
             ucnRefAuthorTitleYearRef.title,
-            ucnRefLinks.source,
+            ucnRefLinks.pubType,
             "",
             ucnRefAuthorTitleYearRef.yearRef,
             "",
