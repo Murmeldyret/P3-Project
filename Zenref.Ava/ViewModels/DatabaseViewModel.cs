@@ -9,23 +9,41 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Zenref.Ava.Models;
 using Zenref.Ava.Views;
+using System.Linq;
+using Zenref.Ava.Models.Spreadsheet;
+using CommunityToolkit.Mvvm.Messaging;
+using System.Diagnostics;
+using System.IO;
+using DynamicData;
+using MessageBox.Avalonia.BaseWindows.Base;
+using MessageBox.Avalonia.Enums;
 
 namespace Zenref.Ava.ViewModels
 {
-    public partial class DatabaseViewModel : ObservableObject
+    public partial class DatabaseViewModel : ObservableRecipient, IRecipient<FilePathsMessage>
     {
+
         [ObservableProperty]
         private ObservableCollection<Reference> references;
+        [ObservableProperty] 
+        private ObservableCollection<RawReference> rawReferences;
         [ObservableProperty]
         private IEnumerable<Reference> filteredReferences;
+        private List<FileInfo> filePaths;
+        private List<int> columnPositions;
+        private int activeSheet;
         [ObservableProperty]
         private bool saveChanges = true;
         [ObservableProperty]
         private string[] propertyArray = { "Forfatter", "Titel", "Publikationstype", "Forlag", "År (Reference)", "Id", "Uddannelse", "Uddannelsessted", "Semester", "Sprog", "År (Rapport)", "Match", "Kommentar", "Pensum", "Sæson", "Eksamensbegivenhed", "Kilde", "Sidetal", "Bind", "Kapitler", "Bogtitel", "Henvisning" };
 
-
-        public DatabaseViewModel()
+        public DatabaseViewModel() : base(WeakReferenceMessenger.Default)
         {
+            Messenger.Register<FilePathsMessage>(this, (r,m) =>
+            {
+                Receive(m);
+                // ReadAllReferences();
+            });
             // FOR TESTING DATAGRID DISPLAYING REFERENCES
             //references = new ObservableCollection<Reference>();
             //references.Add(new Reference("J.K. Rowling", "Harry Potter and the Philosopher's Stone", "Bog", "Bloomsbury", 1997, 10256358, "How to magic", "Hogwarts", "5. Semester", "Engelsk", 2022, 0.8, "Magi", "How to wave a wand", "Forår", "Magic for beginners", "DanBib", 223, "Hvem ved", "Quidditch", "Harry Potter and the Philosopher's Stone", "Rowling, J. K. (1997). Harry Potter and the Philosopher’s Stone (1st ed.). Bloomsbury."));
@@ -42,6 +60,14 @@ namespace Zenref.Ava.ViewModels
             //filteredReferences = references;
         }
 
+        public void Receive(FilePathsMessage message)
+        {
+            filePaths = message.FilePaths;
+            columnPositions = message.ColumnPositions;
+            activeSheet = message.ActiveSheet;
+            Debug.WriteLine("Received FilepathsMessage.");
+        }
+
         // FOR TESTING DATAGRID DISPLAYING REFERENCES
         //private static Random random = new Random();
         //public static string RandomString(int length)
@@ -56,6 +82,43 @@ namespace Zenref.Ava.ViewModels
             DragAndDropView dragAndDropView = new DragAndDropView();
             dragAndDropView.ShowDialog(window);
         }
+
+        private void ReadAllReferences()
+        {
+        //     ObservableCollection<RawReference> referencesInSheets = new ObservableCollection<RawReference>();
+        //     SortedDictionary<Spreadsheet.ReferenceFields, int> positionInSheet = new SortedDictionary<Spreadsheet.ReferenceFields, int>();
+        //     Spreadsheet.ReferenceFields referenceFields = (Spreadsheet.ReferenceFields)0;
+        //     for (int i = 0; i < columnPositions.Count; i++)
+        //     {
+        //         positionInSheet.Add(referenceFields++,columnPositions[i]);
+        //     }
+        //
+        //     try
+        //     {
+        //         foreach (FileInfo path in filePaths)
+        //         {
+        //
+        //             Spreadsheet spreadsheet = new Spreadsheet(path.Name, path.DirectoryName);
+        //             Debug.WriteLine($"FileName: {path.Name} Path: {path.DirectoryName}");
+        //             spreadsheet.SetColumnPosition(positionInSheet);
+        //             spreadsheet.Import();
+        //             spreadsheet.SetActiveSheet(activeSheet);
+        //             Debug.WriteLine($"SPREADSHEET count: {spreadsheet.Count}");
+        //             IEnumerable<RawReference> referencesInSheet = spreadsheet.GetReference(0u);
+        //             referencesInSheets.Add(referencesInSheet);
+        //         }
+        //         RawReferences = referencesInSheets;
+        //         Debug.WriteLine($"Found {references.Count} Reference(s)");
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         IMsBoxWindow<ButtonResult> messageBoxStandardView = MessageBox.Avalonia.MessageBoxManager
+        //             .GetMessageBoxStandardWindow("Error", "Error in reading References from spreadsheet");
+        //         messageBoxStandardView.Show();
+        //         Debug.WriteLine("Error in reading references.");
+        //     }
+        }
+
         /// <summary>
         /// Method called by button click. The method removes the <paramref name="selectedReference"/> from the collection of references.
         /// </summary>

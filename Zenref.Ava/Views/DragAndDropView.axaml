@@ -13,9 +13,8 @@
 	<Window.Resources>
 		<local:ByteConverter x:Key="ByteConverter"/>
 	</Window.Resources>
-	
-	<Grid>
-		<Grid>
+	<Grid ColumnDefinitions="Auto,Auto,Auto">
+		<Grid Grid.Column="0">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition/>
 				<ColumnDefinition/>
@@ -48,6 +47,8 @@
 					Command="{Binding OpenFileDialogCommand}"
 					CommandParameter="{Binding ElementName=DADView}">
 				</Button>
+				<TextBlock Text="Active sheet" Margin="10,0"></TextBlock>
+				<NumericUpDown  Minimum="1" Increment="1" Value="{Binding ActiveSheet}"></NumericUpDown>
 			</StackPanel>
 				<Button 
 					Content="Afbryd"
@@ -56,28 +57,39 @@
 					VerticalAlignment="Bottom" 
 					HorizontalAlignment="Left"
 					Margin="10"/>
-				<Button 
+				<Button
+					IsEnabled="{Binding IsNextButtonEnabled}" 
 					Content="Næste"
+					Command="{Binding ConfirmFileChoices}"
+					CommandParameter="{Binding ElementName=DADView}"
 					VerticalAlignment="Bottom" 
 					HorizontalAlignment="Right"
-					Margin="10"/>					
-			<ListBox Items="{Binding Files}" Grid.Column="1">
-				<ListBox.ItemTemplate>
-					<DataTemplate>
-						<StackPanel>
-							<TextBlock Text="{Binding FullName}"/>
-							<TextBlock Text="{Binding Name}"/>
+					Margin="10"/>
+		</Grid>
+				<ListBox Items="{Binding Files}" Grid.Column="1" Width="300">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<StackPanel>
+								<TextBlock Text="{Binding FullName}"/>
+								<TextBlock Text="{Binding Name}"/>
 							<TextBlock Text="{Binding Length, Converter={StaticResource ByteConverter}}"/>	
 							<Button Content="Fjern" Click="RemoveFile"/>
-						</StackPanel>
-					</DataTemplate>
-				</ListBox.ItemTemplate>
-				<ListBox.ItemsPanel>
-					<ItemsPanelTemplate>
-						<WrapPanel Orientation="Vertical"/>
-					</ItemsPanelTemplate>
-				</ListBox.ItemsPanel>
-			</ListBox>
-		</Grid>
+							</StackPanel>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+					<ListBox.ItemsPanel>
+						<ItemsPanelTemplate>
+							<WrapPanel Orientation="Vertical"/>
+						</ItemsPanelTemplate>
+					</ListBox.ItemsPanel>
+				</ListBox>
+				<StackPanel Grid.Column="2" Orientation="Horizontal">
+					<DataGrid IsReadOnly="False" AutoGenerateColumns="False" Items="{Binding ColumnPositions, Mode=TwoWay}">
+						<DataGrid.Columns>
+							<DataGridTextColumn IsReadOnly="True" Header="Name" Binding="{Binding ColumnName}"/>
+							<DataGridTextColumn IsReadOnly="False" Header="Value" Binding="{Binding ColumnPos, Mode=TwoWay}"/>
+						</DataGrid.Columns>
+					</DataGrid>
+				</StackPanel>
 	</Grid>
 </Window>
