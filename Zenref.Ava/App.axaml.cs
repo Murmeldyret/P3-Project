@@ -17,7 +17,7 @@ namespace Zenref.Ava
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new ExportWindow
+                desktop.MainWindow = new ExportView
                 {
                     DataContext = new ExportViewModel(),
                 };

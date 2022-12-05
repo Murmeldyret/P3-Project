@@ -41,14 +41,14 @@ namespace Zenref.Ava.Views
                     case "Forlag":
                         filteredList = databaseViewModel.References.Where(x => x.Publisher.ToLower().Contains(textBox.Text.ToLower()));
                         break;
-                    case "År (Reference)":
+                    case "ï¿½r (Reference)":
                         filteredList = databaseViewModel.References.Where(x => x.YearRef.ToString().ToLower().Contains(textBox.Text.ToLower()));
                         break;
                     case "Id":
-                        filteredList = databaseViewModel.References.Where(x => x.ID.ToString().ToLower().Contains(textBox.Text.ToLower()));
+                        filteredList = databaseViewModel.References.Where(x => x.Id.ToString().ToLower().Contains(textBox.Text.ToLower()));
                         break;
                     case "Uddannelse":
-                        filteredList = databaseViewModel.References.Where(x => x.Edu.ToLower().Contains(textBox.Text.ToLower()));
+                        filteredList = databaseViewModel.References.Where(x => x.Education.ToLower().Contains(textBox.Text.ToLower()));
                         break;
                     case "Uddannelsested":
                         filteredList = databaseViewModel.References.Where(x => x.Location.ToLower().Contains(textBox.Text.ToLower()));
@@ -59,7 +59,7 @@ namespace Zenref.Ava.Views
                     case "Sprog":
                         filteredList = databaseViewModel.References.Where(x => x.Language.ToLower().Contains(textBox.Text.ToLower()));
                         break;
-                    case "År (Rapport)":
+                    case "ï¿½r (Rapport)":
                         filteredList = databaseViewModel.References.Where(x => x.YearReport.ToString().ToLower().Contains(textBox.Text.ToLower()));
                         break;
                     case "Match":
@@ -71,7 +71,7 @@ namespace Zenref.Ava.Views
                     case "Pensum":
                         filteredList = databaseViewModel.References.Where(x => x.Syllabus.ToLower().Contains(textBox.Text.ToLower()));
                         break;
-                    case "Sæson":
+                    case "Sï¿½son":
                         filteredList = databaseViewModel.References.Where(x => x.Season.ToLower().Contains(textBox.Text.ToLower()));
                         break;
                     case "Eksamensbegivenhed":
