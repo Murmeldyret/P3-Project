@@ -7,7 +7,7 @@
         mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="450"
         Width="700" Height="450"
         x:Name="SearchView"
-        x:Class="Zenref.Ava.Views.SearchCriteriaWindow">
+        x:Class="Zenref.Ava.Views.SearchCriteriaView">
 
 	<Window.Styles>
 
