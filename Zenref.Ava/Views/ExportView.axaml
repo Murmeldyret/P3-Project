@@ -3,9 +3,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
-        x:Class="Zenref.Ava.Views.ExportWindow"
+        x:Class="Zenref.Ava.Views.ExportView"
 		x:Name="MainView"
-        Title="ExportWindow">
+        Title="ExportView">
 	<Window.Styles>
 		<Style Selector="Border">
 			<Setter Property="BorderThickness" Value="1"/>
