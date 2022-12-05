@@ -6,6 +6,7 @@ namespace zenref.Tests
 {
     public class DatabaseTest : IDisposable
     {
+        private RawReference rawReference = new RawReference(null, null, null, null, "din far");
         [Fact]
         public void DatabaseConnection()
         {
@@ -19,11 +20,7 @@ namespace zenref.Tests
         {
             using DataContext context = new();
 
-            Reference reference = new()
-            {
-                Title = "Test Title",
-                Author = "Test Author",
-            };
+            Reference reference = new(rawReference, title: "Test Title", author: "Test Author");
 
             context.References.Add(reference);
             context.SaveChanges();
@@ -36,11 +33,7 @@ namespace zenref.Tests
         {
             using DataContext context = new();
 
-            Reference reference = new()
-            {
-                Title = "Test Title",
-                Author = "Test Author",
-            };
+            Reference reference = new(rawReference, title: "Test Title", author: "Test Author");
 
             context.References.Add(reference);
             context.SaveChanges();
@@ -56,11 +49,7 @@ namespace zenref.Tests
         {
             using DataContext context = new();
 
-            Reference reference = new()
-            {
-                Title = "Test Title",
-                Author = "Test Author",
-            };
+            Reference reference = new(rawReference, title: "Test Title", author: "Test Author");
 
             context.References.Add(reference);
             context.SaveChanges();
@@ -76,11 +65,7 @@ namespace zenref.Tests
         {
             using DataContext context = new();
 
-            Reference reference = new()
-            {
-                Title = "Test Title",
-                Author = "Test Author",
-            };
+            Reference reference = new(rawReference, title: "Test Title", author: "Test Author");
 
             context.References.Add(reference);
             context.SaveChanges();

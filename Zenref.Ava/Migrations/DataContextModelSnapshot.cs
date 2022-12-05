@@ -19,7 +19,7 @@ namespace Zenref.Ava.Migrations
 
             modelBuilder.Entity("Zenref.Ava.Models.Reference", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -35,17 +35,11 @@ namespace Zenref.Ava.Migrations
                     b.Property<string>("Commentary")
                         .HasColumnType("TEXT");
 
-                    b.Property<string?>("DOI")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Edu")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ExamEvent")
                         .HasColumnType("TEXT");
-
-                    b.Property<string?>("ISBN")
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Language")
                         .HasColumnType("TEXT");
@@ -54,7 +48,10 @@ namespace Zenref.Ava.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<double?>("Match")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("REAL");
+
+                    b.Property<string>("OriReference")
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("Pages")
                         .HasColumnType("INTEGER");
@@ -89,23 +86,9 @@ namespace Zenref.Ava.Migrations
                     b.Property<int?>("YearReport")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("OriReference")
-                        .HasColumnType("STRING");
+                    b.HasKey("ID");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("References");
-                });
-
-            modelBuilder.Entity("Zenref.Ava.Models.Spreadsheet", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Spreadsheets");
+                    b.ToTable("Reference", (string)null);
                 });
 #pragma warning restore 612, 618
         }
