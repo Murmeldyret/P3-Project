@@ -25,8 +25,8 @@ namespace zenref.Tests
 
             Filter searchFilters = new Filter(filters, category);
 
-            Assert.Equal(filters, searchFilters.returnFilterQueries());
-            Assert.Equal(category, searchFilters.returnFilterCategory());
+            Assert.Equal(filters, searchFilters.ReturnFilterQueries());
+            Assert.Equal(category, searchFilters.ReturnFilterCategory());
         }
 
         [Fact]
@@ -42,14 +42,14 @@ namespace zenref.Tests
 
             Filter searchFilters = new Filter(filters, category);
 
-            searchFilters.addFilterQuery("TV");
+            searchFilters.AddFilterQuery("TV");
 
             Assert.Equal(new List<string>()
             {
                 "Podcast",
                 "Radio",
                 "TV",
-            }, searchFilters.returnFilterQueries());
+            }, searchFilters.ReturnFilterQueries());
         }
 
         [Fact]
@@ -66,13 +66,13 @@ namespace zenref.Tests
 
             Filter searchFilters = new Filter(filters, category);
 
-            searchFilters.removeFilterQuery("Radio");
+            searchFilters.RemoveFilterQuery("Radio");
 
             Assert.Equal(new List<string>()
             {
                 "Podcast",
                 "TV",
-            }, searchFilters.returnFilterQueries());
+            }, searchFilters.ReturnFilterQueries());
         }
     }
 
@@ -81,6 +81,7 @@ namespace zenref.Tests
         [Fact]
         public void filterCreation()
         {
+            FilterCollection filters = new FilterCollection();
             List<string> filterQuery = new List<string>()
             {
                 "Podcast",
@@ -89,18 +90,19 @@ namespace zenref.Tests
 
             string categoryName = "Podcast";
 
-            FilterCollection.createFilter(filterQuery, categoryName);
+            Filter filter = new Filter(filterQuery, categoryName);
 
-            Filter result = FilterCollection.findFilter("Podcast");
+            filters.Add(filter);
 
-            Assert.Equal(filterQuery, result.returnFilterQueries());
-            Assert.Equal(categoryName, result.returnFilterCategory());
+            Assert.True(filters.Contains(filter));
         }
 
         [Fact]
         public void filterSearching()
         {
             // Arrange
+
+            FilterCollection filters = new FilterCollection();
             // Filter 1
             List<string> filterQuery1 = new List<string>()
             {
@@ -124,22 +126,23 @@ namespace zenref.Tests
             };
             string categoryName3 = "Journal";
 
-            FilterCollection.createFilter(filterQuery1, categoryName1);
-            FilterCollection.createFilter(filterQuery2, categoryName2);
-            FilterCollection.createFilter(filterQuery3, categoryName3);
+            filters.Add(new Filter(filterQuery1, categoryName1));
+            filters.Add(new Filter(filterQuery2, categoryName2));
+            filters.Add(new Filter(filterQuery3, categoryName3));
 
             // Act
-            Filter result = FilterCollection.findFilter("Video");
+            Filter result = filters.FindFilter("Video");
 
             // Assert
-            Assert.Equal(filterQuery2, result.returnFilterQueries());
-            Assert.Equal(categoryName2, result.returnFilterCategory());
+            Assert.Equal(filterQuery2, result.ReturnFilterQueries());
+            Assert.Equal(categoryName2, result.ReturnFilterCategory());
         }
 
         [Fact]
         public void filterIndexSearching()
         {
             // Arrange
+            FilterCollection filters = new FilterCollection();
             // Filter 1
             List<string> filterQuery1 = new List<string>()
             {
@@ -163,21 +166,22 @@ namespace zenref.Tests
             };
             string categoryName3 = "Journal";
 
-            FilterCollection.createFilter(filterQuery1, categoryName1);
-            FilterCollection.createFilter(filterQuery2, categoryName2);
-            FilterCollection.createFilter(filterQuery3, categoryName3);
+            filters.Add(new Filter(filterQuery1, categoryName1));
+            filters.Add(new Filter(filterQuery2, categoryName2));
+            filters.Add(new Filter(filterQuery3, categoryName3));
 
             // Act
-            int result = FilterCollection.findFilterIndex("Video");
+            int result = filters.FindFilterIndex("Video");
 
             // Assert
-            Assert.Equal(2, result);
+            Assert.Equal(1, result);
         }
 
         [Fact]
         public void filterDeletion()
         {
             // Arrange
+            FilterCollection filters = new FilterCollection();
             // Filter 1
             List<string> filterQuery1 = new List<string>()
             {
@@ -201,16 +205,15 @@ namespace zenref.Tests
             };
             string categoryName3 = "Journal";
 
-            FilterCollection.createFilter(filterQuery1, categoryName1);
-            FilterCollection.createFilter(filterQuery2, categoryName2);
-            FilterCollection.createFilter(filterQuery3, categoryName3);
+            filters.Add(new Filter(filterQuery1, categoryName1));
+            filters.Add(new Filter(filterQuery2, categoryName2));
+            filters.Add(new Filter(filterQuery3, categoryName3));
 
             // Act
-            FilterCollection.deleteFilter(2);
+            bool result = filters.Remove(filters.FindFilter("Video"));
 
             // Assert
-            Assert.NotEqual(filterQuery2, FilterCollection.findFilter("Video").returnFilterQueries());
-            Assert.NotEqual(categoryName2, FilterCollection.findFilter("Video").returnFilterCategory());
+            Assert.True(result);
         }
     }
 }

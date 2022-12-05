@@ -19,18 +19,27 @@ namespace zenref.Tests
         Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
         Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
 
-        Reference reference1 = new Reference(
-            "",
-            "wololo"
+        RawReference reference1 = new RawReference(
+            "Software",
+            "Aalborg",
+            "Third",
+            "123",
+            "your dad lmao"
             );
 
-        Reference reference2 = new Reference(
-            "",
-            "True Winner"
+        RawReference reference2 = new RawReference(
+            "Noget andet end software",
+            "Copenhagen",
+            "First",
+            "42069",
+            "I made it up"
             );
-        Reference reference3 = new Reference(
-            "",
-            "Med løg på"
+        RawReference reference3 = new RawReference(
+            "Noget kedeligt",
+            "Mou",
+            "Second",
+            "42",
+            "John"
             );
 
         [Fact]
@@ -207,7 +216,7 @@ namespace zenref.Tests
             secondrow.Cell(3).SetValue<string>("bog");
             secondrow.Cell(4).SetValue<string>("AAU");
             secondrow.Cell(5).SetValue<int>(2022);
-            secondrow.Cell(6).SetValue<int>(12345);
+            secondrow.Cell(6).SetValue<string>("12345");
             secondrow.Cell(7).SetValue<string>("Software");
             secondrow.Cell(8).SetValue<string>("Aalborg");
             secondrow.Cell(9).SetValue<string>("Tredje");
@@ -227,30 +236,14 @@ namespace zenref.Tests
             workbook.SaveAs(FILLEDSPREADSHEETNAME);
 
             //Read reference should be equal to this
-            Reference reference = new Reference("",
-                "titel på noget",
-                "bog",
-                "AAU",
-                2022,
-                12345,
-                "Software",
+            RawReference reference = new RawReference("Software",
                 "Aalborg",
                 "Tredje",
-                "Dansk",
-                2021,
-                0.9,
-                "blank",
-                "Det ved jeg ikke",
-                "Efterår",
-                "pas",
-                "ved jeg heller ikke",
-                69,
-                "",
-                "16-21",
-                "Din far");
+                "12345",
+                "lang tekst");
 
             sheet.Import();
-            Reference importedReference = sheet.GetReference(2);
+            RawReference importedReference = sheet.GetReference(2);
 
             //Equivalent verifies that each public property is the same
             Assert.Equivalent(reference, importedReference);
@@ -299,7 +292,7 @@ namespace zenref.Tests
 
             sheet.Import();
 
-            Assert.Equal("Software", sheet[2].Edu);
+            Assert.Equal("Software", sheet[2].Education);
 
             File.Delete(FILLEDSPREADSHEETNAME);
         }
@@ -313,7 +306,7 @@ namespace zenref.Tests
             //Act
 
             sheet.Create();
-            sheet.AddReference(new List<Reference>() { reference1, reference2, reference3 });
+            sheet.AddReference(new List<RawReference>() { reference1, reference2, reference3 });
             sheet.Export(FILLEDSPREADSHEETNAME);
             //Assert
             int index = sheet.IndexOf(reference2);
@@ -352,7 +345,7 @@ namespace zenref.Tests
             sheet.Insert(1, reference1);
             sheet.Insert(2, reference2);
             sheet.Insert(1, reference3);
-            bool result = sheet[1].ValueEquals(reference3);
+            bool result = sheet[1].Equals(reference3);
 
             //Assert
             //Er reference 1 stadig på index 1?
@@ -432,7 +425,7 @@ namespace zenref.Tests
             sheet.AddReference(reference2, 2);
             sheet.AddReference(reference3, 3);
             sheet.Remove(reference2);
-            bool res = sheet[2].ValueEquals(reference2);
+            bool res = sheet[2].Equals(reference2);
 
             //Assert
             sheet.Export(FILLEDSPREADSHEETNAME);
@@ -445,7 +438,7 @@ namespace zenref.Tests
         {
             //Arrange
             File.Delete(FILLEDSPREADSHEETNAME);
-            Reference referencenull = new Reference();
+            RawReference referencenull = new RawReference(null,null,null,null,null);
 
             //Act
             sheet.Create();
@@ -467,7 +460,7 @@ namespace zenref.Tests
 
             spreadsheet.Create();
 
-            spreadsheet.AddReference(new Reference(_Author: "Din far"),ROWTOINSERTAT);
+            spreadsheet.AddReference(new RawReference(null,null,null,null,"very cool"),ROWTOINSERTAT);
             spreadsheet.Export(SPREADSHEETTESTNAME);
 
             XLWorkbook wb = new XLWorkbook(SPREADSHEETTESTNAME);

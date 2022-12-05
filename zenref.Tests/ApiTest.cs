@@ -4,6 +4,7 @@ using P3Project.API;
 using P3Project;
 using Zenref.Ava.Models;
 using Moq;
+using P3Project.API.APIHelper;
 
 namespace zenref.Tests;
 
@@ -137,9 +138,9 @@ public class ApiTest1 : Api
     //}
 
 
-    public override System.Threading.Tasks.Task<Reference> ReferenceFetch(Reference inputReference, Func<Reference, System.Net.Http.HttpResponseMessage, Reference> referenceParser)
-    {
-        throw new NotImplementedException();
-    }
+    // public override System.Threading.Tasks.Task<Reference> ReferenceFetch(Reference inputReference, Func<Reference, System.Net.Http.HttpResponseMessage, Reference> referenceParser)
+    // {
+    //     throw new NotImplementedException();
+    // }
 
 }
