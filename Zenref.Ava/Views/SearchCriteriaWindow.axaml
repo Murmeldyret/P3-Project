@@ -43,12 +43,18 @@
 			<Setter Property="VerticalAlignment" Value="Bottom"/>
 		</Style>
 
+		<Style Selector="TextBlock.PublikationsTitel">
+			<Setter Property="HorizontalAlignment" Value="Right"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="Margin" Value="0,0,10,0"/>
+			<Setter Property="FontSize" Value="16"/>
+		</Style>
 	</Window.Styles>
 
 	<Grid RowDefinitions="Auto,Auto,*">
 		<Grid ColumnDefinitions="2*, 6.8*" Grid.Row="0">
-			<ComboBox Grid.Column="0" Classes="FirstCategory" PlaceholderText="Felter" Items="{Binding PubTypes.Field}"/>
-			<TextBox Grid.Column="1" Watermark="Søg"/>
+			<TextBlock Classes="PublikationsTitel" Grid.Column="0" Text="Publikations titel:" />
+			<TextBox Grid.Column="1" Text="{Binding PubName}" Watermark="Publikations titel"/>
 		</Grid>
 		<ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" MaxHeight="350">
 			<ItemsControl Grid.Column="0" Items="{Binding SearchOption}">
@@ -64,12 +70,12 @@
 			</ItemsControl>
 		</ScrollViewer>
 		<Grid Grid.Row="2" ColumnDefinitions="0.15*,0.1*,0.1*,0.1*,0.1*,0.5*">
-			<Button Name="addButton" Grid.Column="0" Command="{Binding AddCommand}" Margin="20,10">Tilføj</Button>
-			<Button Name="deleteButton" Grid.Column="1" Command="{Binding DeleteCommand}" Margin="20,10,0,10">Slet</Button>
-			<Button Name="deleteAllButton" Grid.Column="2" Command="{Binding DeleteAllCommand}" Margin="10,10,0,10">Ryd</Button>
-			<Button Name="searchButton" Grid.Column="3" Command="{Binding SearchCommand}" Margin="10,10,0,10">Ny Publikation</Button>
-			<Button Name="EditButton" Grid.Column="4" Command="{Binding EditCommand}" Margin="10,10,0,10">Ændre Publikation</Button>
-			<Button Name="cancelButton" Grid.Column="5" HorizontalAlignment="Right" Margin="80,10,20,10">Afbryd</Button>
+			<Button Name="addButton" Grid.Column="0" Command="{Binding AddSearchCriteriaCommand}" CommandParameter="{Binding ElementName=SearchView}" Margin="20,10">Tilføj søgefelt</Button>
+			<Button Name="deleteButton" Grid.Column="1" Command="{Binding DeleteSearchCriteriaCommand}" CommandParameter="{Binding ElementName=SearchView}" Margin="20,10,0,10">Slet søgefelt</Button>
+			<Button Name="deleteAllButton" Grid.Column="2" Command="{Binding DeleteAllSearchCriteriasCommand}" CommandParameter="{Binding ElementName=SearchView}" Margin="10,10,0,10">Ryd søgefelt</Button>
+			<Button Name="searchButton" Grid.Column="3" Command="{Binding AddPublicationTypeCommand}" CommandParameter="{Binding ElementName=SearchView}" Margin="10,10,0,10">Ny Publikations type</Button>
+			<Button Name="EditButton" Grid.Column="4" Command="{Binding EditCommand}" CommandParameter="{Binding ElementName=SearchView}" Margin="10,10,0,10">Ændre Publikations type</Button>
+			<Button Name="cancelButton" Grid.Column="5" Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=SearchView}" HorizontalAlignment="Right" Margin="80,10,20,10">Afbryd</Button>
 		</Grid>
 	</Grid>
 </Window>

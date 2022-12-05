@@ -13,19 +13,6 @@ using Zenref.Ava.Models;
 
 namespace Zenref.Ava.ViewModels
 {
-    
-    /*
-    public class SearchTermMessage
-    {
-        public List<SearchPublicationType> SearchCollection { get; init; }
-
-        public SearchTermMessage(List<SearchPublicationType> searchCollection)
-        {
-            SearchCollection = searchCollection;
-        }
-    }*/
-    
-    
     public partial class SearchTermMessage : ObservableObject
     {
         public ObservableCollection<PublicationType> SearchPubCollection { get; init; }
@@ -48,28 +35,24 @@ namespace Zenref.Ava.ViewModels
         /// by binding to a method of the same name, but without the "Command" prefix.
         /// </summary>
         [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(AddCommand))]
-        [NotifyCanExecuteChangedFor(nameof(SearchCommand))]
-        [NotifyCanExecuteChangedFor(nameof(DeleteCommand))]
-        [NotifyCanExecuteChangedFor(nameof(DeleteAllCommand))]
-        [NotifyCanExecuteChangedFor(nameof(EditCommand))]
+        [NotifyCanExecuteChangedFor(nameof(AddSearchCriteriaCommand))]
+        [NotifyCanExecuteChangedFor(nameof(DeleteSearchCriteriaCommand))]
+        [NotifyCanExecuteChangedFor(nameof(DeleteAllSearchCriteriasCommand))]
         private ObservableCollection<SearchPublicationType> searchOption = new ObservableCollection<SearchPublicationType>();
 
         [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(AddCommand))]
-        [NotifyCanExecuteChangedFor(nameof(SearchCommand))]
-        [NotifyCanExecuteChangedFor(nameof(DeleteCommand))]
-        [NotifyCanExecuteChangedFor(nameof(DeleteAllCommand))]
+        [NotifyCanExecuteChangedFor(nameof(AddPublicationTypeCommand))]
         [NotifyCanExecuteChangedFor(nameof(EditCommand))]
         private ObservableCollection<PublicationType> pubTypes = new ObservableCollection<PublicationType>();
 
-        /// <summary>
-        /// Public strings that keeps track of the different selected search options from the view
-        /// </summary>
-        public string? SearchTextString;
-        public string? SearchOperand;
-        public string? SearchField;
-        public string PubName = "";
+        /// Strings that keeps track of the different selected search options from the view
+        private string? SearchTextString;
+        private string? SearchOperand;
+        private string? SearchField;
+
+        [ObservableProperty] 
+        [NotifyCanExecuteChangedFor(nameof(AddPublicationTypeCommand))]
+        private string? pubName;
 
         public SearchCriteriaViewModel()
         {
@@ -80,7 +63,7 @@ namespace Zenref.Ava.ViewModels
         {
             SearchOption.Clear();
             SearchOption = searchOption;
-            PubName += pubName;
+            PubName = pubName;
         }
 
 
@@ -92,27 +75,32 @@ namespace Zenref.Ava.ViewModels
         /// 
         /// Sends the observable collection of search terms to the ExpandViewModel
         /// </summary>
+        /// <param name="window"></param>
         [RelayCommand]
-        private void Search()
+        private void AddPublicationType(Window window)
         {
             
-            pubTypes.Add(new PublicationType("Indsæt titel", SearchOption));
-            WeakReferenceMessenger.Default.Send<SearchTermMessage>(new SearchTermMessage(PubTypes));
-        }
-
-        [RelayCommand]
-        private void Edit()
-        {
-            PubTypes.Clear();
             pubTypes.Add(new PublicationType(PubName, SearchOption));
             WeakReferenceMessenger.Default.Send<SearchTermMessage>(new SearchTermMessage(PubTypes));
+            window.Close();
+        }
+
+        /// <summary>
+        /// Edits the publication type 
+        /// </summary>
+        /// <param name="window"></param>
+        [RelayCommand]
+        private void Edit(Window window)
+        {
+            pubTypes.Add(new PublicationType(PubName, SearchOption));
+            window.Close();
         }
 
         /// <summary>
         /// Adds another search option with operand, searchField and text box
         /// </summary>
         [RelayCommand]
-        private void Add()
+        private void AddSearchCriteria()
         {
 
             SearchOption.Add(new SearchPublicationType(
@@ -123,22 +111,32 @@ namespace Zenref.Ava.ViewModels
         }
 
         /// <summary>
-        /// Deletes one search option
+        /// Deletes one search criteria
         /// </summary>
         [RelayCommand]
-        private void Delete()
+        private void DeleteSearchCriteria()
         {
             SearchOption.RemoveAt(SearchOption.Count - 1);
 
         }
 
         /// <summary>
-        /// Deletes all search options
+        /// Deletes all search criterias
         /// </summary>
         [RelayCommand]
-        private void DeleteAll()
+        private void DeleteAllSearchCriterias()
         {
             SearchOption.Clear();
+        }
+
+        /// <summary>
+        /// Closes the window
+        /// </summary>
+        /// <param name="window"></param>
+        [RelayCommand]
+        private void Cancel(Window window)
+        {
+            window.Close();
         }
 
     }

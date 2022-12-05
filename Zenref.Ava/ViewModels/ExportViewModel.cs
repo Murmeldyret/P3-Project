@@ -31,17 +31,31 @@ namespace Zenref.Ava.ViewModels
     }
     public partial class ExportViewModel : ObservableRecipient, IRecipient<SearchTermMessage>
     {
+        /// <summary>
+        /// Property that keeps track of the number of references identified
+        /// </summary>
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(StartCommand))]
+        private int identifiedNumberCounter = 0;
+
+        /// <summary>
+        /// Property that hold the information from creating a new publicatino type
+        /// </summary>
         private ObservableCollection<PublicationType> searchCriteria = new ObservableCollection<PublicationType>();
         private ObservableCollection<SearchPublicationType> searchTest = new ObservableCollection<SearchPublicationType>();
         private ObservableCollection<SearchPublicationType> searchTest2 = new ObservableCollection<SearchPublicationType>();
-        //private List<SearchPublicationType> searchCriteria = new List<SearchPublicationType>();
 
+        /// <summary>
+        /// A collection of the created publication types
+        /// </summary>
         [ObservableProperty] 
         [NotifyCanExecuteChangedFor(nameof(EditPublicationTypeCommand))]
         private ObservableCollection<PublicationType> publicationTypes = new ObservableCollection<PublicationType>();
         
-        public ICommand EditPublicationTypeCommmand { get; set; }
-
+        /// <summary>
+        /// Constructor, sets up the predefined publication types.
+        /// And registers a message from the SearchCriteriaViewModel
+        /// </summary>
         public ExportViewModel() 
             : base(WeakReferenceMessenger.Default)
         {
@@ -49,11 +63,6 @@ namespace Zenref.Ava.ViewModels
             searchTest2.Add(new SearchPublicationType(searchTerm: "hello2vuu", searchSelectOperand: "OG", searchSelectField: "Titel"));
             PublicationTypes.Add(new PublicationType("Bog", searchTest));
             PublicationTypes.Add(new PublicationType("Artikel", searchTest2));
-
-            foreach (PublicationType t in PublicationTypes)
-            {
-                Console.WriteLine(t.Name);
-            }
             
             Messenger.Register<SearchTermMessage>(this, (r, m) =>
             {
@@ -61,19 +70,15 @@ namespace Zenref.Ava.ViewModels
             });
         }
 
+        /// <summary>
+        /// Handles the message sent from the SearchCriteriaViewModel.
+        /// And adds the Criteria
+        /// </summary>
+        /// <param name="message"></param>
         public void Receive(SearchTermMessage message)
         {
             searchCriteria = message.SearchPubCollection;
-            Console.WriteLine(searchCriteria.Count);
-            
-            foreach(PublicationType s in PublicationTypes)
-            {
-                if (s.Name == searchCriteria[0].Name)
-                {
-                    s.searchPublicationTypes = searchCriteria[0].searchPublicationTypes;
-                }
-
-            }
+            PublicationTypes.Add(searchCriteria[0]);
         }
 
         [RelayCommand]
@@ -83,25 +88,30 @@ namespace Zenref.Ava.ViewModels
             SearchView.Show();
         }
 
+        /// <summary>
+        /// Deletes the publication type with the same name as the one related to the delete button
+        /// </summary>
+        /// <param name="msg"></param>
         [RelayCommand]
-        private void DeletePublicationType(object msg)
+        private void DeletePublicationType(string msg)
         {
-            Console.WriteLine(PublicationTypes.Count);
-            //PublicationTypes.RemoveAt(PublicationTypes.Count - 1);
             string text = (string)msg;
             
             for (int i = 0; i < PublicationTypes.Count; i++)
             {
                 if (text == PublicationTypes[i].Name)
                 {
-                    Console.WriteLine($"text: {text} == {publicationTypes[i].Name}");
                     PublicationTypes.RemoveAt(i);
                 }
             }
-            
-        }
 
+        }
         
+        /// <summary>
+        /// Edits a specific publication type.
+        /// It opens a new window with the information related to the publication type
+        /// </summary>
+        /// <param name="msg"></param>
         [RelayCommand]
         private void EditPublicationType(string msg)
         {
@@ -115,5 +125,29 @@ namespace Zenref.Ava.ViewModels
                 }
             }
         }
+
+        /// <summary>
+        /// Starts to identify the references
+        /// </summary>
+        [RelayCommand]
+        private void Start()
+        {
+            IdentifiedNumberCounter = 0;
+            for (int i = 0; i < 100; i++)
+            {
+                IdentifiedNumberCounter++;
+                Console.WriteLine(IdentifiedNumberCounter);
+            }
+        }
+
+        /// <summary>
+        /// Exports to excel
+        /// </summary>
+        [RelayCommand]
+        private void Export()
+        {
+            Console.WriteLine("Export");
+        }
+        
     }
 }

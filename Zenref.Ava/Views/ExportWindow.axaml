@@ -15,36 +15,44 @@
 			<Setter Property="HorizontalAlignment" Value="Left"/>
 			<Setter Property="Padding" Value="10"/>
 		</Style>
-		<Style Selector="TextBox">
-			<Setter Property="Width" Value="150"/>	
-			<Setter Property="FontSize" Value="12"/>
+		<Style Selector="Button.Options">
+			<Setter Property="Width" Value="33"/>
+			<Setter Property="Height" Value="33"/>
 		</Style>
-		<Style Selector="Button.Options Button.Cross">
-			<Setter Property="Width" Value="25"/>
-			<Setter Property="Height" Value="25"/>
+		<Style Selector="Button.Cross">
+			<Setter Property="Width" Value="33"/>
+			<Setter Property="Height" Value="33"/>
 		</Style>
+		
+		<!--Publication type column-->
+		<Style Selector="StackPanel.PubTypes">
+			<Setter Property="Margin" Value="25, 25, 25, 0"/>
+		</Style>
+		
+		<Style Selector="ItemsControl > ContentPresenter">
+			<Setter Property="Height" Value="50"/>
+		</Style>
+		
+		<Style Selector="TextBox.PubTypeTitle">
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="FontSize" Value="16"/>
+			<Setter Property="Width" Value="200"/>	
+			<Setter Property="MaxWidth" Value="400"/>	
+		</Style>
+		
+		
 	</Window.Styles>
 	<Grid ColumnDefinitions="Auto, Auto">
-		<StackPanel Grid.Column="0">
+		<StackPanel Classes="PubTypes" Grid.Column="0">
 			<Border Classes="Left">
-				<ScrollViewer MaxHeight="400">
-					<ItemsControl Items="{Binding PublicationTypes}" Name="PubType">
+				<ScrollViewer MaxHeight="625">
+					<ItemsControl Items="{Binding PublicationTypes}" x:Name="PubType">
 						<ItemsControl.ItemTemplate>
 							<DataTemplate>
-								<Grid ColumnDefinitions="*,Auto,Auto">
-									<TextBox Text="{Binding Name}" Grid.Column="0" x:Name="PubName" />
+								<Grid Classes="PubTypeBox" ColumnDefinitions="*,Auto,Auto">
+									<TextBox Classes="PubTypeTitle" Text="{Binding Name}" Grid.Column="0" x:Name="PubName" />
 									<Button Grid.Column="1" Classes="Options" Command="{Binding ElementName=MainView, Path=DataContext.EditPublicationTypeCommand}" CommandParameter="{Binding ElementName=PubName, Path=Text}">
-										<!-- CommandParameter="{Binding ElementName=MainView}-->
-										<!--<Image Source="avares://Zenref.Ava/Assets/options.ico" />-->
 										<Image Source="avares://Zenref.Ava/Assets/options.ico" />
-										<!--
-										<Button.CommandParameter>
-											<MultiBinding>
-												<Binding ElementName="MainView"/>
-												<Binding Path="Name"/>
-											</MultiBinding>
-										</Button.CommandParameter>
-										-->
 									</Button>
 									<Button Grid.Column="2" Classes="Cross" Command="{Binding ElementName=MainView, Path=DataContext.DeletePublicationTypeCommand}" CommandParameter="{Binding ElementName=PubName, Path=Text}">
 										<Image Source="avares://Zenref.Ava/Assets/cross.ico" />
@@ -67,7 +75,7 @@
 				<StackPanel Orientation="Horizontal" Spacing="10">
 					<TextBlock Text="Identificeret" Width="125"/>
 					<TextBlock Text=":"/>
-					<TextBlock Text="0"/>
+					<TextBlock Text="{Binding ElementName=MainView, Path=DataContext.IdentifiedNumberCounter}"/>
 				</StackPanel>
 				<StackPanel Orientation="Horizontal" Spacing="10">
 					<TextBlock Text="Uidentificeret" Width="125"/>
@@ -77,8 +85,8 @@
 			</StackPanel>
 		</Border>
 	</StackPanel>
-		<Button Name="menuButton" Command="{Binding OpenSearchCriteriaCommand}" CommandParameter="{Binding ElementName=MainView}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="100" Margin="10">Menu</Button>
-		<Button Name="startButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Margin="125,10">Start</Button>
-		<Button Name="exportButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Margin="10,10">Exporter</Button>
+		<Button Name="menuButton" Command="{Binding OpenSearchCriteriaCommand}" CommandParameter="{Binding ElementName=MainView}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="180" Margin="10">Tilføj Publikationstype</Button>
+		<Button Name="startButton" Command="{Binding StartCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Margin="225,10">Start</Button>
+		<Button Name="exportButton" Command="{Binding ExportCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Margin="10,10">Exporter</Button>
 	</Grid>
 </Window>
