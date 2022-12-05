@@ -407,5 +407,79 @@ namespace zenref.Tests
             //Assert
             Assert.Equal(expected, actual);
         }
+        [Fact]
+        public void FlagsEnumTest()
+        {
+            Reference reference = new Reference(rawReference,
+                "Anders Rask",
+                "Titel på noget",
+                "bog",
+                "AAU",
+                2022,
+                "Dansk",
+                2020,
+                0.9,
+                "Smart kommentar",
+                "ingen idé",
+                "Efterår",
+                "en god eksamen",
+                "pure opspind",
+                21,
+                "20th",
+                "16-21",
+                "Very good book");
+
+            Assert.False(reference.isIdentified()); 
+        }
+        [Fact]
+        public void FlagsEnumTestFromApi()
+        {
+            Reference reference = new Reference(rawReference,
+                "Anders Rask",
+                "Titel på noget",
+                "bog",
+                "AAU",
+                2022,
+                "Dansk",
+                2020,
+                0.9,
+                "Smart kommentar",
+                "ingen idé",
+                "Efterår",
+                "en god eksamen",
+                "pure opspind",
+                21,
+                "20th",
+                "16-21",
+                "Very good book",
+                DateTimeOffset.Now);
+
+            Assert.True(reference.isIdentified()); 
+        }
+        [Fact]
+        public void FlagsEnumTestFromApiMatchBelowThreshold()
+        {
+            Reference reference = new Reference(rawReference,
+                "Anders Rask",
+                "Titel på noget",
+                "bog",
+                "AAU",
+                2022,
+                "Dansk",
+                2020,
+                0.42,
+                "Smart kommentar",
+                "ingen idé",
+                "Efterår",
+                "en god eksamen",
+                "pure opspind",
+                21,
+                "20th",
+                "16-21",
+                "Very good book",
+                DateTimeOffset.Now);
+
+            Assert.False(reference.isIdentified()); 
+        }
     }
 }
