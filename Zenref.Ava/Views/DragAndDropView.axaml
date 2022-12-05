@@ -1,0 +1,83 @@
+<Window x:Class="Zenref.Ava.Views.DragAndDropView"
+		x:Name="DADView"
+		xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		WindowStartupLocation="CenterOwner"
+		xmlns:local="clr-namespace:Zenref.Ava.Models;assembly=Zenref.Ava"
+        mc:Ignorable="d" d:DesignWidth="850" d:DesignHeight="500"
+		Width="850" Height="500"
+		MinWidth="850" MinHeight="500"
+        Title="Drag and drop window">
+	<Window.Resources>
+		<local:ByteConverter x:Key="ByteConverter"/>
+	</Window.Resources>
+	
+	<Grid>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+			<StackPanel Grid.Column="0">
+				<Grid DragDrop.AllowDrop="True" ColumnDefinitions="*,Auto">
+					<Rectangle
+						Fill="Gainsboro"
+						Height="300">
+					</Rectangle>
+					<StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+						<Image
+							Source="/Assets/upload.ico"
+							Stretch="Uniform"
+							Height="50"/>
+						<TextBlock
+							Text="Drop filer her"
+							FontSize="20"/>
+					</StackPanel>
+				</Grid>
+				<Button
+					HorizontalAlignment="Center"
+					Background="Gray"
+					Foreground="White"
+					Content="Vælg Fil"
+					CornerRadius="10"
+					Height="50"
+					Width="150"
+					Margin="10"
+					Command="{Binding OpenFileDialogCommand}"
+					CommandParameter="{Binding ElementName=DADView}">
+				</Button>
+			</StackPanel>
+				<Button 
+					Content="Afbryd"
+					Command="{Binding CloseWindow}" 
+					CommandParameter="{Binding ElementName=DADView}" 
+					VerticalAlignment="Bottom" 
+					HorizontalAlignment="Left"
+					Margin="10"/>
+				<Button 
+					Content="Næste"
+					VerticalAlignment="Bottom" 
+					HorizontalAlignment="Right"
+					Margin="10"/>					
+			<ListBox Items="{Binding Files}" Grid.Column="1">
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<StackPanel>
+							<TextBlock Text="{Binding FullName}"/>
+							<TextBlock Text="{Binding Name}"/>
+							<TextBlock Text="{Binding Length, Converter={StaticResource ByteConverter}}"/>	
+							<Button Content="Fjern" Click="RemoveFile"/>
+						</StackPanel>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+				<ListBox.ItemsPanel>
+					<ItemsPanelTemplate>
+						<WrapPanel Orientation="Vertical"/>
+					</ItemsPanelTemplate>
+				</ListBox.ItemsPanel>
+			</ListBox>
+		</Grid>
+	</Grid>
+</Window>

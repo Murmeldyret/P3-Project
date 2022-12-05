@@ -1,53 +1,26 @@
-<Window xmlns="https://github.com/avaloniaui"
+<Window x:Class="Zenref.Ava.Views.MainWindow"
+		x:Name="MainView"
+		xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:viewModels="using:Zenref.Ava.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="600"
-        x:Class="Zenref.Ava.Views.MainWindow"
-		Title="Main Window">
-		
-	<Design.DataContext>
-		<viewModels:MainWindowViewModel />
-	</Design.DataContext>
+		WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Zenref.Ava">
 
-	<Grid Name="grid" RowDefinitions="Auto, Auto">
-		<Menu Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Stretch">
-			<Button Name="addReferenceButton"> Tilføj</Button>
-			<Button Name="editReferenceButton"> Ændre</Button>
-			<Button Name="deleteReferenceButton"> Slet</Button>
-			<TextBox Name="searchTextBox" Watermark="Søg" Width="150" FontSize="15" KeyUp="SearchTextBox_TextInput"></TextBox>
-			<Button Name="menuButton">Menu</Button>
-		</Menu>
-		<DataGrid Name="dataGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,40"      
-				  RowBackground="LightGray" CanUserResizeColumns="True" Height="500" Width="1000">
-			<DataGrid.Columns>
-				<DataGridTextColumn Header="Uddannelse" Binding="{Binding Uddannelse, Mode=TwoWay}"/>
-				<DataGridTextColumn Header="Uddannelsesinstitution" Binding="{Binding Uddannelsesinstitution, Mode=TwoWay}"/>
-				<DataGridTextColumn Header="Semester" Binding="{Binding Semester, Mode=TwoWay}"/>
-				<DataGridTextColumn Header="År" Binding="{Binding År, Mode=TwoWay}"/>
-				<DataGridTextColumn Header="Pensumliste" Width="100" Binding="{Binding Pensumliste, Mode=TwoWay}"/>
-				<DataGridTextColumn Header="ID" Binding="{Binding Id, Mode=TwoWay}"/>
-				<DataGridTextColumn Header="Henvisning" Width="100" Binding="{Binding Henvisning, Mode=TwoWay}"/>
-				<DataGridTemplateColumn>
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<Button Name="btnEdit" Click="EditButton_Click" Width="40" Height="40">
-								<Image Source="/Assets/options.ico"/>
-							</Button>
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-				</DataGridTemplateColumn>
-				<DataGridTemplateColumn>
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<Button Name="btnDelete" Click="DeleteButton_Click" Width="40" Height="40">
-								<Image Source="/Assets/cross.ico"/>
-							</Button>
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-				</DataGridTemplateColumn>
-			</DataGrid.Columns>
-		</DataGrid>
-	</Grid>
+	<Window.Styles>
+		<Style Selector="Button">
+			<Setter Property="Height" Value="250" />
+			<Setter Property="Width" Value="350"/>
+			<Setter Property="Margin" Value="15"/>
+		</Style>
+	</Window.Styles>
+
+	<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+		<Button Content="Kendte kilder" Command="{Binding OpenDatabaseView}" CommandParameter="{Binding ElementName=MainView}"/>
+		<Button Content="Identificer kilder" Command="{Binding OpenExportView}" CommandParameter="{Binding ElementName=MainView}"/>
+	</StackPanel>
+	
 </Window>
+

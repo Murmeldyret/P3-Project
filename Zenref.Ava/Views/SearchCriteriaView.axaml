@@ -77,5 +77,6 @@
 			<Button Name="EditButton" Grid.Column="4" Command="{Binding EditCommand}" CommandParameter="{Binding ElementName=SearchView}" Margin="10,10,0,10">Ændre Publikations type</Button>
 			<Button Name="cancelButton" Grid.Column="5" Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=SearchView}" HorizontalAlignment="Right" Margin="80,10,20,10">Afbryd</Button>
 		</Grid>
+
 	</Grid>
 </Window>

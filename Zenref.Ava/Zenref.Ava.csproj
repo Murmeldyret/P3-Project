@@ -6,12 +6,15 @@
 	<!--Avalonia doesen't support TrimMode=link currently,but we are working on that https://github.com/AvaloniaUI/Avalonia/issues/6892 -->
 	<TrimMode>copyused</TrimMode>
 	<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <!-- <GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles> -->
+    <UserSecretsId>41062a39-62fd-4e5b-9ca7-08b3e749986d</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
     <None Remove="Assets\cross.ico" />
     <None Remove="Assets\options.ico" />
+    <None Remove="Assets\upload.ico" />
   </ItemGroup>
   <ItemGroup>
 	<!--This helps with theme dll-s trimming.
@@ -26,7 +29,16 @@
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.18" />
 	<PackageReference Include="Avalonia.ReactiveUI" Version="0.10.18" />
+	<PackageReference Include="ClosedXML" Version="0.97.0" />
 	<PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+	<PackageReference Include="Fastenshtein" Version="1.0.0.8" />
+	<PackageReference Include="MessageBox.Avalonia" Version="2.1.0" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.10">
+	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  <PrivateAssets>all</PrivateAssets>
+	</PackageReference>
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.10" />
+	<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	<PackageReference Include="XamlNameReferenceGenerator" Version="1.3.4" />
   </ItemGroup>
   <ItemGroup>

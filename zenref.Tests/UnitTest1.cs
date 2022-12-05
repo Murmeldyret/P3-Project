@@ -1,13 +1,11 @@
 using Xunit;
 using System.IO;
 
+using Zenref.Ava.Models;
+
 namespace zenref.Tests;
 
 public class UnitTest1
 {
-    [Fact]
-    public void Test1()
-    {
-        
-    }
+    
 }
