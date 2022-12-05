@@ -261,7 +261,7 @@ namespace zenref.Tests
             IFilterCollection.GetInstance().Add(new Filter(filterQuery1, categoryName1));
 
             // Test reference that matches the filter.
-            Reference reference = new Reference("Zenref Author", "Radio, Building a reference metadata scraper", "Podcast", "Gruppe 6", 2022, 2, "Software");
+            Reference reference = new Reference(new RawReference("Edu", "Location", "Semester", "2", "OriReference"), "Zenref Author", "Radio, Building a reference metadata scraper", "Podcast", "Gruppe 6", 2022);
 
             // Act
             string result = IFilterCollection.GetInstance().categorize(reference);
@@ -285,7 +285,7 @@ namespace zenref.Tests
             IFilterCollection.GetInstance().Add(new Filter(filterQuery1, categoryName1));
 
             // Test reference that matches the filter.
-            Reference reference = new Reference("Zenref Author", "Radio, Building a reference metadata scraper", "Something else", "Gruppe 6", 2022, 2, "Software");
+            Reference reference = new Reference(new RawReference("Edu", "Location", "Semester", "2", "OriReference"), "Zenref Author", "Radio, Building a reference metadata scraper", "Something else", "Gruppe 6", 2022);
 
             // Act
             string result = IFilterCollection.GetInstance().categorize(reference);
