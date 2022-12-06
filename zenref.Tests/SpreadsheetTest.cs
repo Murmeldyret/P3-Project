@@ -474,10 +474,10 @@ namespace zenref.Tests
         public void SwapReferencePropertySwaps()
         {
             //Dictionary needs to be copied because of the way reference types work :/
-            SortedDictionary<Spreadsheet.ReferenceFields, int> originalDic = new SortedDictionary<Spreadsheet.ReferenceFields, int>(spreadsheet.PositionOfReferencesInSheet);
+            Dictionary<Spreadsheet.ReferenceFields, int> originalDic = new Dictionary<Spreadsheet.ReferenceFields, int>(spreadsheet.PositionOfReferencesInSheet);
             spreadsheet.SwapReferenceProperty(Spreadsheet.ReferenceFields.Author,Spreadsheet.ReferenceFields.Title);
 
-            SortedDictionary<Spreadsheet.ReferenceFields, int> newDic = spreadsheet.PositionOfReferencesInSheet;
+            Dictionary<Spreadsheet.ReferenceFields, int> newDic = spreadsheet.PositionOfReferencesInSheet;
 
             Tuple<int, int> oldDicValues = new Tuple<int, int>(originalDic[Spreadsheet.ReferenceFields.Author], originalDic[Spreadsheet.ReferenceFields.Title]);
             Tuple<int, int> newDicValues = new Tuple<int, int>(newDic[Spreadsheet.ReferenceFields.Author], newDic[Spreadsheet.ReferenceFields.Title]);
@@ -489,9 +489,9 @@ namespace zenref.Tests
         [Fact]
         public void SetColumnPositionOverwrite()
         {
-            SortedDictionary<Spreadsheet.ReferenceFields, int> originaldic = new(spreadsheet.PositionOfReferencesInSheet);
+            Dictionary<Spreadsheet.ReferenceFields, int> originaldic = new(spreadsheet.PositionOfReferencesInSheet);
 
-            SortedDictionary<Spreadsheet.ReferenceFields, int> newDic = new()
+            Dictionary<Spreadsheet.ReferenceFields, int> newDic = new()
             {
                 {Spreadsheet.ReferenceFields.Author, 22},
                 {Spreadsheet.ReferenceFields.Title, 21},
