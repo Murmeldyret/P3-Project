@@ -17,6 +17,7 @@ using System.IO;
 using DynamicData;
 using MessageBox.Avalonia.BaseWindows.Base;
 using MessageBox.Avalonia.Enums;
+using System;
 
 namespace Zenref.Ava.ViewModels
 {
@@ -46,7 +47,8 @@ namespace Zenref.Ava.ViewModels
             });
             // FOR TESTING DATAGRID DISPLAYING REFERENCES
             //references = new ObservableCollection<Reference>();
-            //references.Add(new Reference("J.K. Rowling", "Harry Potter and the Philosopher's Stone", "Bog", "Bloomsbury", 1997, 10256358, "How to magic", "Hogwarts", "5. Semester", "Engelsk", 2022, 0.8, "Magi", "How to wave a wand", "Forår", "Magic for beginners", "DanBib", 223, "Hvem ved", "Quidditch", "Harry Potter and the Philosopher's Stone", "Rowling, J. K. (1997). Harry Potter and the Philosopher’s Stone (1st ed.). Bloomsbury."));
+            //RawReference rawReference = new RawReference("How to magic", "Hogwarts", "5. semester", "1234-4321", "Rowling, J. K. (1997). Harry Potter and the Philosopher’s Stone (1st ed.). Bloomsbury.");
+            //references.Add(new Reference(rawReference, "J.K. Rowling", "Harry Potter and the Philosopher's Stone", "Bog", "Bloomsbury", 1997, "Engelsk", 2022, 0.8, "Kommentar", "How to wave a wand", "Forår", "Magic for beginners", "DanBib", 223, "Hvem ved", "Quidditch", "Bogtitel"));
             //for (int i = 0; i < 100; i++)
             //{
             //    List<string> s = new List<string>();
@@ -55,7 +57,8 @@ namespace Zenref.Ava.ViewModels
             //        s.Add(RandomString(10));
             //    }
             //    double d = 0.5;
-            //    references.Add(new Reference(s[0], s[1], s[2], s[3], i, i, s[4], s[5], s[6], s[7], i, d, s[8], s[9], s[10], s[11], s[12], i, s[13], s[14], s[15], s[16]));
+            //    RawReference rawReference1 = new RawReference(s[0], s[1], s[2], $"{i}", s[3]);
+            //    references.Add(new Reference(rawReference1, s[4], s[5], s[6], s[7], i, s[8], i, d, s[9], s[10], s[11], s[12], s[13], i, s[14], s[15], s[16]));
             //}
             //filteredReferences = references;
         }
@@ -68,7 +71,7 @@ namespace Zenref.Ava.ViewModels
             Debug.WriteLine("Received FilepathsMessage.");
         }
 
-        // FOR TESTING DATAGRID DISPLAYING REFERENCES
+        //FOR TESTING DATAGRID DISPLAYING REFERENCES
         //private static Random random = new Random();
         //public static string RandomString(int length)
         //{
