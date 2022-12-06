@@ -205,18 +205,21 @@ namespace Zenref.Ava.ViewModels
                     IEnumerable<RawReference> referencesInSheet = spreadsheet.GetReference(0u);
                     referencesInSheets.Add(referencesInSheet);
                 }
+
                 RawReferences = referencesInSheets;
-                Debug.WriteLine($"Found {references.Count} Reference(s)");
+                Debug.WriteLine($"Found {RawReferences.Count} Reference(s)");
             }
             catch (Exception e)
             {
-                IMsBoxWindow<ButtonResult> messageBoxStandardView = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia.MessageBoxManager
+                IMsBoxWindow<ButtonResult> messageBoxStandardView = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia
+                    .MessageBoxManager
                     .GetMessageBoxStandardWindow("Error", "Error in reading References from spreadsheet");
                 messageBoxStandardView.Show();
                 Debug.WriteLine("Error in reading references.");
                 Debug.WriteLine(e.Message + e.StackTrace);
                 Debug.WriteLine(positionInSheet.Count);
             }
+            
         }
     }
 }
