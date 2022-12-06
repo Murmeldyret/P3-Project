@@ -154,9 +154,14 @@ namespace Zenref.Ava.ViewModels
             IdentifiedNumberCounter = 0;
             UnIdentifiedNumberCounter = 0;
 
+            // Read all the references from the excel file
             ReadAllReferences();
 
-            Console.WriteLine("Start");
+            // Identify the references in the database
+            // TODO: Implement the identification of the references
+
+            // If the database does not contain the reference, search for it in the internet
+            
 
         }
 

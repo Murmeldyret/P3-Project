@@ -23,24 +23,6 @@ namespace P3Project.API
             this.RateLimitInMsecs = RateLimitInMsecs;
         }
 
-/*
-        public override async Task<Reference> ReferenceFetch(Reference inputReference, Func<Reference, HttpResponseMessage, Reference> referenceParser)
-        {
-            Uri apiUri = BuildUri($"&query={inputReference.OriReference}");
-
-            HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(apiUri);
-
-            // Validation
-            if (!_isHTTPResponseCodeSuccess(response))
-            {
-                throw new HttpRequestException("Was not able to get ressource from server.");
-            }
-
-            // Parse into deligate
-            Reference parsed_reference = referenceParser(inputReference, response);
-
-            return parsed_reference;
-        }*/
         public Reference ReferenceParser(RawReference inputReference, HttpResponseMessage response)
         {
             string responseContent = response.Content.ReadAsStringAsync().Result;
