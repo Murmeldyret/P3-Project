@@ -146,11 +146,11 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// <exception cref="ArgumentException"> If the size of input dictionary is not the same as the number of fields in a reference</exception>
         public void SetColumnPosition(SortedDictionary<ReferenceFields, int> inputdic)
         {
-            if (inputdic.Count == _referenceFieldsCount)
+            // if (inputdic.Count == _referenceFieldsCount)
                 PositionOfReferencesInSheet = inputdic;
-            else
-                throw new ArgumentException(
-                    $"Parameter inputdic must be the same size as the current dictionary. inputdic.Count =={inputdic.Count} !={_referenceFieldsCount}");
+            // else
+            //     throw new ArgumentException(
+            //         $"Parameter inputdic must be the same size as the current dictionary. inputdic.Count =={inputdic.Count} !={_referenceFieldsCount}");
         }
 
         /// <summary>

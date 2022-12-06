@@ -196,7 +196,7 @@ namespace Zenref.Ava.ViewModels
                 foreach (FileInfo path in filePaths)
                 {
 
-                    Spreadsheet spreadsheet = new Spreadsheet(path.Name, path.DirectoryName);
+                    Spreadsheet spreadsheet = new Spreadsheet(path.FullName);
                     Debug.WriteLine($"FileName: {path.Name} Path: {path.DirectoryName}");
                     spreadsheet.SetColumnPosition(positionInSheet);
                     spreadsheet.Import();
@@ -214,6 +214,8 @@ namespace Zenref.Ava.ViewModels
                     .GetMessageBoxStandardWindow("Error", "Error in reading References from spreadsheet");
                 messageBoxStandardView.Show();
                 Debug.WriteLine("Error in reading references.");
+                Debug.WriteLine(e.Message + e.StackTrace);
+                Debug.WriteLine(positionInSheet.Count);
             }
         }
     }
