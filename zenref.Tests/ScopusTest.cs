@@ -46,11 +46,17 @@ namespace zenref.Tests
         public async void ReferenceFetchTest()
         {
             // New reference
+            //RawReference inputReference = new RawReference("lige meget",
+            //    "lige meget",
+            //    "lige meget",
+            //    "lige meget",
+            //    "Zhao, Nannan. (2024). Improvement of Cloud Computing Medical Data Protection Technology Based on Symmetric Encryption Algorithm");
+
             RawReference inputReference = new RawReference("lige meget",
                 "lige meget",
                 "lige meget",
                 "lige meget",
-                "Zhao, Nannan. (2024). Improvement of Cloud Computing Medical Data Protection Technology Based on Symmetric Encryption Algorithm");
+                "Andersen, B. B. & Porse, L. H. (2021). TAP. Teori til Analyse og Praksis i billedkunst. Praxis.");
             // Get secret key
             var configuration = new ConfigurationBuilder()
             .AddUserSecrets<Settings>()

@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using DynamicData;
 using MessageBox.Avalonia.BaseWindows.Base;
 using MessageBox.Avalonia.Enums;
+using P3Project.API;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -161,7 +162,12 @@ namespace Zenref.Ava.ViewModels
             // TODO: Implement the identification of the references
 
             // If the database does not contain the reference, search for it in the internet
-            
+            ApiSearching apiSearching = new ApiSearching();
+            // Call the apisearching method
+            apiSearching.SearchReferences(rawReferences.ToList());
+
+
+
 
         }
 

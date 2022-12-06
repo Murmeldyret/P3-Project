@@ -108,9 +108,19 @@ namespace P3Project.API
             {
                 throw new ArgumentNullException("The original reference is null");
             }
-            oriReference = oriReference.Replace("(", " ");
-            oriReference = oriReference.Replace(")", " ");
+            oriReference = oriReference.Replace("(", "%28");
+            oriReference = oriReference.Replace(")", "%29");
             oriReference = oriReference.Replace("*", " ");
+            oriReference = oriReference.Replace("?", "%3f");
+            oriReference = oriReference.Replace("&", "%26");
+            oriReference = oriReference.Replace(":", "%3a");
+            oriReference = oriReference.Replace(";", "%3b");
+            oriReference = oriReference.Replace(",", "%2c");
+            oriReference = oriReference.Replace("=", "%3d");
+            oriReference = oriReference.Replace("+", "%2b");
+            oriReference = oriReference.Replace("/", "%2f");
+            
+
 
             return oriReference;
         }
@@ -188,7 +198,7 @@ namespace P3Project.API
         }
     }
 
-    public class apiSearching
+    public class ApiSearching
     {
         public List<Reference> SearchReferences(List<RawReference> rawReferences)
         {
@@ -209,6 +219,7 @@ namespace P3Project.API
         {
             // Read the apikey from the file
             string apiKey = File.ReadAllText("scopusApiKey.txt");
+
             // Initialize the api
             Scopus scopus = new Scopus(apiKey, new Uri("https://api.elsevier.com/content/search/scopus"));
             return scopus;
