@@ -86,7 +86,8 @@
 		</Border>
 	</StackPanel>
 		<Button Name="menuButton" Command="{Binding OpenSearchCriteriaCommand}" CommandParameter="{Binding ElementName=MainView}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="180" Margin="10">Tilføj Publikationstype</Button>
-		<Button Name="startButton" Command="{Binding StartCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Margin="225,10">Start</Button>
+		<Button Name="importButton" Command="{Binding OpenDragAndDropViewCommand}" CommandParameter="{Binding ElementName=MainView" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="180" Margin="100">Importer referencer</Button>
+	    <Button Name="startButton" Command="{Binding StartCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Margin="225,10">Start</Button>
 		<Button Name="exportButton" Command="{Binding ExportCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Margin="10,10">Exporter</Button>
 	</Grid>
 </Window>

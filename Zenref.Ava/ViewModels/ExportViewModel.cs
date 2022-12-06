@@ -3,21 +3,26 @@ using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using DynamicData;
+using MessageBox.Avalonia.BaseWindows.Base;
+using MessageBox.Avalonia.Enums;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Zenref.Ava.Models;
+using Zenref.Ava.Models.Spreadsheet;
 using Zenref.Ava.Views;
 
 namespace Zenref.Ava.ViewModels
 {
-    public partial class ExportViewModel : ObservableRecipient, IRecipient<SearchTermMessage>
+    public partial class ExportViewModel : ObservableRecipient, IRecipient<FilePathsMessage>
     {
         /// <summary>
         /// Property that keeps track of the number of references identified
@@ -40,23 +45,38 @@ namespace Zenref.Ava.ViewModels
         /// <summary>
         /// A collection of the created publication types
         /// </summary>
-        [ObservableProperty] 
+        [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(EditPublicationTypeCommand))]
         private ObservableCollection<PublicationType> publicationTypes = new ObservableCollection<PublicationType>();
-        
+
+        private List<FileInfo> filePaths;
+        private List<int> columnPositions;
+        private int activeSheet;
+        [ObservableProperty]
+        private ObservableCollection<Reference> references;
+        [ObservableProperty]
+        private ObservableCollection<RawReference> rawReferences;
+        [ObservableProperty]
+        private IEnumerable<Reference> filteredReferences;
+
         /// <summary>
         /// Constructor, sets up the predefined publication types.
         /// And registers a message from the SearchCriteriaViewModel
         /// </summary>
-        public ExportViewModel() 
+        public ExportViewModel()
             : base(WeakReferenceMessenger.Default)
         {
             searchTest.Add(new SearchPublicationType(searchTerm: "hello", searchSelectOperand: "OG", searchSelectField: "Titel"));
             searchTest2.Add(new SearchPublicationType(searchTerm: "hello2vuu", searchSelectOperand: "OG", searchSelectField: "Titel"));
             PublicationTypes.Add(new PublicationType("Bog", searchTest));
             PublicationTypes.Add(new PublicationType("Artikel", searchTest2));
-            
+
             Messenger.Register<SearchTermMessage>(this, (r, m) =>
+            {
+                Receive(m);
+            });
+
+            Messenger.Register<FilePathsMessage>(this, (r, m) =>
             {
                 Receive(m);
             });
@@ -88,7 +108,7 @@ namespace Zenref.Ava.ViewModels
         private void DeletePublicationType(string msg)
         {
             string text = (string)msg;
-            
+
             for (int i = 0; i < PublicationTypes.Count; i++)
             {
                 if (text == PublicationTypes[i].Name)
@@ -98,7 +118,14 @@ namespace Zenref.Ava.ViewModels
             }
 
         }
-        
+
+        [RelayCommand]
+        private void OpenDragAndDropView(Window window)
+        {
+            DragAndDropView dragAndDropView = new DragAndDropView();
+            dragAndDropView.ShowDialog(window);
+        }
+
         /// <summary>
         /// Edits a specific publication type.
         /// It opens a new window with the information related to the publication type
@@ -127,8 +154,6 @@ namespace Zenref.Ava.ViewModels
             IdentifiedNumberCounter = 0;
             UnIdentifiedNumberCounter = 0;
 
-            
-
         }
 
         /// <summary>
@@ -139,6 +164,53 @@ namespace Zenref.Ava.ViewModels
         {
             Console.WriteLine("Export");
         }
-        
+
+
+        public void Receive(FilePathsMessage message)
+        {
+            filePaths = message.FilePaths;
+            columnPositions = message.ColumnPositions;
+            activeSheet = message.ActiveSheet;
+            Debug.WriteLine("Received FilePathsMessage");
+            Console.WriteLine("Filepaths: " + filePaths.Count);
+            Console.WriteLine("ColumnPositions: " + columnPositions);
+            Console.WriteLine("ActiveSheet: " + activeSheet);
+        }
+
+        private void ReadAllReferences()
+        {
+            ObservableCollection<RawReference> referencesInSheets = new ObservableCollection<RawReference>();
+            SortedDictionary<Spreadsheet.ReferenceFields, int> positionInSheet = new SortedDictionary<Spreadsheet.ReferenceFields, int>();
+            Spreadsheet.ReferenceFields referenceFields = (Spreadsheet.ReferenceFields)0;
+            for (int i = 0; i < columnPositions.Count; i++)
+            {
+                positionInSheet.Add(referenceFields++, columnPositions[i]);
+            }
+
+            try
+            {
+                foreach (FileInfo path in filePaths)
+                {
+
+                    Spreadsheet spreadsheet = new Spreadsheet(path.Name, path.DirectoryName);
+                    Debug.WriteLine($"FileName: {path.Name} Path: {path.DirectoryName}");
+                    spreadsheet.SetColumnPosition(positionInSheet);
+                    spreadsheet.Import();
+                    spreadsheet.SetActiveSheet(activeSheet);
+                    Debug.WriteLine($"SPREADSHEET count: {spreadsheet.Count}");
+                    IEnumerable<RawReference> referencesInSheet = spreadsheet.GetReference(0u);
+                    referencesInSheets.Add(referencesInSheet);
+                }
+                RawReferences = referencesInSheets;
+                Debug.WriteLine($"Found {references.Count} Reference(s)");
+            }
+            catch (Exception e)
+            {
+                IMsBoxWindow<ButtonResult> messageBoxStandardView = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow("Error", "Error in reading References from spreadsheet");
+                messageBoxStandardView.Show();
+                Debug.WriteLine("Error in reading references.");
+            }
+        }
     }
 }
