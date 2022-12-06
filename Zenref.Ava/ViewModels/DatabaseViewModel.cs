@@ -42,7 +42,7 @@ namespace Zenref.Ava.ViewModels
             Messenger.Register<FilePathsMessage>(this, (r,m) =>
             {
                 Receive(m);
-                // ReadAllReferences();
+                //ReadAllReferences();
             });
             // FOR TESTING DATAGRID DISPLAYING REFERENCES
             //references = new ObservableCollection<Reference>();
