@@ -36,8 +36,8 @@
 					<DataGridTextColumn Header="Publikationstype" Binding="{Binding PubType}"/>
 					<DataGridTextColumn Header="Forlag" Binding="{Binding Publisher}"/>
 					<DataGridTextColumn Header="År (Reference)" Binding="{Binding YearRef}"/>
-					<DataGridTextColumn Header="Id" Binding="{Binding ID}"/>
-					<DataGridTextColumn Header="Uddannelse" Binding="{Binding Edu}"/>
+					<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+					<DataGridTextColumn Header="Uddannelse" Binding="{Binding Education}"/>
 					<DataGridTextColumn Header="Uddannelsessted" Binding="{Binding Location}"/>
 					<DataGridTextColumn Header="Semester" Binding="{Binding Semester}"/>
 					<DataGridTextColumn Header="Sprog" Binding="{Binding Language}"/>

@@ -13,12 +13,8 @@
 	<Window.Resources>
 		<local:ByteConverter x:Key="ByteConverter"/>
 	</Window.Resources>
-	<Grid ColumnDefinitions="Auto,Auto,Auto">
+	<Grid ColumnDefinitions="*,Auto,Auto">
 		<Grid Grid.Column="0">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition/>
-				<ColumnDefinition/>
-			</Grid.ColumnDefinitions>
 			<StackPanel Grid.Column="0">
 				<Grid DragDrop.AllowDrop="True" ColumnDefinitions="*,Auto">
 					<Rectangle
@@ -66,7 +62,7 @@
 					HorizontalAlignment="Right"
 					Margin="10"/>
 		</Grid>
-				<ListBox Items="{Binding Files}" Grid.Column="1" Width="300">
+				<ListBox Items="{Binding Files}" Grid.Column="1" Width="350">
 					<ListBox.ItemTemplate>
 						<DataTemplate>
 							<StackPanel>

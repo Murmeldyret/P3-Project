@@ -41,7 +41,7 @@ namespace Zenref.Ava.Views
                     case "Forlag":
                         filteredList = databaseViewModel.References.Where(x => x.Publisher.ToLower().Contains(textBox.Text.ToLower()));
                         break;
-                    case "�r (Reference)":
+                    case "År (Reference)":
                         filteredList = databaseViewModel.References.Where(x => x.YearRef.ToString().ToLower().Contains(textBox.Text.ToLower()));
                         break;
                     case "Id":
@@ -59,7 +59,7 @@ namespace Zenref.Ava.Views
                     case "Sprog":
                         filteredList = databaseViewModel.References.Where(x => x.Language.ToLower().Contains(textBox.Text.ToLower()));
                         break;
-                    case "�r (Rapport)":
+                    case "År (Rapport)":
                         filteredList = databaseViewModel.References.Where(x => x.YearReport.ToString().ToLower().Contains(textBox.Text.ToLower()));
                         break;
                     case "Match":
