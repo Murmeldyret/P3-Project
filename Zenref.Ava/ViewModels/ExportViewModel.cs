@@ -16,6 +16,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AvaloniaEdit;
+using P3Project.API;
 using Zenref.Ava.Models;
 using Zenref.Ava.Models.Spreadsheet;
 using Zenref.Ava.Views;
@@ -58,6 +60,9 @@ namespace Zenref.Ava.ViewModels
         private ObservableCollection<RawReference> rawReferences;
         [ObservableProperty]
         private IEnumerable<Reference> filteredReferences;
+
+        [ObservableProperty] 
+        private string apiKey;
 
         /// <summary>
         /// Constructor, sets up the predefined publication types.
@@ -143,6 +148,53 @@ namespace Zenref.Ava.ViewModels
                     SearchView.Show();
                 }
             }
+        }
+
+        /// <summary>
+        /// Adds api key to file - Creates file if it doesn't already exist
+        /// </summary>
+        [RelayCommand]
+        private void AddApiKey()
+        {
+            string filename = @"../../../Models/ApiKeys/scopusApiKey.txt";
+
+            try
+            {
+                // Check if the file already exists
+                if (File.Exists(filename))
+                {
+                    // Overwrite the apikey txt file
+                    using (StreamWriter sw = new StreamWriter(filename))
+                    {
+                        sw.Write(ApiKey);
+                    }
+                    
+                    // Read the apikey from file
+                    using (StreamReader sr = new StreamReader(filename))
+                    {
+                        string line;
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            ApiKey = line;
+                        }
+                    }
+                }
+                else
+                {
+                    // Creates new file
+                    using (StreamWriter sw = new StreamWriter(filename))
+                    {
+                        sw.WriteLine("Indsæt api nøgle");
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
         }
 
         /// <summary>

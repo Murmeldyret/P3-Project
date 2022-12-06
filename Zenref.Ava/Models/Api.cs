@@ -208,7 +208,7 @@ namespace P3Project.API
         public Scopus InitializeScopus()
         {
             // Read the apikey from the file
-            string apiKey = File.ReadAllText("scopusApiKey.txt");
+            string apiKey = File.ReadAllText("./ApiKeys/scopusApiKey.txt");
             // Initialize the api
             Scopus scopus = new Scopus(apiKey, new Uri("https://api.elsevier.com/content/search/scopus"));
             return scopus;
