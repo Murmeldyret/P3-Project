@@ -154,6 +154,10 @@ namespace Zenref.Ava.ViewModels
             IdentifiedNumberCounter = 0;
             UnIdentifiedNumberCounter = 0;
 
+            ReadAllReferences();
+
+            Console.WriteLine("Start");
+
         }
 
         /// <summary>
