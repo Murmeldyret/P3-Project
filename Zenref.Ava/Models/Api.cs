@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Zenref.Ava.Models;
 using P3Project.API.APIHelper;
 using System.Net;
+using System.IO;
 
 namespace P3Project.API
 {
@@ -184,6 +185,33 @@ namespace P3Project.API
                 throw new NotImplementedException("Fuck dig ikke implementeret");
                 //throw new ArgumentException($"{_baseURL}\nAPI key is not valid. Please update the key, or this site will not be available ");
             }
+        }
+    }
+
+    public class apiSearching
+    {
+        public List<Reference> SearchReferences(List<RawReference> rawReferences)
+        {
+            // This should have been done in a better way, however, there is no time for it.
+            Scopus scopus = InitializeScopus();
+            
+            List<Reference> references = new List<Reference>();
+            foreach (RawReference rawReference in rawReferences)
+            {
+                Reference reference = scopus.ReferenceFetch(rawReference, scopus.ReferenceParser).Result;
+                references.Add(reference);
+            }
+
+            return references;
+        }
+
+        public Scopus InitializeScopus()
+        {
+            // Read the apikey from the file
+            string apiKey = File.ReadAllText("scopusApiKey.txt");
+            // Initialize the api
+            Scopus scopus = new Scopus(apiKey, new Uri("https://api.elsevier.com/content/search/scopus"));
+            return scopus;
         }
     }
 }
