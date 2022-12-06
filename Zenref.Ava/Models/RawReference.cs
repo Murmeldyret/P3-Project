@@ -1,10 +1,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.RegularExpressions;
 using DocumentFormat.OpenXml.Office2013.Drawing.ChartStyle;
 using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.EntityFrameworkCore;
 
 namespace Zenref.Ava.Models;
 //TODO Erik skal dokumentere metoder :)))))
@@ -46,6 +48,10 @@ public class RawReference : IEquatable<RawReference>
         Semester = semester;
         Id = id;
         OriReference = oriReference;
+    }
+    public RawReference()
+    {
+
     }
 
     protected RawReference(RawReference rawReference)

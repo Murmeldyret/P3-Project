@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 
 namespace Zenref.Ava.Models
 {
@@ -17,6 +18,11 @@ namespace Zenref.Ava.Models
             {
                 TimeOfCreation = (DateTimeOffset)time;
             }
+        }
+        
+        public Reference()
+        {
+
         }
 
         public Reference(RawReference rawReference,
