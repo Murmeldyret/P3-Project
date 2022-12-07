@@ -219,20 +219,28 @@ namespace Zenref.Ava.ViewModels
             apiSearching.SearchReferences(rawReferences.ToList());
 
 
-
-
+            
         }
 
         /// <summary>
         /// Exports to excel
         /// </summary>
-        [RelayCommand]
         private void Export(Spreadsheet sheet, string name)
         {
-            sheet.AddReference(filteredReferences, 2);
+            List<Reference> testreferences = new List<Reference>();
+            foreach (RawReference reference in rawReferences)
+            {
+                testreferences.Add(new Reference(reference,DateTimeOffset.Now));
+            }
+            Debug.WriteLine($"testreferences count:{testreferences.Count()}");
+            sheet.AddReference(testreferences, 2);
             sheet.Export(name);
             Debug.WriteLine($"Exported {filteredReferences.Count()} Reference(s).");
         }
+        /// <summary>
+        /// Prompts the user to save a file at a given location
+        /// </summary>
+        /// <param name="window">The window that creates the dialog</param>
         [RelayCommand]
         private async void SaveFileDialog(Window window)
         {
