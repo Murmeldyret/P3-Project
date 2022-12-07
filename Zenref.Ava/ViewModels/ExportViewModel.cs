@@ -209,7 +209,9 @@ namespace Zenref.Ava.ViewModels
 
             // Read all the references from the excel file
             ReadAllReferences();
-
+            // Spreadsheet spreadsheet = new Spreadsheet("output.xlsx");
+            // spreadsheet.Create();
+            // Export(spreadsheet,"output.xlsx");
             // Identify the references in the database
             // TODO: Implement the identification of the references
 
@@ -235,7 +237,7 @@ namespace Zenref.Ava.ViewModels
             Debug.WriteLine($"testreferences count:{testreferences.Count()}");
             sheet.AddReference(testreferences, 2);
             sheet.Export(name);
-            Debug.WriteLine($"Exported {filteredReferences.Count()} Reference(s).");
+            //Debug.WriteLine($"Exported {filteredReferences.Count()} Reference(s).");
         }
         /// <summary>
         /// Prompts the user to save a file at a given location
