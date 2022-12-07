@@ -64,12 +64,13 @@ namespace Zenref.Ava.Models.Spreadsheet
         
         public enum ReferenceFields
         {
+            Id,
             Author,
             Title,
             PublicationType,
             Publisher,
             YearRef,
-            IdRef,
+            RefId,
             Education,
             Location,
             Semester,
@@ -94,28 +95,29 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// <remarks>Note: The values should be unique as well, since one Excel cell can only contain one field</remarks>
         public SortedDictionary<ReferenceFields, int> PositionOfReferencesInSheet { get; private set; } = new()
         {
-            { ReferenceFields.Author, 1 },
-            { ReferenceFields.Title, 2 },
-            { ReferenceFields.PublicationType, 3 },
-            { ReferenceFields.Publisher, 4 },
-            { ReferenceFields.YearRef, 5 },
-            { ReferenceFields.IdRef, 6 },
-            { ReferenceFields.Education, 7 },
-            { ReferenceFields.Location, 8 },
-            { ReferenceFields.Semester, 9 },
-            { ReferenceFields.Language, 10 },
-            { ReferenceFields.YearReport, 11 },
-            { ReferenceFields.OriginalRef, 12 },
-            { ReferenceFields.Match, 13 },
-            { ReferenceFields.Comment, 14 },
-            { ReferenceFields.Syllabus, 15 },
-            { ReferenceFields.Season, 16 },
-            { ReferenceFields.ExamEvent, 17 },
-            { ReferenceFields.Source, 18 },
-            { ReferenceFields.Pages, 19 },
-            { ReferenceFields.Volume, 20 },
-            { ReferenceFields.Chapters, 21 },
-            { ReferenceFields.BookTitle, 22 },
+            { ReferenceFields.Id, 1 },
+            { ReferenceFields.Author, 2 },
+            { ReferenceFields.Title, 3 },
+            { ReferenceFields.PublicationType, 4 },
+            { ReferenceFields.Publisher, 5 },
+            { ReferenceFields.YearRef, 6 },
+            { ReferenceFields.RefId, 7},
+            { ReferenceFields.Education, 8 },
+            { ReferenceFields.Location, 9 },
+            { ReferenceFields.Semester, 10 },
+            { ReferenceFields.Language, 11 },
+            { ReferenceFields.YearReport, 12 },
+            { ReferenceFields.OriginalRef, 13 },
+            { ReferenceFields.Match, 14 },
+            { ReferenceFields.Comment, 15 },
+            { ReferenceFields.Syllabus, 16 },
+            { ReferenceFields.Season, 17 },
+            { ReferenceFields.ExamEvent, 18 },
+            { ReferenceFields.Source, 19 },
+            { ReferenceFields.Pages, 20 },
+            { ReferenceFields.Volume, 21 },
+            { ReferenceFields.Chapters, 22 },
+            { ReferenceFields.BookTitle, 23 },
         };
 
         /// <summary>
@@ -226,75 +228,97 @@ namespace Zenref.Ava.Models.Spreadsheet
         }
 
         /// <summary>
-        /// Gets a reference at the specified row
+        /// Reads the contents of an Excel row and returns a Reference
         /// </summary>
-        /// <param name="index">The row index of the ReferenceNote that Excel is 1-indexed, and the first row is usually reserved for metadata</param>
-        /// <returns>The Reference at the given row</returns>
-        /// <remarks>Note that Excel is 1-indexed, and the 1st row is usually reserved for metadata</remarks>
-        public RawReference GetReference(int index)
+        /// <param name="row">The Excel row containing a Reference</param>
+        /// <returns>A Reference from the given row</returns>
+        private Reference ReadRow(IXLRow row)
+        {
+            int id = getCell(row, ReferenceFields.Id).GetValue<int>();
+            string author = getCell(row, ReferenceFields.Author).GetValue<string>();
+            string title = getCell(row, ReferenceFields.Title).GetValue<string>();
+            string pubType = getCell(row, ReferenceFields.PublicationType).GetValue<string>();
+            string publisher = getCell(row, ReferenceFields.Publisher).GetValue<string>();
+            int? yearOfRef = getCell(row, ReferenceFields.YearRef).GetValue<int?>();
+            string language = getCell(row, ReferenceFields.Language).GetValue<string>();
+            int? yearOfReport = getCell(row, ReferenceFields.YearReport).GetValue<int?>();
+            double? match = getCell(row, ReferenceFields.Match).GetValue<double?>();
+            string comment = getCell(row, ReferenceFields.Comment).GetValue<string>();
+            string syllabus = getCell(row, ReferenceFields.Syllabus).GetValue<string>();
+            string season = getCell(row, ReferenceFields.Season).GetValue<string>();
+            string examEvent = getCell(row, ReferenceFields.ExamEvent).GetValue<string>();
+            string source = getCell(row, ReferenceFields.Source).GetValue<string>();
+            int? pages = getCell(row, ReferenceFields.Pages).GetValue<int?>();
+            string volume = getCell(row, ReferenceFields.Volume).GetValue<string>();
+            string chapters = getCell(row, ReferenceFields.Chapters).GetValue<string>();
+            string bookTitle = getCell(row, ReferenceFields.BookTitle).GetValue<string>();
+
+            string education = getCell(row, ReferenceFields.Education).GetValue<string>();
+            string location = getCell(row, ReferenceFields.Location).GetValue<string>();
+            string semester = getCell(row, ReferenceFields.Semester).GetValue<string>();
+            string oriReference = getCell(row, ReferenceFields.OriginalRef).GetValue<string>();
+            string refId = getCell(row, ReferenceFields.RefId).GetValue<string>();
+
+            RawReference rawReference = new RawReference(education, location, semester, refId, oriReference);
+            return new Reference(rawReference,
+                id,
+                author,
+                title,
+                pubType,
+                publisher,
+                yearOfRef,
+                language,
+                yearOfReport,
+                match,
+                comment,
+                syllabus,
+                season,
+                examEvent,
+                source,
+                pages,
+                volume,
+                chapters,
+                bookTitle);
+
+        }
+        /// <summary>
+        /// Gets a Reference from the specified index
+        /// </summary>
+        /// <param name="index">the 1 based index of a reference</param>
+        /// <returns>The reference at the indexed position with fields filled accordingly</returns>
+        public Reference GetReference(int index)
         {
             CurrentRow = index;
             IXLRow indexedRow = XlWorksheet.Row(index);
             return ReadRow(indexedRow);
         }
 
+        /// </summary>
+        /// <param name="index">The row index of the ReferenceNote that Excel is 1-indexed, and the first row is usually reserved for metadata</param>
+        /// <returns>The Reference at the given row</returns>
+        /// <remarks>Note that Excel is 1-indexed, and the 1st row is usually reserved for metadata</remarks>
+        public RawReference GetRawReference(int index)
+        {
+            CurrentRow = index;
+            IXLRow indexedRow = XlWorksheet.Row(index);
+            return ReadRawRow(indexedRow);
+        }
+
+
         /// <summary>
         /// Reads the contents of an Excel row and returns a Reference
         /// </summary>
         /// <param name="row">The Excel row containing a Reference</param>
         /// <returns>A Reference from the given row</returns>
-        private RawReference ReadRow(IXLRow row)
+        private RawReference ReadRawRow(IXLRow row)
         {
-            // string author =         getCell(row, ReferenceFields.Author).GetValue<string>();
-            // string title =          getCell(row, ReferenceFields.Title).GetValue<string>();
-            // string pubType =        getCell(row, ReferenceFields.PublicationType).GetValue<string>();
-            // string publisher =      getCell(row, ReferenceFields.Publisher).GetValue<string>();
-            // int? yearOfRef =        getCell(row, ReferenceFields.YearRef).GetValue<int?>();
-            // int? id =               getCell(row, ReferenceFields.IdRef).GetValue<int?>();
-            // string edu =            getCell(row, ReferenceFields.Education).GetValue<string>();
-            // string location =       getCell(row, ReferenceFields.Location).GetValue<string>();
-            // string semester =       getCell(row, ReferenceFields.Semester).GetValue<string>();
-            // string language =       getCell(row, ReferenceFields.Language).GetValue<string>();
-            // int? yearOfReport =     getCell(row, ReferenceFields.YearReport).GetValue<int?>();
-            // double? match =         getCell(row, ReferenceFields.Match).GetValue<double?>();
-            // string comment =        getCell(row, ReferenceFields.Comment).GetValue<string>();
-            // string syllabus =       getCell(row, ReferenceFields.Syllabus).GetValue<string>();
-            // string season =         getCell(row, ReferenceFields.Season).GetValue<string>();
-            // string examEvent =      getCell(row, ReferenceFields.ExamEvent).GetValue<string>();
-            // string source =         getCell(row, ReferenceFields.Source).GetValue<string>();
-            // int? pages =            getCell(row, ReferenceFields.Pages).GetValue<int?>();
-            // string volume =         getCell(row, ReferenceFields.Volume).GetValue<string>();
-            // string chapters =       getCell(row, ReferenceFields.Chapters).GetValue<string>();
-            // string bookTitle =      getCell(row, ReferenceFields.BookTitle).GetValue<string>();
-            //
-            // return new RawReference(author,
-            //     title,
-            //     pubType,
-            //     publisher,
-            //     yearOfRef,
-            //     id,
-            //     edu,
-            //     location,
-            //     semester,
-            //     language,
-            //     yearOfReport,
-            //     match,
-            //     comment,
-            //     syllabus,
-            //     season,
-            //     examEvent,
-            //     source,
-            //     pages,
-            //     volume,
-            //     chapters,
-            //     bookTitle);
             string education = getCell(row, ReferenceFields.Education).GetValue<string>();
             string location = getCell(row, ReferenceFields.Location).GetValue<string>();
             string semester = getCell(row, ReferenceFields.Semester).GetValue<string>();
             string oriReference = getCell(row, ReferenceFields.OriginalRef).GetValue<string>();
-            string id = getCell(row, ReferenceFields.IdRef).GetValue<string>();
+            string refId = getCell(row, ReferenceFields.RefId).GetValue<string>();
 
-            return new RawReference(education, location, semester, id, oriReference);
+            return new RawReference(education, location, semester, refId, oriReference);
 
         }
 
@@ -309,13 +333,35 @@ namespace Zenref.Ava.Models.Spreadsheet
             return row.Cell(PositionOfReferencesInSheet[field]);
         }
 
+        ///// <summary>
+        ///// Reads the next references in the spreadsheet, delimited by <paramref name="amount"/>
+        ///// </summary>
+        ///// <param name="amount">The amount of references to read, if <paramref name="amount"/> is 0, reads all references in the worksheet.</param>
+        ///// <returns>List of references from spreadsheet</returns>
+        ///// <exception cref="NotImplementedException"></exception>
+        //public IEnumerable<RawReference> GetReference(uint amount)
+        //{
+        //    if (amount + CurrentRow >= MaxRowsInExcel)
+        //    {
+        //        throw new ArgumentOutOfRangeException(
+        //            $"Excel does not support more than 1,048,576 rows, tried to read {amount + CurrentRow} rows.");
+        //    }
+
+        //    int totalrows = amount != 0 ? CurrentRow + (int)amount : Count;
+
+        //    for (int i = CurrentRow; i <= totalrows; i++)
+        //    {
+        //        yield return GetReference(i);
+        //    }
+        //}
+
         /// <summary>
         /// Reads the next references in the spreadsheet, delimited by <paramref name="amount"/>
         /// </summary>
         /// <param name="amount">The amount of references to read, if <paramref name="amount"/> is 0, reads all references in the worksheet.</param>
         /// <returns>List of references from spreadsheet</returns>
         /// <exception cref="NotImplementedException"></exception>
-        public IEnumerable<RawReference> GetReference(uint amount)
+        public IEnumerable<Reference> GetReference(uint amount)
         {
             if (amount + CurrentRow >= MaxRowsInExcel)
             {
@@ -355,7 +401,14 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// </summary>
         /// <param name="reference">The reference to be added</param>
         /// <param name="row">Optional, adds reference to a given row, possibly overwriting it</param>
-        public void AddReference(RawReference reference, int row = -1)
+        public void AddRawReference(RawReference reference, int row = -1)
+        {
+            row = row != -1 ? row : Count + 1;
+            IXLRow indexedRow = XlWorksheet.Row(row);
+            indexedRow.Clear();
+            setRawReference(reference, indexedRow);
+        }
+        public void AddReference(Reference reference, int row = -1)
         {
             row = row != -1 ? row : Count + 1;
             IXLRow indexedRow = XlWorksheet.Row(row);
@@ -363,7 +416,7 @@ namespace Zenref.Ava.Models.Spreadsheet
             setReference(reference, indexedRow);
         }
 
-        private void setReference(RawReference reference, IXLRow indexedRow)
+        private void setRawReference(RawReference reference, IXLRow indexedRow)
         {
             // getCell(indexedRow, ReferenceFields.Author).SetValue(reference.Author ?? "");
             // getCell(indexedRow, ReferenceFields.Title).SetValue(reference.Title ?? "");
@@ -389,7 +442,36 @@ namespace Zenref.Ava.Models.Spreadsheet
             getCell(indexedRow, ReferenceFields.Education).SetValue(reference.Education);
             getCell(indexedRow, ReferenceFields.Location).SetValue(reference.Location);
             getCell(indexedRow, ReferenceFields.Semester).SetValue(reference.Semester);
-            getCell(indexedRow, ReferenceFields.IdRef).SetValue(reference.Id);
+            getCell(indexedRow, ReferenceFields.RefId).SetValue(reference.RefId);
+            getCell(indexedRow, ReferenceFields.OriginalRef).SetValue(reference.OriReference);
+        }
+
+        private void setReference(Reference reference, IXLRow indexedRow)
+        {
+            getCell(indexedRow, ReferenceFields.Id).SetValue(reference.Id);
+            getCell(indexedRow, ReferenceFields.Author).SetValue(reference.Author ?? "");
+            getCell(indexedRow, ReferenceFields.Title).SetValue(reference.Title ?? "");
+            getCell(indexedRow, ReferenceFields.PublicationType).SetValue(reference.PubType ?? "");
+            getCell(indexedRow, ReferenceFields.Publisher).SetValue(reference.Publisher ?? "");
+            getCell(indexedRow, ReferenceFields.YearRef).SetValue(reference.YearRef);
+            getCell(indexedRow, ReferenceFields.Location).SetValue(reference.Location ?? "");
+            getCell(indexedRow, ReferenceFields.Semester).SetValue(reference.Semester ?? "");
+            getCell(indexedRow, ReferenceFields.Language).SetValue(reference.Language ?? "");
+            getCell(indexedRow, ReferenceFields.YearReport).SetValue(reference.YearReport);
+            getCell(indexedRow, ReferenceFields.Match).SetValue(reference.Match);
+            getCell(indexedRow, ReferenceFields.Comment).SetValue(reference.Commentary ?? "");
+            getCell(indexedRow, ReferenceFields.Syllabus).SetValue(reference.Syllabus ?? "");
+            getCell(indexedRow, ReferenceFields.Season).SetValue(reference.Season ?? "");
+            getCell(indexedRow, ReferenceFields.ExamEvent).SetValue(reference.ExamEvent ?? "");
+            getCell(indexedRow, ReferenceFields.Source).SetValue(reference.Source ?? "");
+            getCell(indexedRow, ReferenceFields.Pages).SetValue(reference.Pages);
+            getCell(indexedRow, ReferenceFields.Volume).SetValue(reference.Volume ?? "");
+            getCell(indexedRow, ReferenceFields.Chapters).SetValue(reference.Chapters ?? "");
+            getCell(indexedRow, ReferenceFields.BookTitle).SetValue(reference.BookTitle ?? "");
+            getCell(indexedRow, ReferenceFields.Education).SetValue(reference.Education);
+            getCell(indexedRow, ReferenceFields.Location).SetValue(reference.Location);
+            getCell(indexedRow, ReferenceFields.Semester).SetValue(reference.Semester);
+            getCell(indexedRow, ReferenceFields.RefId).SetValue(reference.RefId);
             getCell(indexedRow, ReferenceFields.OriginalRef).SetValue(reference.OriReference);
         }
 
@@ -399,7 +481,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// <param name="references">Collection of references to be added</param>
         /// <param name="startRow">The start row from where the references should be inserted. If default, appends to end of list of references</param>
         /// <exception cref="ArgumentException">Throws if parameter startRow is 0 or less than -1</exception>
-        public void AddReference(IEnumerable<RawReference> references, int startRow = -1)
+        public void AddRawReference(IEnumerable<RawReference> references, int startRow = -1)
         {
             if (startRow is 0 or < -1)
             {
@@ -408,7 +490,7 @@ namespace Zenref.Ava.Models.Spreadsheet
             if (startRow == -1) startRow = Count + 1;
             foreach (RawReference reference in references)
             {
-                AddReference(reference, startRow++);
+                AddRawReference(reference, startRow++);
             }
         }
 
@@ -474,7 +556,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         {
             if (index is > 0 and <= MaxRowsInExcel)
             {
-                AddReference(item, index);
+                AddRawReference(item, index);
             }
             else
             {
@@ -506,7 +588,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// <param name="item">The reference to append</param>
         public void Add(RawReference item)
         {
-            AddReference(item, Count + 1);
+            AddRawReference(item, Count + 1);
         }
 
         /// <summary>
