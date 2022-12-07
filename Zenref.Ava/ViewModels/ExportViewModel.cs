@@ -38,6 +38,20 @@ namespace Zenref.Ava.ViewModels
         [NotifyCanExecuteChangedFor(nameof(StartCommand))]
         private int unIdentifiedNumberCounter = 0;
 
+        [ObservableProperty] private bool isApiKeyButtonEnabled = true;
+        [ObservableProperty] private bool isImportButtonEnabled = false;
+        [ObservableProperty] private bool isStartButtonEnabled = false;
+        [ObservableProperty] private bool isExportButtonEnabled = false;
+
+        private bool canProceed()
+        {
+            return true;
+        }
+        private bool canNotProceed()
+        {
+            return false;
+        }
+
         /// <summary>
         /// Property that hold the information from creating a new publicatino type
         /// </summary>
@@ -76,6 +90,15 @@ namespace Zenref.Ava.ViewModels
             searchTest2.Add(new SearchPublicationType(searchTerm: "hello2vuu", searchSelectOperand: "OG", searchSelectField: "Titel"));
             PublicationTypes.Add(new PublicationType("Bog", searchTest));
             PublicationTypes.Add(new PublicationType("Artikel", searchTest2));
+            
+            using (StreamReader sr = new StreamReader(@"../../../Models/ApiKeys/scopusApiKey.txt"))
+            {
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    IsImportButtonEnabled = canProceed();
+                }
+            }
 
             Messenger.Register<SearchTermMessage>(this, (r, m) =>
             {
@@ -130,6 +153,8 @@ namespace Zenref.Ava.ViewModels
         {
             DragAndDropView dragAndDropView = new DragAndDropView();
             dragAndDropView.ShowDialog(window);
+            IsStartButtonEnabled = canProceed();
+            IsApiKeyButtonEnabled = canNotProceed();
         }
 
         /// <summary>
@@ -189,6 +214,9 @@ namespace Zenref.Ava.ViewModels
                     }
 
                 }
+
+                IsStartButtonEnabled = canNotProceed();
+                IsImportButtonEnabled = canProceed();
             }
             catch (Exception e)
             {
@@ -206,7 +234,7 @@ namespace Zenref.Ava.ViewModels
         {
             IdentifiedNumberCounter = 0;
             UnIdentifiedNumberCounter = 0;
-
+/*
             // Read all the references from the excel file
             ReadAllReferences();
 
@@ -217,9 +245,10 @@ namespace Zenref.Ava.ViewModels
             ApiSearching apiSearching = new ApiSearching();
             // Call the apisearching method
             apiSearching.SearchReferences(rawReferences.ToList());
+*/
 
-
-
+            IsStartButtonEnabled = canNotProceed();
+            IsExportButtonEnabled = canProceed();
 
         }
 
@@ -230,6 +259,10 @@ namespace Zenref.Ava.ViewModels
         private void Export()
         {
             Console.WriteLine("Export");
+            IsApiKeyButtonEnabled = canProceed();
+            IsExportButtonEnabled = false;
+            IsStartButtonEnabled = false;
+            IsImportButtonEnabled = false;
         }
 
 
