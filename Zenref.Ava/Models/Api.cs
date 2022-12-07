@@ -96,6 +96,7 @@ namespace P3Project.API
             // Validation
             if (!_isHTTPResponseCodeSuccess(response))
             {
+                Debug.WriteLine(response.StatusCode);
                 throw new HttpRequestException("Was not able to get ressource from server.");
             }
 
@@ -119,6 +120,7 @@ namespace P3Project.API
             oriReference = oriReference.Replace(")", " ");
             oriReference = oriReference.Replace("*", " ");
             oriReference = oriReference.Replace("&", " ");
+            oriReference = oriReference.Replace("#", " ");
             oriReference = oriReference.Replace("+", "%2b");
             oriReference = oriReference.Replace("/", "%2f");
 
