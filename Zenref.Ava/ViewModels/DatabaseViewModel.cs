@@ -18,6 +18,7 @@ using DynamicData;
 using MessageBox.Avalonia.BaseWindows.Base;
 using MessageBox.Avalonia.Enums;
 using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace Zenref.Ava.ViewModels
 {
@@ -27,7 +28,7 @@ namespace Zenref.Ava.ViewModels
         [ObservableProperty]
         private ObservableCollection<Reference> references;
         [ObservableProperty] 
-        private ObservableCollection<RawReference> rawReferences;
+        private ObservableCollection<Reference> inputReferences;
         [ObservableProperty]
         private IEnumerable<Reference> filteredReferences;
         private List<FileInfo> filePaths;
@@ -36,15 +37,20 @@ namespace Zenref.Ava.ViewModels
         [ObservableProperty]
         private bool saveChanges = true;
         [ObservableProperty]
-        private string[] propertyArray = { "Forfatter", "Titel", "Publikationstype", "Forlag", "År (Reference)", "Id", "Uddannelse", "Uddannelsessted", "Semester", "Sprog", "År (Rapport)", "Match", "Kommentar", "Pensum", "Sæson", "Eksamensbegivenhed", "Kilde", "Sidetal", "Bind", "Kapitler", "Bogtitel", "Henvisning" };
+        private string[] propertyArray = { "Forfatter", "Titel", "Publikationstype", "Forlag", "År (Reference)", "Reference id", "Uddannelse", "Uddannelsessted", "Semester", "Sprog", "År (Rapport)", "Match", "Kommentar", "Pensum", "Sæson", "Eksamensbegivenhed", "Kilde", "Sidetal", "Bind", "Kapitler", "Bogtitel", "Henvisning" };
 
         public DatabaseViewModel() : base(WeakReferenceMessenger.Default)
         {
             Messenger.Register<FilePathsMessage>(this, (r,m) =>
             {
                 Receive(m);
-                // ReadAllReferences();
+                ReadAllReferences();
             });
+            using (var context = new DataContext())
+            {
+                var referenceList = context.References.ToList();
+                references = new ObservableCollection<Reference>(referenceList);
+            }
             // FOR TESTING DATAGRID DISPLAYING REFERENCES
             //references = new ObservableCollection<Reference>();
             //RawReference rawReference = new RawReference("How to magic", "Hogwarts", "5. semester", "1234-4321", "Rowling, J. K. (1997). Harry Potter and the Philosopher’s Stone (1st ed.). Bloomsbury.");
@@ -60,7 +66,7 @@ namespace Zenref.Ava.ViewModels
             //    RawReference rawReference1 = new RawReference(s[0], s[1], s[2], $"{i}", s[3]);
             //    references.Add(new Reference(rawReference1, s[4], s[5], s[6], s[7], i, s[8], i, d, s[9], s[10], s[11], s[12], s[13], i, s[14], s[15], s[16]));
             //}
-            //filteredReferences = references;
+            filteredReferences = references;
         }
 
         public void Receive(FilePathsMessage message)
@@ -82,44 +88,63 @@ namespace Zenref.Ava.ViewModels
         [RelayCommand]
         private void OpenDragAndDropView(Window window)
         {
+            //using (var context = new DataContext())
+            //{
+            //    try
+            //    {
+            //        RawReference rawReference = new RawReference("How to magicc", "Hogwarts", "5. semester", "1234-4321", "Rowling, J. K. (1997). Harry Potter and the Philosopher’s Stone (1st ed.). Bloomsbury.");
+            //        Reference testReference = new Reference(rawReference, 1, "J.K. Rowling", "Harry Potter and the Philosopher's Stone", "Bog", "Bloomsbury", 1997, "Engelsk", 2022, 0.8, "Kommentar", "How to wave a wand", "Forår", "Magic for beginners", "DanBib", 223, "Hvem ved", "Quidditch", "Bogtitel");
+            //        context.References.Add(testReference);
+            //        context.SaveChanges();
+            //    }
+            //    catch (DbUpdateException e)
+            //    {
+            //        Debug.WriteLine(e.Data);
+            //    }
+
+            //}
             DragAndDropView dragAndDropView = new DragAndDropView();
             dragAndDropView.ShowDialog(window);
         }
 
         private void ReadAllReferences()
         {
-        //     ObservableCollection<RawReference> referencesInSheets = new ObservableCollection<RawReference>();
-        //     SortedDictionary<Spreadsheet.ReferenceFields, int> positionInSheet = new SortedDictionary<Spreadsheet.ReferenceFields, int>();
-        //     Spreadsheet.ReferenceFields referenceFields = (Spreadsheet.ReferenceFields)0;
-        //     for (int i = 0; i < columnPositions.Count; i++)
-        //     {
-        //         positionInSheet.Add(referenceFields++,columnPositions[i]);
-        //     }
-        //
-        //     try
-        //     {
-        //         foreach (FileInfo path in filePaths)
-        //         {
-        //
-        //             Spreadsheet spreadsheet = new Spreadsheet(path.Name, path.DirectoryName);
-        //             Debug.WriteLine($"FileName: {path.Name} Path: {path.DirectoryName}");
-        //             spreadsheet.SetColumnPosition(positionInSheet);
-        //             spreadsheet.Import();
-        //             spreadsheet.SetActiveSheet(activeSheet);
-        //             Debug.WriteLine($"SPREADSHEET count: {spreadsheet.Count}");
-        //             IEnumerable<RawReference> referencesInSheet = spreadsheet.GetReference(0u);
-        //             referencesInSheets.Add(referencesInSheet);
-        //         }
-        //         RawReferences = referencesInSheets;
-        //         Debug.WriteLine($"Found {references.Count} Reference(s)");
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         IMsBoxWindow<ButtonResult> messageBoxStandardView = MessageBox.Avalonia.MessageBoxManager
-        //             .GetMessageBoxStandardWindow("Error", "Error in reading References from spreadsheet");
-        //         messageBoxStandardView.Show();
-        //         Debug.WriteLine("Error in reading references.");
-        //     }
+            ObservableCollection<Reference> referencesInSheets = new ObservableCollection<Reference>();
+            SortedDictionary<Spreadsheet.ReferenceFields, int> positionInSheet = new SortedDictionary<Spreadsheet.ReferenceFields, int>();
+            Spreadsheet.ReferenceFields referenceFields = (Spreadsheet.ReferenceFields)0;
+            for (int i = 0; i < columnPositions.Count; i++)
+            {
+                positionInSheet.Add(referenceFields++, columnPositions[i]);
+            }
+
+            try
+            {
+                foreach (FileInfo path in filePaths)
+                {
+
+                    Spreadsheet spreadsheet = new Spreadsheet(path.FullName);
+                    Debug.WriteLine($"FileName: {path.Name} Path: {path.DirectoryName}");
+                    spreadsheet.SetColumnPosition(positionInSheet);
+                    spreadsheet.Import();
+                    spreadsheet.SetActiveSheet(activeSheet);
+                    Debug.WriteLine($"SPREADSHEET count: {spreadsheet.Count}");
+                    IEnumerable<Reference> referencesInSheet = spreadsheet.GetReference(0u);
+                    referencesInSheets.Add(referencesInSheet);
+                }
+
+                InputReferences = referencesInSheets;
+                Debug.WriteLine($"Found {InputReferences.Count} Reference(s)");
+            }
+            catch (Exception e)
+            {
+                IMsBoxWindow<ButtonResult> messageBoxStandardView = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia
+                    .MessageBoxManager
+                    .GetMessageBoxStandardWindow("Error", "Error in reading References from spreadsheet");
+                messageBoxStandardView.Show();
+                Debug.WriteLine("Error in reading references.");
+                Debug.WriteLine(e.Message + e.StackTrace);
+                Debug.WriteLine(positionInSheet.Count);
+            }
         }
 
         /// <summary>
@@ -155,6 +180,21 @@ namespace Zenref.Ava.ViewModels
         public void OnWindowClosing(object sender, CancelEventArgs e)
         {
             // Code to be executed before window is closed.
+            using (var context = new DataContext())
+            {
+                if (saveChanges)
+                {
+                    foreach (Reference reference in context.References)
+                    {
+                        context.References.Remove(reference);
+                    }
+                    foreach (Reference reference in references)
+                    {
+                        context.References.Add(reference);
+                    }
+                    context.SaveChanges();
+                }
+            }
         }
     }
 }
