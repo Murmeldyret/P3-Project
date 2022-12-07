@@ -227,9 +227,34 @@ namespace Zenref.Ava.ViewModels
         /// Exports to excel
         /// </summary>
         [RelayCommand]
-        private void Export()
+        private void Export(Spreadsheet sheet, string name)
         {
-            Console.WriteLine("Export");
+            sheet.AddReference(filteredReferences, 2);
+            sheet.Export(name);
+            Debug.WriteLine($"Exported {filteredReferences.Count()} Reference(s).");
+        }
+        [RelayCommand]
+        private async void SaveFileDialog(Window window)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Title = "Choose export folder",
+                InitialFileName = "Behandlede_Referencer.xlsx",
+                DefaultExtension = ".xlsx",
+            };
+            string? filePathToExportedFile = await saveFileDialog.ShowAsync(window);
+            if (filePathToExportedFile is null)
+            {
+                IMsBoxWindow<ButtonResult> messageBoxStandardView = MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow("Error", "Error in reading References from spreadsheet"); 
+                messageBoxStandardView.Show();
+            }
+            else
+            {
+               Spreadsheet exportSheet = new Spreadsheet(filePathToExportedFile);
+               exportSheet.Create();
+               Export(exportSheet, filePathToExportedFile);
+            }
         }
 
 
