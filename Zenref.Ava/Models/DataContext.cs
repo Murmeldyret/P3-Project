@@ -10,18 +10,24 @@ namespace Zenref.Ava.Models
     {
         public DbSet<Reference> References => Set<Reference>();
 
+        //private string  DbPath { get; }
+
+        //public DataContext()
+        //{
+            
+        //}
+        //DbPath = Path.Combine(Environment.CurrentDirectory, "Zenref1.db");
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
+            => optionsBuilder.UseSqlite($"Data Source={Path.Combine(Environment.CurrentDirectory, "Zenref1.db")}");
+        
             // optionsBuilder.UseSqlite("FileName=zenref.db");
-            optionsBuilder.UseSqlite("FileName=zenref.db", optionsBuilder =>
-            {
-                optionsBuilder.MigrationsAssembly("Zenref.Ava");
-            });
+            //optionsBuilder.UseSqlite("FileName=zenref.db", optionsBuilder =>
+            //{
+            //    optionsBuilder.MigrationsAssembly("Zenref.Ava");
+            //});
 
-            optionsBuilder.UseSqlite("Data Source=zenref.db");
-
-            base.OnConfiguring(optionsBuilder);
-        }
+            //base.OnConfiguring(optionsBuilder);
+        
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
