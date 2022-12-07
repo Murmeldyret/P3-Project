@@ -137,11 +137,13 @@ namespace Zenref.Ava.ViewModels
             int defaultColumnPositions = 1;
             columnPositions = new ObservableCollection<ColumnPositionHandler>()
             {
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Id.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Author.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Title.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.PublicationType.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Publisher.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.YearRef.ToString(),defaultColumnPositions++,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.IdRef.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.RefId.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Education.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Location.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Semester.ToString(),defaultColumnPositions++,action,this),
@@ -155,6 +157,7 @@ namespace Zenref.Ava.ViewModels
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.ExamEvent.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Source.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Pages.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Volume.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Chapters.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.BookTitle.ToString(),defaultColumnPositions++,action,this),
             };

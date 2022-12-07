@@ -31,12 +31,13 @@
 			<DataGrid x:Name="myDataGrid" Items="{Binding FilteredReferences}" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
 				  RowBackground="LightGray" CanUserResizeColumns="True" RowHeight="30" Width="1200" Height="550">
 				<DataGrid.Columns>
+					<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
 					<DataGridTextColumn Header="Forfatter" Binding="{Binding Author}"/>	
 					<DataGridTextColumn Header="Titel" Binding="{Binding Title}"/>
 					<DataGridTextColumn Header="Publikationstype" Binding="{Binding PubType}"/>
 					<DataGridTextColumn Header="Forlag" Binding="{Binding Publisher}"/>
 					<DataGridTextColumn Header="År (Reference)" Binding="{Binding YearRef}"/>
-					<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+					<DataGridTextColumn Header="Reference id" Binding="{Binding RefId}"/>
 					<DataGridTextColumn Header="Uddannelse" Binding="{Binding Education}"/>
 					<DataGridTextColumn Header="Uddannelsessted" Binding="{Binding Location}"/>
 					<DataGridTextColumn Header="Semester" Binding="{Binding Semester}"/>
