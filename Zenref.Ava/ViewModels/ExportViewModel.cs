@@ -229,13 +229,13 @@ namespace Zenref.Ava.ViewModels
         /// </summary>
         private void Export(Spreadsheet sheet, string name)
         {
-            List<Reference> testreferences = new List<Reference>();
-            foreach (RawReference reference in rawReferences)
-            {
-                testreferences.Add(new Reference(reference,DateTimeOffset.Now));
-            }
-            Debug.WriteLine($"testreferences count:{testreferences.Count()}");
-            sheet.AddReference(testreferences, 2);
+            // List<Reference> testreferences = new List<Reference>();
+            // foreach (RawReference reference in rawReferences)
+            // {
+            //     testreferences.Add(new Reference(reference,DateTimeOffset.Now));
+            // }
+            Debug.WriteLine($"testreferences count:{FilteredReferences.Count()}");
+            sheet.AddReference(FilteredReferences, 2);
             sheet.Export(name);
             //Debug.WriteLine($"Exported {filteredReferences.Count()} Reference(s).");
         }
