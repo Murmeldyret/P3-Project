@@ -22,6 +22,7 @@ using P3Project.API;
 using Zenref.Ava.Models;
 using Zenref.Ava.Models.Spreadsheet;
 using Zenref.Ava.Views;
+using System.ComponentModel;
 
 namespace Zenref.Ava.ViewModels
 {
@@ -62,8 +63,10 @@ namespace Zenref.Ava.ViewModels
         [ObservableProperty]
         private IEnumerable<Reference> filteredReferences;
 
-        [ObservableProperty] 
+        [ObservableProperty]
         private string apiKey;
+        private BackgroundWorker StartWorker;
+        private bool _isRunning;
 
         /// <summary>
         /// Constructor, sets up the predefined publication types.
@@ -157,7 +160,7 @@ namespace Zenref.Ava.ViewModels
         [RelayCommand]
         private void AddApiKey()
         {
-            string filename = @"../../../Models/ApiKeys/scopusApiKey.txt";
+            string filename = @"./ApiKeys/scopusApiKey.txt";
 
             try
             {
@@ -169,7 +172,7 @@ namespace Zenref.Ava.ViewModels
                     {
                         sw.Write(ApiKey);
                     }
-                    
+
                     // Read the apikey from file
                     using (StreamReader sr = new StreamReader(filename))
                     {
@@ -207,21 +210,16 @@ namespace Zenref.Ava.ViewModels
             IdentifiedNumberCounter = 0;
             UnIdentifiedNumberCounter = 0;
 
-            // Read all the references from the excel file
-            ReadAllReferences();
-            // Spreadsheet spreadsheet = new Spreadsheet("output.xlsx");
-            // spreadsheet.Create();
-            // Export(spreadsheet,"output.xlsx");
-            // Identify the references in the database
-            // TODO: Implement the identification of the references
+            StartWorker = new BackgroundWorker()
+            {
+                WorkerReportsProgress = true,
+                WorkerSupportsCancellation = true
+            };
+            StartWorker.DoWork += RunBackgroundSearchProcess;
+            StartWorker.ProgressChanged += ChangedBackgroundSearchProcess;
+            StartWorker.RunWorkerCompleted += CompletedBackgroundSearchProcess;
 
-            // If the database does not contain the reference, search for it in the internet
-            ApiSearching apiSearching = new ApiSearching();
-            // Call the apisearching method
-            apiSearching.SearchReferences(rawReferences.ToList());
-
-
-            
+            StartWorker.RunWorkerAsync();
         }
 
         /// <summary>
@@ -317,6 +315,44 @@ namespace Zenref.Ava.ViewModels
                 Debug.WriteLine(e.Message + e.StackTrace);
                 Debug.WriteLine(positionInSheet.Count);
             }
+
+        }
+
+        private void RunBackgroundSearchProcess(object sender, DoWorkEventArgs e)
+        {
+            _isRunning = true;
+            // Read all the references from the excel file
+            ReadAllReferences();
+
+            // Identify the references in the database
+            // TODO: Implement the identification of the references
+
+            // If the database does not contain the reference, search for it in the internet
+            ApiSearching apiSearching = new ApiSearching();
+            // Call the apisearching method
+            List<Reference> references = apiSearching.SearchReferences(rawReferences.ToList());
+
+            Console.WriteLine("References: " + rawReferences.Count);
+
+            // Filter the references
+            FilterCollection instance = IFilterCollection.GetInstance();
+
+            
+
+            // Categorize all the references
+            foreach (Reference reference in references)
+            {
+                // Call the categorize function.
+                
+            }
+        }
+        private void CompletedBackgroundSearchProcess(object sender, RunWorkerCompletedEventArgs e)
+        {
+            _isRunning = false;
+        }
+
+        private void ChangedBackgroundSearchProcess(object sender, ProgressChangedEventArgs e)
+        {
             
         }
     }

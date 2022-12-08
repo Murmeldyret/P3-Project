@@ -2,11 +2,13 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 using Zenref.Ava.Models;
 using P3Project.API.APIHelper;
 using System.Net;
 using System.IO;
+using System.Diagnostics;
 
 namespace P3Project.API
 {
@@ -92,8 +94,12 @@ namespace P3Project.API
             // Validation
             if (!_isHTTPResponseCodeSuccess(response))
             {
+                Debug.WriteLine(response.StatusCode);
                 throw new HttpRequestException("Was not able to get ressource from server.");
             }
+
+            // Validate whether the response is empty
+
 
             // Parse into deligate
             Reference parsed_reference = referenceParser(inputReference, response);
@@ -108,18 +114,14 @@ namespace P3Project.API
             {
                 throw new ArgumentNullException("The original reference is null");
             }
-            oriReference = oriReference.Replace("(", "%28");
-            oriReference = oriReference.Replace(")", "%29");
+            oriReference = oriReference.Replace("(", " ");
+            oriReference = oriReference.Replace(")", " ");
             oriReference = oriReference.Replace("*", " ");
-            oriReference = oriReference.Replace("?", "%3f");
-            oriReference = oriReference.Replace("&", "%26");
-            oriReference = oriReference.Replace(":", "%3a");
-            oriReference = oriReference.Replace(";", "%3b");
-            oriReference = oriReference.Replace(",", "%2c");
-            oriReference = oriReference.Replace("=", "%3d");
+            oriReference = oriReference.Replace("&", " ");
+            oriReference = oriReference.Replace("#", " ");
             oriReference = oriReference.Replace("+", "%2b");
             oriReference = oriReference.Replace("/", "%2f");
-            
+
 
 
             return oriReference;
@@ -204,18 +206,27 @@ namespace P3Project.API
         {
             // This should have been done in a better way, however, there is no time for it.
             Scopus scopus = InitializeScopus();
-            
+
+            int i = 2;
+
             List<Reference> references = new List<Reference>();
             foreach (RawReference rawReference in rawReferences)
             {
-                Reference reference = scopus.ReferenceFetch(rawReference, scopus.ReferenceParser).Result;
+                Debug.WriteLine(i);
+                if (i == 72)
+                {
+                    Debug.WriteLine("hej");
+                }
+                Reference reference = Task.Run(() => scopus.ReferenceFetch(rawReference, scopus.ReferenceParser)).Result;
                 references.Add(reference);
+
+                i++;
             }
 
             return references;
         }
 
-        public Scopus InitializeScopus()
+        private Scopus InitializeScopus()
         {
             // Read the apikey from the file
             string apiKey = File.ReadAllText("./ApiKeys/scopusApiKey.txt");
