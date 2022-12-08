@@ -89,9 +89,7 @@ namespace P3Project.API
             string queryString = queryCleaner(inputReference.OriReference);
             Uri apiUri = BuildUri($"query={queryString}");
 
-            Debug.WriteLine("Here 1");
             HttpResponseMessage response = await ApiClient.getInstance().GetAsync(apiUri);       // Request API for ressource.
-            Debug.WriteLine("Here 2");
 
             // Validation
             if (!_isHTTPResponseCodeSuccess(response))
@@ -209,11 +207,20 @@ namespace P3Project.API
             // This should have been done in a better way, however, there is no time for it.
             Scopus scopus = InitializeScopus();
 
+            int i = 2;
+
             List<Reference> references = new List<Reference>();
             foreach (RawReference rawReference in rawReferences)
             {
+                Debug.WriteLine(i);
+                if (i == 72)
+                {
+                    Debug.WriteLine("hej");
+                }
                 Reference reference = Task.Run(() => scopus.ReferenceFetch(rawReference, scopus.ReferenceParser)).Result;
                 references.Add(reference);
+
+                i++;
             }
 
             return references;
