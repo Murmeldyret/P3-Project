@@ -134,7 +134,7 @@ namespace Zenref.Ava.ViewModels
             isNextButtonEnabled = false;
             files = new ObservableCollection<FileInfo>();
             Files.CollectionChanged += Files_CollectionChanged;
-            int defaultColumnPositions = 1;
+            int defaultColumnPositions = 9;
             columnPositions = new ObservableCollection<ColumnPositionHandler>()
             {
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Id.ToString(),defaultColumnPositions++,action,this),
@@ -143,18 +143,18 @@ namespace Zenref.Ava.ViewModels
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.PublicationType.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Publisher.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.YearRef.ToString(),defaultColumnPositions++,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.RefId.ToString(),defaultColumnPositions++,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Education.ToString(),defaultColumnPositions++,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Location.ToString(),defaultColumnPositions++,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Semester.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.RefId.ToString(),6,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Education.ToString(),1,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Location.ToString(),2,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Semester.ToString(),3,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Language.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.YearReport.ToString(),defaultColumnPositions++,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.OriginalRef.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.OriginalRef.ToString(),7,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Match.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Comment.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Syllabus.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Season.ToString(),defaultColumnPositions++,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.ExamEvent.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.ExamEvent.ToString(),5,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Source.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Pages.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Volume.ToString(),defaultColumnPositions++,action,this),

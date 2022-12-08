@@ -234,21 +234,21 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// <returns>A Reference from the given row</returns>
         private Reference ReadRow(IXLRow row)
         {
-            int id = getCell(row, ReferenceFields.Id).GetValue<int>();
+            string id = getCell(row, ReferenceFields.Id).GetString();
             string author = getCell(row, ReferenceFields.Author).GetValue<string>();
             string title = getCell(row, ReferenceFields.Title).GetValue<string>();
             string pubType = getCell(row, ReferenceFields.PublicationType).GetValue<string>();
             string publisher = getCell(row, ReferenceFields.Publisher).GetValue<string>();
-            int? yearOfRef = getCell(row, ReferenceFields.YearRef).GetValue<int?>();
+            string yearOfRef = getCell(row, ReferenceFields.YearRef).GetString();
             string language = getCell(row, ReferenceFields.Language).GetValue<string>();
-            int? yearOfReport = getCell(row, ReferenceFields.YearReport).GetValue<int?>();
+            string yearOfReport = getCell(row, ReferenceFields.YearReport).GetString();
             double? match = getCell(row, ReferenceFields.Match).GetValue<double?>();
             string comment = getCell(row, ReferenceFields.Comment).GetValue<string>();
             string syllabus = getCell(row, ReferenceFields.Syllabus).GetValue<string>();
             string season = getCell(row, ReferenceFields.Season).GetValue<string>();
             string examEvent = getCell(row, ReferenceFields.ExamEvent).GetValue<string>();
             string source = getCell(row, ReferenceFields.Source).GetValue<string>();
-            int? pages = getCell(row, ReferenceFields.Pages).GetValue<int?>();
+            string pages = getCell(row, ReferenceFields.Pages).GetString();
             string volume = getCell(row, ReferenceFields.Volume).GetValue<string>();
             string chapters = getCell(row, ReferenceFields.Chapters).GetValue<string>();
             string bookTitle = getCell(row, ReferenceFields.BookTitle).GetValue<string>();
@@ -261,21 +261,21 @@ namespace Zenref.Ava.Models.Spreadsheet
 
             RawReference rawReference = new RawReference(education, location, semester, refId, oriReference);
             return new Reference(rawReference,
-                id,
+                0,
                 author,
                 title,
                 pubType,
                 publisher,
-                yearOfRef,
+                0,
                 language,
-                yearOfReport,
+                0,
                 match,
                 comment,
                 syllabus,
                 season,
                 examEvent,
                 source,
-                pages,
+                0,
                 volume,
                 chapters,
                 bookTitle);

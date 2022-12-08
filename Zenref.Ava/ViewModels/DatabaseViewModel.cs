@@ -92,8 +92,8 @@ namespace Zenref.Ava.ViewModels
             //{
             //    try
             //    {
-            //        RawReference rawReference = new RawReference("How to magicc", "Hogwarts", "5. semester", "1234-4321", "Rowling, J. K. (1997). Harry Potter and the Philosopher’s Stone (1st ed.). Bloomsbury.");
-            //        Reference testReference = new Reference(rawReference, 1, "J.K. Rowling", "Harry Potter and the Philosopher's Stone", "Bog", "Bloomsbury", 1997, "Engelsk", 2022, 0.8, "Kommentar", "How to wave a wand", "Forår", "Magic for beginners", "DanBib", 223, "Hvem ved", "Quidditch", "Bogtitel");
+            //        RawReference rawReference = new RawReference("How to magic", "Hogwarts", "5. semester", "1234-4321", "Rowling, J. K. (1997). Harry Potter and the Philosopher’s Stone (1st ed.). Bloomsbury.");
+            //        Reference testReference = new Reference(rawReference, 5, "J.K. Rowling", "Harry Potter and the Philosopher's Stone", "Bog", "Bloomsbury", 1997, "Engelsk", 2022, 0.8, "Kommentar", "How to wave a wand", "Forår", "Magic for beginners", "DanBib", 223, "Hvem ved", "Quidditch", "Bogtitel");
             //        context.References.Add(testReference);
             //        context.SaveChanges();
             //    }
@@ -102,7 +102,7 @@ namespace Zenref.Ava.ViewModels
             //        Debug.WriteLine(e.Data);
             //    }
 
-            //}
+            //    }
             DragAndDropView dragAndDropView = new DragAndDropView();
             dragAndDropView.ShowDialog(window);
         }
