@@ -300,6 +300,18 @@ namespace Zenref.Ava.ViewModels
             List<Reference> references = apiSearching.SearchReferences(rawReferences.ToList());
 
             Console.WriteLine("References: " + rawReferences.Count);
+
+            // Filter the references
+            FilterCollection instance = IFilterCollection.GetInstance();
+
+            
+
+            // Categorize all the references
+            foreach (Reference reference in references)
+            {
+                // Call the categorize function.
+                
+            }
         }
         private void CompletedBackgroundSearchProcess(object sender, RunWorkerCompletedEventArgs e)
         {
