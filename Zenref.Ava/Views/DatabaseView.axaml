@@ -26,7 +26,7 @@
 			<TextBox KeyUp="SearchFilter" Watermark="Søg" Width="150" FontSize="15"/>
 			<ComboBox Name="myCombobox" Items="{Binding PropertyArray}" SelectedIndex="0"/>
 			<Button Command="{Binding DeleteReference}" CommandParameter="{Binding SelectedItem, ElementName=myDataGrid}" Content="Slet"/>
-			<CheckBox IsChecked="{Binding SaveChanges}" Content="Gem ændringer automatisk"/>
+			<CheckBox IsChecked="{Binding SaveChanges}" Content="Gem ændringer"/>
 		</Menu>
 			<DataGrid x:Name="myDataGrid" Items="{Binding FilteredReferences}" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
 				  RowBackground="LightGray" CanUserResizeColumns="True" RowHeight="30" Width="1200" Height="550">
