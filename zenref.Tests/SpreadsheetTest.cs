@@ -442,11 +442,11 @@ namespace zenref.Tests
 
             //Act
             sheet.Create();
-            sheet.AddReference(reference1,1);
-            sheet.AddReference(reference1,2);
-            sheet.AddReference(referencenull,3);
-            sheet.AddReference(referencenull,4);
-            sheet.AddReference(reference1,5);
+            sheet.AddRawReference(reference1,1);
+            sheet.AddRawReference(reference1,2);
+            sheet.AddRawReference(referencenull,3);
+            sheet.AddRawReference(referencenull,4);
+            sheet.AddRawReference(reference1,5);
 
             //Assert
             Assert.Equal(3, sheet.Count);
@@ -498,7 +498,7 @@ namespace zenref.Tests
                 {Spreadsheet.ReferenceFields.PublicationType, 20},
                 {Spreadsheet.ReferenceFields.Publisher, 19},
                 {Spreadsheet.ReferenceFields.YearRef, 18},
-                {Spreadsheet.ReferenceFields.IdRef, 17},
+                {Spreadsheet.ReferenceFields.RefId, 17},
                 {Spreadsheet.ReferenceFields.Education, 16},
                 {Spreadsheet.ReferenceFields.Location, 15},
                 {Spreadsheet.ReferenceFields.Semester, 14},

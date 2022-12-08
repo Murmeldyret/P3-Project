@@ -2,6 +2,7 @@ using ClosedXML.Excel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -234,6 +235,10 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// <returns>A Reference from the given row</returns>
         private Reference ReadRow(IXLRow row)
         {
+            try
+            {
+
+
             string id = getCell(row, ReferenceFields.Id).GetString();
             string author = getCell(row, ReferenceFields.Author).GetValue<string>();
             string title = getCell(row, ReferenceFields.Title).GetValue<string>();
@@ -279,7 +284,13 @@ namespace Zenref.Ava.Models.Spreadsheet
                 volume,
                 chapters,
                 bookTitle);
-
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return null;
+            }
+            
         }
         /// <summary>
         /// Gets a Reference from the specified index

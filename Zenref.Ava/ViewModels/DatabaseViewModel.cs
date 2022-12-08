@@ -18,6 +18,7 @@ using DynamicData;
 using MessageBox.Avalonia.BaseWindows.Base;
 using MessageBox.Avalonia.Enums;
 using System;
+using System.Reactive.Linq;
 using Microsoft.EntityFrameworkCore;
 
 namespace Zenref.Ava.ViewModels
@@ -46,11 +47,11 @@ namespace Zenref.Ava.ViewModels
                 Receive(m);
                 ReadAllReferences();
             });
-            using (var context = new DataContext())
-            {
-                var referenceList = context.References.ToList();
-                references = new ObservableCollection<Reference>(referenceList);
-            }
+            // using (var context = new DataContext())
+            // {
+            //     var referenceList = context.References.ToList();
+            //     references = new ObservableCollection<Reference>(referenceList);
+            // }
             // FOR TESTING DATAGRID DISPLAYING REFERENCES
             //references = new ObservableCollection<Reference>();
             //RawReference rawReference = new RawReference("How to magic", "Hogwarts", "5. semester", "1234-4321", "Rowling, J. K. (1997). Harry Potter and the Philosopher’s Stone (1st ed.). Bloomsbury.");
@@ -132,18 +133,33 @@ namespace Zenref.Ava.ViewModels
                     referencesInSheets.Add(referencesInSheet);
                 }
 
-                InputReferences = referencesInSheets;
-                Debug.WriteLine($"Found {InputReferences.Count} Reference(s)");
+
             }
             catch (Exception e)
             {
-                IMsBoxWindow<ButtonResult> messageBoxStandardView = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia
-                    .MessageBoxManager
-                    .GetMessageBoxStandardWindow("Error", "Error in reading References from spreadsheet");
-                messageBoxStandardView.Show();
+
                 Debug.WriteLine("Error in reading references.");
                 Debug.WriteLine(e.Message + e.StackTrace);
                 Debug.WriteLine(positionInSheet.Count);
+            }
+            finally
+            {
+                int nullReferences = referencesInSheets.Where(x => x is null).Count();
+                if (nullReferences > 0)
+                {
+                    IMsBoxWindow<ButtonResult> messageBoxStandardView = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia
+                        .MessageBoxManager
+                        .GetMessageBoxStandardWindow("Error", $"Failed to read {nullReferences} reference(s)");
+                    messageBoxStandardView.Show();   
+                }
+                
+               
+
+                inputReferences = new ObservableCollection<Reference>();
+                InputReferences.AddRange(referencesInSheets.Where(x => x is not null));
+                Debug.WriteLine($"Found {InputReferences.Count} Reference(s)");
+                Debug.WriteLine($"Number of failed references: {nullReferences}");
+                
             }
         }
 
