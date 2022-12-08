@@ -137,7 +137,6 @@ namespace Zenref.Ava.ViewModels
             int defaultColumnPositions = 1;
             columnPositions = new ObservableCollection<ColumnPositionHandler>()
             {
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.Id.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Author.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Title.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.PublicationType.ToString(),defaultColumnPositions++,action,this),

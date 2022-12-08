@@ -50,8 +50,6 @@ namespace Zenref.Ava.ViewModels
                 {
                     references.Add(reference);
                 }
-                Debug.WriteLine(references[0].Title);
-                Debug.WriteLine(references[1].Title);
                 //using (var context = new DataContext())
                 //{
                 //    foreach (Reference reference in inputReferences)
