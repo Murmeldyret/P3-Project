@@ -330,7 +330,7 @@ namespace Zenref.Ava.ViewModels
             // If the database does not contain the reference, search for it in the internet
             ApiSearching apiSearching = new ApiSearching();
             // Call the apisearching method
-            List<Reference> references = apiSearching.SearchReferences(rawReferences.ToList());
+            (List<Reference> references, List<RawReference> leftOverRef) = apiSearching.SearchReferences(rawReferences.ToList());
 
             Console.WriteLine("References: " + rawReferences.Count);
 
@@ -343,7 +343,18 @@ namespace Zenref.Ava.ViewModels
             foreach (Reference reference in references)
             {
                 // Call the categorize function.
-                
+                if(reference.PubType == null)
+                {
+                    reference.PubType = instance.categorize(reference);
+                }
+            }
+
+            // Categorize all the remaining raw references
+            foreach (RawReference rawreference in leftOverRef)
+            {
+                Reference reference = new Reference(rawreference, DateTimeOffset.Now);
+                reference.PubType = "Uncategorized";
+                references.Add(reference);
             }
         }
         private void CompletedBackgroundSearchProcess(object sender, RunWorkerCompletedEventArgs e)
