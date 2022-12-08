@@ -187,7 +187,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// <exception cref="ArgumentException">Throws if position is below 0</exception>
         public void SetActiveSheet(int position)
         {
-            if (Workbook != null && (Workbook.Worksheets.Count <= position || position <= 0))
+            if (Workbook != null && (Workbook.Worksheets.Count < position || position <= 0))
             {
                 if (position > 0)
                     Workbook.Worksheets.Add(DateTimeOffset.Now.ToUnixTimeSeconds().ToString(), position);
