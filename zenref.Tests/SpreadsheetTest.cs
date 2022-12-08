@@ -243,7 +243,7 @@ namespace zenref.Tests
                 "lang tekst");
 
             sheet.Import();
-            RawReference importedReference = sheet.GetReference(2);
+            RawReference importedReference = sheet.GetRawReference(2);
 
             //Equivalent verifies that each public property is the same
             Assert.Equivalent(reference, importedReference);

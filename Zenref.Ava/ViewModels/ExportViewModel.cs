@@ -220,16 +220,49 @@ namespace Zenref.Ava.ViewModels
             StartWorker.RunWorkerCompleted += CompletedBackgroundSearchProcess;
 
             StartWorker.RunWorkerAsync();
-
         }
 
         /// <summary>
         /// Exports to excel
         /// </summary>
-        [RelayCommand]
-        private void Export()
+        private void Export(Spreadsheet sheet, string name)
         {
-            Console.WriteLine("Export");
+            // List<Reference> testreferences = new List<Reference>();
+            // foreach (RawReference reference in rawReferences)
+            // {
+            //     testreferences.Add(new Reference(reference,DateTimeOffset.Now));
+            // }
+            Debug.WriteLine($"testreferences count:{FilteredReferences.Count()}");
+            sheet.AddReference(FilteredReferences, 2);
+            sheet.Export(name);
+            //Debug.WriteLine($"Exported {filteredReferences.Count()} Reference(s).");
+        }
+        /// <summary>
+        /// Prompts the user to save a file at a given location
+        /// </summary>
+        /// <param name="window">The window that creates the dialog</param>
+        [RelayCommand]
+        private async void SaveFileDialog(Window window)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Title = "Choose export folder",
+                InitialFileName = "Behandlede_Referencer.xlsx",
+                DefaultExtension = ".xlsx",
+            };
+            string? filePathToExportedFile = await saveFileDialog.ShowAsync(window);
+            if (filePathToExportedFile is null)
+            {
+                IMsBoxWindow<ButtonResult> messageBoxStandardView = MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow("Error", "Error in reading References from spreadsheet"); 
+                messageBoxStandardView.Show();
+            }
+            else
+            {
+               Spreadsheet exportSheet = new Spreadsheet(filePathToExportedFile);
+               exportSheet.Create();
+               Export(exportSheet, filePathToExportedFile);
+            }
         }
 
 
