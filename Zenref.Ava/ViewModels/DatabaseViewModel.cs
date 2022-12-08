@@ -15,11 +15,9 @@ using CommunityToolkit.Mvvm.Messaging;
 using System.Diagnostics;
 using System.IO;
 using DynamicData;
-using MessageBox.Avalonia.BaseWindows.Base;
 using MessageBox.Avalonia.Enums;
 using System;
 using System.Reactive.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace Zenref.Ava.ViewModels
 {
@@ -38,7 +36,7 @@ namespace Zenref.Ava.ViewModels
         [ObservableProperty]
         private bool saveChanges = true;
         [ObservableProperty]
-        private string[] propertyArray = { "Forfatter", "Titel", "Publikationstype", "Forlag", "År (Reference)", "Reference id", "Uddannelse", "Uddannelsessted", "Semester", "Sprog", "År (Rapport)", "Match", "Kommentar", "Pensum", "Sæson", "Eksamensbegivenhed", "Kilde", "Sidetal", "Bind", "Kapitler", "Bogtitel", "Henvisning" };
+        private string[] propertyArray = { "Id", "Forfatter", "Titel", "Publikationstype", "Forlag", "År (Reference)", "Reference id", "Uddannelse", "Uddannelsessted", "Semester", "Sprog", "År (Rapport)", "Match", "Kommentar", "Pensum", "Sæson", "Eksamensbegivenhed", "Kilde", "Sidetal", "Bind", "Kapitler", "Bogtitel", "Henvisning" };
 
         public DatabaseViewModel() : base(WeakReferenceMessenger.Default)
         {
@@ -88,7 +86,6 @@ namespace Zenref.Ava.ViewModels
             {
                 foreach (FileInfo path in filePaths)
                 {
-
                     Spreadsheet spreadsheet = new Spreadsheet(path.FullName);
                     Debug.WriteLine($"FileName: {path.Name} Path: {path.DirectoryName}");
                     spreadsheet.SetColumnPosition(positionInSheet);
@@ -98,12 +95,9 @@ namespace Zenref.Ava.ViewModels
                     IEnumerable<Reference> referencesInSheet = spreadsheet.GetReference(0u);
                     referencesInSheets.Add(referencesInSheet);
                 }
-
-
             }
             catch (Exception e)
             {
-
                 Debug.WriteLine("Error in reading references.");
                 Debug.WriteLine(e.Message + e.StackTrace);
                 Debug.WriteLine(positionInSheet.Count);
@@ -118,14 +112,10 @@ namespace Zenref.Ava.ViewModels
                         .GetMessageBoxStandardWindow("Error", $"Failed to read {nullReferences} reference(s)");
                     messageBoxStandardView.Show();   
                 }
-                
-               
-
                 inputReferences = new ObservableCollection<Reference>();
                 InputReferences.AddRange(referencesInSheets.Where(x => x is not null));
                 Debug.WriteLine($"Found {InputReferences.Count} Reference(s)");
-                Debug.WriteLine($"Number of failed references: {nullReferences}");
-                
+                Debug.WriteLine($"Number of failed references: {nullReferences}");   
             }
         }
 
@@ -145,9 +135,9 @@ namespace Zenref.Ava.ViewModels
                         ContentMessage = "Er du sikker på, at du vil slette referencen?",
                         WindowStartupLocation = WindowStartupLocation.CenterScreen,
                         ButtonDefinitions = new[]
-                        {
-                            new ButtonDefinition { Name = "Nej", IsCancel = true },
-                            new ButtonDefinition { Name = "Ja", IsDefault = true }
+                        {  
+                            new ButtonDefinition { Name = "Ja", IsDefault = true },
+                            new ButtonDefinition { Name = "Nej", IsCancel = true }
                         },
                     });
                 if (await messageBoxCustomWindow.Show() == "Ja")

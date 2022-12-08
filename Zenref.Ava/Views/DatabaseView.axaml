@@ -24,7 +24,7 @@
 		<Menu Background="Gray" Grid.Row="0">
 			<Button Command="{Binding OpenDragAndDropView}" CommandParameter="{Binding ElementName=DBView}" Content="Tilføj"/>
 			<TextBox KeyUp="SearchFilter" Watermark="Søg" Width="150" FontSize="15"/>
-			<ComboBox Name="myCombobox" Items="{Binding PropertyArray}" SelectedIndex="1"/>
+			<ComboBox Name="myCombobox" Items="{Binding PropertyArray}" SelectedIndex="0"/>
 			<Button Command="{Binding DeleteReference}" CommandParameter="{Binding SelectedItem, ElementName=myDataGrid}" Content="Slet"/>
 			<CheckBox IsChecked="{Binding SaveChanges}" Content="Gem ændringer automatisk"/>
 		</Menu>
