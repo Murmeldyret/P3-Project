@@ -28,8 +28,8 @@ namespace Zenref.Ava.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<Reference> references;
-        [ObservableProperty] 
-        private ObservableCollection<Reference> inputReferences;
+        [ObservableProperty]
+        private ObservableCollection<Reference> inputReferences = new ObservableCollection<Reference>();
         [ObservableProperty]
         private IEnumerable<Reference> filteredReferences;
         private List<FileInfo> filePaths;
@@ -46,12 +46,26 @@ namespace Zenref.Ava.ViewModels
             {
                 Receive(m);
                 ReadAllReferences();
+                foreach (Reference reference in inputReferences)
+                {
+                    references.Add(reference);
+                }
+                Debug.WriteLine(references[0].Title);
+                Debug.WriteLine(references[1].Title);
+                //using (var context = new DataContext())
+                //{
+                //    foreach (Reference reference in inputReferences)
+                //    {
+                //        context.References.Add(reference);
+                //    }
+                //    context.SaveChanges();
+                //}
             });
-            // using (var context = new DataContext())
-            // {
-            //     var referenceList = context.References.ToList();
-            //     references = new ObservableCollection<Reference>(referenceList);
-            // }
+            using (var context = new DataContext())
+            {
+                var referenceList = context.References.ToList();
+                references = new ObservableCollection<Reference>(referenceList);
+            }
             // FOR TESTING DATAGRID DISPLAYING REFERENCES
             //references = new ObservableCollection<Reference>();
             //RawReference rawReference = new RawReference("How to magic", "Hogwarts", "5. semester", "1234-4321", "Rowling, J. K. (1997). Harry Potter and the Philosopher’s Stone (1st ed.). Bloomsbury.");
@@ -89,21 +103,21 @@ namespace Zenref.Ava.ViewModels
         [RelayCommand]
         private void OpenDragAndDropView(Window window)
         {
-            //using (var context = new DataContext())
-            //{
-            //    try
-            //    {
-            //        RawReference rawReference = new RawReference("How to magic", "Hogwarts", "5. semester", "1234-4321", "Rowling, J. K. (1997). Harry Potter and the Philosopher’s Stone (1st ed.). Bloomsbury.");
-            //        Reference testReference = new Reference(rawReference, 5, "J.K. Rowling", "Harry Potter and the Philosopher's Stone", "Bog", "Bloomsbury", 1997, "Engelsk", 2022, 0.8, "Kommentar", "How to wave a wand", "Forår", "Magic for beginners", "DanBib", 223, "Hvem ved", "Quidditch", "Bogtitel");
-            //        context.References.Add(testReference);
-            //        context.SaveChanges();
-            //    }
-            //    catch (DbUpdateException e)
-            //    {
-            //        Debug.WriteLine(e.Data);
-            //    }
+            using (var context = new DataContext())
+            {
+                try
+                {
+                    RawReference rawReference = new RawReference("How to magic", "Hogwarts", "5. semester", "1234-4321", "Rowling, J. K. (1997). Harry Potter and the Philosopher’s Stone (1st ed.). Bloomsbury.");
+                    Reference testReference = new Reference(rawReference, "J.K. Rowling", "Harry Potter and the Philosopher's Stone", "Bog", "Bloomsbury", 1997, "Engelsk", 2022, 0.8, "Kommentar", "How to wave a wand", "Forår", "Magic for beginners", "DanBib", 223, "Hvem ved", "Quidditch", "Bogtitel");
+                    context.References.Add(testReference);
+                    context.SaveChanges();
+                }
+                catch (DbUpdateException e)
+                {
+                    Debug.WriteLine(e.Data);
+                }
 
-            //    }
+            }
             DragAndDropView dragAndDropView = new DragAndDropView();
             dragAndDropView.ShowDialog(window);
         }
@@ -196,21 +210,21 @@ namespace Zenref.Ava.ViewModels
         public void OnWindowClosing(object sender, CancelEventArgs e)
         {
             // Code to be executed before window is closed.
-            using (var context = new DataContext())
-            {
-                if (saveChanges)
-                {
-                    foreach (Reference reference in context.References)
-                    {
-                        context.References.Remove(reference);
-                    }
-                    foreach (Reference reference in references)
-                    {
-                        context.References.Add(reference);
-                    }
-                    context.SaveChanges();
-                }
-            }
+            //using (var context = new DataContext())
+            //{
+            //    if (saveChanges)
+            //    {
+            //        foreach (Reference reference in context.References)
+            //        {
+            //            context.References.Remove(reference);
+            //        }
+            //        foreach (Reference reference in References)
+            //        {
+            //            context.References.Add(reference);
+            //        }
+            //        context.SaveChanges();
+            //    }
+            //}
         }
     }
 }

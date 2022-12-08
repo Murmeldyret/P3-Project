@@ -189,7 +189,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// <exception cref="ArgumentException">Throws if position is below 0</exception>
         public void SetActiveSheet(int position)
         {
-            if (Workbook != null && (Workbook.Worksheets.Count <= position || position <= 0))
+            if (Workbook != null && (Workbook.Worksheets.Count < position || position <= 0))
             {
                 if (position > 0)
                     Workbook.Worksheets.Add(DateTimeOffset.Now.ToUnixTimeSeconds().ToString(), position);
@@ -239,21 +239,21 @@ namespace Zenref.Ava.Models.Spreadsheet
             {
 
 
-            string id = getCell(row, ReferenceFields.Id).GetString();
+            int id = getCell(row, ReferenceFields.Id).GetValue<int>();
             string author = getCell(row, ReferenceFields.Author).GetValue<string>();
             string title = getCell(row, ReferenceFields.Title).GetValue<string>();
             string pubType = getCell(row, ReferenceFields.PublicationType).GetValue<string>();
             string publisher = getCell(row, ReferenceFields.Publisher).GetValue<string>();
-            string yearOfRef = getCell(row, ReferenceFields.YearRef).GetString();
+            int? yearOfRef = getCell(row, ReferenceFields.YearRef).GetValue<int>();
             string language = getCell(row, ReferenceFields.Language).GetValue<string>();
-            string yearOfReport = getCell(row, ReferenceFields.YearReport).GetString();
-            double? match = getCell(row, ReferenceFields.Match).GetValue<double?>();
+            int? yearOfReport = getCell(row, ReferenceFields.YearReport).GetValue<int>();
+            double match = getCell(row, ReferenceFields.Match).GetValue<double>();
             string comment = getCell(row, ReferenceFields.Comment).GetValue<string>();
             string syllabus = getCell(row, ReferenceFields.Syllabus).GetValue<string>();
             string season = getCell(row, ReferenceFields.Season).GetValue<string>();
             string examEvent = getCell(row, ReferenceFields.ExamEvent).GetValue<string>();
             string source = getCell(row, ReferenceFields.Source).GetValue<string>();
-            string pages = getCell(row, ReferenceFields.Pages).GetString();
+            int? pages = getCell(row, ReferenceFields.Pages).GetValue<int>();
             string volume = getCell(row, ReferenceFields.Volume).GetValue<string>();
             string chapters = getCell(row, ReferenceFields.Chapters).GetValue<string>();
             string bookTitle = getCell(row, ReferenceFields.BookTitle).GetValue<string>();
@@ -266,21 +266,21 @@ namespace Zenref.Ava.Models.Spreadsheet
 
             RawReference rawReference = new RawReference(education, location, semester, refId, oriReference);
             return new Reference(rawReference,
-                0,
+                id,
                 author,
                 title,
                 pubType,
                 publisher,
-                0,
+                yearOfRef,
                 language,
-                0,
+                yearOfReport,
                 match,
                 comment,
                 syllabus,
                 season,
                 examEvent,
                 source,
-                0,
+                pages,
                 volume,
                 chapters,
                 bookTitle);
