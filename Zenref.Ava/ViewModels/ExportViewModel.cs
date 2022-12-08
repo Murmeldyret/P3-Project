@@ -231,11 +231,46 @@ namespace Zenref.Ava.ViewModels
             // foreach (RawReference reference in rawReferences)
             // {
             //     testreferences.Add(new Reference(reference,DateTimeOffset.Now));
+            // 
+            // List<Reference> references = new List<Reference>();
+            // int i = 0;
+            // string pubType;
+            // foreach (RawReference rawReference in rawReferences)
+            // {
+            //     switch (i % 3)
+            //     {
+            //         case 0:
+            //             pubType = "bog";
+            //             break;
+            //         case 1:
+            //             pubType = "Online";
+            //             break;
+            //         case 2:
+            //             pubType = "Tidsskrift";
+            //             break;
+            //         default:
+            //             pubType = "din far";
+            //             break;
+            //     }
+            //     references.Add(new Reference(rawReference, pubType: pubType));
+            //     i++;
             // }
+            //
+            // filteredReferences = references;
+
+            IEnumerable<IGrouping<string, Reference>> referencesGroupedByPubType = filteredReferences.GroupBy(
+                reference => reference.PubType.ToLower());
+            foreach (IGrouping<string,Reference> grouping in referencesGroupedByPubType)
+            {
+                Debug.WriteLine($"{grouping.Key} has {grouping.Count()} reference(s)");
+                sheet.SetActiveSheet(grouping.Key);
+                sheet.AddReference(grouping);
+            }
+
             Debug.WriteLine($"testreferences count:{FilteredReferences.Count()}");
             sheet.AddReference(FilteredReferences, 2);
             sheet.Export(name);
-            //Debug.WriteLine($"Exported {filteredReferences.Count()} Reference(s).");
+            Debug.WriteLine($"Exported {filteredReferences.Count()} Reference(s).");
         }
         /// <summary>
         /// Prompts the user to save a file at a given location
