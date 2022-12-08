@@ -65,7 +65,6 @@ namespace Zenref.Ava.Models.Spreadsheet
         
         public enum ReferenceFields
         {
-            Id,
             Author,
             Title,
             PublicationType,
@@ -96,29 +95,28 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// <remarks>Note: The values should be unique as well, since one Excel cell can only contain one field</remarks>
         public SortedDictionary<ReferenceFields, int> PositionOfReferencesInSheet { get; private set; } = new()
         {
-            { ReferenceFields.Id, 1 },
-            { ReferenceFields.Author, 2 },
-            { ReferenceFields.Title, 3 },
-            { ReferenceFields.PublicationType, 4 },
-            { ReferenceFields.Publisher, 5 },
-            { ReferenceFields.YearRef, 6 },
-            { ReferenceFields.RefId, 7},
-            { ReferenceFields.Education, 8 },
-            { ReferenceFields.Location, 9 },
-            { ReferenceFields.Semester, 10 },
-            { ReferenceFields.Language, 11 },
-            { ReferenceFields.YearReport, 12 },
-            { ReferenceFields.OriginalRef, 13 },
-            { ReferenceFields.Match, 14 },
-            { ReferenceFields.Comment, 15 },
-            { ReferenceFields.Syllabus, 16 },
-            { ReferenceFields.Season, 17 },
-            { ReferenceFields.ExamEvent, 18 },
-            { ReferenceFields.Source, 19 },
-            { ReferenceFields.Pages, 20 },
-            { ReferenceFields.Volume, 21 },
-            { ReferenceFields.Chapters, 22 },
-            { ReferenceFields.BookTitle, 23 },
+            { ReferenceFields.Author, 1 },
+            { ReferenceFields.Title, 2 },
+            { ReferenceFields.PublicationType, 3 },
+            { ReferenceFields.Publisher, 4 },
+            { ReferenceFields.YearRef, 5 },
+            { ReferenceFields.RefId, 6},
+            { ReferenceFields.Education, 7 },
+            { ReferenceFields.Location, 8 },
+            { ReferenceFields.Semester, 9 },
+            { ReferenceFields.Language, 10 },
+            { ReferenceFields.YearReport, 11 },
+            { ReferenceFields.OriginalRef, 12 },
+            { ReferenceFields.Match, 13 },
+            { ReferenceFields.Comment, 14 },
+            { ReferenceFields.Syllabus, 15 },
+            { ReferenceFields.Season, 16 },
+            { ReferenceFields.ExamEvent, 17 },
+            { ReferenceFields.Source, 18 },
+            { ReferenceFields.Pages, 19 },
+            { ReferenceFields.Volume, 20 },
+            { ReferenceFields.Chapters, 21 },
+            { ReferenceFields.BookTitle, 22 },
         };
 
         /// <summary>
@@ -237,9 +235,6 @@ namespace Zenref.Ava.Models.Spreadsheet
         {
             try
             {
-
-
-            int id = getCell(row, ReferenceFields.Id).GetValue<int>();
             string author = getCell(row, ReferenceFields.Author).GetValue<string>();
             string title = getCell(row, ReferenceFields.Title).GetValue<string>();
             string pubType = getCell(row, ReferenceFields.PublicationType).GetValue<string>();
@@ -266,7 +261,6 @@ namespace Zenref.Ava.Models.Spreadsheet
 
             RawReference rawReference = new RawReference(education, location, semester, refId, oriReference);
             return new Reference(rawReference,
-                id,
                 author,
                 title,
                 pubType,
@@ -459,7 +453,6 @@ namespace Zenref.Ava.Models.Spreadsheet
 
         private void setReference(Reference reference, IXLRow indexedRow)
         {
-            getCell(indexedRow, ReferenceFields.Id).SetValue(reference.Id);
             getCell(indexedRow, ReferenceFields.Author).SetValue(reference.Author ?? "");
             getCell(indexedRow, ReferenceFields.Title).SetValue(reference.Title ?? "");
             getCell(indexedRow, ReferenceFields.PublicationType).SetValue(reference.PubType ?? "");
