@@ -25,7 +25,7 @@ namespace Zenref.Ava.Models
         }
 
         public Reference(RawReference rawReference,
-            int id,
+            // int id,
             string author = "",
             string title = "",
             string pubType = "",
@@ -46,7 +46,7 @@ namespace Zenref.Ava.Models
             DateTimeOffset? time = null
         ) : this(rawReference,time)
         {
-            Id = id;
+            // Id = id;
             Author = author;
             Title = title;
             PubType = pubType;

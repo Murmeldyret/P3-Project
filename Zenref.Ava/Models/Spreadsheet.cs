@@ -239,7 +239,7 @@ namespace Zenref.Ava.Models.Spreadsheet
             {
 
 
-            string id = getCell(row, ReferenceFields.Id).GetString();
+            // string id = getCell(row, ReferenceFields.Id).GetString();
             string author = getCell(row, ReferenceFields.Author).GetValue<string>();
             string title = getCell(row, ReferenceFields.Title).GetValue<string>();
             string pubType = getCell(row, ReferenceFields.PublicationType).GetValue<string>();
@@ -266,7 +266,7 @@ namespace Zenref.Ava.Models.Spreadsheet
 
             RawReference rawReference = new RawReference(education, location, semester, refId, oriReference);
             return new Reference(rawReference,
-                0,
+                // 0,
                 author,
                 title,
                 pubType,
