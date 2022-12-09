@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.IO;
+using Zenref.Ava.ViewModels;
 
 namespace Zenref.Ava.Models
 {
@@ -271,8 +273,8 @@ namespace Zenref.Ava.Models
     /// </summary>
     public class Filter : IFilter, IEnumerable
     {
-        protected List<string> filterQuery;  // The queries of the filter.
-        protected string categoryName;       // The name of the filter.
+        public List<string> filterQuery { get; set; }  // The queries of the filter.
+        public string categoryName { get; set; }       // The name of the filter.
 
         /// <summary>
         /// The constructor that initializes a new instance of the <see cref="Filter"/> class with a category name.

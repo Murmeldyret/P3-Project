@@ -166,11 +166,11 @@
 			<StackPanel>
 				<TextBlock>Publikations typer</TextBlock>
 				<ScrollViewer>
-				<ItemsControl x:Name="PubType">
+				<ItemsControl x:Name="PubType" Items="{Binding PublicationTypes}">
 					<ItemsControl.ItemTemplate>
 						<DataTemplate>
 							<Grid Classes="PubTypeBox" ColumnDefinitions="*,Auto,Auto">
-								<TextBox Classes="PubTypeTitle" Text="{Binding Name}" x:Name="PubName" />
+								<TextBox Classes="PubTypeTitle" Text="{Binding Path=categoryName}" x:Name="PubName" />
 								<Button Classes="Options" Command="{Binding ElementName=MainView, Path=DataContext.EditPublicationTypeCommand}" CommandParameter="{Binding ElementName=PubName, Path=Text}">
 									<Image Source="avares://Zenref.Ava/Assets/options.ico" />
 								</Button>

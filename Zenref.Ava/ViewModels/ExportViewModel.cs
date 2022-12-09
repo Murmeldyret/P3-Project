@@ -18,13 +18,42 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using AvaloniaEdit;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DynamicData.Binding;
 using P3Project.API;
 using Zenref.Ava.Models;
 using Zenref.Ava.Models.Spreadsheet;
 using Zenref.Ava.Views;
+using Filter = Zenref.Ava.Models.Filter;
 
 namespace Zenref.Ava.ViewModels
 {
+    public class FilterType
+    {
+        private int id;
+        public static int sId = 0;
+
+        public int Id
+        {
+            get
+            {
+                return id;
+            }
+            set
+            {
+                id = sId;
+            }
+        }
+
+        public ObservableCollection<Filter> filt { get; set; }
+
+        public FilterType(ObservableCollection<Filter> filter)
+        {
+            id = ++sId;
+            filt = filter;
+        }
+    }
+    
     public partial class ExportViewModel : ObservableRecipient, IRecipient<FilePathsMessage>
     {
         /// <summary>
@@ -38,15 +67,24 @@ namespace Zenref.Ava.ViewModels
         [NotifyCanExecuteChangedFor(nameof(StartCommand))]
         private int unIdentifiedNumberCounter = 0;
 
+        // Keeps track of which buttons are enabled
         [ObservableProperty] private bool isApiKeyButtonEnabled = true;
         [ObservableProperty] private bool isImportButtonEnabled = false;
         [ObservableProperty] private bool isStartButtonEnabled = false;
         [ObservableProperty] private bool isExportButtonEnabled = false;
 
+        /// <summary>
+        /// Makes a bool true
+        /// </summary>
+        /// <returns>true</returns>
         private bool canProceed()
         {
             return true;
         }
+        /// <summary>
+        /// Makes a bool false
+        /// </summary>
+        /// <returns>false</returns>
         private bool canNotProceed()
         {
             return false;
@@ -55,29 +93,45 @@ namespace Zenref.Ava.ViewModels
         /// <summary>
         /// Property that hold the information from creating a new publicatino type
         /// </summary>
+        /*
         private ObservableCollection<PublicationType> searchCriteria = new ObservableCollection<PublicationType>();
         private ObservableCollection<SearchPublicationType> searchTest = new ObservableCollection<SearchPublicationType>();
         private ObservableCollection<SearchPublicationType> searchTest2 = new ObservableCollection<SearchPublicationType>();
+        */
+        //private ObservableCollection<Filter> searchCriteria = new ObservableCollection<Filter>();
+        //private ObservableCollection<FilterType> searchCriteria = new ObservableCollection<FilterType>();
+        private ObservableCollection<Filter> searchCriteria = new ObservableCollection<Filter>();
+
+        private ObservableCollection<SearchTerms> searchString = new ObservableCollection<SearchTerms>();
 
         /// <summary>
         /// A collection of the created publication types
         /// </summary>
+        /*
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(EditPublicationTypeCommand))]
         private ObservableCollection<PublicationType> publicationTypes = new ObservableCollection<PublicationType>();
+        */
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(EditPublicationTypeCommand))]
+        private ObservableCollection<Filter> publicationTypes = new ObservableCollection<Filter>();
+        //private ObservableCollection<FilterType> publicationTypes = new ObservableCollection<FilterType>();
+
+        private string name;
+        private List<string> query;
 
         private List<FileInfo> filePaths;
         private List<int> columnPositions;
         private int activeSheet;
-        [ObservableProperty]
-        private ObservableCollection<Reference> references;
-        [ObservableProperty]
-        private ObservableCollection<RawReference> rawReferences;
-        [ObservableProperty]
-        private IEnumerable<Reference> filteredReferences;
+        [ObservableProperty] private ObservableCollection<Reference> references;
+        [ObservableProperty] private ObservableCollection<RawReference> rawReferences;
+        [ObservableProperty] private IEnumerable<Reference> filteredReferences;
 
-        [ObservableProperty] 
-        private string apiKey;
+        [ObservableProperty] private string apiKey;
+
+        private List<string> filter;
+
+        private int id = 0;
 
         /// <summary>
         /// Constructor, sets up the predefined publication types.
@@ -86,18 +140,36 @@ namespace Zenref.Ava.ViewModels
         public ExportViewModel()
             : base(WeakReferenceMessenger.Default)
         {
+            /*
             searchTest.Add(new SearchPublicationType(searchTerm: "hello", searchSelectOperand: "OG", searchSelectField: "Titel"));
             searchTest2.Add(new SearchPublicationType(searchTerm: "hello2vuu", searchSelectOperand: "OG", searchSelectField: "Titel"));
             PublicationTypes.Add(new PublicationType("Bog", searchTest));
             PublicationTypes.Add(new PublicationType("Artikel", searchTest2));
-            
-            using (StreamReader sr = new StreamReader(@"../../../Models/ApiKeys/scopusApiKey.txt"))
+            */
+
+            try
             {
-                string line;
-                while ((line = sr.ReadLine()) != null)
+                if (File.Exists(@"../../../Models/ApiKeys/scopusApiKey.txt"))
                 {
-                    IsImportButtonEnabled = canProceed();
+                    using (StreamReader sr = new StreamReader(@"../../../Models/ApiKeys/scopusApiKey.txt"))
+                    {
+                        string line;
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            IsImportButtonEnabled = canProceed();
+                        }
+                    }
                 }
+                else
+                {
+                    IsImportButtonEnabled = canNotProceed();
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
             }
 
             Messenger.Register<SearchTermMessage>(this, (r, m) =>
@@ -119,7 +191,23 @@ namespace Zenref.Ava.ViewModels
         public void Receive(SearchTermMessage message)
         {
             searchCriteria = message.SearchPubCollection;
-            PublicationTypes.Add(searchCriteria[0]);
+            /*
+            foreach (string s in searchCriteria[0].ReturnFilterQueries())
+            {
+                Console.WriteLine($"something: {s}");
+            }
+            */
+            if (PublicationTypes.Count > 0)
+            {
+                for (int i = 0; i < PublicationTypes.Count; i++)
+                {
+                    Console.WriteLine($"Count: {i}");
+                }
+            }
+            else
+            {
+                PublicationTypes.Add(new Filter(searchCriteria[0].filterQuery, searchCriteria[0].categoryName));
+            }
         }
 
         [RelayCommand]
@@ -136,11 +224,11 @@ namespace Zenref.Ava.ViewModels
         [RelayCommand]
         private void DeletePublicationType(string msg)
         {
-            string text = (string)msg;
+            Console.WriteLine(msg);
 
             for (int i = 0; i < PublicationTypes.Count; i++)
             {
-                if (text == PublicationTypes[i].Name)
+                if (msg == PublicationTypes[i].categoryName)
                 {
                     PublicationTypes.RemoveAt(i);
                 }
@@ -165,15 +253,20 @@ namespace Zenref.Ava.ViewModels
         [RelayCommand]
         private void EditPublicationType(string msg)
         {
+            searchString.Clear();
             for (int i = 0; i < PublicationTypes.Count; i++)
             {
-                if (PublicationTypes[i].Name == msg)
+                foreach (string s in PublicationTypes[i].filterQuery)
                 {
-                    SearchCriteriaView SearchView = new SearchCriteriaView();
-                    SearchView.DataContext = new SearchCriteriaViewModel(PublicationTypes[i].searchPublicationTypes, msg);
-                    SearchView.Show();
+                    Console.WriteLine($"edit btn from exportVM values: {s}");
+                    searchString.Add(new SearchTerms(searchString: s));
                 }
+
+                SearchCriteriaView SearchView = new SearchCriteriaView();
+                SearchView.DataContext = new SearchCriteriaViewModel(searchString, msg, id);
+                SearchView.Show();
             }
+
         }
 
         /// <summary>

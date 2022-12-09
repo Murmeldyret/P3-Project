@@ -60,11 +60,14 @@
 			<ItemsControl Grid.Column="0" Items="{Binding SearchOption}">
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
+						<TextBox Watermark="Indsæt søgning" Text="{Binding SearchString}" />
+						<!--
 						<Grid ColumnDefinitions="1.5*, 2*, 6*">
 							<ComboBox Grid.Column="0" Classes="SecondCategory Operator" SelectedItem="{Binding SearchSelectOperand}" PlaceholderText="Operator" Items="{Binding Path=Operand}" />
 							<ComboBox Grid.Column="1" Classes="SecondCategory" SelectedItem="{Binding SearchSelectField}" PlaceholderText="Felter" Items="{Binding Path=Field}"/>
 							<TextBox Grid.Column="2" Watermark="Søg" Text="{Binding SearchTerm}" />
 						</Grid>
+						-->
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
