@@ -478,6 +478,33 @@ namespace Zenref.Ava.Models.Spreadsheet
             getCell(indexedRow, ReferenceFields.RefId).SetValue(reference.RefId);
             getCell(indexedRow, ReferenceFields.OriginalRef).SetValue(reference.OriReference);
         }
+        private void setReference(Reference reference, IXLRow indexedRow)
+        {
+            getCell(indexedRow, ReferenceFields.Author).SetValue(reference.Author ?? "");
+            getCell(indexedRow, ReferenceFields.Title).SetValue(reference.Title ?? "");
+            getCell(indexedRow, ReferenceFields.PublicationType).SetValue(reference.PubType ?? "");
+            getCell(indexedRow, ReferenceFields.Publisher).SetValue(reference.Publisher ?? "");
+            getCell(indexedRow, ReferenceFields.YearRef).SetValue(reference.YearRef);
+            getCell(indexedRow, ReferenceFields.Location).SetValue(reference.Location ?? "");
+            getCell(indexedRow, ReferenceFields.Semester).SetValue(reference.Semester ?? "");
+            getCell(indexedRow, ReferenceFields.Language).SetValue(reference.Language ?? "");
+            getCell(indexedRow, ReferenceFields.YearReport).SetValue(reference.YearReport);
+            getCell(indexedRow, ReferenceFields.Match).SetValue(reference.Match);
+            getCell(indexedRow, ReferenceFields.Comment).SetValue(reference.Commentary ?? "");
+            getCell(indexedRow, ReferenceFields.Syllabus).SetValue(reference.Syllabus ?? "");
+            getCell(indexedRow, ReferenceFields.Season).SetValue(reference.Season ?? "");
+            getCell(indexedRow, ReferenceFields.ExamEvent).SetValue(reference.ExamEvent ?? "");
+            getCell(indexedRow, ReferenceFields.Source).SetValue(reference.Source ?? "");
+            getCell(indexedRow, ReferenceFields.Pages).SetValue(reference.Pages);
+            getCell(indexedRow, ReferenceFields.Volume).SetValue(reference.Volume ?? "");
+            getCell(indexedRow, ReferenceFields.Chapters).SetValue(reference.Chapters ?? "");
+            getCell(indexedRow, ReferenceFields.BookTitle).SetValue(reference.BookTitle ?? "");
+            getCell(indexedRow, ReferenceFields.Education).SetValue(reference.Education);
+            getCell(indexedRow, ReferenceFields.Location).SetValue(reference.Location);
+            getCell(indexedRow, ReferenceFields.Semester).SetValue(reference.Semester);
+            getCell(indexedRow, ReferenceFields.IdRef).SetValue(reference.Id);
+            getCell(indexedRow, ReferenceFields.OriginalRef).SetValue(reference.OriReference);
+        }
 
         /// <summary>
         /// Appends multiple <c>references</c> to the next rows of the first worksheet
@@ -495,6 +522,18 @@ namespace Zenref.Ava.Models.Spreadsheet
             foreach (RawReference reference in references)
             {
                 AddRawReference(reference, startRow++);
+            }
+        }
+        public void AddReference(IEnumerable<Reference> references, int startRow = -1)
+        {
+            if (startRow is 0 or < -1)
+            {
+                throw new ArgumentException("Start row cannot be 0 or less than -1");
+            }
+            if (startRow == -1) startRow = Count + 1;
+            foreach (Reference reference in references)
+            {
+                AddReference(reference, startRow++);
             }
         }
 

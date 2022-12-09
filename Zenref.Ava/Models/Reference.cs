@@ -213,7 +213,7 @@ namespace Zenref.Ava.Models
             FoundInDataBase = 1 << 5, // 32
             
             // ManualReview = Raw | NotFound | (FoundInApi & LowMatchThreshold),
-            // Identified = (FoundInApi & HighMatchThreshold) | FoundInDataBase,
+            // Identified = (FoundInApi | HighMatchThreshold) | FoundInDataBase,
         }
 
         
@@ -221,21 +221,25 @@ namespace Zenref.Ava.Models
         /// Determines whether or not a Reference is considered identified
         /// </summary>
         /// <returns>True if the Reference is identified, false if not and needs to be reviewed manually</returns>
-        private bool isIdentified()
+        public bool isIdentified()
         {
-            identificationState state = identificationState.None;
-            identificationState identified = (identificationState.FoundInApi & identificationState.HighMatchThreshold) |
-                                             identificationState.FoundInDataBase;
-            if (TimeOfCreation.HasValue || TimeOfCreation.Value != null)
+            identificationState state = identificationState.NotFound;
+            identificationState identifiedInApi =
+                (identificationState.FoundInApi | identificationState.HighMatchThreshold);
+            
+            identificationState identifiedInDB = identificationState.FoundInDataBase;
+            
+            if (TimeOfCreation.HasValue)
             {
+                state &= ~identificationState.NotFound;
                 state |= identificationState.FoundInApi;
                 state |= Match >= MINIMUMMATCHTHRESHOLD
                     ? identificationState.HighMatchThreshold
                     : identificationState.LowMatchThreshold;
             }
 
-
-            return state == identified;
+            return (state | identifiedInApi) == identifiedInApi;
+            // return identified.HasFlag(~state & identified);
             // return ((state & identificationState.Identified) == identificationState.Identified);
 
         }
