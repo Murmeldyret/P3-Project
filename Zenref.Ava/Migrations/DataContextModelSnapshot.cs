@@ -15,11 +15,11 @@ namespace Zenref.Ava.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.10");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
 
             modelBuilder.Entity("Zenref.Ava.Models.Reference", b =>
                 {
-                    b.Property<int?>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -35,7 +35,8 @@ namespace Zenref.Ava.Migrations
                     b.Property<string>("Commentary")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Edu")
+                    b.Property<string>("Education")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ExamEvent")
@@ -45,12 +46,14 @@ namespace Zenref.Ava.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Location")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<double?>("Match")
                         .HasColumnType("REAL");
 
                     b.Property<string>("OriReference")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("Pages")
@@ -62,10 +65,15 @@ namespace Zenref.Ava.Migrations
                     b.Property<string>("Publisher")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("RefId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Season")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Semester")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Source")
@@ -86,7 +94,7 @@ namespace Zenref.Ava.Migrations
                     b.Property<int?>("YearReport")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Reference", (string)null);
                 });
