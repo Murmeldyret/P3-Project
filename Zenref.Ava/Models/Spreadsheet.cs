@@ -434,7 +434,7 @@ namespace Zenref.Ava.Models.Spreadsheet
             getCell(indexedRow, ReferenceFields.OriginalRef).SetValue(reference.OriReference);
         }
 
-                private void setReference(Reference reference, IXLRow indexedRow)
+        private void setReference(Reference reference, IXLRow indexedRow)
         {
             getCell(indexedRow, ReferenceFields.Author).SetValue(reference.Author ?? "");
             getCell(indexedRow, ReferenceFields.Title).SetValue(reference.Title ?? "");

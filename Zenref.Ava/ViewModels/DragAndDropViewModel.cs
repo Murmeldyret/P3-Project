@@ -246,6 +246,10 @@ namespace Zenref.Ava.ViewModels
                 window.Close();
             }
         }
+        /// <summary>
+        /// Confirms the files chosen by filedialog and sends a message containing the filenames, what each column contains, and what sheet to read from.
+        /// </summary>
+        /// <param name="window">The window that contains the filenames and properties related to it.</param>
         private void ConfirmFileChoices(Window window)
         {
             List<int> ints = columnPositions.Select(x => x.columnPos).ToList();
