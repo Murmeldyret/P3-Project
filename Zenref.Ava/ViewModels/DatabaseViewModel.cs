@@ -160,7 +160,7 @@ namespace Zenref.Ava.ViewModels
                     {
                         context.References.Remove(reference);
                     }
-                    foreach (Reference reference in References)
+                    foreach (Reference reference in references)
                     {
                         context.References.Add(reference);
                     }

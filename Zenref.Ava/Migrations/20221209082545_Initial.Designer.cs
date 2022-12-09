@@ -11,8 +11,8 @@ using Zenref.Ava.Models;
 namespace Zenref.Ava.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221208110310_test2")]
-    partial class test2
+    [Migration("20221209082545_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
