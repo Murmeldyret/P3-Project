@@ -11,6 +11,7 @@ using P3Project.API.APIHelper;
 using Moq;
 using System.Net.Http;
 using System.Net;
+using System.Collections.Generic;
 
 namespace zenref.Tests
 {
@@ -46,11 +47,17 @@ namespace zenref.Tests
         public async void ReferenceFetchTest()
         {
             // New reference
+            //RawReference inputReference = new RawReference("lige meget",
+            //    "lige meget",
+            //    "lige meget",
+            //    "lige meget",
+            //    "Zhao, Nannan. (2024). Improvement of Cloud Computing Medical Data Protection Technology Based on Symmetric Encryption Algorithm");
+
             RawReference inputReference = new RawReference("lige meget",
                 "lige meget",
                 "lige meget",
                 "lige meget",
-                "Zhao, Nannan. (2024). Improvement of Cloud Computing Medical Data Protection Technology Based on Symmetric Encryption Algorithm");
+                "Andersen, B. B. & Porse, L. H. (2021). TAP. Teori til Analyse og Praksis i billedkunst. Praxis.");
             // Get secret key
             var configuration = new ConfigurationBuilder()
             .AddUserSecrets<Settings>()
@@ -64,7 +71,32 @@ namespace zenref.Tests
             Reference reference = await scopus.ReferenceFetch(inputReference, scopus.ReferenceParser);
 
             // Assert
-            Assert.NotNull(reference);
+            Assert.NotNull(reference.Title);
+        }
+
+        [Fact]
+        public void ReferenceFetchWithApiSearch()
+        {
+            // New reference
+            RawReference inputReference = new RawReference("lige meget",
+                "lige meget",
+                "lige meget",
+                "lige meget",
+                "Andersen, B. B. & Porse, L. H. (2021). TAP. Teori til Analyse og Praksis i billedkunst. Praxis.");
+
+            // Get secret key
+            var configuration = new ConfigurationBuilder()
+            .AddUserSecrets<Settings>()
+            .Build();
+
+            List<RawReference> references = new List<RawReference>();
+            references.Add(inputReference);
+
+            ApiSearching apiSearching = new ApiSearching();
+            List<Reference> listReferences = apiSearching.SearchReferences(references);
+
+            Assert.Null(listReferences[0].Title);
+
         }
     }
 

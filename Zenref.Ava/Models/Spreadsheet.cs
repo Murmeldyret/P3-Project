@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace Zenref.Ava.Models.Spreadsheet
 {
@@ -54,7 +55,7 @@ namespace Zenref.Ava.Models.Spreadsheet
             get
             {
                 if (index <= 0) throw new ArgumentOutOfRangeException(nameof(index));
-                return GetReference(index);
+                return GetRawReference(index);
             }
             set
             {
@@ -93,7 +94,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// Represents the different fields in an Excel worksheet where the key is the column position and the value is the content
         /// </summary>
         /// <remarks>Note: The values should be unique as well, since one Excel cell can only contain one field</remarks>
-        public SortedDictionary<ReferenceFields, int> PositionOfReferencesInSheet { get; private set; } = new()
+        public Dictionary<ReferenceFields, int> PositionOfReferencesInSheet { get; private set; } = new()
         {
             { ReferenceFields.Author, 1 },
             { ReferenceFields.Title, 2 },
@@ -145,13 +146,13 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// </summary>
         /// <param name="inputdic">The Sorted dictionary where the key is the reference property and the value is the column position associated with the property</param>
         /// <exception cref="ArgumentException"> If the size of input dictionary is not the same as the number of fields in a reference</exception>
-        public void SetColumnPosition(SortedDictionary<ReferenceFields, int> inputdic)
+        public void SetColumnPosition(Dictionary<ReferenceFields, int> inputdic)
         {
-            if (inputdic.Count == _referenceFieldsCount)
+            // if (inputdic.Count == _referenceFieldsCount)
                 PositionOfReferencesInSheet = inputdic;
-            else
-                throw new ArgumentException(
-                    $"Parameter inputdic must be the same size as the current dictionary. inputdic.Count =={inputdic.Count} !={_referenceFieldsCount}");
+            // else
+            //     throw new ArgumentException(
+            //         $"Parameter inputdic must be the same size as the current dictionary. inputdic.Count =={inputdic.Count} !={_referenceFieldsCount}");
         }
 
         /// <summary>
@@ -326,6 +327,70 @@ namespace Zenref.Ava.Models.Spreadsheet
             return new RawReference(education, location, semester, refId, oriReference);
 
         }
+        
+        /// <summary>
+        /// Reads the contents of an Excel row and returns a Reference
+        /// </summary>
+        /// <param name="row">The Excel row containing a Reference</param>
+        /// <returns>A Reference from the given row</returns>
+        private Reference ReadRow(IXLRow row)
+        {
+            string author =         getCell(row, ReferenceFields.Author).GetValue<string>();
+            string title =          getCell(row, ReferenceFields.Title).GetValue<string>();
+            string pubType =        getCell(row, ReferenceFields.PublicationType).GetValue<string>();
+            string publisher =      getCell(row, ReferenceFields.Publisher).GetValue<string>();
+            int? yearOfRef =        getCell(row, ReferenceFields.YearRef).GetValue<int?>();
+            string language =       getCell(row, ReferenceFields.Language).GetValue<string>();
+            int? yearOfReport =     getCell(row, ReferenceFields.YearReport).GetValue<int?>();
+            double? match =         getCell(row, ReferenceFields.Match).GetValue<double?>();
+            string comment =        getCell(row, ReferenceFields.Comment).GetValue<string>();
+            string syllabus =       getCell(row, ReferenceFields.Syllabus).GetValue<string>();
+            string season =         getCell(row, ReferenceFields.Season).GetValue<string>();
+            string examEvent =      getCell(row, ReferenceFields.ExamEvent).GetValue<string>();
+            string source =         getCell(row, ReferenceFields.Source).GetValue<string>();
+            int? pages =            getCell(row, ReferenceFields.Pages).GetValue<int?>();
+            string volume =         getCell(row, ReferenceFields.Volume).GetValue<string>();
+            string chapters =       getCell(row, ReferenceFields.Chapters).GetValue<string>();
+            string bookTitle =      getCell(row, ReferenceFields.BookTitle).GetValue<string>();
+            
+            string education = getCell(row, ReferenceFields.Education).GetValue<string>();
+            string location = getCell(row, ReferenceFields.Location).GetValue<string>();
+            string semester = getCell(row, ReferenceFields.Semester).GetValue<string>();
+            string oriReference = getCell(row, ReferenceFields.OriginalRef).GetValue<string>();
+            string id = getCell(row, ReferenceFields.IdRef).GetValue<string>();
+
+            RawReference rawReference = new RawReference(education, location, semester, id, oriReference);
+            return new Reference( rawReference,
+                author,
+                title,
+                pubType,
+                publisher,
+                yearOfRef,
+                language,
+                yearOfReport,
+                match,
+                comment,
+                syllabus,
+                season,
+                examEvent,
+                source,
+                pages,
+                volume,
+                chapters,
+                bookTitle);
+
+        }
+        /// <summary>
+        /// Gets a Reference from the specified index
+        /// </summary>
+        /// <param name="index">the 1 based index of a reference</param>
+        /// <returns>The reference at the indexed position with fields filled accordingly</returns>
+        public Reference GetReference(int index)
+        {
+            CurrentRow = index;
+            IXLRow indexedRow = XlWorksheet.Row(index);
+            return ReadRow(indexedRow);
+        }
 
         /// <summary>
         /// Gets the Excel cell at a given row and specific field
@@ -378,7 +443,7 @@ namespace Zenref.Ava.Models.Spreadsheet
 
             for (int i = CurrentRow; i <= totalrows; i++)
             {
-                yield return GetReference(i);
+                yield return GetRawReference(i);
             }
         }
 
@@ -412,6 +477,25 @@ namespace Zenref.Ava.Models.Spreadsheet
             IXLRow indexedRow = XlWorksheet.Row(row);
             indexedRow.Clear();
             setRawReference(reference, indexedRow);
+        }
+
+        /// <summary>
+        /// Appends multiple <c>references</c> to the next rows of the first worksheet
+        /// </summary>
+        /// <param name="references">Collection of references to be added</param>
+        /// <param name="startRow">The start row from where the references should be inserted. If default, appends to end of list of references</param>
+        /// <exception cref="ArgumentException">Throws if parameter startRow is 0 or less than -1</exception>
+        public void AddReference(IEnumerable<RawReference> references, int startRow = -1)
+        {
+            if (startRow is 0 or < -1)
+            {
+                throw new ArgumentException("Start row cannot be 0 or less than -1");
+            }
+            if (startRow == -1) startRow = Count + 1;
+            foreach (RawReference reference in references)
+            {
+                AddReference(reference, startRow++);
+            }
         }
         public void AddReference(Reference reference, int row = -1)
         {

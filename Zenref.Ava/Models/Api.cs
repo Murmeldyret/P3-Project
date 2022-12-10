@@ -2,10 +2,13 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 using Zenref.Ava.Models;
 using P3Project.API.APIHelper;
 using System.Net;
+using System.IO;
+using System.Diagnostics;
 
 namespace P3Project.API
 {
@@ -91,8 +94,12 @@ namespace P3Project.API
             // Validation
             if (!_isHTTPResponseCodeSuccess(response))
             {
+                Debug.WriteLine(response.StatusCode);
                 throw new HttpRequestException("Was not able to get ressource from server.");
             }
+
+            // Validate whether the response is empty
+
 
             // Parse into deligate
             Reference parsed_reference = referenceParser(inputReference, response);
@@ -110,6 +117,12 @@ namespace P3Project.API
             oriReference = oriReference.Replace("(", " ");
             oriReference = oriReference.Replace(")", " ");
             oriReference = oriReference.Replace("*", " ");
+            oriReference = oriReference.Replace("&", " ");
+            oriReference = oriReference.Replace("#", " ");
+            oriReference = oriReference.Replace("+", "%2b");
+            oriReference = oriReference.Replace("/", "%2f");
+
+
 
             return oriReference;
         }
@@ -184,6 +197,42 @@ namespace P3Project.API
                 throw new NotImplementedException("Fuck dig ikke implementeret");
                 //throw new ArgumentException($"{_baseURL}\nAPI key is not valid. Please update the key, or this site will not be available ");
             }
+        }
+    }
+
+    public class ApiSearching
+    {
+        public List<Reference> SearchReferences(List<RawReference> rawReferences)
+        {
+            // This should have been done in a better way, however, there is no time for it.
+            Scopus scopus = InitializeScopus();
+
+            int i = 2;
+
+            List<Reference> references = new List<Reference>();
+            foreach (RawReference rawReference in rawReferences)
+            {
+                Debug.WriteLine(i);
+                if (i == 72)
+                {
+                    Debug.WriteLine("hej");
+                }
+                Reference reference = Task.Run(() => scopus.ReferenceFetch(rawReference, scopus.ReferenceParser)).Result;
+                references.Add(reference);
+
+                i++;
+            }
+
+            return references;
+        }
+
+        private Scopus InitializeScopus()
+        {
+            // Read the apikey from the file
+            string apiKey = File.ReadAllText("./ApiKeys/scopusApiKey.txt");
+            // Initialize the api
+            Scopus scopus = new Scopus(apiKey, new Uri("https://api.elsevier.com/content/search/scopus"));
+            return scopus;
         }
     }
 }

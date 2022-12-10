@@ -80,13 +80,18 @@
 				<StackPanel Orientation="Horizontal" Spacing="10">
 					<TextBlock Text="Uidentificeret" Width="125"/>
 					<TextBlock Text=":"/>
-					<TextBlock Text="0"/>
+					<TextBlock Text="{Binding ElementName=MainView, Path=DataContext.UnidentifiedNumberCounter}"/>
 				</StackPanel>
 			</StackPanel>
 		</Border>
 	</StackPanel>
+		<StackPanel VerticalAlignment="Bottom" Orientation="Horizontal" Margin="10, 0, 0, 150">
+			<TextBox Watermark="Indsæt API nøgle" Text="{Binding ApiKey}"/>
+			<Button Content="Tilføj" Command="{Binding AddApiKeyCommand}"/>
+		</StackPanel>
 		<Button Name="menuButton" Command="{Binding OpenSearchCriteriaCommand}" CommandParameter="{Binding ElementName=MainView}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="180" Margin="10">Tilføj Publikationstype</Button>
-		<Button Name="startButton" Command="{Binding StartCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Margin="225,10">Start</Button>
-		<Button Name="exportButton" Command="{Binding ExportCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Margin="10,10">Exporter</Button>
+		<Button Name="importButton" Command="{Binding OpenDragAndDropViewCommand}" CommandParameter="{Binding ElementName=MainView}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="180" Margin="100">Importer referencer</Button>
+	    <Button Name="startButton" Command="{Binding StartCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Margin="225,10">Start</Button>
+		<Button Name="exportButton" Command="{Binding SaveFileDialogCommand}" CommandParameter="{Binding ElementName=MainView}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Margin="10,10">Exporter</Button>
 	</Grid>
 </Window>
