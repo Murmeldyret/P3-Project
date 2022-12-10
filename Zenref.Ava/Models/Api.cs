@@ -86,8 +86,7 @@ namespace P3Project.API
         /// <returns>A reference with correctly filled fields</returns>
         public virtual async Task<(Reference, RawReference)> ReferenceFetch(RawReference inputReference, Func<RawReference, HttpResponseMessage, Reference> referenceParser)
         {
-            string queryString = queryCleaner(inputReference.OriReference);
-            Uri apiUri = BuildUri($"query={queryString}");
+            Uri apiUri = BuildUri(inputReference);
 
             HttpResponseMessage response = await ApiClient.getInstance().GetAsync(apiUri);       // Request API for ressource.
 
@@ -128,9 +127,15 @@ namespace P3Project.API
         }
 
 
-        protected Uri BuildUri(string query)
+        protected Uri BuildUri(RawReference inputReference)
         {
             UriBuilder uriBuilder = new UriBuilder(_baseURL);
+
+            // Convert RawReference to a Reference
+            Reference convertedReference = inputReference.ExtractData();
+
+            string query = "query=" + queryCleaner(convertedReference.Title!);
+
 
             // Add all parameters to the query
             if (ParametersName != null && ParametersValue != null && ParametersName.Count == ParametersValue.Count)
