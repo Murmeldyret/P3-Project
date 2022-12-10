@@ -5,12 +5,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 
 namespace Zenref.Ava.Models
 {
     public class Reference : RawReference, IEquatable<Reference>
     {
-
         public Reference(RawReference rawReference, DateTimeOffset? time = null ):base(rawReference)
         {
             if (time is not null)
@@ -18,8 +18,14 @@ namespace Zenref.Ava.Models
                 TimeOfCreation = (DateTimeOffset)time;
             }
         }
+        
+        public Reference()
+        {
+
+        }
 
         public Reference(RawReference rawReference,
+            // int id,
             string author = "",
             string title = "",
             string pubType = "",
@@ -40,6 +46,7 @@ namespace Zenref.Ava.Models
             DateTimeOffset? time = null
         ) : this(rawReference,time)
         {
+            // Id = id;
             Author = author;
             Title = title;
             PubType = pubType;
@@ -168,6 +175,8 @@ namespace Zenref.Ava.Models
         /// <summary>
         /// The time at which this object returned by API response if present.
         /// </summary>
+        [Key]
+        public int Id { get; set; }
         public Optional<DateTimeOffset> TimeOfCreation { get; }
         public string? Author { get; set; }
         public string? Title { get; set; }
@@ -204,7 +213,7 @@ namespace Zenref.Ava.Models
             FoundInDataBase = 1 << 5, // 32
             
             // ManualReview = Raw | NotFound | (FoundInApi & LowMatchThreshold),
-            // Identified = (FoundInApi & HighMatchThreshold) | FoundInDataBase,
+            // Identified = (FoundInApi | HighMatchThreshold) | FoundInDataBase,
         }
 
         
@@ -212,21 +221,25 @@ namespace Zenref.Ava.Models
         /// Determines whether or not a Reference is considered identified
         /// </summary>
         /// <returns>True if the Reference is identified, false if not and needs to be reviewed manually</returns>
-        private bool isIdentified()
+        public bool isIdentified()
         {
-            identificationState state = identificationState.None;
-            identificationState identified = (identificationState.FoundInApi & identificationState.HighMatchThreshold) |
-                                             identificationState.FoundInDataBase;
-            if (TimeOfCreation.HasValue || TimeOfCreation.Value != null)
+            identificationState state = identificationState.NotFound;
+            identificationState identifiedInApi =
+                (identificationState.FoundInApi | identificationState.HighMatchThreshold);
+            
+            identificationState identifiedInDB = identificationState.FoundInDataBase;
+            
+            if (TimeOfCreation.HasValue)
             {
+                state &= ~identificationState.NotFound;
                 state |= identificationState.FoundInApi;
                 state |= Match >= MINIMUMMATCHTHRESHOLD
                     ? identificationState.HighMatchThreshold
                     : identificationState.LowMatchThreshold;
             }
 
-
-            return state == identified;
+            return (state | identifiedInApi) == identifiedInApi;
+            // return identified.HasFlag(~state & identified);
             // return ((state & identificationState.Identified) == identificationState.Identified);
 
         }
@@ -243,13 +256,13 @@ namespace Zenref.Ava.Models
             {
                 return false;
             }
-
+            bool IdEquals = this.Id == other.Id;
             bool AuthorEquals = this.Author == other.Author;
             bool TitleEquals = this.Title == other.Title;
             bool PubTypeEquals = this.PubType == other.PubType;
             bool PublisherEquals = this.Publisher == other.Publisher;
             bool YearRefEquals = this.YearRef == other.YearRef;
-            bool IdEquals = this.Id == other.Id;
+            bool RefIdEquals = this.RefId == other.RefId;
             bool EduEquals = this.Education == other.Education;
             bool LocationEquals = this.Location == other.Location;
             bool SemesterEquals = this.Semester == other.Semester;
@@ -266,7 +279,8 @@ namespace Zenref.Ava.Models
             bool ChaptersEquals = this.Chapters == other.Chapters;
             bool BookTitleEquals = this.BookTitle == other.BookTitle;
 
-            isEqual = AuthorEquals
+            isEqual = IdEquals
+                      && AuthorEquals
                       && TitleEquals
                       && PubTypeEquals
                       && PublisherEquals

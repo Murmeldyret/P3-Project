@@ -46,6 +46,7 @@ namespace Zenref.Ava.ViewModels
         private ObservableCollection<SearchPublicationType> searchTest = new ObservableCollection<SearchPublicationType>();
         private ObservableCollection<SearchPublicationType> searchTest2 = new ObservableCollection<SearchPublicationType>();
 
+        private ObservableCollection<(Filter filter, int id)> filtercollection = new ObservableCollection<(Filter, int)>();
         /// <summary>
         /// A collection of the created publication types
         /// </summary>
@@ -89,6 +90,7 @@ namespace Zenref.Ava.ViewModels
             {
                 Receive(m);
             });
+            int num = filtercollection[1].id;
         }
 
         /// <summary>
@@ -223,19 +225,59 @@ namespace Zenref.Ava.ViewModels
         }
 
         /// <summary>
-        /// Exports to excel
+        /// Exports references to an excel workbook.
         /// </summary>
+        /// <param name="sheet">The sheet to write to</param>
+        /// <param name="name">The name of the outputted Excel file (including file suffix)</param>
+        /// <remarks>
+        /// Groups references by their publication type where each group will be saved to a separate worksheet.
+        /// </remarks>
         private void Export(Spreadsheet sheet, string name)
         {
             // List<Reference> testreferences = new List<Reference>();
             // foreach (RawReference reference in rawReferences)
             // {
             //     testreferences.Add(new Reference(reference,DateTimeOffset.Now));
+            // 
+            // List<Reference> references = new List<Reference>();
+            // int i = 0;
+            // string pubType;
+            // foreach (RawReference rawReference in rawReferences)
+            // {
+            //     switch (i % 3)
+            //     {
+            //         case 0:
+            //             pubType = "bog";
+            //             break;
+            //         case 1:
+            //             pubType = "Online";
+            //             break;
+            //         case 2:
+            //             pubType = "Tidsskrift";
+            //             break;
+            //         default:
+            //             pubType = "din far";
+            //             break;
+            //     }
+            //     references.Add(new Reference(rawReference, pubType: pubType));
+            //     i++;
             // }
+            //
+            // filteredReferences = references;
+
+            IEnumerable<IGrouping<string, Reference>> referencesGroupedByPubType = filteredReferences.GroupBy(
+                reference => reference.PubType.ToLower());
+            foreach (IGrouping<string,Reference> grouping in referencesGroupedByPubType)
+            {
+                Debug.WriteLine($"{grouping.Key} has {grouping.Count()} reference(s)");
+                sheet.SetActiveSheet(grouping.Key);
+                sheet.AddReference(grouping);
+            }
+
             Debug.WriteLine($"testreferences count:{FilteredReferences.Count()}");
             sheet.AddReference(FilteredReferences, 2);
             sheet.Export(name);
-            //Debug.WriteLine($"Exported {filteredReferences.Count()} Reference(s).");
+            Debug.WriteLine($"Exported {filteredReferences.Count()} Reference(s).");
         }
         /// <summary>
         /// Prompts the user to save a file at a given location
@@ -267,6 +309,10 @@ namespace Zenref.Ava.ViewModels
         }
 
 
+        /// <summary>
+        /// Method called when this class receives a message on the default channel of type <c>FilePathsMessage.</c>
+        /// </summary>
+        /// <param name="message">The message received.</param>
         public void Receive(FilePathsMessage message)
         {
             filePaths = message.FilePaths;
@@ -278,6 +324,9 @@ namespace Zenref.Ava.ViewModels
             Console.WriteLine("ActiveSheet: " + activeSheet);
         }
 
+        /// <summary>
+        /// Reads all the references from the chosen Excel files.
+        /// </summary>
         private void ReadAllReferences()
         {
             ObservableCollection<RawReference> referencesInSheets = new ObservableCollection<RawReference>();
