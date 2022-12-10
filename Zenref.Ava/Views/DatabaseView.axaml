@@ -24,20 +24,21 @@
 		<Menu Background="Gray" Grid.Row="0">
 			<Button Command="{Binding OpenDragAndDropView}" CommandParameter="{Binding ElementName=DBView}" Content="Tilføj"/>
 			<TextBox KeyUp="SearchFilter" Watermark="Søg" Width="150" FontSize="15"/>
-			<ComboBox Name="myCombobox" Items="{Binding PropertyArray}" SelectedIndex="1"/>
+			<ComboBox Name="myCombobox" Items="{Binding PropertyArray}" SelectedIndex="0"/>
 			<Button Command="{Binding DeleteReference}" CommandParameter="{Binding SelectedItem, ElementName=myDataGrid}" Content="Slet"/>
-			<CheckBox IsChecked="{Binding SaveChanges}" Content="Gem ændringer automatisk"/>
+			<CheckBox IsChecked="{Binding SaveChanges}" Content="Gem ændringer"/>
 		</Menu>
 			<DataGrid x:Name="myDataGrid" Items="{Binding FilteredReferences}" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
 				  RowBackground="LightGray" CanUserResizeColumns="True" RowHeight="30" Width="1200" Height="550">
 				<DataGrid.Columns>
+					<DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
 					<DataGridTextColumn Header="Forfatter" Binding="{Binding Author}"/>	
 					<DataGridTextColumn Header="Titel" Binding="{Binding Title}"/>
 					<DataGridTextColumn Header="Publikationstype" Binding="{Binding PubType}"/>
 					<DataGridTextColumn Header="Forlag" Binding="{Binding Publisher}"/>
 					<DataGridTextColumn Header="År (Reference)" Binding="{Binding YearRef}"/>
-					<DataGridTextColumn Header="Id" Binding="{Binding ID}"/>
-					<DataGridTextColumn Header="Uddannelse" Binding="{Binding Edu}"/>
+					<DataGridTextColumn Header="Reference id" Binding="{Binding RefId}"/>
+					<DataGridTextColumn Header="Uddannelse" Binding="{Binding Education}"/>
 					<DataGridTextColumn Header="Uddannelsessted" Binding="{Binding Location}"/>
 					<DataGridTextColumn Header="Semester" Binding="{Binding Semester}"/>
 					<DataGridTextColumn Header="Sprog" Binding="{Binding Language}"/>
