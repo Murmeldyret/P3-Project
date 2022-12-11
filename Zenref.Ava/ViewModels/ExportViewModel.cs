@@ -62,7 +62,7 @@ namespace Zenref.Ava.ViewModels
         [ObservableProperty]
         private ObservableCollection<RawReference> rawReferences;
         [ObservableProperty]
-        private List<Reference> filteredReferences = new List<Reference>();
+        private IEnumerable<Reference> filteredReferences;
 
         [ObservableProperty]
         private string apiKey;
@@ -408,11 +408,7 @@ namespace Zenref.Ava.ViewModels
                 StartWorker.ReportProgress(0, countRef);
             }
 
-            // Add all the references to the observable collection
-            foreach (Reference reference in listReferences)
-            {
-                FilteredReferences.Add(reference);
-            }
+            FilteredReferences = listReferences;
 
             Debug.WriteLine("Hello");
         }
