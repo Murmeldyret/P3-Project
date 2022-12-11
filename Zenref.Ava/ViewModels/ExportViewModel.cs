@@ -408,8 +408,6 @@ namespace Zenref.Ava.ViewModels
             }
 
             FilteredReferences = listReferences;
-
-            Debug.WriteLine("Hello");
         }
 
         private static void UpdateCounter(FilterCollection instance, int[] countRef, Reference reference)
