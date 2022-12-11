@@ -171,10 +171,10 @@
 						<DataTemplate>
 							<Grid Classes="PubTypeBox" ColumnDefinitions="*,Auto,Auto">
 								<TextBox Classes="PubTypeTitle" Text="{Binding Path=categoryName}" x:Name="PubName" />
-								<Button Classes="Options" Command="{Binding ElementName=MainView, Path=DataContext.EditPublicationTypeCommand}" CommandParameter="{Binding ElementName=PubName, Path=Text}">
+								<Button Classes="Options" Command="{Binding ElementName=MainView, Path=DataContext.EditPublicationTypeCommand}" CommandParameter="{Binding }">
 									<Image Source="avares://Zenref.Ava/Assets/options.ico" />
 								</Button>
-								<Button Classes="Cross" Command="{Binding ElementName=MainView, Path=DataContext.DeletePublicationTypeCommand}" CommandParameter="{Binding ElementName=PubName, Path=Text}">
+								<Button Classes="Cross" Command="{Binding ElementName=MainView, Path=DataContext.DeletePublicationTypeCommand}" CommandParameter="{Binding }">
 									<Image Source="avares://Zenref.Ava/Assets/cross.ico" />
 								</Button>
 							</Grid>

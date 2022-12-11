@@ -14,11 +14,13 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using AvaloniaEdit;
 using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
 using DynamicData.Binding;
 using P3Project.API;
 using Zenref.Ava.Models;
@@ -28,32 +30,6 @@ using Filter = Zenref.Ava.Models.Filter;
 
 namespace Zenref.Ava.ViewModels
 {
-    public class FilterType
-    {
-        private int id;
-        public static int sId = 0;
-
-        public int Id
-        {
-            get
-            {
-                return id;
-            }
-            set
-            {
-                id = sId;
-            }
-        }
-
-        public ObservableCollection<Filter> filt { get; set; }
-
-        public FilterType(ObservableCollection<Filter> filter)
-        {
-            id = ++sId;
-            filt = filter;
-        }
-    }
-    
     public partial class ExportViewModel : ObservableRecipient, IRecipient<FilePathsMessage>
     {
         /// <summary>
@@ -98,9 +74,9 @@ namespace Zenref.Ava.ViewModels
         private ObservableCollection<SearchPublicationType> searchTest = new ObservableCollection<SearchPublicationType>();
         private ObservableCollection<SearchPublicationType> searchTest2 = new ObservableCollection<SearchPublicationType>();
         */
-        //private ObservableCollection<Filter> searchCriteria = new ObservableCollection<Filter>();
         //private ObservableCollection<FilterType> searchCriteria = new ObservableCollection<FilterType>();
         private ObservableCollection<Filter> searchCriteria = new ObservableCollection<Filter>();
+        //private List<Filter> searchCriteria = new List<Filter>();
 
         private ObservableCollection<SearchTerms> searchString = new ObservableCollection<SearchTerms>();
 
@@ -117,8 +93,7 @@ namespace Zenref.Ava.ViewModels
         private ObservableCollection<Filter> publicationTypes = new ObservableCollection<Filter>();
         //private ObservableCollection<FilterType> publicationTypes = new ObservableCollection<FilterType>();
 
-        private string name;
-        private List<string> query;
+        private List<Filter> ff = new List<Filter>();
 
         private List<FileInfo> filePaths;
         private List<int> columnPositions;
@@ -129,7 +104,6 @@ namespace Zenref.Ava.ViewModels
 
         [ObservableProperty] private string apiKey;
 
-        private List<string> filter;
 
         private int id = 0;
 
@@ -140,13 +114,6 @@ namespace Zenref.Ava.ViewModels
         public ExportViewModel()
             : base(WeakReferenceMessenger.Default)
         {
-            /*
-            searchTest.Add(new SearchPublicationType(searchTerm: "hello", searchSelectOperand: "OG", searchSelectField: "Titel"));
-            searchTest2.Add(new SearchPublicationType(searchTerm: "hello2vuu", searchSelectOperand: "OG", searchSelectField: "Titel"));
-            PublicationTypes.Add(new PublicationType("Bog", searchTest));
-            PublicationTypes.Add(new PublicationType("Artikel", searchTest2));
-            */
-
             try
             {
                 if (File.Exists(@"../../../Models/ApiKeys/scopusApiKey.txt"))
@@ -182,6 +149,7 @@ namespace Zenref.Ava.ViewModels
                 Receive(m);
             });
         }
+        public int DublicationCounter = 0;
 
         /// <summary>
         /// Handles the message sent from the SearchCriteriaViewModel.
@@ -191,29 +159,48 @@ namespace Zenref.Ava.ViewModels
         public void Receive(SearchTermMessage message)
         {
             searchCriteria = message.SearchPubCollection;
+
+            int pubId = 0;
+            
+            PublicationTypes.Add(new Filter(searchCriteria[0].filtQ, searchCriteria[0].filterQuery, $"Indsæt publikations titel"));
             /*
-            foreach (string s in searchCriteria[0].ReturnFilterQueries())
-            {
-                Console.WriteLine($"something: {s}");
-            }
-            */
-            if (PublicationTypes.Count > 0)
-            {
+            if (PublicationTypes.Any())
+            { 
                 for (int i = 0; i < PublicationTypes.Count; i++)
                 {
-                    Console.WriteLine($"Count: {i}");
+                    Console.WriteLine($"ID:{PublicationTypes[i].ListId}----------Name:{PublicationTypes[i].categoryName}");
+                    if (PublicationTypes[i].categoryName == searchCriteria[0].categoryName)
+                    {
+                        //searchCriteria[0].categoryName = $"{searchCriteria[0].categoryName}1";
+                        DublicationCounter++;
+                        PublicationTypes.Add(new Filter(searchCriteria[0].filtQ, searchCriteria[0].filterQuery, $"{searchCriteria[0].categoryName}{DublicationCounter}"));
+                    }
+
+                    if (!PublicationTypes[i].categoryName.Contains(searchCriteria[0].categoryName))
+                    {
+                        Console.WriteLine("wow not on the list");
+                    }
+                }
+
+                if (!PublicationTypes.Contains(searchCriteria[0]))
+                {
+                    Console.WriteLine("wavavaviva");
+                    PublicationTypes.Add(new Filter(searchCriteria[0].filtQ, searchCriteria[0].filterQuery, searchCriteria[0].categoryName));
                 }
             }
             else
             {
-                PublicationTypes.Add(new Filter(searchCriteria[0].filterQuery, searchCriteria[0].categoryName));
+                PublicationTypes.Add(new Filter(searchCriteria[0].filtQ, searchCriteria[0].filterQuery, searchCriteria[0].categoryName));
             }
+            */
         }
 
         [RelayCommand]
         private void OpenSearchCriteria(Window window)
         {
+            bool isAddPubEnabled = true;
             SearchCriteriaView SearchView = new SearchCriteriaView();
+            SearchView.DataContext = new SearchCriteriaViewModel(isAddPubEnabled);
             SearchView.Show();
         }
 
@@ -222,18 +209,25 @@ namespace Zenref.Ava.ViewModels
         /// </summary>
         /// <param name="msg"></param>
         [RelayCommand]
-        private void DeletePublicationType(string msg)
+        private void DeletePublicationType(object msg)
         {
-            Console.WriteLine(msg);
 
+            Console.WriteLine(msg.GetType().GetProperty("ListId").GetValue(msg));
+            //int id = (int)msg.GetType().GetProperty("ListId").GetValue(msg);
+            string name = (string)msg.GetType().GetProperty("categoryName").GetValue(msg);
+
+            foreach (Filter f in PublicationTypes)
+            {
+                Console.WriteLine($"id: {f.ListId}");
+            }
+            
             for (int i = 0; i < PublicationTypes.Count; i++)
             {
-                if (msg == PublicationTypes[i].categoryName)
+                if (name == PublicationTypes[i].categoryName)
                 {
                     PublicationTypes.RemoveAt(i);
                 }
             }
-
         }
 
         [RelayCommand]
@@ -251,22 +245,90 @@ namespace Zenref.Ava.ViewModels
         /// </summary>
         /// <param name="msg"></param>
         [RelayCommand]
-        private void EditPublicationType(string msg)
+        private void EditPublicationType(object msg)
         {
-            searchString.Clear();
+            bool isEditEnabled = true;
+            //int id = (int)msg.GetType().GetProperty("ListId").GetValue(msg);
+            string name = (string)msg.GetType().GetProperty("categoryName").GetValue(msg);
+            
+            for (int i = 0; i < PublicationTypes.Count; i++)
+            {
+                //if (id == PublicationTypes[i].ListId)
+                if (name == PublicationTypes[i].categoryName)
+                {
+
+                    PublicationTypes[i].cancel = false;
+                    Console.WriteLine($"categoryName: {PublicationTypes[i].categoryName}");
+                    //ff.Add(new Filter(PublicationTypes[i].filtQ, PublicationTypes[i].categoryName));
+                    SearchCriteriaView SearchView = new SearchCriteriaView();
+                    //SearchView.DataContext = new SearchCriteriaViewModel(ft[i].ftSearchTerm, msg, id);
+                    //SearchView.DataContext = new SearchCriteriaViewModel(PublicationTypes[i].filtQ, PublicationTypes[i].categoryName, id);
+                    //SearchView.DataContext = new SearchCriteriaViewModel(PublicationTypes[i], isEditEnabled);
+                    SearchView.DataContext = new SearchCriteriaViewModel(PublicationTypes[i].filtQ, PublicationTypes[i].categoryName, isEditEnabled);
+                    SearchView.Show();
+                    Console.WriteLine($"pub::{PublicationTypes[i].categoryName}:::::::::::::se{searchCriteria[0].categoryName}");
+                }
+            }
+            /*
+            List<Filter> filterList = new List<Filter>();
+            for (int i = 0; i < PublicationTypes.Count; i++)
+            {
+                if (msg == PublicationTypes[i].categoryName)
+                {
+                    filterList.Add(new Filter(PublicationTypes[i].filtQ, PublicationTypes[i].categoryName));
+                    /*
+                    for (int j = 0; j < PublicationTypes[i].filterQuery.Count; j++)
+                    {
+                        searchString.Add(new SearchTerms(PublicationTypes[i].filterQuery[j]));
+                    }
+
+                    PublicationTypes[i].cancel = false;
+                    Console.WriteLine($"categoryName: {PublicationTypes[i].categoryName}");
+                    ff.Add(new Filter(PublicationTypes[i].filtQ, PublicationTypes[i].categoryName));
+                    SearchCriteriaView SearchView = new SearchCriteriaView();
+                    //SearchView.DataContext = new SearchCriteriaViewModel(ft[i].ftSearchTerm, msg, id);
+                    //SearchView.DataContext = new SearchCriteriaViewModel(PublicationTypes[i].filtQ, PublicationTypes[i].categoryName, id);
+                    SearchView.DataContext =
+                        new SearchCriteriaViewModel(PublicationTypes[i], PublicationTypes[i].cancel);
+                    SearchView.Show();
+                }
+            }
+        
+                    */
+            
+
+            /*
+            if (!searchString.Any())
+            {
+                for (int i = 0; i < PublicationTypes.Count; i++)
+                {
+                    for (int j = 0; j < PublicationTypes[i].filterQuery.Count; j++)
+                    {
+                        if (msg == PublicationTypes[i].categoryName)
+                        {
+                            searchString.Add(new SearchTerms(PublicationTypes[i].filterQuery[j]));
+                            Console.WriteLine("hello from shit");
+                                    
+                        }
+                    }
+                }
+            }
+            */
+
+            /*
             for (int i = 0; i < PublicationTypes.Count; i++)
             {
                 foreach (string s in PublicationTypes[i].filterQuery)
                 {
-                    Console.WriteLine($"edit btn from exportVM values: {s}");
+                    //Console.WriteLine($"edit btn from exportVM values: {s}");
                     searchString.Add(new SearchTerms(searchString: s));
                 }
 
-                SearchCriteriaView SearchView = new SearchCriteriaView();
-                SearchView.DataContext = new SearchCriteriaViewModel(searchString, msg, id);
-                SearchView.Show();
+                //searchString = observableCollection<SearchTerm>
+                // Publication[i].filterQuery = List<string>
+                //searchString = PublicationTypes[i].filterQuery;
             }
-
+            */
         }
 
         /// <summary>
