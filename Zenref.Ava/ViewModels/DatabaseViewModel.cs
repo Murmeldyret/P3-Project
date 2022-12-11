@@ -75,7 +75,7 @@ namespace Zenref.Ava.ViewModels
         private void ReadAllReferences()
         {
             ObservableCollection<Reference> referencesInSheets = new ObservableCollection<Reference>();
-            SortedDictionary<Spreadsheet.ReferenceFields, int> positionInSheet = new SortedDictionary<Spreadsheet.ReferenceFields, int>();
+            Dictionary<Spreadsheet.ReferenceFields, int> positionInSheet = new Dictionary<Spreadsheet.ReferenceFields, int>();
             Spreadsheet.ReferenceFields referenceFields = (Spreadsheet.ReferenceFields)0;
             for (int i = 0; i < columnPositions.Count; i++)
             {
