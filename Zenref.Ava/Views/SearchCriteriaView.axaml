@@ -68,24 +68,12 @@
 			<Button Name="addButton" HorizontalAlignment="Left" Grid.Column="0" Command="{Binding AddSearchCriteriaCommand}" CommandParameter="{Binding ElementName=SearchView}" Margin="10,10,10,10">Tilføj søgefelt</Button>
 			<Button Name="deleteButton" HorizontalAlignment="Left" Grid.Column="1" Command="{Binding DeleteSearchCriteriaCommand}" CommandParameter="{Binding ElementName=SearchView}" Margin="10,10,10,10">Slet søgefelt</Button>
 			<Button Name="deleteAllButton" HorizontalAlignment="Left" Grid.Column="2" Command="{Binding DeleteAllSearchCriteriasCommand}" CommandParameter="{Binding ElementName=SearchView}" Margin="10,10,10,10">Ryd søgefelter</Button>
-			<!--
-			<TextBlock Classes="PublikationsTitel" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="20,0,0,0" Text="Publikations type: " />
-			<TextBlock Classes="PublikationsTitel" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0" Text="{Binding PubName}" />
-			<TextBox Grid.Column="1" Text="{Binding ElementName=SearchView, Path=DataContext.PubName}" Watermark="Publikations titel"/>
-			-->
 		</Grid>
 		<ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" MaxHeight="350">
 			<ItemsControl Grid.Column="0" Items="{Binding SearchOption}">
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
 						<TextBox Watermark="Indsæt søgning" Text="{Binding SearchString}" />
-						<!--
-						<Grid ColumnDefinitions="1.5*, 2*, 6*">
-							<ComboBox Grid.Column="0" Classes="SecondCategory Operator" SelectedItem="{Binding SearchSelectOperand}" PlaceholderText="Operator" Items="{Binding Path=Operand}" />
-							<ComboBox Grid.Column="1" Classes="SecondCategory" SelectedItem="{Binding SearchSelectField}" PlaceholderText="Felter" Items="{Binding Path=Field}"/>
-							<TextBox Grid.Column="2" Watermark="Søg" Text="{Binding SearchTerm}" />
-						</Grid>
-						-->
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
