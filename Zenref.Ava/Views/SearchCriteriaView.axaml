@@ -7,6 +7,7 @@
         mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="450"
         Width="700" Height="450"
         x:Name="SearchView"
+        Title="{Binding PubName}"
         x:Class="Zenref.Ava.Views.SearchCriteriaView">
 
 	<Window.Styles>
@@ -67,9 +68,9 @@
 			<Button Name="addButton" HorizontalAlignment="Left" Grid.Column="0" Command="{Binding AddSearchCriteriaCommand}" CommandParameter="{Binding ElementName=SearchView}" Margin="10,10,10,10">Tilføj søgefelt</Button>
 			<Button Name="deleteButton" HorizontalAlignment="Left" Grid.Column="1" Command="{Binding DeleteSearchCriteriaCommand}" CommandParameter="{Binding ElementName=SearchView}" Margin="10,10,10,10">Slet søgefelt</Button>
 			<Button Name="deleteAllButton" HorizontalAlignment="Left" Grid.Column="2" Command="{Binding DeleteAllSearchCriteriasCommand}" CommandParameter="{Binding ElementName=SearchView}" Margin="10,10,10,10">Ryd søgefelter</Button>
+			<!--
 			<TextBlock Classes="PublikationsTitel" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="20,0,0,0" Text="Publikations type: " />
 			<TextBlock Classes="PublikationsTitel" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0" Text="{Binding PubName}" />
-			<!--
 			<TextBox Grid.Column="1" Text="{Binding ElementName=SearchView, Path=DataContext.PubName}" Watermark="Publikations titel"/>
 			-->
 		</Grid>

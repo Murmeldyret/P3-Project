@@ -45,42 +45,22 @@ namespace Zenref.Ava.ViewModels
         /// The NotifyCanExecuteChangedFor property generates code that help executing commands form actions like a button click
         /// by binding to a method of the same name, but without the "Command" prefix.
         /// </summary>
-        /*
-        [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(AddSearchCriteriaCommand))]
-        [NotifyCanExecuteChangedFor(nameof(DeleteSearchCriteriaCommand))]
-        [NotifyCanExecuteChangedFor(nameof(DeleteAllSearchCriteriasCommand))]
-        private ObservableCollection<SearchPublicationType> searchOption = new ObservableCollection<SearchPublicationType>();
-        */
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(AddSearchCriteriaCommand))]
         [NotifyCanExecuteChangedFor(nameof(DeleteSearchCriteriaCommand))]
         [NotifyCanExecuteChangedFor(nameof(DeleteAllSearchCriteriasCommand))]
         private ObservableCollection<SearchTerms> searchOption = new ObservableCollection<SearchTerms>();
         
-        private List<SearchTerms> originalSearchOptions = new List<SearchTerms>();
-
-        /*
-        [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(AddPublicationTypeCommand))]
-        [NotifyCanExecuteChangedFor(nameof(EditCommand))]
-        private ObservableCollection<PublicationType> pubTypes = new ObservableCollection<PublicationType>();
-        */
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(AddPublicationTypeCommand))]
         [NotifyCanExecuteChangedFor(nameof(EditCommand))]
         private ObservableCollection<Filter> pubTypes = new ObservableCollection<Filter>();
 
-        private ObservableCollection<Filter> oriPubTypes = new ObservableCollection<Filter>();
-
         /// Strings that keeps track of the different selected search options from the view
         [ObservableProperty] private bool isEditEnabled;
         [ObservableProperty] private bool isAddPubEnabled;
         
-        
         private string? searchTextString;
-        private string? SearchOperand;
-        private string? SearchField;
 
         [ObservableProperty] 
         [NotifyCanExecuteChangedFor(nameof(AddPublicationTypeCommand))]
@@ -99,13 +79,11 @@ namespace Zenref.Ava.ViewModels
             SearchOption.Clear();
         }
         
-        private bool isCanceled;
 
         public SearchCriteriaViewModel(Filter filter, bool isEditEnabled)
         {
             Console.WriteLine("Constructer struck hahahhhahhahahhaha");
             PubTypes.Clear();
-            oriPubTypes.Clear();
 
             this.IsEditEnabled = isEditEnabled;
             this.isAddPubEnabled = false;
@@ -114,18 +92,6 @@ namespace Zenref.Ava.ViewModels
             PubTypes.Add(new Filter(filter.filtQ, filter.filterQuery, filter.categoryName));
         }
         
-        public SearchCriteriaViewModel(ObservableCollection<SearchTerms> searchOption, string pubName, bool isEditEnabled)
-        {
-            foreach (SearchTerms s in searchOption)
-            {
-                Console.WriteLine($"passed from export: {s.SearchString}");
-            }
-            SearchOption.Clear();
-            SearchOption = searchOption;
-            originalSearchOptions = searchOption.ToList();
-            PubName = pubName;
-            this.isEditEnabled = isEditEnabled;
-        }
 
         /// <summary>
         /// The RelayCommand makes it into a new command, and is in relation to the NotifyCanExecuteChangedFor
@@ -150,12 +116,18 @@ namespace Zenref.Ava.ViewModels
         }
 
         /// <summary>
-        /// Edits the publication type 
+        /// Edits the publication type, and save the changes 
         /// </summary>
         /// <param name="window"></param>
         [RelayCommand]
         private void Edit(Window window)
-        { 
+        {
+            PubTypes[0].filterQuery.Clear();
+            foreach (SearchTerms s in PubTypes[0].filtQ)
+            {
+                PubTypes[0].filterQuery.Add(s.SearchString);
+            }
+            
             isEditEnabled = false;
             window.Close();
         }
@@ -167,20 +139,6 @@ namespace Zenref.Ava.ViewModels
         private void AddSearchCriteria()
         {
             SearchOption.Add(new SearchTerms(searchString: searchTextString));
-            
-            /*
-            foreach (SearchTerms s in SearchOption)
-            {
-                Console.WriteLine(s.SearchString);
-            }
-            */
-
-            /*
-            SearchOption.Add(new SearchPublicationType(
-                searchTerm: SearchTextString, 
-                searchSelectOperand: SearchOperand, 
-                searchSelectField: SearchField));
-            */
         }
 
         /// <summary>
@@ -203,26 +161,18 @@ namespace Zenref.Ava.ViewModels
         }
 
         /// <summary>
-        /// Closes the window
+        /// Closes the window and discard unsaved changes
         /// </summary>
         /// <param name="window"></param>
         [RelayCommand]
         private void Cancel(Window window)
         {
-            // Clear new observablelist and exchange with backup
-            /*
-            PubTypes.Clear();
-            ObservableCollection<SearchTerms> osc = new ObservableCollection<SearchTerms>(originalSearchOptions);
-            PubTypes.Add(new Filter(osc, PubName));
-            */
             if (!PubTypes.Any())
             {
                 window.Close();
             }
             else
             {
-                isCanceled = true;
-                Console.WriteLine(isCanceled);
                 SearchOption.Clear();
 
                 foreach (string s in pubTypes[0].filterQuery)
@@ -230,7 +180,6 @@ namespace Zenref.Ava.ViewModels
                     searchOption.Add(new SearchTerms(s));
                 }
 
-                PubTypes[0].cancel = isCanceled;
                 window.Close();
                 
                 
