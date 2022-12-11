@@ -90,7 +90,6 @@ namespace Zenref.Ava.ViewModels
             {
                 Receive(m);
             });
-            int num = filtercollection[1].id;
         }
 
         /// <summary>

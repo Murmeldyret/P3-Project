@@ -381,9 +381,9 @@ namespace zenref.Tests
 
             //Act
             sheet.Create();
-            sheet.AddReference(reference1, 1);
-            sheet.AddReference(reference2, 2);
-            sheet.AddReference(reference3, 3);
+            sheet.AddRawReference(reference1, 1);
+            sheet.AddRawReference(reference2, 2);
+            sheet.AddRawReference(reference3, 3);
             sheet.RemoveAt(2);
 
             //Assert
@@ -402,7 +402,7 @@ namespace zenref.Tests
 
             //Act
             sheet.Create();
-            sheet.AddReference(reference1, 1);
+            sheet.AddRawReference(reference1, 1);
             ws.Clear();
             sheet.Clear();
 
@@ -421,9 +421,9 @@ namespace zenref.Tests
 
             //Act
             sheet.Create();
-            sheet.AddReference(reference1, 1);
-            sheet.AddReference(reference2, 2);
-            sheet.AddReference(reference3, 3);
+            sheet.AddRawReference(reference1, 1);
+            sheet.AddRawReference(reference2, 2);
+            sheet.AddRawReference(reference3, 3);
             sheet.Remove(reference2);
             bool res = sheet[2].Equals(reference2);
 
@@ -460,7 +460,7 @@ namespace zenref.Tests
 
             spreadsheet.Create();
 
-            spreadsheet.AddReference(new RawReference(null,null,null,null,"very cool"),ROWTOINSERTAT);
+            spreadsheet.AddRawReference(new RawReference(null,null,null,null,"very cool"),ROWTOINSERTAT);
             spreadsheet.Export(SPREADSHEETTESTNAME);
 
             XLWorkbook wb = new XLWorkbook(SPREADSHEETTESTNAME);
