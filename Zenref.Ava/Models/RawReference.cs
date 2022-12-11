@@ -90,7 +90,7 @@ public class RawReference : IEquatable<RawReference>
     /// <returns>An enriched reference with filled fields</returns>
     public Reference ExtractData()
     {
-        string doi = DoiSearch();
+        string doi = ""; //DoiSearch();
         (string author, string title, int? yearRef) ucnRefAuthorTitleYearRef = UCNRefAuthorTitleYearRef();
         (string pubType, string source) ucnRefLinks = UCNRefLinks();
 

@@ -290,19 +290,20 @@ namespace Zenref.Ava.ViewModels
                 Title = "Choose export folder",
                 InitialFileName = "Behandlede_Referencer.xlsx",
                 DefaultExtension = ".xlsx",
+
             };
             string? filePathToExportedFile = await saveFileDialog.ShowAsync(window);
             if (filePathToExportedFile is null)
             {
                 IMsBoxWindow<ButtonResult> messageBoxStandardView = MessageBox.Avalonia.MessageBoxManager
-                    .GetMessageBoxStandardWindow("Error", "Error in reading References from spreadsheet"); 
+                    .GetMessageBoxStandardWindow("Error", "Error in reading References from spreadsheet");
                 messageBoxStandardView.Show();
             }
             else
             {
-               Spreadsheet exportSheet = new Spreadsheet(filePathToExportedFile);
-               exportSheet.Create();
-               Export(exportSheet, filePathToExportedFile);
+                Spreadsheet exportSheet = new Spreadsheet(filePathToExportedFile);
+                exportSheet.Create();
+                Export(exportSheet, filePathToExportedFile);
             }
         }
 
@@ -363,7 +364,6 @@ namespace Zenref.Ava.ViewModels
                 Debug.WriteLine(e.Message + e.StackTrace);
                 Debug.WriteLine(positionInSheet.Count);
             }
-
         }
 
         private void RunBackgroundSearchProcess(object sender, DoWorkEventArgs e)
@@ -378,22 +378,59 @@ namespace Zenref.Ava.ViewModels
             // If the database does not contain the reference, search for it in the internet
             ApiSearching apiSearching = new ApiSearching();
             // Call the apisearching method
-            List<Reference> references = apiSearching.SearchReferences(rawReferences.ToList());
+            (List<Reference> listReferences, List<RawReference> leftOverRef) = apiSearching.SearchReferences(rawReferences.ToList());
 
             Console.WriteLine("References: " + rawReferences.Count);
 
             // Filter the references
             FilterCollection instance = IFilterCollection.GetInstance();
 
-            
+            int[] countRef = { 0, 0 };
 
             // Categorize all the references
-            foreach (Reference reference in references)
+            foreach (Reference reference in listReferences)
             {
-                // Call the categorize function.
+                UpdateCounter(instance, countRef, reference);
+
+                StartWorker.ReportProgress(0, countRef);
+            }
+
+            // Categorize all the remaining raw references
+            foreach (RawReference rawreference in leftOverRef)
+            {
+                Reference reference = rawreference.ExtractData();
+                reference.PubType = instance.categorize(reference);
+
+                UpdateCounter(instance, countRef, reference);
                 
+                listReferences.Add(reference);
+                StartWorker.ReportProgress(0, countRef);
+            }
+
+            FilteredReferences = listReferences;
+        }
+
+        private static void UpdateCounter(FilterCollection instance, int[] countRef, Reference reference)
+        {
+            // Call the categorize function.
+            if (reference.PubType == null)
+            {
+                reference.PubType = instance.categorize(reference);
+            }
+
+
+
+            if (reference.PubType != "Uncategorized")
+            {
+                countRef[0]++;
+            }
+
+            else
+            {
+                countRef[1]++;
             }
         }
+
         private void CompletedBackgroundSearchProcess(object sender, RunWorkerCompletedEventArgs e)
         {
             _isRunning = false;
@@ -401,7 +438,10 @@ namespace Zenref.Ava.ViewModels
 
         private void ChangedBackgroundSearchProcess(object sender, ProgressChangedEventArgs e)
         {
-            
+            int[] countRef = e.UserState as int[];
+
+            IdentifiedNumberCounter = countRef![0];
+            UnIdentifiedNumberCounter = countRef[1];
         }
     }
 }

@@ -84,10 +84,9 @@ namespace P3Project.API
         /// </summary>
         /// <param name="inputReference">The Reference that is to be looked up (usually unidentified)</param>
         /// <returns>A reference with correctly filled fields</returns>
-        public virtual async Task<Reference> ReferenceFetch(RawReference inputReference, Func<RawReference, HttpResponseMessage, Reference> referenceParser)
+        public virtual async Task<(Reference, RawReference)> ReferenceFetch(RawReference inputReference, Func<RawReference, HttpResponseMessage, Reference> referenceParser)
         {
-            string queryString = queryCleaner(inputReference.OriReference);
-            Uri apiUri = BuildUri($"query={queryString}");
+            Uri apiUri = BuildUri(inputReference);
 
             HttpResponseMessage response = await ApiClient.getInstance().GetAsync(apiUri);       // Request API for ressource.
 
@@ -104,7 +103,7 @@ namespace P3Project.API
             // Parse into deligate
             Reference parsed_reference = referenceParser(inputReference, response);
 
-            return parsed_reference;
+            return (parsed_reference, inputReference);
 
         }
 
@@ -128,9 +127,15 @@ namespace P3Project.API
         }
 
 
-        protected Uri BuildUri(string query)
+        protected Uri BuildUri(RawReference inputReference)
         {
             UriBuilder uriBuilder = new UriBuilder(_baseURL);
+
+            // Convert RawReference to a Reference
+            Reference convertedReference = inputReference.ExtractData();
+
+            string query = "query=" + queryCleaner(convertedReference.Title!);
+
 
             // Add all parameters to the query
             if (ParametersName != null && ParametersValue != null && ParametersName.Count == ParametersValue.Count)
@@ -202,28 +207,27 @@ namespace P3Project.API
 
     public class ApiSearching
     {
-        public List<Reference> SearchReferences(List<RawReference> rawReferences)
+        public (List<Reference>, List<RawReference>) SearchReferences(List<RawReference> rawReferences)
         {
             // This should have been done in a better way, however, there is no time for it.
             Scopus scopus = InitializeScopus();
 
-            int i = 2;
-
             List<Reference> references = new List<Reference>();
+            List<RawReference> leftOverReferences = new List<RawReference>();
             foreach (RawReference rawReference in rawReferences)
             {
-                Debug.WriteLine(i);
-                if (i == 72)
+                (Reference reference, RawReference OriReference) = Task.Run(() => scopus.ReferenceFetch(rawReference, scopus.ReferenceParser)).Result;
+                if (reference.Title != null)
                 {
-                    Debug.WriteLine("hej");
+                    references.Add(reference);
                 }
-                Reference reference = Task.Run(() => scopus.ReferenceFetch(rawReference, scopus.ReferenceParser)).Result;
-                references.Add(reference);
-
-                i++;
+                else
+                {
+                    leftOverReferences.Add(OriReference);
+                }
             }
 
-            return references;
+            return (references, leftOverReferences);
         }
 
         private Scopus InitializeScopus()

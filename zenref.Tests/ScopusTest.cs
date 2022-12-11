@@ -47,17 +47,17 @@ namespace zenref.Tests
         public async void ReferenceFetchTest()
         {
             // New reference
-            //RawReference inputReference = new RawReference("lige meget",
-            //    "lige meget",
-            //    "lige meget",
-            //    "lige meget",
-            //    "Zhao, Nannan. (2024). Improvement of Cloud Computing Medical Data Protection Technology Based on Symmetric Encryption Algorithm");
-
             RawReference inputReference = new RawReference("lige meget",
                 "lige meget",
                 "lige meget",
                 "lige meget",
-                "Andersen, B. B. & Porse, L. H. (2021). TAP. Teori til Analyse og Praksis i billedkunst. Praxis.");
+                "Zhao, Nannan. (2024). Improvement of Cloud Computing Medical Data Protection Technology Based on Symmetric Encryption Algorithm");
+
+            //RawReference inputReference = new RawReference("lige meget",
+            //    "lige meget",
+            //    "lige meget",
+            //    "lige meget",
+            //    "Andersen, B. B. & Porse, L. H. (2021). TAP. Teori til Analyse og Praksis i billedkunst. Praxis.");
             // Get secret key
             var configuration = new ConfigurationBuilder()
             .AddUserSecrets<Settings>()
@@ -68,7 +68,7 @@ namespace zenref.Tests
 
 
             // Act
-            Reference reference = await scopus.ReferenceFetch(inputReference, scopus.ReferenceParser);
+            (Reference reference, RawReference rawReference) = await scopus.ReferenceFetch(inputReference, scopus.ReferenceParser);
 
             // Assert
             Assert.NotNull(reference.Title);
@@ -93,7 +93,7 @@ namespace zenref.Tests
             references.Add(inputReference);
 
             ApiSearching apiSearching = new ApiSearching();
-            List<Reference> listReferences = apiSearching.SearchReferences(references);
+            (List<Reference> listReferences, List<RawReference> listRawReferences) = apiSearching.SearchReferences(references);
 
             Assert.Null(listReferences[0].Title);
 
