@@ -279,22 +279,6 @@ namespace Zenref.Ava.Models
         public string categoryName { get; set; }       // The name of the filter.
         public bool cancel { get; set; }
 
-        private int listId;
-        public static int sListId = 0;
-
-        public int ListId
-        {
-            get
-            {
-                return listId;
-            }
-            set
-            {
-                listId = sListId;
-            }
-            
-        }
-
         /// <summary>
         /// The constructor that initializes a new instance of the <see cref="Filter"/> class with a category name.
         /// </summary>
@@ -313,15 +297,8 @@ namespace Zenref.Ava.Models
             this.categoryName = categoryName;
         }
         
-        public Filter(ObservableCollection<SearchTerms> filtQ, string categoryName)
-        {
-            this.filtQ = filtQ;
-            this.categoryName = categoryName;
-        }
-
         public Filter(ObservableCollection<SearchTerms> filtQ, List<string> filterQuery, string categoryName)
         {
-            this.ListId = ++sListId;
             this.filtQ = filtQ;
             this.filterQuery = filterQuery;
             this.categoryName = categoryName;

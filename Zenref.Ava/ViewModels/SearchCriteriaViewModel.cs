@@ -147,7 +147,10 @@ namespace Zenref.Ava.ViewModels
         [RelayCommand]
         private void DeleteSearchCriteria()
         {
-            SearchOption.RemoveAt(SearchOption.Count - 1);
+            if (SearchOption.Any())
+            {
+                SearchOption.RemoveAt(SearchOption.Count - 1);
+            }
 
         }
 
