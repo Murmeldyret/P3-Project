@@ -431,7 +431,7 @@ namespace Zenref.Ava.Models.Spreadsheet
             row = row != -1 ? row : Count + 1;
             IXLRow indexedRow = XlWorksheet.Row(row);
             indexedRow.Clear();
-            setRawReference(reference, indexedRow);
+            setReference(reference, indexedRow);
         }
 
         private void setRawReference(RawReference reference, IXLRow indexedRow)
