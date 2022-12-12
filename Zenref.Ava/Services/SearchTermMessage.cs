@@ -1,12 +1,14 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Zenref.Ava.Models;
 
 namespace Zenref.Ava.ViewModels;
 
 public class SearchTermMessage
 {
-    public ObservableCollection<PublicationType> SearchPubCollection { get; init; }
+    public ObservableCollection<Filter> SearchPubCollection { get; init; }
 
-    public SearchTermMessage(ObservableCollection<PublicationType> searchOption)
+    public SearchTermMessage(ObservableCollection<Filter> searchOption)
     {
         SearchPubCollection = searchOption;
     }

@@ -14,15 +14,21 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using AvaloniaEdit;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
+using DynamicData.Binding;
 using P3Project.API;
 using Zenref.Ava.Models;
 using Zenref.Ava.Models.Spreadsheet;
 using Zenref.Ava.Views;
+using Filter = Zenref.Ava.Models.Filter;
 using System.ComponentModel;
+
 
 namespace Zenref.Ava.ViewModels
 {
@@ -39,12 +45,34 @@ namespace Zenref.Ava.ViewModels
         [NotifyCanExecuteChangedFor(nameof(StartCommand))]
         private int unIdentifiedNumberCounter = 0;
 
+        // Keeps track of which buttons are enabled
+        [ObservableProperty] private bool isApiKeyButtonEnabled = true;
+        [ObservableProperty] private bool isImportButtonEnabled = false;
+        [ObservableProperty] private bool isStartButtonEnabled = false;
+        [ObservableProperty] private bool isExportButtonEnabled = false;
+
+        /// <summary>
+        /// Makes a bool true
+        /// </summary>
+        /// <returns>true</returns>
+        private bool canProceed()
+        {
+            return true;
+        }
+        /// <summary>
+        /// Makes a bool false
+        /// </summary>
+        /// <returns>false</returns>
+        private bool canNotProceed()
+        {
+            return false;
+        }
+        
         /// <summary>
         /// Property that hold the information from creating a new publicatino type
         /// </summary>
-        private ObservableCollection<PublicationType> searchCriteria = new ObservableCollection<PublicationType>();
-        private ObservableCollection<SearchPublicationType> searchTest = new ObservableCollection<SearchPublicationType>();
-        private ObservableCollection<SearchPublicationType> searchTest2 = new ObservableCollection<SearchPublicationType>();
+        private ObservableCollection<Filter> searchCriteria = new ObservableCollection<Filter>();
+
 
         private ObservableCollection<(Filter filter, int id)> filtercollection = new ObservableCollection<(Filter, int)>();
         /// <summary>
@@ -52,22 +80,24 @@ namespace Zenref.Ava.ViewModels
         /// </summary>
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(EditPublicationTypeCommand))]
-        private ObservableCollection<PublicationType> publicationTypes = new ObservableCollection<PublicationType>();
+        private ObservableCollection<Filter> publicationTypes = new ObservableCollection<Filter>();
+
 
         private List<FileInfo> filePaths;
         private List<int> columnPositions;
         private int activeSheet;
-        [ObservableProperty]
-        private ObservableCollection<Reference> references;
-        [ObservableProperty]
-        private ObservableCollection<RawReference> rawReferences;
-        [ObservableProperty]
-        private IEnumerable<Reference> filteredReferences;
+        [ObservableProperty] private ObservableCollection<Reference> references;
+        [ObservableProperty] private ObservableCollection<RawReference> rawReferences;
+        [ObservableProperty] private IEnumerable<Reference> filteredReferences;
+
+        [ObservableProperty] private string apiKey;
+
 
         [ObservableProperty]
         private string apiKey;
         private BackgroundWorker StartWorker;
         private bool _isRunning;
+
 
         /// <summary>
         /// Constructor, sets up the predefined publication types.
@@ -76,10 +106,31 @@ namespace Zenref.Ava.ViewModels
         public ExportViewModel()
             : base(WeakReferenceMessenger.Default)
         {
-            searchTest.Add(new SearchPublicationType(searchTerm: "hello", searchSelectOperand: "OG", searchSelectField: "Titel"));
-            searchTest2.Add(new SearchPublicationType(searchTerm: "hello2vuu", searchSelectOperand: "OG", searchSelectField: "Titel"));
-            PublicationTypes.Add(new PublicationType("Bog", searchTest));
-            PublicationTypes.Add(new PublicationType("Artikel", searchTest2));
+            // Searching for api key
+            try
+            {
+                if (File.Exists(@"../../../Models/ApiKeys/scopusApiKey.txt"))
+                {
+                    using (StreamReader sr = new StreamReader(@"../../../Models/ApiKeys/scopusApiKey.txt"))
+                    {
+                        string line;
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            IsImportButtonEnabled = canProceed();
+                        }
+                    }
+                }
+                else
+                {
+                    IsImportButtonEnabled = canNotProceed();
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
 
             Messenger.Register<SearchTermMessage>(this, (r, m) =>
             {
@@ -100,13 +151,19 @@ namespace Zenref.Ava.ViewModels
         public void Receive(SearchTermMessage message)
         {
             searchCriteria = message.SearchPubCollection;
-            PublicationTypes.Add(searchCriteria[0]);
+
+            PublicationTypes.Add(new Filter(searchCriteria[0].filtQ, searchCriteria[0].filterQuery, $"Titel"));
         }
 
+        /// <summary>
+        /// Opens the SearchCritetiaView, so the user can add a publication type
+        /// </summary>
         [RelayCommand]
-        private void OpenSearchCriteria(Window window)
+        private void OpenSearchCriteria()
         {
+            bool isAddPubEnabled = true;
             SearchCriteriaView SearchView = new SearchCriteriaView();
+            SearchView.DataContext = new SearchCriteriaViewModel(isAddPubEnabled);
             SearchView.Show();
         }
 
@@ -115,25 +172,32 @@ namespace Zenref.Ava.ViewModels
         /// </summary>
         /// <param name="msg"></param>
         [RelayCommand]
-        private void DeletePublicationType(string msg)
+        private void DeletePublicationType(object msg)
         {
-            string text = (string)msg;
 
+            string name = (string)msg.GetType().GetProperty("categoryName").GetValue(msg);
+            
+            // Find the name of the publication type and delete it
             for (int i = 0; i < PublicationTypes.Count; i++)
             {
-                if (text == PublicationTypes[i].Name)
+                if (name == PublicationTypes[i].categoryName)
                 {
                     PublicationTypes.RemoveAt(i);
                 }
             }
-
         }
 
+        /// <summary>
+        /// Opens drag and drop view to import excel file
+        /// </summary>
+        /// <param name="window"></param>
         [RelayCommand]
         private void OpenDragAndDropView(Window window)
         {
             DragAndDropView dragAndDropView = new DragAndDropView();
             dragAndDropView.ShowDialog(window);
+            IsStartButtonEnabled = canProceed();
+            IsApiKeyButtonEnabled = canNotProceed();
         }
 
         /// <summary>
@@ -142,14 +206,20 @@ namespace Zenref.Ava.ViewModels
         /// </summary>
         /// <param name="msg"></param>
         [RelayCommand]
-        private void EditPublicationType(string msg)
+        private void EditPublicationType(object msg)
         {
+            bool isEditEnabled = true;
+            string name = (string)msg.GetType().GetProperty("categoryName").GetValue(msg);
+            
+            // Loop over publication types
             for (int i = 0; i < PublicationTypes.Count; i++)
             {
-                if (PublicationTypes[i].Name == msg)
+                // Take the chosen publication type and open it in SearchCriteriaView for edit
+                if (name == PublicationTypes[i].categoryName)
                 {
+                    PublicationTypes[i].cancel = false;
                     SearchCriteriaView SearchView = new SearchCriteriaView();
-                    SearchView.DataContext = new SearchCriteriaViewModel(PublicationTypes[i].searchPublicationTypes, msg);
+                    SearchView.DataContext = new SearchCriteriaViewModel(PublicationTypes[i], isEditEnabled);
                     SearchView.Show();
                 }
             }
@@ -193,6 +263,9 @@ namespace Zenref.Ava.ViewModels
                     }
 
                 }
+
+                IsStartButtonEnabled = canNotProceed();
+                IsImportButtonEnabled = canProceed();
             }
             catch (Exception e)
             {
@@ -210,6 +283,9 @@ namespace Zenref.Ava.ViewModels
         {
             IdentifiedNumberCounter = 0;
             UnIdentifiedNumberCounter = 0;
+            
+
+            IsStartButtonEnabled = canNotProceed();
 
             StartWorker = new BackgroundWorker()
             {
@@ -263,6 +339,12 @@ namespace Zenref.Ava.ViewModels
             // }
             //
             // filteredReferences = references;
+            
+            
+            IsApiKeyButtonEnabled = canProceed();
+            IsExportButtonEnabled = false;
+            IsStartButtonEnabled = false;
+            IsImportButtonEnabled = false;
 
             IEnumerable<IGrouping<string, Reference>> referencesGroupedByPubType = filteredReferences.GroupBy(
                 reference => reference.PubType.ToLower());
@@ -434,6 +516,7 @@ namespace Zenref.Ava.ViewModels
         private void CompletedBackgroundSearchProcess(object sender, RunWorkerCompletedEventArgs e)
         {
             _isRunning = false;
+            IsExportButtonEnabled = canProceed();
         }
 
         private void ChangedBackgroundSearchProcess(object sender, ProgressChangedEventArgs e)
