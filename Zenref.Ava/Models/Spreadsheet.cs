@@ -408,24 +408,24 @@ namespace Zenref.Ava.Models.Spreadsheet
             setRawReference(reference, indexedRow);
         }
 
-        /// <summary>
-        /// Appends multiple <c>references</c> to the next rows of the first worksheet
-        /// </summary>
-        /// <param name="references">Collection of references to be added</param>
-        /// <param name="startRow">The start row from where the references should be inserted. If default, appends to end of list of references</param>
-        /// <exception cref="ArgumentException">Throws if parameter startRow is 0 or less than -1</exception>
-        public void AddReference(IEnumerable<RawReference> references, int startRow = -1)
-        {
-            if (startRow is 0 or < -1)
-            {
-                throw new ArgumentException("Start row cannot be 0 or less than -1");
-            }
-            if (startRow == -1) startRow = Count + 1;
-            foreach (RawReference reference in references)
-            {
-                AddRawReference(reference, startRow++);
-            }
-        }
+        // /// <summary>
+        // /// Appends multiple <c>references</c> to the next rows of the first worksheet
+        // /// </summary>
+        // /// <param name="references">Collection of references to be added</param>
+        // /// <param name="startRow">The start row from where the references should be inserted. If default, appends to end of list of references</param>
+        // /// <exception cref="ArgumentException">Throws if parameter startRow is 0 or less than -1</exception>
+        // public void AddReference(IEnumerable<RawReference> references, int startRow = -1)
+        // {
+        //     if (startRow is 0 or < -1)
+        //     {
+        //         throw new ArgumentException("Start row cannot be 0 or less than -1");
+        //     }
+        //     if (startRow == -1) startRow = Count + 1;
+        //     foreach (RawReference reference in references)
+        //     {
+        //         AddRawReference(reference, startRow++);
+        //     }
+        // }
         public void AddReference(Reference reference, int row = -1)
         {
             row = row != -1 ? row : Count + 1;

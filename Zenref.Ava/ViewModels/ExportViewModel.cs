@@ -236,14 +236,15 @@ namespace Zenref.Ava.ViewModels
             // List<Reference> testreferences = new List<Reference>();
             // foreach (RawReference reference in rawReferences)
             // {
-            //     testreferences.Add(new Reference(reference,DateTimeOffset.Now));
-            // 
+            //     testreferences.Add(new Reference(reference, DateTimeOffset.Now));
+            // }
+            //
             // List<Reference> references = new List<Reference>();
             // int i = 0;
             // string pubType;
             // foreach (RawReference rawReference in rawReferences)
             // {
-            //     switch (i % 3)
+            //     switch (i % 4)
             //     {
             //         case 0:
             //             pubType = "bog";
@@ -253,6 +254,9 @@ namespace Zenref.Ava.ViewModels
             //             break;
             //         case 2:
             //             pubType = "Tidsskrift";
+            //             break;
+            //         case 3:
+            //             pubType = "uncategorized";
             //             break;
             //         default:
             //             pubType = "din far";
@@ -274,7 +278,6 @@ namespace Zenref.Ava.ViewModels
             }
 
             Debug.WriteLine($"testreferences count:{FilteredReferences.Count()}");
-            sheet.AddReference(FilteredReferences, 2);
             sheet.Export(name);
             Debug.WriteLine($"Exported {filteredReferences.Count()} Reference(s).");
         }
@@ -285,6 +288,7 @@ namespace Zenref.Ava.ViewModels
         [RelayCommand]
         private async void SaveFileDialog(Window window)
         {
+            // ReadAllReferences();
             SaveFileDialog saveFileDialog = new SaveFileDialog
             {
                 Title = "Choose export folder",

@@ -306,7 +306,7 @@ namespace zenref.Tests
             //Act
 
             sheet.Create();
-            sheet.AddReference(new List<RawReference>() { reference1, reference2, reference3 });
+            sheet.AddRawReference(new List<RawReference>() { reference1, reference2, reference3 });
             sheet.Export(FILLEDSPREADSHEETNAME);
             //Assert
             int index = sheet.IndexOf(reference2);
