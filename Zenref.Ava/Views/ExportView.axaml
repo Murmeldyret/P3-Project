@@ -193,7 +193,7 @@
 				<StackPanel Classes="TextStack" Orientation="Horizontal" Spacing="10">
 					<TextBlock Text="Referencer importeret"/>
 					<TextBlock Text=":"/>
-					<TextBlock Text="60000"/>
+					<TextBlock Text="{Binding RawReferences.Count}"/>
 				</StackPanel>
 				<StackPanel Classes="TextStack" Orientation="Horizontal" Spacing="10">
 					<TextBlock Text="Identificeret"/>
@@ -203,7 +203,7 @@
 				<StackPanel Classes="TextStack" Orientation="Horizontal" Spacing="10">
 					<TextBlock Text="Uidentificeret"/>
 					<TextBlock Text=":"/>
-					<TextBlock Text="{Binding ElementName=MainView, Path=DataContext.UnidentifiedNumberCounter}"/>
+					<TextBlock Text="{Binding ElementName=MainView, Path=DataContext.UnIdentifiedNumberCounter}"/>
 				</StackPanel>
 			</StackPanel>
 		</Border>
