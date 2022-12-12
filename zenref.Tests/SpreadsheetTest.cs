@@ -243,7 +243,7 @@ namespace zenref.Tests
                 "lang tekst");
 
             sheet.Import();
-            RawReference importedReference = sheet.GetReference(2);
+            RawReference importedReference = sheet.GetRawReference(2);
 
             //Equivalent verifies that each public property is the same
             Assert.Equivalent(reference, importedReference);
@@ -381,9 +381,9 @@ namespace zenref.Tests
 
             //Act
             sheet.Create();
-            sheet.AddReference(reference1, 1);
-            sheet.AddReference(reference2, 2);
-            sheet.AddReference(reference3, 3);
+            sheet.AddRawReference(reference1, 1);
+            sheet.AddRawReference(reference2, 2);
+            sheet.AddRawReference(reference3, 3);
             sheet.RemoveAt(2);
 
             //Assert
@@ -402,7 +402,7 @@ namespace zenref.Tests
 
             //Act
             sheet.Create();
-            sheet.AddReference(reference1, 1);
+            sheet.AddRawReference(reference1, 1);
             ws.Clear();
             sheet.Clear();
 
@@ -421,9 +421,9 @@ namespace zenref.Tests
 
             //Act
             sheet.Create();
-            sheet.AddReference(reference1, 1);
-            sheet.AddReference(reference2, 2);
-            sheet.AddReference(reference3, 3);
+            sheet.AddRawReference(reference1, 1);
+            sheet.AddRawReference(reference2, 2);
+            sheet.AddRawReference(reference3, 3);
             sheet.Remove(reference2);
             bool res = sheet[2].Equals(reference2);
 
@@ -442,11 +442,11 @@ namespace zenref.Tests
 
             //Act
             sheet.Create();
-            sheet.AddReference(reference1,1);
-            sheet.AddReference(reference1,2);
-            sheet.AddReference(referencenull,3);
-            sheet.AddReference(referencenull,4);
-            sheet.AddReference(reference1,5);
+            sheet.AddRawReference(reference1,1);
+            sheet.AddRawReference(reference1,2);
+            sheet.AddRawReference(referencenull,3);
+            sheet.AddRawReference(referencenull,4);
+            sheet.AddRawReference(reference1,5);
 
             //Assert
             Assert.Equal(3, sheet.Count);
@@ -460,7 +460,7 @@ namespace zenref.Tests
 
             spreadsheet.Create();
 
-            spreadsheet.AddReference(new RawReference(null,null,null,null,"very cool"),ROWTOINSERTAT);
+            spreadsheet.AddRawReference(new RawReference(null,null,null,null,"very cool"),ROWTOINSERTAT);
             spreadsheet.Export(SPREADSHEETTESTNAME);
 
             XLWorkbook wb = new XLWorkbook(SPREADSHEETTESTNAME);
@@ -498,7 +498,7 @@ namespace zenref.Tests
                 {Spreadsheet.ReferenceFields.PublicationType, 20},
                 {Spreadsheet.ReferenceFields.Publisher, 19},
                 {Spreadsheet.ReferenceFields.YearRef, 18},
-                {Spreadsheet.ReferenceFields.IdRef, 17},
+                {Spreadsheet.ReferenceFields.RefId, 17},
                 {Spreadsheet.ReferenceFields.Education, 16},
                 {Spreadsheet.ReferenceFields.Location, 15},
                 {Spreadsheet.ReferenceFields.Semester, 14},

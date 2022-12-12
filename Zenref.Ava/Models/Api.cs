@@ -2,11 +2,13 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 using Zenref.Ava.Models;
 using P3Project.API.APIHelper;
 using System.Net;
 using System.IO;
+using System.Diagnostics;
 
 namespace P3Project.API
 {
@@ -82,23 +84,26 @@ namespace P3Project.API
         /// </summary>
         /// <param name="inputReference">The Reference that is to be looked up (usually unidentified)</param>
         /// <returns>A reference with correctly filled fields</returns>
-        public virtual async Task<Reference> ReferenceFetch(RawReference inputReference, Func<RawReference, HttpResponseMessage, Reference> referenceParser)
+        public virtual async Task<(Reference, RawReference)> ReferenceFetch(RawReference inputReference, Func<RawReference, HttpResponseMessage, Reference> referenceParser)
         {
-            string queryString = queryCleaner(inputReference.OriReference);
-            Uri apiUri = BuildUri($"query={queryString}");
+            Uri apiUri = BuildUri(inputReference);
 
             HttpResponseMessage response = await ApiClient.getInstance().GetAsync(apiUri);       // Request API for ressource.
 
             // Validation
             if (!_isHTTPResponseCodeSuccess(response))
             {
+                Debug.WriteLine(response.StatusCode);
                 throw new HttpRequestException("Was not able to get ressource from server.");
             }
+
+            // Validate whether the response is empty
+
 
             // Parse into deligate
             Reference parsed_reference = referenceParser(inputReference, response);
 
-            return parsed_reference;
+            return (parsed_reference, inputReference);
 
         }
 
@@ -108,27 +113,29 @@ namespace P3Project.API
             {
                 throw new ArgumentNullException("The original reference is null");
             }
-            oriReference = oriReference.Replace("(", "%28");
-            oriReference = oriReference.Replace(")", "%29");
+            oriReference = oriReference.Replace("(", " ");
+            oriReference = oriReference.Replace(")", " ");
             oriReference = oriReference.Replace("*", " ");
-            oriReference = oriReference.Replace("?", "%3f");
-            oriReference = oriReference.Replace("&", "%26");
-            oriReference = oriReference.Replace(":", "%3a");
-            oriReference = oriReference.Replace(";", "%3b");
-            oriReference = oriReference.Replace(",", "%2c");
-            oriReference = oriReference.Replace("=", "%3d");
+            oriReference = oriReference.Replace("&", " ");
+            oriReference = oriReference.Replace("#", " ");
             oriReference = oriReference.Replace("+", "%2b");
             oriReference = oriReference.Replace("/", "%2f");
-            
+
 
 
             return oriReference;
         }
 
 
-        protected Uri BuildUri(string query)
+        protected Uri BuildUri(RawReference inputReference)
         {
             UriBuilder uriBuilder = new UriBuilder(_baseURL);
+
+            // Convert RawReference to a Reference
+            Reference convertedReference = inputReference.ExtractData();
+
+            string query = "query=" + queryCleaner(convertedReference.Title!);
+
 
             // Add all parameters to the query
             if (ParametersName != null && ParametersValue != null && ParametersName.Count == ParametersValue.Count)
@@ -200,22 +207,30 @@ namespace P3Project.API
 
     public class ApiSearching
     {
-        public List<Reference> SearchReferences(List<RawReference> rawReferences)
+        public (List<Reference>, List<RawReference>) SearchReferences(List<RawReference> rawReferences)
         {
             // This should have been done in a better way, however, there is no time for it.
             Scopus scopus = InitializeScopus();
-            
+
             List<Reference> references = new List<Reference>();
+            List<RawReference> leftOverReferences = new List<RawReference>();
             foreach (RawReference rawReference in rawReferences)
             {
-                Reference reference = scopus.ReferenceFetch(rawReference, scopus.ReferenceParser).Result;
-                references.Add(reference);
+                (Reference reference, RawReference OriReference) = Task.Run(() => scopus.ReferenceFetch(rawReference, scopus.ReferenceParser)).Result;
+                if (reference.Title != null)
+                {
+                    references.Add(reference);
+                }
+                else
+                {
+                    leftOverReferences.Add(OriReference);
+                }
             }
 
-            return references;
+            return (references, leftOverReferences);
         }
 
-        public Scopus InitializeScopus()
+        private Scopus InitializeScopus()
         {
             // Read the apikey from the file
             string apiKey = File.ReadAllText("./ApiKeys/scopusApiKey.txt");

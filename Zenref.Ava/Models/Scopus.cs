@@ -25,10 +25,34 @@ namespace P3Project.API
 
         public Reference ReferenceParser(RawReference inputReference, HttpResponseMessage response)
         {
-            string responseContent = response.Content.ReadAsStringAsync().Result;
+            string responseContent;
+            try
+            {
+                responseContent = Task.Run(() => response.Content.ReadAsStringAsync()).Result;
+            }
+            catch (System.Exception)
+            {
+                // If the response cannot be read, return the raw reference as a reference
+                return new Reference(inputReference, DateTimeOffset.Now);
+            }
 
             // Parse json in object
-            ScopusResponse scopusResponse = ScopusResponse.FromJson(responseContent);
+            ScopusResponse scopusResponse;
+            try
+            {
+                scopusResponse = ScopusResponse.FromJson(responseContent);
+            }
+            catch (System.Exception)
+            {
+                // If the response cannot be parsed, return the raw reference as a reference
+                return new Reference(inputReference, DateTimeOffset.Now);
+            }
+
+            // If the response is empty, return the raw reference as a reference
+            if (scopusResponse.SearchResults.OpensearchTotalResults == 0)
+            {
+                return new Reference(inputReference, DateTimeOffset.Now);
+            }
 
 
             // Split inputReference into substrings
@@ -63,7 +87,10 @@ namespace P3Project.API
             }
 
             Reference outputReference = new Reference(inputReference, DateTimeOffset.Now);
-            // Set the best match as the reference
+
+            try
+            {
+                // Set the best match as the reference
                 outputReference.Author = scopusResponse.SearchResults.Entry[bestMatchIndex].DcCreator;
                 outputReference.Title = scopusResponse.SearchResults.Entry[bestMatchIndex].DcTitle;
                 outputReference.PubType = scopusResponse.SearchResults.Entry[bestMatchIndex].PrismAggregationType;
@@ -73,7 +100,12 @@ namespace P3Project.API
                 outputReference.Match = bestMatchScorePercentage;
                 outputReference.Volume = scopusResponse.SearchResults.Entry[bestMatchIndex].PrismVolume.ToString();
                 outputReference.BookTitle = scopusResponse.SearchResults.Entry[bestMatchIndex].PrismPublicationName;
-            
+            }
+            catch (System.Exception)
+            {
+                return new Reference(inputReference, DateTimeOffset.Now);
+            }
+
 
             return outputReference;
         }

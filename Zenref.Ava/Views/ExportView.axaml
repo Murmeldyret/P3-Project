@@ -207,6 +207,7 @@
 				</StackPanel>
 			</StackPanel>
 		</Border>
+
 		<Grid Classes="ButtonGrid" ColumnDefinitions="*" RowDefinitions="Auto, Auto, Auto, Auto" ShowGridLines="false">
 			<StackPanel Classes="ButtonPanel ApiInsert">
 				<TextBlock>1) Første gang programmet åbnes indsættes api nøglen (scopus)</TextBlock>
@@ -230,5 +231,6 @@
 			</StackPanel>
 		</Grid>
 			<Button Classes="AddPub" Command="{Binding OpenSearchCriteriaCommand}" CommandParameter="{Binding ElementName=MainView}">Tilføj Publikationstype</Button>
+
 	</Grid>
 </Window>

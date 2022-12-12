@@ -27,6 +27,8 @@ using Zenref.Ava.Models;
 using Zenref.Ava.Models.Spreadsheet;
 using Zenref.Ava.Views;
 using Filter = Zenref.Ava.Models.Filter;
+using System.ComponentModel;
+
 
 namespace Zenref.Ava.ViewModels
 {
@@ -72,6 +74,7 @@ namespace Zenref.Ava.ViewModels
         private ObservableCollection<Filter> searchCriteria = new ObservableCollection<Filter>();
 
 
+        private ObservableCollection<(Filter filter, int id)> filtercollection = new ObservableCollection<(Filter, int)>();
         /// <summary>
         /// A collection of the created publication types
         /// </summary>
@@ -90,7 +93,11 @@ namespace Zenref.Ava.ViewModels
         [ObservableProperty] private string apiKey;
 
 
-        private int id = 0;
+        [ObservableProperty]
+        private string apiKey;
+        private BackgroundWorker StartWorker;
+        private bool _isRunning;
+
 
         /// <summary>
         /// Constructor, sets up the predefined publication types.
@@ -224,7 +231,7 @@ namespace Zenref.Ava.ViewModels
         [RelayCommand]
         private void AddApiKey()
         {
-            string filename = @"../../../Models/ApiKeys/scopusApiKey.txt";
+            string filename = @"./ApiKeys/scopusApiKey.txt";
 
             try
             {
@@ -236,7 +243,7 @@ namespace Zenref.Ava.ViewModels
                     {
                         sw.Write(ApiKey);
                     }
-                    
+
                     // Read the apikey from file
                     using (StreamReader sr = new StreamReader(filename))
                     {
@@ -276,38 +283,117 @@ namespace Zenref.Ava.ViewModels
         {
             IdentifiedNumberCounter = 0;
             UnIdentifiedNumberCounter = 0;
-/*
-            // Read all the references from the excel file
-            ReadAllReferences();
-
-            // Identify the references in the database
-            // TODO: Implement the identification of the references
-
-            // If the database does not contain the reference, search for it in the internet
-            ApiSearching apiSearching = new ApiSearching();
-            // Call the apisearching method
-            apiSearching.SearchReferences(rawReferences.ToList());
-*/
+            
 
             IsStartButtonEnabled = canNotProceed();
-            IsExportButtonEnabled = canProceed();
 
+            StartWorker = new BackgroundWorker()
+            {
+                WorkerReportsProgress = true,
+                WorkerSupportsCancellation = true
+            };
+            StartWorker.DoWork += RunBackgroundSearchProcess;
+            StartWorker.ProgressChanged += ChangedBackgroundSearchProcess;
+            StartWorker.RunWorkerCompleted += CompletedBackgroundSearchProcess;
+
+            StartWorker.RunWorkerAsync();
         }
 
         /// <summary>
-        /// Exports to excel
+        /// Exports references to an excel workbook.
         /// </summary>
-        [RelayCommand]
-        private void Export()
+        /// <param name="sheet">The sheet to write to</param>
+        /// <param name="name">The name of the outputted Excel file (including file suffix)</param>
+        /// <remarks>
+        /// Groups references by their publication type where each group will be saved to a separate worksheet.
+        /// </remarks>
+        private void Export(Spreadsheet sheet, string name)
         {
-            Console.WriteLine("Export");
+            // List<Reference> testreferences = new List<Reference>();
+            // foreach (RawReference reference in rawReferences)
+            // {
+            //     testreferences.Add(new Reference(reference,DateTimeOffset.Now));
+            // 
+            // List<Reference> references = new List<Reference>();
+            // int i = 0;
+            // string pubType;
+            // foreach (RawReference rawReference in rawReferences)
+            // {
+            //     switch (i % 3)
+            //     {
+            //         case 0:
+            //             pubType = "bog";
+            //             break;
+            //         case 1:
+            //             pubType = "Online";
+            //             break;
+            //         case 2:
+            //             pubType = "Tidsskrift";
+            //             break;
+            //         default:
+            //             pubType = "din far";
+            //             break;
+            //     }
+            //     references.Add(new Reference(rawReference, pubType: pubType));
+            //     i++;
+            // }
+            //
+            // filteredReferences = references;
+            
+            
             IsApiKeyButtonEnabled = canProceed();
             IsExportButtonEnabled = false;
             IsStartButtonEnabled = false;
             IsImportButtonEnabled = false;
+
+            IEnumerable<IGrouping<string, Reference>> referencesGroupedByPubType = filteredReferences.GroupBy(
+                reference => reference.PubType.ToLower());
+            foreach (IGrouping<string,Reference> grouping in referencesGroupedByPubType)
+            {
+                Debug.WriteLine($"{grouping.Key} has {grouping.Count()} reference(s)");
+                sheet.SetActiveSheet(grouping.Key);
+                sheet.AddReference(grouping);
+            }
+
+            Debug.WriteLine($"testreferences count:{FilteredReferences.Count()}");
+            sheet.AddReference(FilteredReferences, 2);
+            sheet.Export(name);
+            Debug.WriteLine($"Exported {filteredReferences.Count()} Reference(s).");
+        }
+        /// <summary>
+        /// Prompts the user to save a file at a given location
+        /// </summary>
+        /// <param name="window">The window that creates the dialog</param>
+        [RelayCommand]
+        private async void SaveFileDialog(Window window)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Title = "Choose export folder",
+                InitialFileName = "Behandlede_Referencer.xlsx",
+                DefaultExtension = ".xlsx",
+
+            };
+            string? filePathToExportedFile = await saveFileDialog.ShowAsync(window);
+            if (filePathToExportedFile is null)
+            {
+                IMsBoxWindow<ButtonResult> messageBoxStandardView = MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow("Error", "Error in reading References from spreadsheet");
+                messageBoxStandardView.Show();
+            }
+            else
+            {
+                Spreadsheet exportSheet = new Spreadsheet(filePathToExportedFile);
+                exportSheet.Create();
+                Export(exportSheet, filePathToExportedFile);
+            }
         }
 
 
+        /// <summary>
+        /// Method called when this class receives a message on the default channel of type <c>FilePathsMessage.</c>
+        /// </summary>
+        /// <param name="message">The message received.</param>
         public void Receive(FilePathsMessage message)
         {
             filePaths = message.FilePaths;
@@ -319,6 +405,9 @@ namespace Zenref.Ava.ViewModels
             Console.WriteLine("ActiveSheet: " + activeSheet);
         }
 
+        /// <summary>
+        /// Reads all the references from the chosen Excel files.
+        /// </summary>
         private void ReadAllReferences()
         {
             ObservableCollection<RawReference> referencesInSheets = new ObservableCollection<RawReference>();
@@ -357,7 +446,85 @@ namespace Zenref.Ava.ViewModels
                 Debug.WriteLine(e.Message + e.StackTrace);
                 Debug.WriteLine(positionInSheet.Count);
             }
-            
+        }
+
+        private void RunBackgroundSearchProcess(object sender, DoWorkEventArgs e)
+        {
+            _isRunning = true;
+            // Read all the references from the excel file
+            ReadAllReferences();
+
+            // Identify the references in the database
+            // TODO: Implement the identification of the references
+
+            // If the database does not contain the reference, search for it in the internet
+            ApiSearching apiSearching = new ApiSearching();
+            // Call the apisearching method
+            (List<Reference> listReferences, List<RawReference> leftOverRef) = apiSearching.SearchReferences(rawReferences.ToList());
+
+            Console.WriteLine("References: " + rawReferences.Count);
+
+            // Filter the references
+            FilterCollection instance = IFilterCollection.GetInstance();
+
+            int[] countRef = { 0, 0 };
+
+            // Categorize all the references
+            foreach (Reference reference in listReferences)
+            {
+                UpdateCounter(instance, countRef, reference);
+
+                StartWorker.ReportProgress(0, countRef);
+            }
+
+            // Categorize all the remaining raw references
+            foreach (RawReference rawreference in leftOverRef)
+            {
+                Reference reference = rawreference.ExtractData();
+                reference.PubType = instance.categorize(reference);
+
+                UpdateCounter(instance, countRef, reference);
+                
+                listReferences.Add(reference);
+                StartWorker.ReportProgress(0, countRef);
+            }
+
+            FilteredReferences = listReferences;
+        }
+
+        private static void UpdateCounter(FilterCollection instance, int[] countRef, Reference reference)
+        {
+            // Call the categorize function.
+            if (reference.PubType == null)
+            {
+                reference.PubType = instance.categorize(reference);
+            }
+
+
+
+            if (reference.PubType != "Uncategorized")
+            {
+                countRef[0]++;
+            }
+
+            else
+            {
+                countRef[1]++;
+            }
+        }
+
+        private void CompletedBackgroundSearchProcess(object sender, RunWorkerCompletedEventArgs e)
+        {
+            _isRunning = false;
+            IsExportButtonEnabled = canProceed();
+        }
+
+        private void ChangedBackgroundSearchProcess(object sender, ProgressChangedEventArgs e)
+        {
+            int[] countRef = e.UserState as int[];
+
+            IdentifiedNumberCounter = countRef![0];
+            UnIdentifiedNumberCounter = countRef[1];
         }
     }
 }

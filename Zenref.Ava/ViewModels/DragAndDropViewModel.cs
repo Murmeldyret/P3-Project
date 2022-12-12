@@ -142,7 +142,7 @@ namespace Zenref.Ava.ViewModels
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.PublicationType.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Publisher.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.YearRef.ToString(),defaultColumnPositions++,action,this),
-                new ColumnPositionHandler(Spreadsheet.ReferenceFields.IdRef.ToString(),defaultColumnPositions++,action,this),
+                new ColumnPositionHandler(Spreadsheet.ReferenceFields.RefId.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Education.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Location.ToString(),defaultColumnPositions++,action,this),
                 new ColumnPositionHandler(Spreadsheet.ReferenceFields.Semester.ToString(),defaultColumnPositions++,action,this),
@@ -246,6 +246,10 @@ namespace Zenref.Ava.ViewModels
                 window.Close();
             }
         }
+        /// <summary>
+        /// Confirms the files chosen by filedialog and sends a message containing the filenames, what each column contains, and what sheet to read from.
+        /// </summary>
+        /// <param name="window">The window that contains the filenames and properties related to it.</param>
         private void ConfirmFileChoices(Window window)
         {
             List<int> ints = columnPositions.Select(x => x.columnPos).ToList();
