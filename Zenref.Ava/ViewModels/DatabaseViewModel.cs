@@ -105,17 +105,15 @@ namespace Zenref.Ava.ViewModels
             finally
             {
                 int nullReferences = referencesInSheets.Where(x => x is null).Count();
-                if (nullReferences > 0)
-                {
-                    IMsBoxWindow<ButtonResult> messageBoxStandardView = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia
-                        .MessageBoxManager
-                        .GetMessageBoxStandardWindow("Error", $"Failed to read {nullReferences} reference(s)");
-                    messageBoxStandardView.Show();   
-                }
                 inputReferences = new ObservableCollection<Reference>();
                 InputReferences.AddRange(referencesInSheets.Where(x => x is not null));
                 Debug.WriteLine($"Found {InputReferences.Count} Reference(s)");
-                Debug.WriteLine($"Number of failed references: {nullReferences}");   
+                Debug.WriteLine($"Number of failed references: {nullReferences}");
+
+                IMsBoxWindow<ButtonResult> messageBoxStandardView = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia
+                    .MessageBoxManager
+                    .GetMessageBoxStandardWindow("Indlæsning", $"{InputReferences.Count} reference(r) indlæst\n{nullReferences} reference(r) ikke indlæst");
+                messageBoxStandardView.Show();
             }
         }
 
@@ -144,6 +142,13 @@ namespace Zenref.Ava.ViewModels
                 {
                     references.Remove(selectedReference);
                 }
+            }
+            else
+            {
+                IMsBoxWindow<ButtonResult> messageBoxStandardView = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia
+                    .MessageBoxManager
+                    .GetMessageBoxStandardWindow("Sletning", "Vælg den reference, du vil slette");
+                messageBoxStandardView.Show();
             }
         }
         /// <summary>
