@@ -10,30 +10,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Zenref.Ava.Models;
-using Zenref.Ava.Views;
 
 namespace Zenref.Ava.ViewModels
 {
-    public class SearchTerms
-    {
-        private string searchString;
-        public string SearchString
-        {
-            get
-            {
-                return this.searchString;
-            }
-            set
-            {
-                this.searchString = value;
-            }
-        }
-
-        public SearchTerms(string searchString)
-        {
-            this.searchString = searchString;
-        }
-    }
     public partial class SearchCriteriaViewModel : ObservableObject
     {
         /// <summary>
@@ -49,22 +28,20 @@ namespace Zenref.Ava.ViewModels
         [NotifyCanExecuteChangedFor(nameof(AddSearchCriteriaCommand))]
         [NotifyCanExecuteChangedFor(nameof(DeleteSearchCriteriaCommand))]
         [NotifyCanExecuteChangedFor(nameof(DeleteAllSearchCriteriasCommand))]
-        private ObservableCollection<SearchTerms> searchOption = new ObservableCollection<SearchTerms>();
-        
+        private ObservableCollection<SearchPublicationType> searchOption = new ObservableCollection<SearchPublicationType>();
+
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(AddPublicationTypeCommand))]
         [NotifyCanExecuteChangedFor(nameof(EditCommand))]
-        private ObservableCollection<Filter> pubTypes = new ObservableCollection<Filter>();
+        private ObservableCollection<PublicationType> pubTypes = new ObservableCollection<PublicationType>();
 
         /// Strings that keeps track of the different selected search options from the view
-        [ObservableProperty] private bool isEditEnabled;
-        [ObservableProperty] private bool isAddPubEnabled;
-        
-        private string? searchTextString;
+        private string? SearchTextString;
+        private string? SearchOperand;
+        private string? SearchField;
 
         [ObservableProperty] 
         [NotifyCanExecuteChangedFor(nameof(AddPublicationTypeCommand))]
-        [NotifyCanExecuteChangedFor(nameof(EditCommand))]
         private string? pubName;
 
         public SearchCriteriaViewModel()
@@ -72,26 +49,15 @@ namespace Zenref.Ava.ViewModels
             SearchOption.Clear();
         }
 
-        public SearchCriteriaViewModel(bool isAddPubEnabled)
+        public SearchCriteriaViewModel(ObservableCollection<SearchPublicationType> searchOption, string pubName)
         {
-            this.isAddPubEnabled = isAddPubEnabled;
-            isEditEnabled = false;
             SearchOption.Clear();
+            SearchOption = searchOption;
+            PubName = pubName;
         }
-        
 
-        public SearchCriteriaViewModel(Filter filter, bool isEditEnabled)
-        {
-            Console.WriteLine("Constructer struck hahahhhahhahahhaha");
-            PubTypes.Clear();
 
-            this.IsEditEnabled = isEditEnabled;
-            this.isAddPubEnabled = false;
-            PubName = filter.categoryName;
-            searchOption = filter.filtQ;
-            PubTypes.Add(new Filter(filter.filtQ, filter.filterQuery, filter.categoryName));
-        }
-        
+
 
         /// <summary>
         /// The RelayCommand makes it into a new command, and is in relation to the NotifyCanExecuteChangedFor
@@ -103,32 +69,20 @@ namespace Zenref.Ava.ViewModels
         [RelayCommand]
         private void AddPublicationType(Window window)
         {
-            List<string> Search = new List<string>();
-            foreach (SearchTerms s in SearchOption)      
-            {
-                Search.Add(s.SearchString);
-            }
             
-            
-            PubTypes.Add(new Filter(SearchOption, Search, PubName));
+            pubTypes.Add(new PublicationType(PubName, SearchOption));
             WeakReferenceMessenger.Default.Send<SearchTermMessage>(new SearchTermMessage(PubTypes));
             window.Close();
         }
 
         /// <summary>
-        /// Edits the publication type, and save the changes 
+        /// Edits the publication type 
         /// </summary>
         /// <param name="window"></param>
         [RelayCommand]
         private void Edit(Window window)
         {
-            PubTypes[0].filterQuery.Clear();
-            foreach (SearchTerms s in PubTypes[0].filtQ)
-            {
-                PubTypes[0].filterQuery.Add(s.SearchString);
-            }
-            
-            isEditEnabled = false;
+            pubTypes.Add(new PublicationType(PubName, SearchOption));
             window.Close();
         }
 
@@ -138,7 +92,12 @@ namespace Zenref.Ava.ViewModels
         [RelayCommand]
         private void AddSearchCriteria()
         {
-            SearchOption.Add(new SearchTerms(searchString: searchTextString));
+
+            SearchOption.Add(new SearchPublicationType(
+                searchTerm: SearchTextString, 
+                searchSelectOperand: SearchOperand, 
+                searchSelectField: SearchField));
+
         }
 
         /// <summary>
@@ -147,10 +106,7 @@ namespace Zenref.Ava.ViewModels
         [RelayCommand]
         private void DeleteSearchCriteria()
         {
-            if (SearchOption.Any())
-            {
-                SearchOption.RemoveAt(SearchOption.Count - 1);
-            }
+            SearchOption.RemoveAt(SearchOption.Count - 1);
 
         }
 
@@ -164,29 +120,13 @@ namespace Zenref.Ava.ViewModels
         }
 
         /// <summary>
-        /// Closes the window and discard unsaved changes
+        /// Closes the window
         /// </summary>
         /// <param name="window"></param>
         [RelayCommand]
         private void Cancel(Window window)
         {
-            if (!PubTypes.Any())
-            {
-                window.Close();
-            }
-            else
-            {
-                SearchOption.Clear();
-
-                foreach (string s in pubTypes[0].filterQuery)
-                {
-                    searchOption.Add(new SearchTerms(s));
-                }
-
-                window.Close();
-                
-                
-            }
+            window.Close();
         }
 
     }
