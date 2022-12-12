@@ -90,8 +90,6 @@ namespace Zenref.Ava.ViewModels
         [ObservableProperty] private ObservableCollection<RawReference> rawReferences;
         [ObservableProperty] private IEnumerable<Reference> filteredReferences;
 
-        [ObservableProperty] private string apiKey;
-
 
         [ObservableProperty]
         private string apiKey;
@@ -407,6 +405,7 @@ namespace Zenref.Ava.ViewModels
             Console.WriteLine("Filepaths: " + filePaths.Count);
             Console.WriteLine("ColumnPositions: " + columnPositions);
             Console.WriteLine("ActiveSheet: " + activeSheet);
+            ReadAllReferences();
         }
 
         /// <summary>
@@ -456,7 +455,7 @@ namespace Zenref.Ava.ViewModels
         {
             _isRunning = true;
             // Read all the references from the excel file
-            ReadAllReferences();
+            //ReadAllReferences();
 
             // Identify the references in the database
             // TODO: Implement the identification of the references
