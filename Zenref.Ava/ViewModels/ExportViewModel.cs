@@ -128,9 +128,9 @@ namespace Zenref.Ava.ViewModels
             // Searching for api key
             try
             {
-                if (File.Exists(@"../../../Models/ApiKeys/scopusApiKey.txt"))
+                if (File.Exists(@"./ApiKeys/scopusApiKey.txt"))
                 {
-                    using (StreamReader sr = new StreamReader(@"../../../Models/ApiKeys/scopusApiKey.txt"))
+                    using (StreamReader sr = new StreamReader(@"./ApiKeys/scopusApiKey.txt"))
                     {
                         string line;
                         while ((line = sr.ReadLine()) != null)
