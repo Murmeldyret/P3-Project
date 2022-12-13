@@ -49,7 +49,8 @@ namespace Zenref.Ava.ViewModels
         [ObservableProperty] private bool isApiKeyButtonEnabled = true;
         [ObservableProperty] private bool isImportButtonEnabled = false;
         [ObservableProperty] private bool isStartButtonEnabled = false;
-        [ObservableProperty] private bool isExportButtonEnabled = false;
+        [ObservableProperty] private bool isExportButtonEnabled = true;
+        [ObservableProperty] private bool isSaveFilterButtonEnabled = false;
 
         /// <summary>
         /// Makes a bool true
@@ -73,8 +74,8 @@ namespace Zenref.Ava.ViewModels
         /// </summary>
         private ObservableCollection<Filter> searchCriteria = new ObservableCollection<Filter>();
 
-
-        private ObservableCollection<(Filter filter, int id)> filtercollection = new ObservableCollection<(Filter, int)>();
+        private FilterCollection PremadeFilter = IFilterCollection.GetInstance();
+                
         /// <summary>
         /// A collection of the created publication types
         /// </summary>
@@ -90,7 +91,6 @@ namespace Zenref.Ava.ViewModels
         [ObservableProperty] private ObservableCollection<RawReference> rawReferences;
         [ObservableProperty] private IEnumerable<Reference> filteredReferences;
 
-        [ObservableProperty] private string apiKey;
 
 
         [ObservableProperty]
@@ -98,6 +98,21 @@ namespace Zenref.Ava.ViewModels
         private BackgroundWorker StartWorker;
         private bool _isRunning;
 
+        [RelayCommand]
+        private void SaveFilterCommand()
+        { 
+            PremadeFilter.Clear();
+            if (PublicationTypes.Any())
+            {
+                foreach (Filter f in PublicationTypes)
+                {
+                    PremadeFilter.Add(f);
+                    Console.WriteLine($"filtC:{PremadeFilter}");
+                }
+                PremadeFilter.SaveFilters();
+                IsSaveFilterButtonEnabled = true;
+            }
+        }
 
         /// <summary>
         /// Constructor, sets up the predefined publication types.
@@ -123,6 +138,37 @@ namespace Zenref.Ava.ViewModels
                 else
                 {
                     IsImportButtonEnabled = canNotProceed();
+                }
+
+                if (PremadeFilter.Any())
+                {
+                    PremadeFilter.LoadFilters();
+                    int inc = 0;
+                    foreach (Filter filter in PremadeFilter)
+                    {
+                        filter.ReturnFilterCategory();
+                        PublicationTypes.Add(filter);
+
+                        for (int i = inc; i < PublicationTypes.Count; i++)
+                        {
+
+                            if (PublicationTypes[i].filtQ == null)
+                            {
+                                PublicationTypes[i].filtQ = new ObservableCollection<SearchTerms>();
+                            }
+                            
+                            foreach (string query in filter)
+                            {
+                                PublicationTypes[i].filtQ.Add(new SearchTerms(query));
+                            }
+                            
+                        }
+
+                        inc++;
+
+                    }
+                    
+                    IsSaveFilterButtonEnabled = true;
                 }
 
             }
@@ -153,6 +199,14 @@ namespace Zenref.Ava.ViewModels
             searchCriteria = message.SearchPubCollection;
 
             PublicationTypes.Add(new Filter(searchCriteria[0].filtQ, searchCriteria[0].filterQuery, $"Titel"));
+            if (PublicationTypes.Any())
+            {
+                IsSaveFilterButtonEnabled = canProceed();
+            }
+            else
+            {
+                IsSaveFilterButtonEnabled = canNotProceed();
+            }
         }
 
         /// <summary>
