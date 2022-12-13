@@ -152,10 +152,7 @@ namespace Zenref.Ava.ViewModels
                         for (int i = inc; i < PublicationTypes.Count; i++)
                         {
 
-                            if (PublicationTypes[i].filtQ == null)
-                            {
-                                PublicationTypes[i].filtQ = new ObservableCollection<SearchTerms>();
-                            }
+                            PublicationTypes[i].filtQ = new ObservableCollection<SearchTerms>();
                             
                             foreach (string query in filter)
                             {
