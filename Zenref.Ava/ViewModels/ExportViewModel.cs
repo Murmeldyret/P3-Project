@@ -92,11 +92,9 @@ namespace Zenref.Ava.ViewModels
         [ObservableProperty] private IEnumerable<Reference> filteredReferences;
 
 
-
-        [ObservableProperty]
-        private string apiKey;
         private BackgroundWorker StartWorker;
         private bool _isRunning;
+
 
         [RelayCommand]
         private void SaveFilter()
@@ -118,6 +116,7 @@ namespace Zenref.Ava.ViewModels
             }
         }
 
+
         /// <summary>
         /// Constructor, sets up the predefined publication types.
         /// And registers a message from the SearchCriteriaViewModel
@@ -136,6 +135,7 @@ namespace Zenref.Ava.ViewModels
                 else
                 {
                     if (File.Exists(@"./ApiKeys/scopusApiKey.txt"))
+
                     {
                         using (StreamReader sr = new StreamReader(@"./ApiKeys/scopusApiKey.txt"))
                         {
@@ -588,7 +588,7 @@ namespace Zenref.Ava.ViewModels
         private void CompletedBackgroundSearchProcess(object sender, RunWorkerCompletedEventArgs e)
         {
             _isRunning = false;
-            IsExportButtonEnabled = canProceed();
+            IsExportButtonEnabled = true;
         }
 
         private void ChangedBackgroundSearchProcess(object sender, ProgressChangedEventArgs e)
