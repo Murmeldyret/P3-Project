@@ -1,194 +1,192 @@
 <Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
-        x:Class="Zenref.Ava.Views.ExportView"
-		x:Name="MainView"
-        Title="ExportView">
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
+	x:Class="Zenref.Ava.Views.ExportView"
+	x:Name="MainView"
+	Title="ExportView">
 	<Window.Styles>
-		
+
 		<!--General settings-->
 		<!--Border-->
 		<Style Selector="Border">
-			<Setter Property="BorderThickness" Value="1"/>
-			<Setter Property="BorderBrush" Value="Black"/>
+			<Setter Property="BorderThickness" Value="1" />
+			<Setter Property="BorderBrush" Value="Black" />
 		</Style>
 		<!--Buttons-->
 		<Style Selector="Button">
-			<Setter Property="Padding" Value="8,4"/>
+			<Setter Property="Padding" Value="8,4" />
 		</Style>
-		
+
 		<!--Publication type content:-->
 		<!--Border - position-->
 		<Style Selector="Border.Left">
-			<Setter Property="HorizontalAlignment" Value="Left"/>
-			<Setter Property="VerticalAlignment" Value="Top"/>
-			<Setter Property="Padding" Value="10"/>
-			<Setter Property="Grid.Column" Value="0"/>
-			<Setter Property="Grid.Row" Value="0"/>
-			<Setter Property="Margin" Value="25, 25, 25, 0"/>
-			<Setter Property="MaxHeight" Value="400"/>
+			<Setter Property="HorizontalAlignment" Value="Left" />
+			<Setter Property="VerticalAlignment" Value="Top" />
+			<Setter Property="Padding" Value="10" />
+			<Setter Property="Grid.Column" Value="0" />
+			<Setter Property="Grid.Row" Value="0" />
+			<Setter Property="Margin" Value="25, 25, 25, 0" />
+			<Setter Property="MaxHeight" Value="400" />
 		</Style>
 		<Style Selector="ItemsControl">
-			<Setter Property="Items" Value="{Binding PublicationTypes}"/>
+			<Setter Property="Items" Value="{Binding PublicationTypes}" />
 		</Style>
 		<!--Height of the box that displays all publication types-->
 		<Style Selector="ItemsControl > ContentPresenter">
-			<Setter Property="Height" Value="50"/>
+			<Setter Property="Height" Value="50" />
 		</Style>
 		<!--Publication type column - position-->
-		<Style Selector="StackPanel.PubTypes">
-		</Style>
+		<Style Selector="StackPanel.PubTypes"></Style>
 		<!--Publication type scroll viewer - maxheight-->
 		<Style Selector="ScrollViewer.PubTypeScroll">
-			<Setter Property="MaxHeight" Value="625"/>
+			<Setter Property="MaxHeight" Value="625" />
 		</Style>
 		<!--Textbox with the publication titel - position and style-->
 		<Style Selector="TextBox.PubTypeTitle">
-			<Setter Property="Grid.Column" Value="0"/>
-			<Setter Property="VerticalAlignment" Value="Center"/>
-			<Setter Property="FontSize" Value="16"/>
-			<Setter Property="Width" Value="200"/>	
-			<Setter Property="MaxWidth" Value="400"/>
+			<Setter Property="Grid.Column" Value="0" />
+			<Setter Property="VerticalAlignment" Value="Center" />
+			<Setter Property="FontSize" Value="16" />
+			<Setter Property="Width" Value="200" />
+			<Setter Property="MaxWidth" Value="400" />
 		</Style>
 		<Style Selector="TextBox.PubTypeTitle:pointerover">
-			<Setter Property="BorderThickness" Value="2"/>
+			<Setter Property="BorderThickness" Value="2" />
 		</Style>
 		<!--Buttons - dimensions & bindings-->
 		<Style Selector="Button.Options">
-			<Setter Property="Grid.Column" Value="1"/>
-			<Setter Property="Width" Value="33"/>
-			<Setter Property="Height" Value="33"/>
-			<Setter Property="Padding" Value="4"/>
+			<Setter Property="Grid.Column" Value="1" />
+			<Setter Property="Width" Value="33" />
+			<Setter Property="Height" Value="33" />
+			<Setter Property="Padding" Value="4" />
 		</Style>
 		<Style Selector="Button.Cross">
-			<Setter Property="Grid.Column" Value="2"/>
-			<Setter Property="Width" Value="33"/>
-			<Setter Property="Height" Value="33"/>
-			<Setter Property="Padding" Value="4"/>
+			<Setter Property="Grid.Column" Value="2" />
+			<Setter Property="Width" Value="33" />
+			<Setter Property="Height" Value="33" />
+			<Setter Property="Padding" Value="4" />
 		</Style>
-		
+
 		<!--Add publication type button-->
 		<Style Selector="Button.AddPub">
-			<Setter Property="Grid.Column" Value="0"/>
-			<Setter Property="Grid.Row" Value="0"/>
-			<Setter Property="HorizontalContentAlignment" Value="Center"/>
-			<Setter Property="HorizontalAlignment" Value="Right"/>
-			<Setter Property="VerticalAlignment" Value="Top"/>
-			<Setter Property="Margin" Value="0,25,45,0"/>
-			<Setter Property="Padding" Value="8,4"/>
+			<Setter Property="Grid.Column" Value="0" />
+			<Setter Property="Grid.Row" Value="0" />
+			<Setter Property="HorizontalContentAlignment" Value="Center" />
+			<Setter Property="HorizontalAlignment" Value="Right" />
+			<Setter Property="VerticalAlignment" Value="Top" />
+			<Setter Property="Margin" Value="0,25,45,0" />
+			<Setter Property="Padding" Value="8,4" />
 		</Style>
-		
-		<!--Reference statistics content-->	
+
+		<!--Reference statistics content-->
 		<!--Border-->
 		<Style Selector="Border.Right">
-			<Setter Property="Grid.Column" Value="1"/>
-			<Setter Property="Grid.Row" Value="0"/>
-			<Setter Property="Padding" Value="10"/>
-			<Setter Property="Margin" Value="0, 25,0,0"/>
-			<Setter Property="VerticalAlignment" Value="Top"/>
-			<Setter Property="MaxHeight" Value="400"/>
+			<Setter Property="Grid.Column" Value="1" />
+			<Setter Property="Grid.Row" Value="0" />
+			<Setter Property="Padding" Value="10" />
+			<Setter Property="Margin" Value="0, 25,0,0" />
+			<Setter Property="VerticalAlignment" Value="Top" />
+			<Setter Property="MaxHeight" Value="400" />
 		</Style>
-		
+
 		<Style Selector="StackPanel.TextStack TextBlock">
-			<Setter Property="FontSize" Value="16"/>
+			<Setter Property="FontSize" Value="16" />
 		</Style>
-		
-		
+
+
 		<!--Button grid-->
 		<Style Selector="Grid.ButtonGrid">
-			<Setter Property="Column" Value="2"/>
-			<Setter Property="Row" Value="0"/>
+			<Setter Property="Column" Value="2" />
+			<Setter Property="Row" Value="0" />
 		</Style>
-		
+
 		<Style Selector="StackPanel.ButtonPanel">
-			<Setter Property="HorizontalAlignment" Value="Right"/>
-			<Setter Property="VerticalAlignment" Value="Top"/>
-			<Setter Property="Margin" Value="0,45,50,10"/>
+			<Setter Property="HorizontalAlignment" Value="Right" />
+			<Setter Property="VerticalAlignment" Value="Top" />
+			<Setter Property="Margin" Value="0,45,50,10" />
 		</Style>
 		<!--Insert api button-->
 		<Style Selector="StackPanel.ApiInsert">
-			<Setter Property="Grid.Column" Value="0"/>
-			<Setter Property="Grid.Row" Value="0"/>
-			<Setter Property="HorizontalAlignment" Value="Left"/>
-			<Setter Property="Margin" Value="10,25,0,0"/>
+			<Setter Property="Grid.Column" Value="0" />
+			<Setter Property="Grid.Row" Value="0" />
+			<Setter Property="HorizontalAlignment" Value="Left" />
+			<Setter Property="Margin" Value="10,25,0,0" />
 		</Style>
 		<Style Selector="StackPanel.ApiInsertInnerPanel">
-			<Setter Property="Orientation" Value="Horizontal"/>
+			<Setter Property="Orientation" Value="Horizontal" />
 		</Style>
 		<Style Selector="StackPanel.ApiInsertInnerPanel TextBox">
-			<Setter Property="Width" Value="250"/>
-			<Setter Property="Margin" Value="0,5,10,0"/>
+			<Setter Property="Width" Value="250" />
+			<Setter Property="Margin" Value="0,5,10,0" />
 		</Style>
 		<Style Selector="StackPanel.ApiInsertInnerPanel Button">
-			<Setter Property="IsEnabled" Value="{Binding IsApiKeyButtonEnabled}"/>
+			<Setter Property="IsEnabled" Value="{Binding IsApiKeyButtonEnabled}" />
 		</Style>
 		<!--Import reference button-->
 		<Style Selector="StackPanel.Import">
-			<Setter Property="Grid.Column" Value="0"/>
-			<Setter Property="Grid.Row" Value="1"/>
-			<Setter Property="HorizontalAlignment" Value="Left"/>
-			<Setter Property="Margin" Value="10,20,0,0"/>
+			<Setter Property="Grid.Column" Value="0" />
+			<Setter Property="Grid.Row" Value="1" />
+			<Setter Property="HorizontalAlignment" Value="Left" />
+			<Setter Property="Margin" Value="10,20,0,0" />
 		</Style>
 		<Style Selector="StackPanel.Import Button">
-			<Setter Property="Width" Value="180"/>
-			<Setter Property="Margin" Value="0,5,0,0"/>
-			<Setter Property="IsEnabled" Value="{Binding IsImportButtonEnabled}"/>
+			<Setter Property="Width" Value="180" />
+			<Setter Property="Margin" Value="0,5,0,0" />
+			<Setter Property="IsEnabled" Value="{Binding IsImportButtonEnabled}" />
 		</Style>
 		<!--Start indentification button-->
 		<Style Selector="StackPanel.Start">
-			<Setter Property="Grid.Column" Value="0"/>
-			<Setter Property="Grid.Row" Value="2"/>
-			<Setter Property="HorizontalAlignment" Value="Left"/>
-			<Setter Property="Margin" Value="10,20,0,0"/>
+			<Setter Property="Grid.Column" Value="0" />
+			<Setter Property="Grid.Row" Value="2" />
+			<Setter Property="HorizontalAlignment" Value="Left" />
+			<Setter Property="Margin" Value="10,20,0,0" />
 		</Style>
 		<Style Selector="StackPanel.Start Button">
-			<Setter Property="Width" Value="180"/>
-			<Setter Property="Margin" Value="0,5,0,0"/>
-			<Setter Property="IsEnabled" Value="{Binding IsStartButtonEnabled}"/>
+			<Setter Property="Width" Value="180" />
+			<Setter Property="Margin" Value="0,5,0,0" />
+			<Setter Property="IsEnabled" Value="{Binding IsStartButtonEnabled}" />
 		</Style>
 		<!--Export to excel button-->
 		<Style Selector="StackPanel.Export">
-			<Setter Property="Grid.Column" Value="0"/>
-			<Setter Property="Grid.Row" Value="3"/>
-			<Setter Property="HorizontalAlignment" Value="Left"/>
-			<Setter Property="Margin" Value="10,20,0,0"/>
+			<Setter Property="Grid.Column" Value="0" />
+			<Setter Property="Grid.Row" Value="3" />
+			<Setter Property="HorizontalAlignment" Value="Left" />
+			<Setter Property="Margin" Value="10,20,0,0" />
 		</Style>
 		<Style Selector="StackPanel.Export Button">
-			<Setter Property="Width" Value="180"/>
-			<Setter Property="Margin" Value="0,5,0,0"/>
-			<Setter Property="IsEnabled" Value="{Binding IsExportButtonEnabled}"/>
+			<Setter Property="Width" Value="180" />
+			<Setter Property="Margin" Value="0,5,0,0" />
+			<Setter Property="IsEnabled" Value="{Binding IsExportButtonEnabled}" />
 		</Style>
-		
-		
-		
+
+
 	</Window.Styles>
 	<Grid Classes="OuterGrid" ColumnDefinitions="1.2*, 0.7*, *" RowDefinitions="*" ShowGridLines="false">
 		<Border Classes="Left">
 			<StackPanel>
 				<TextBlock>Publikations typer</TextBlock>
 				<ScrollViewer>
-				<ItemsControl x:Name="PubType" Items="{Binding PublicationTypes}">
-					<ItemsControl.ItemTemplate>
-						<DataTemplate>
-							<Grid Classes="PubTypeBox" ColumnDefinitions="*,Auto,Auto">
-								<TextBox Classes="PubTypeTitle" Text="{Binding Path=categoryName}" x:Name="PubName" />
-								<Button Classes="Options" Command="{Binding ElementName=MainView, Path=DataContext.EditPublicationTypeCommand}" CommandParameter="{Binding }">
-									<Image Source="avares://Zenref.Ava/Assets/options.ico" />
-								</Button>
-								<Button Classes="Cross" Command="{Binding ElementName=MainView, Path=DataContext.DeletePublicationTypeCommand}" CommandParameter="{Binding }">
-									<Image Source="avares://Zenref.Ava/Assets/cross.ico" />
-								</Button>
-							</Grid>
-						</DataTemplate>
-					</ItemsControl.ItemTemplate>
-				</ItemsControl>
-			</ScrollViewer>
+					<ItemsControl x:Name="PubType" Items="{Binding PublicationTypes}">
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<Grid Classes="PubTypeBox" ColumnDefinitions="*,Auto,Auto">
+									<TextBox Classes="PubTypeTitle" Text="{Binding Path=categoryName}" x:Name="PubName" />
+									<Button Classes="Options" Command="{Binding ElementName=MainView, Path=DataContext.EditPublicationTypeCommand}" CommandParameter="{Binding }">
+										<Image Source="avares://Zenref.Ava/Assets/options.ico" />
+									</Button>
+									<Button Classes="Cross" Command="{Binding ElementName=MainView, Path=DataContext.DeletePublicationTypeCommand}" CommandParameter="{Binding }">
+										<Image Source="avares://Zenref.Ava/Assets/cross.ico" />
+									</Button>
+								</Grid>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+				</ScrollViewer>
 			</StackPanel>
 		</Border>
 		<Border Classes="Right">
-			
+
 			<StackPanel Orientation="Vertical" Spacing="3">
 				<StackPanel Classes="TextStack" Orientation="Horizontal" Spacing="10">
 					<TextBlock Text="Referencer importeret"/>
@@ -196,9 +194,9 @@
 					<TextBlock Text="{Binding RawReferences.Count}"/>
 				</StackPanel>
 				<StackPanel Classes="TextStack" Orientation="Horizontal" Spacing="10">
-					<TextBlock Text="Identificeret"/>
-					<TextBlock Text=":"/>
-					<TextBlock Text="{Binding ElementName=MainView, Path=DataContext.IdentifiedNumberCounter}"/>
+					<TextBlock Text="Identificeret" />
+					<TextBlock Text=":" />
+					<TextBlock Text="{Binding ElementName=MainView, Path=DataContext.IdentifiedNumberCounter}" />
 				</StackPanel>
 				<StackPanel Classes="TextStack" Orientation="Horizontal" Spacing="10">
 					<TextBlock Text="Uidentificeret"/>
@@ -213,8 +211,8 @@
 				<TextBlock>1) Første gang programmet åbnes indsættes api nøglen (scopus)</TextBlock>
 				<TextBlock>(Indsæt ny api nøgle, eller fortsæt til trin 2)</TextBlock>
 				<StackPanel Classes="ApiInsertInnerPanel">
-					<TextBox Watermark="Indsæt API nøgle" Text="{Binding ApiKey}"/>
-					<Button Content="Tilføj" Command="{Binding AddApiKeyCommand}"/>
+					<TextBox Watermark="Indsæt API nøgle" Text="{Binding ApiKey}" />
+					<Button Content="Tilføj" Command="{Binding AddApiKeyCommand}" />
 				</StackPanel>
 			</StackPanel>
 			<StackPanel Classes="ButtonPanel Import">
@@ -227,10 +225,10 @@
 			</StackPanel>
 			<StackPanel Classes="ButtonPanel Export">
 				<TextBlock>4) Tilsidst exporter resultatet til excel</TextBlock>
-				<Button Command="{Binding ExportCommand}">Exporter</Button>
+				<Button Classes="Export" Command="{Binding SaveFileDialogCommand}" CommandParameter="{Binding ElementName=MainView}">Exporter</Button>
 			</StackPanel>
 		</Grid>
-			<Button Classes="AddPub" Command="{Binding OpenSearchCriteriaCommand}" CommandParameter="{Binding ElementName=MainView}">Tilføj Publikationstype</Button>
+		<Button Classes="AddPub" Command="{Binding OpenSearchCriteriaCommand}" CommandParameter="{Binding ElementName=MainView}">Tilføj Publikationstype</Button>
 
 	</Grid>
 </Window>
