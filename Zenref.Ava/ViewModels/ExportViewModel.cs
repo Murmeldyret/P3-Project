@@ -262,7 +262,14 @@ namespace Zenref.Ava.ViewModels
         {
             DragAndDropView dragAndDropView = new DragAndDropView();
             dragAndDropView.ShowDialog(window);
-            IsStartButtonEnabled = canProceed();
+            if (filePaths is null || filePaths.Count == 0)
+            {
+                IsStartButtonEnabled = canNotProceed();
+            }
+            else
+            {
+                IsStartButtonEnabled = canProceed();
+            }
             IsApiKeyButtonEnabled = canNotProceed();
         }
 
