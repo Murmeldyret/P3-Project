@@ -325,7 +325,7 @@ namespace Zenref.Ava.ViewModels
                     // Creates new file
                     using (StreamWriter sw = new StreamWriter(filename))
                     {
-                        sw.WriteLine("Indsæt api nøgle");
+                        sw.Write(ApiKey);
                     }
 
                 }
