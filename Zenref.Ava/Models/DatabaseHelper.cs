@@ -10,7 +10,9 @@ namespace Zenref.Ava.Models
             using DataContext db = new();
             
             Reference reference = db.References
-                .FirstOrDefault(b => b.Title == title) ?? throw new InvalidOperationException();
+                .FirstOrDefault(b => b.Title == title) ?? new Reference();
+
+            reference.Title = "";
 
             return reference;
         }

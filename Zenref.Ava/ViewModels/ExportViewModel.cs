@@ -67,7 +67,7 @@ namespace Zenref.Ava.ViewModels
         {
             return false;
         }
-        
+
         /// <summary>
         /// Property that hold the information from creating a new publicatino type
         /// </summary>
@@ -172,7 +172,7 @@ namespace Zenref.Ava.ViewModels
         {
 
             string name = (string)msg.GetType().GetProperty("categoryName").GetValue(msg);
-            
+
             // Find the name of the publication type and delete it
             for (int i = 0; i < PublicationTypes.Count; i++)
             {
@@ -206,7 +206,7 @@ namespace Zenref.Ava.ViewModels
         {
             bool isEditEnabled = true;
             string name = (string)msg.GetType().GetProperty("categoryName").GetValue(msg);
-            
+
             // Loop over publication types
             for (int i = 0; i < PublicationTypes.Count; i++)
             {
@@ -279,7 +279,7 @@ namespace Zenref.Ava.ViewModels
         {
             IdentifiedNumberCounter = 0;
             UnIdentifiedNumberCounter = 0;
-            
+
 
             IsStartButtonEnabled = canNotProceed();
 
@@ -339,8 +339,8 @@ namespace Zenref.Ava.ViewModels
             // }
             //
             // filteredReferences = references;
-            
-            
+
+
             IsApiKeyButtonEnabled = canProceed();
             IsExportButtonEnabled = false;
             IsStartButtonEnabled = false;
@@ -348,7 +348,7 @@ namespace Zenref.Ava.ViewModels
 
             IEnumerable<IGrouping<string, Reference>> referencesGroupedByPubType = filteredReferences.GroupBy(
                 reference => reference.PubType.ToLower());
-            foreach (IGrouping<string,Reference> grouping in referencesGroupedByPubType)
+            foreach (IGrouping<string, Reference> grouping in referencesGroupedByPubType)
             {
                 Debug.WriteLine($"{grouping.Key} has {grouping.Count()} reference(s)");
                 sheet.SetActiveSheet(grouping.Key);
@@ -451,26 +451,50 @@ namespace Zenref.Ava.ViewModels
         private void RunBackgroundSearchProcess(object sender, DoWorkEventArgs e)
         {
             _isRunning = true;
+            int[] countRef = { 0, 0 };
             // Read all the references from the excel file
             ReadAllReferences();
 
-            // Identify the references in the database
-            // TODO: Implement the identification of the references
-
-            // If the database does not contain the reference, search for it in the internet
-            ApiSearching apiSearching = new ApiSearching();
-            // Call the apisearching method
-            (List<Reference> listReferences, List<RawReference> leftOverRef) = apiSearching.SearchReferences(rawReferences.ToList());
-
-            Console.WriteLine("References: " + rawReferences.Count);
+            List<Reference> OverAllReferences = new List<Reference>();
+            List<RawReference> leftOver = new List<RawReference>();
 
             // Filter the references
             FilterCollection instance = IFilterCollection.GetInstance();
 
-            int[] countRef = { 0, 0 };
+
+            // Identify the references in the database
+            // TODO: Implement the identification of the references
+
+            foreach (RawReference reference in rawReferences.ToList())
+            {
+                Reference dbReference = DatabaseHelper.GetReference(reference.ExtractData().Title);
+
+                if (dbReference.Title != "")
+                {
+                    OverAllReferences.Add(dbReference);
+                }
+                else
+                {
+                    leftOver.Add(reference);
+                }
+            }
+
+
+
+            // If the database does not contain the reference, search for it in the internet
+            ApiSearching apiSearching = new ApiSearching();
+            // Call the apisearching method
+            (List<Reference> listReferences, leftOver) = apiSearching.SearchReferences(leftOver);
+
+            Console.WriteLine("References: " + rawReferences.Count);
+
+            foreach (Reference reference in listReferences)
+            {
+                OverAllReferences.Add(reference);
+            }
 
             // Categorize all the references
-            foreach (Reference reference in listReferences)
+            foreach (Reference reference in OverAllReferences)
             {
                 UpdateCounter(instance, countRef, reference);
 
@@ -478,13 +502,13 @@ namespace Zenref.Ava.ViewModels
             }
 
             // Categorize all the remaining raw references
-            foreach (RawReference rawreference in leftOverRef)
+            foreach (RawReference rawreference in leftOver)
             {
                 Reference reference = rawreference.ExtractData();
                 reference.PubType = instance.categorize(reference);
 
                 UpdateCounter(instance, countRef, reference);
-                
+
                 listReferences.Add(reference);
                 StartWorker.ReportProgress(0, countRef);
             }
