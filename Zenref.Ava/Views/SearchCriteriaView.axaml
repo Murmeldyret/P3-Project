@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:controls="clr-namespace:Zenref.Ava.Views"
         mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="450"
-        Width="700" Height="450"
+		Width="700" Height="450"
+        MinWidth="700" MinHeight="450"
         x:Name="SearchView"
         Title="{Binding PubName}"
         x:Class="Zenref.Ava.Views.SearchCriteriaView">

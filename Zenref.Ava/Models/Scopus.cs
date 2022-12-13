@@ -100,6 +100,14 @@ namespace P3Project.API
                 outputReference.Match = bestMatchScorePercentage;
                 outputReference.Volume = scopusResponse.SearchResults.Entry[bestMatchIndex].PrismVolume.ToString();
                 outputReference.BookTitle = scopusResponse.SearchResults.Entry[bestMatchIndex].PrismPublicationName;
+                if (scopusResponse.SearchResults.Entry[bestMatchIndex].PrismIssn is not null)
+                {
+                    outputReference.Commentary = scopusResponse.SearchResults.Entry[bestMatchIndex].PrismIssn.ToString();
+                }
+                else if (scopusResponse.SearchResults.Entry[bestMatchIndex].PrismDoi is not null)
+                {
+                    outputReference.Commentary = scopusResponse.SearchResults.Entry[bestMatchIndex].PrismDoi.ToString();
+                }
             }
             catch (System.Exception)
             {

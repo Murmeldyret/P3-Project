@@ -124,7 +124,7 @@ namespace Zenref.Ava.ViewModels
         private List<string> filePath;
 
         [ObservableProperty]
-        private ObservableCollection<FileInfo> files;
+        private ObservableCollection<FileInfo>? files;
         [ObservableProperty] 
         private int activeSheet = 1;
         
@@ -174,11 +174,20 @@ namespace Zenref.Ava.ViewModels
         /// <returns>True if the user can proceed, false otherwise</returns>
         private bool CanProceed()
         {
-            bool anyFileChosen = files.Count() != 0;
+            bool anyFileChosen;
+            if (files is null)
+            {
+                anyFileChosen = false;
+            }
+            else
+            {
+                anyFileChosen = files.Count() != 0;
+            }
+
             IEnumerable<int> ints = columnPositions
                 .Where(x => x.columnPos is > 0)
                 .Select(x => x.columnPos);
-            
+
             int distinctColumnPosValues = ints
                 .Distinct()
                 .Count();
@@ -208,8 +217,8 @@ namespace Zenref.Ava.ViewModels
                     FileInfo fileInfo = new FileInfo(filePath);
                     files.Add(fileInfo);
                 }
-            }
             filePath = filePaths.ToList();
+            }
         }
         /// <summary>
         /// Event fired when object is dragged over element. It limits what types of objects can be dropped in the drop element.
