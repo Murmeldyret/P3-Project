@@ -1,12 +1,7 @@
-
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using DocumentFormat.OpenXml.Office2013.Drawing.ChartStyle;
-using DocumentFormat.OpenXml.Spreadsheet;
-using Microsoft.EntityFrameworkCore;
 
 namespace Zenref.Ava.Models;
 //TODO Erik skal dokumentere metoder :)))))
@@ -19,20 +14,24 @@ public class RawReference : IEquatable<RawReference>
     /// The field of study/education.
     /// </summary>
     public string Education { get; set; } 
+    
     /// <summary>
     /// The campus/location.
     /// </summary>
     public string Location { get; set; }
+    
     /// <summary>
     /// The semester
     /// </summary>
     /// <remarks>Can be represented in numbers or a string</remarks>
     public string Semester { get; set; }
+    
     /// <summary>
     /// The identifier of a given reference
     /// </summary>
     /// <remarks>Mostly contains numbers, but can contain chars</remarks>
     public string RefId { get; set; }
+    
     /// <summary>
     /// The original reference from a report, contains all data needed to enrich a reference.
     /// </summary>
@@ -41,7 +40,12 @@ public class RawReference : IEquatable<RawReference>
     /// <summary>
     /// Initializes a RawReference where all properties are required
     /// </summary>
-    public RawReference(string education, string location, string semester, string refId, string oriReference)
+    public RawReference(
+        string education, 
+        string location, 
+        string semester, 
+        string refId, 
+        string oriReference)
     {
         Education = education;
         Location = location;
@@ -49,9 +53,10 @@ public class RawReference : IEquatable<RawReference>
         RefId = refId;
         OriReference = oriReference;
     }
+    
     public RawReference()
     {
-
+    
     }
 
     protected RawReference(RawReference rawReference)
@@ -60,28 +65,32 @@ public class RawReference : IEquatable<RawReference>
     {
         
     }
-    
+
     public bool Equals(RawReference? other)
     {
-        bool isEqual = false;
         if (other is null)
-        {
-            return isEqual;
-        }
-
-        bool educationEquals = this.Education == other.Education;
-        bool locationEquals = this.Location == other.Location;
-        bool semesterEquals = this.Semester == other.Semester;
-        bool idEquals = this.RefId == other.RefId;
-        bool oriReferenceEquals = this.OriReference == other.OriReference;
-
-        isEqual = educationEquals
-                  && locationEquals
-                  && semesterEquals
-                  && idEquals
-                  && oriReferenceEquals;
+            return false;
         
-        return isEqual;
+        return this.Education == other.Education &&
+               this.Location == other.Location &&
+               this.Semester == other.Semester &&
+               this.RefId == other.RefId &&
+               this.OriReference == other.OriReference;
+        
+
+        // bool educationEquals = this.Education == other.Education;
+        // bool locationEquals = this.Location == other.Location;
+        // bool semesterEquals = this.Semester == other.Semester;
+        // bool idEquals = this.RefId == other.RefId;
+        // bool oriReferenceEquals = this.OriReference == other.OriReference;
+        //
+        // isEqual = educationEquals
+        //           && locationEquals
+        //           && semesterEquals
+        //           && idEquals
+        //           && oriReferenceEquals;
+        //
+        // return isEqual;
     }
 
     /// <summary>

@@ -5,6 +5,8 @@ using Xunit;
 using Zenref.Ava.Models.Spreadsheet;
 using ClosedXML.Excel;
 using System.IO;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Zenref.Ava.Factories;
 using Zenref.Ava.Models;
 
 
@@ -15,32 +17,9 @@ namespace zenref.Tests
         const string SPREADSHEETTESTNAME = "test.xlsx";
         const string FILLEDSPREADSHEETNAME = "ReadRefTest.xlsx";
 
-        XLWorkbook workbook = new XLWorkbook();
-        Spreadsheet spreadsheet = new Spreadsheet(SPREADSHEETTESTNAME);
-        Spreadsheet sheet = new Spreadsheet(FILLEDSPREADSHEETNAME);
-
-        RawReference reference1 = new RawReference(
-            "Software",
-            "Aalborg",
-            "Third",
-            "123",
-            "your dad lmao"
-            );
-
-        RawReference reference2 = new RawReference(
-            "Noget andet end software",
-            "Copenhagen",
-            "First",
-            "42069",
-            "I made it up"
-            );
-        RawReference reference3 = new RawReference(
-            "Noget kedeligt",
-            "Mou",
-            "Second",
-            "42",
-            "John"
-            );
+        XLWorkbook workbook = new();
+        Spreadsheet spreadsheet = new(SPREADSHEETTESTNAME);
+        Spreadsheet sheet = new(FILLEDSPREADSHEETNAME);
 
         [Fact]
         public void CheckFilename()
@@ -300,11 +279,16 @@ namespace zenref.Tests
                //Check for value reference
         public void IndexOf()
         {
+            // Create a new reference object
             //Arrange
             File.Delete(FILLEDSPREADSHEETNAME);
+            
+            var factory = new ReferenceFactory();
+            var reference1 = factory.CreateRawReference("Software", "Aalborg", "Tredje", "12345", "lang tekst");
+            var reference2 = factory.CreateRawReference("Noget andet end software", "Copenhagen", "First", "42069", "I made it up");
+            var reference3 = factory.CreateRawReference("Noget kedeligt", "Mou", "Second", "42", "John");
 
             //Act
-
             sheet.Create();
             sheet.AddReference(new List<RawReference>() { reference1, reference2, reference3 });
             sheet.Export(FILLEDSPREADSHEETNAME);
@@ -320,6 +304,11 @@ namespace zenref.Tests
         {
             //Arrange
             File.Delete(FILLEDSPREADSHEETNAME);
+            
+            var factory = new ReferenceFactory();
+            var reference1 = factory.CreateRawReference("Software", "Aalborg", "Tredje", "12345", "lang tekst");
+            var reference2 = factory.CreateRawReference("Noget andet end software", "Copenhagen", "First", "42069", "I made it up");
+            var reference3 = factory.CreateRawReference("Noget kedeligt", "Mou", "Second", "42", "John");
 
             //Act
             sheet.Create();
@@ -339,6 +328,11 @@ namespace zenref.Tests
         {
             //Arrange
             File.Delete(FILLEDSPREADSHEETNAME);
+            
+            var factory = new ReferenceFactory();
+            var reference1 = factory.CreateRawReference("Software", "Aalborg", "Tredje", "12345", "lang tekst");
+            var reference2 = factory.CreateRawReference("Noget andet end software", "Copenhagen", "First", "42069", "I made it up");
+            var reference3 = factory.CreateRawReference("Noget kedeligt", "Mou", "Second", "42", "John");
 
             //Act
             sheet.Create();
@@ -361,6 +355,10 @@ namespace zenref.Tests
         {
             //Arrange
             File.Delete(FILLEDSPREADSHEETNAME);
+            
+            var factory = new ReferenceFactory();
+            var reference1 = factory.CreateRawReference("Software", "Aalborg", "Tredje", "12345", "lang tekst");
+            var reference2 = factory.CreateRawReference("Noget andet end software", "Copenhagen", "First", "42069", "I made it up");
 
             //Act
             sheet.Create();
@@ -378,6 +376,11 @@ namespace zenref.Tests
         {
             //Arrange
             File.Delete(FILLEDSPREADSHEETNAME);
+            
+            var factory = new ReferenceFactory();
+            var reference1 = factory.CreateRawReference("Software", "Aalborg", "Tredje", "12345", "lang tekst");
+            var reference2 = factory.CreateRawReference("Noget andet end software", "Copenhagen", "First", "42069", "I made it up");
+            var reference3 = factory.CreateRawReference("Noget kedeligt", "Mou", "Second", "42", "John");
 
             //Act
             sheet.Create();
@@ -399,6 +402,9 @@ namespace zenref.Tests
             File.Delete(FILLEDSPREADSHEETNAME);
 
             IXLWorksheet ws = workbook.AddWorksheet(SHEETNAME);
+            
+            var factory = new ReferenceFactory();
+            var reference1 = factory.CreateRawReference("Software", "Aalborg", "Tredje", "12345", "lang tekst");
 
             //Act
             sheet.Create();
@@ -418,6 +424,11 @@ namespace zenref.Tests
         {
             //Arrange
             File.Delete(FILLEDSPREADSHEETNAME);
+            
+            var factory = new ReferenceFactory();
+            var reference1 = factory.CreateRawReference("Software", "Aalborg", "Tredje", "12345", "lang tekst");
+            var reference2 = factory.CreateRawReference("Noget andet end software", "Copenhagen", "First", "42069", "I made it up");
+            var reference3 = factory.CreateRawReference("Noget kedeligt", "Mou", "Second", "42", "John");
 
             //Act
             sheet.Create();
@@ -440,6 +451,9 @@ namespace zenref.Tests
             File.Delete(FILLEDSPREADSHEETNAME);
             RawReference referencenull = new RawReference(null,null,null,null,null);
 
+            var factory = new ReferenceFactory();
+            var reference1 = factory.CreateRawReference("Software", "Aalborg", "Tredje", "12345", "lang tekst");
+            
             //Act
             sheet.Create();
             sheet.AddRawReference(reference1,1);

@@ -9,13 +9,13 @@ namespace P3Project.API.APIHelper
     /// Class <c>ApiClient</c> is a partial class that can be extended with additional configuration
     public class ApiClient
     {
-		private static HttpClient? _ApiClient { get; set; }
+        private static HttpClient? _ApiClient { get; set; }
 
         private ApiClient()
         {
             _ApiClient = new HttpClient();
 
-			ApiClientConfiguration apiConfiguration = new ApiClientConfiguration();
+            ApiClientConfiguration apiConfiguration = new ApiClientConfiguration();
             apiConfiguration.initializeClient(_ApiClient);
         }
 
@@ -45,8 +45,8 @@ namespace P3Project.API.APIHelper
         {
             _ApiClient.DefaultRequestHeaders.Accept.Clear();
 
-            defaultInitialization(_ApiClient);           // Can be overwriten by partial method by clearing the headers.
-            CustomInit(_ApiClient);                     // The default initialization can be extended by implementing a partial method.
+            defaultInitialization(_ApiClient); // Can be overwriten by partial method by clearing the headers.
+            CustomInit(_ApiClient); // The default initialization can be extended by implementing a partial method.
         }
 
 
@@ -61,4 +61,3 @@ namespace P3Project.API.APIHelper
         }
     }
 }
-
