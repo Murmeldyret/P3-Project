@@ -262,15 +262,16 @@ namespace Zenref.Ava.ViewModels
         {
             DragAndDropView dragAndDropView = new DragAndDropView();
             dragAndDropView.ShowDialog(window);
-            if (filePaths is null || filePaths.Count == 0)
-            {
-                IsStartButtonEnabled = canNotProceed();
-            }
-            else
-            {
-                IsStartButtonEnabled = canProceed();
-            }
+            //if (filePaths is null || filePaths.Count == 0)
+            //{
+            //    IsStartButtonEnabled = canNotProceed();
+            //}
+            //else
+            //{
+            //    IsStartButtonEnabled = canProceed();
+            //}
             IsApiKeyButtonEnabled = canNotProceed();
+            IsStartButtonEnabled = canProceed(); //! Can't do what you are trying to since show dialog is async.
         }
 
         /// <summary>
