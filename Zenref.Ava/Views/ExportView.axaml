@@ -70,16 +70,27 @@
 
 		<!--Add publication type button-->
 		<Style Selector="Button.AddPub">
-			<Setter Property="Grid.Column" Value="0" />
-			<Setter Property="Grid.Row" Value="0" />
-			<Setter Property="HorizontalContentAlignment" Value="Center" />
-			<Setter Property="HorizontalAlignment" Value="Right" />
-			<Setter Property="VerticalAlignment" Value="Top" />
-			<Setter Property="Margin" Value="0,25,45,0" />
-			<Setter Property="Padding" Value="8,4" />
+			<Setter Property="Grid.Column" Value="0"/>
+			<Setter Property="Grid.Row" Value="0"/>
+			<Setter Property="HorizontalContentAlignment" Value="Center"/>
+			<Setter Property="HorizontalAlignment" Value="Right"/>
+			<Setter Property="VerticalAlignment" Value="Top"/>
+			<Setter Property="Margin" Value="0,25,45,0"/>
+			<Setter Property="Padding" Value="8,4"/>
 		</Style>
-
-		<!--Reference statistics content-->
+		<!--Add publication type button-->
+		<Style Selector="Button.AddFilter">
+			<Setter Property="Grid.Column" Value="0"/>
+			<Setter Property="Grid.Row" Value="0"/>
+			<Setter Property="HorizontalContentAlignment" Value="Center"/>
+			<Setter Property="HorizontalAlignment" Value="Right"/>
+			<Setter Property="VerticalAlignment" Value="Top"/>
+			<Setter Property="Margin" Value="0,65,45,0"/>
+			<Setter Property="Padding" Value="8,4"/>
+			<Setter Property="IsEnabled" Value="{Binding IsSaveFilterButtonEnabled}"/>
+		</Style>
+		
+		<!--Reference statistics content-->	
 		<!--Border-->
 		<Style Selector="Border.Right">
 			<Setter Property="Grid.Column" Value="1" />
@@ -228,7 +239,7 @@
 				<Button Classes="Export" Command="{Binding SaveFileDialogCommand}" CommandParameter="{Binding ElementName=MainView}">Exporter</Button>
 			</StackPanel>
 		</Grid>
-		<Button Classes="AddPub" Command="{Binding OpenSearchCriteriaCommand}" CommandParameter="{Binding ElementName=MainView}">Tilføj Publikationstype</Button>
-
+			<Button Classes="AddPub" Command="{Binding OpenSearchCriteriaCommand}" CommandParameter="{Binding ElementName=MainView}">Tilføj Publikationstype</Button>
+			<Button Classes="AddFilter" Command="{Binding SaveFilterCommand}" CommandParameter="{Binding ElementName=MainView}">Gem Publikationstyper</Button>
 	</Grid>
 </Window>

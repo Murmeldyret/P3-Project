@@ -50,6 +50,7 @@ namespace Zenref.Ava.ViewModels
         [ObservableProperty] private bool isImportButtonEnabled = false;
         [ObservableProperty] private bool isStartButtonEnabled = false;
         [ObservableProperty] private bool isExportButtonEnabled = false;
+        [ObservableProperty] private bool isSaveFilterButtonEnabled = false;
 
         /// <summary>
         /// Makes a bool true
@@ -73,8 +74,8 @@ namespace Zenref.Ava.ViewModels
         /// </summary>
         private ObservableCollection<Filter> searchCriteria = new ObservableCollection<Filter>();
 
-
-        private ObservableCollection<(Filter filter, int id)> filtercollection = new ObservableCollection<(Filter, int)>();
+        private FilterCollection PremadeFilter = IFilterCollection.GetInstance();
+                
         /// <summary>
         /// A collection of the created publication types
         /// </summary>
@@ -89,11 +90,33 @@ namespace Zenref.Ava.ViewModels
         [ObservableProperty] private ObservableCollection<Reference> references;
         [ObservableProperty] private ObservableCollection<RawReference> rawReferences;
         [ObservableProperty] private IEnumerable<Reference> filteredReferences;
-
         [ObservableProperty] private string apiKey;
+
 
         private BackgroundWorker StartWorker;
         private bool _isRunning;
+
+
+        [RelayCommand]
+        private void SaveFilter()
+        { 
+            PremadeFilter.Clear();
+            if (PublicationTypes.Any())
+            {
+                foreach (Filter f in PublicationTypes)
+                {
+                    PremadeFilter.Add(f);
+                    Console.WriteLine($"filtC:{PremadeFilter}");
+                }
+                PremadeFilter.SaveFilters();
+                IMsBoxWindow<ButtonResult> messageSaveFilterBox = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia
+                    .MessageBoxManager
+                    .GetMessageBoxStandardWindow("Filter Gemt", "Publikationstyperne er blevet gemt\n til næste gang programmet starter");
+                messageSaveFilterBox.Show();
+                IsSaveFilterButtonEnabled = true;
+            }
+        }
+
 
         /// <summary>
         /// Constructor, sets up the predefined publication types.
@@ -105,20 +128,58 @@ namespace Zenref.Ava.ViewModels
             // Searching for api key
             try
             {
-                if (File.Exists(@"ApiKeys/scopusApiKey.txt"))
+                if (!Directory.Exists(@"./ApiKeys"))
                 {
-                    using (StreamReader sr = new StreamReader(@"ApiKeys/scopusApiKey.txt"))
-                    {
-                        string line;
-                        while ((line = sr.ReadLine()) != null)
-                        {
-                            IsImportButtonEnabled = canProceed();
-                        }
-                    }
+                    Console.WriteLine("directory create");
+                    Directory.CreateDirectory(@"./ApiKeys");
                 }
                 else
                 {
-                    IsImportButtonEnabled = canNotProceed();
+                    if (File.Exists(@"./ApiKeys/scopusApiKey.txt"))
+
+                    {
+                        using (StreamReader sr = new StreamReader(@"./ApiKeys/scopusApiKey.txt"))
+                        {
+                            string line;
+                            while ((line = sr.ReadLine()) != null)
+                            {
+                                IsImportButtonEnabled = canProceed();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        IsImportButtonEnabled = canNotProceed();
+                    }
+                        
+                }
+
+                if (PremadeFilter.Any())
+                {
+                    PremadeFilter.LoadFilters();
+                    int inc = 0;
+                    foreach (Filter filter in PremadeFilter)
+                    {
+                        filter.ReturnFilterCategory();
+                        PublicationTypes.Add(filter);
+
+                        for (int i = inc; i < PublicationTypes.Count; i++)
+                        {
+
+                            PublicationTypes[i].filtQ = new ObservableCollection<SearchTerms>();
+                            
+                            foreach (string query in filter)
+                            {
+                                PublicationTypes[i].filtQ.Add(new SearchTerms(query));
+                            }
+                            
+                        }
+
+                        inc++;
+
+                    }
+                    
+                    IsSaveFilterButtonEnabled = true;
                 }
 
             }
@@ -149,6 +210,14 @@ namespace Zenref.Ava.ViewModels
             searchCriteria = message.SearchPubCollection;
 
             PublicationTypes.Add(new Filter(searchCriteria[0].filtQ, searchCriteria[0].filterQuery, $"Titel"));
+            if (PublicationTypes.Any())
+            {
+                IsSaveFilterButtonEnabled = canProceed();
+            }
+            else
+            {
+                IsSaveFilterButtonEnabled = canNotProceed();
+            }
         }
 
         /// <summary>
@@ -259,6 +328,10 @@ namespace Zenref.Ava.ViewModels
                     }
 
                 }
+                IMsBoxWindow<ButtonResult> messageSaveFilterBox = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia
+                    .MessageBoxManager
+                    .GetMessageBoxStandardWindow("API nøgle", "API nøglen er blevet gemt");
+                messageSaveFilterBox.Show();
 
                 IsStartButtonEnabled = canNotProceed();
                 IsImportButtonEnabled = canProceed();

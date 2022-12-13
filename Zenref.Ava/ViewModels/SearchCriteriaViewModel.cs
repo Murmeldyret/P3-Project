@@ -82,7 +82,6 @@ namespace Zenref.Ava.ViewModels
 
         public SearchCriteriaViewModel(Filter filter, bool isEditEnabled)
         {
-            Console.WriteLine("Constructer struck hahahhhahhahahhaha");
             PubTypes.Clear();
 
             this.IsEditEnabled = isEditEnabled;
