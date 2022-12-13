@@ -297,9 +297,9 @@ namespace Zenref.Ava.Models.Spreadsheet
             string location = getCell(row, ReferenceFields.Location).GetValue<string>();
             string semester = getCell(row, ReferenceFields.Semester).GetValue<string>();
             string oriReference = getCell(row, ReferenceFields.OriginalRef).GetValue<string>();
-            string id = getCell(row, ReferenceFields.RefId).GetValue<string>();
+            string refId = getCell(row, ReferenceFields.RefId).GetValue<string>();
 
-            RawReference rawReference = new RawReference(education, location, semester, id, oriReference);
+            RawReference rawReference = new RawReference(education, location, semester, refId, oriReference);
             return new Reference( rawReference,
                 author,
                 title,
