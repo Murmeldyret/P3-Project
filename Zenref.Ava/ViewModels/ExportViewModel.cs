@@ -99,7 +99,7 @@ namespace Zenref.Ava.ViewModels
         private bool _isRunning;
 
         [RelayCommand]
-        private void SaveFilterCommand()
+        private void SaveFilter()
         { 
             PremadeFilter.Clear();
             if (PublicationTypes.Any())
@@ -110,6 +110,10 @@ namespace Zenref.Ava.ViewModels
                     Console.WriteLine($"filtC:{PremadeFilter}");
                 }
                 PremadeFilter.SaveFilters();
+                IMsBoxWindow<ButtonResult> messageSaveFilterBox = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia
+                    .MessageBoxManager
+                    .GetMessageBoxStandardWindow("Filter Gemt", "Publikationstyperne er blevet gemt\n til næste gang programmet starter");
+                messageSaveFilterBox.Show();
                 IsSaveFilterButtonEnabled = true;
             }
         }
@@ -314,6 +318,10 @@ namespace Zenref.Ava.ViewModels
                     }
 
                 }
+                IMsBoxWindow<ButtonResult> messageSaveFilterBox = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia
+                    .MessageBoxManager
+                    .GetMessageBoxStandardWindow("API nøgle", "API nøglen er blevet gemt");
+                messageSaveFilterBox.Show();
 
                 IsStartButtonEnabled = canNotProceed();
                 IsImportButtonEnabled = canProceed();
