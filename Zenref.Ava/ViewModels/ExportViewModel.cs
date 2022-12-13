@@ -49,7 +49,7 @@ namespace Zenref.Ava.ViewModels
         [ObservableProperty] private bool isApiKeyButtonEnabled = true;
         [ObservableProperty] private bool isImportButtonEnabled = false;
         [ObservableProperty] private bool isStartButtonEnabled = false;
-        [ObservableProperty] private bool isExportButtonEnabled = true;
+        [ObservableProperty] private bool isExportButtonEnabled = false;
         [ObservableProperty] private bool isSaveFilterButtonEnabled = false;
 
         /// <summary>
@@ -90,6 +90,7 @@ namespace Zenref.Ava.ViewModels
         [ObservableProperty] private ObservableCollection<Reference> references;
         [ObservableProperty] private ObservableCollection<RawReference> rawReferences;
         [ObservableProperty] private IEnumerable<Reference> filteredReferences;
+        [ObservableProperty] private string apiKey;
 
 
         private BackgroundWorker StartWorker;
