@@ -94,7 +94,6 @@ namespace Zenref.Ava.ViewModels
         [ObservableProperty] private IEnumerable<Reference> filteredReferences;
         [ObservableProperty] private string apiKey;
 
-
         private BackgroundWorker StartWorker;
         private bool _isRunning;
 
@@ -478,6 +477,7 @@ namespace Zenref.Ava.ViewModels
             Console.WriteLine("Filepaths: " + filePaths.Count);
             Console.WriteLine("ColumnPositions: " + columnPositions);
             Console.WriteLine("ActiveSheet: " + activeSheet);
+            ReadAllReferences();
         }
 
         /// <summary>
@@ -528,7 +528,7 @@ namespace Zenref.Ava.ViewModels
             _isRunning = true;
             int[] countRef = { 0, 0 };
             // Read all the references from the excel file
-            ReadAllReferences();
+            //ReadAllReferences();
 
             TotalReferences = rawReferences.Count;
 

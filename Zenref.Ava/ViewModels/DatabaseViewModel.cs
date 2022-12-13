@@ -18,6 +18,7 @@ using DynamicData;
 using MessageBox.Avalonia.Enums;
 using System;
 using System.Reactive.Linq;
+using MessageBox.Avalonia;
 
 namespace Zenref.Ava.ViewModels
 {
@@ -105,17 +106,25 @@ namespace Zenref.Ava.ViewModels
             finally
             {
                 int nullReferences = referencesInSheets.Where(x => x is null).Count();
-                if (nullReferences > 0)
-                {
-                    IMsBoxWindow<ButtonResult> messageBoxStandardView = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia
-                        .MessageBoxManager
-                        .GetMessageBoxStandardWindow("Error", $"Failed to read {nullReferences} reference(s)");
-                    messageBoxStandardView.Show();   
-                }
                 inputReferences = new ObservableCollection<Reference>();
                 InputReferences.AddRange(referencesInSheets.Where(x => x is not null));
                 Debug.WriteLine($"Found {InputReferences.Count} Reference(s)");
-                Debug.WriteLine($"Number of failed references: {nullReferences}");   
+                Debug.WriteLine($"Number of failed references: {nullReferences}");
+                if (inputReferences.Count < 1 && nullReferences < 1)
+                {
+                    IMsBoxWindow<ButtonResult> msBoxWindow = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia
+                        .MessageBoxManager
+                        .GetMessageBoxStandardWindow("Fejl", "Fejl i indlæsning af referencer", icon: Icon.Error);
+                    msBoxWindow.Show();
+                }
+                else
+                {
+                    IMsBoxWindow<ButtonResult> msBoxWindow = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia
+                        .MessageBoxManager
+                        .GetMessageBoxStandardWindow("Indlæsning",  $"{inputReferences.Count} reference(r) indlæst\t\t\n{nullReferences} reference(r) ikke indlæst", icon: Icon.Success);
+                    msBoxWindow.Show();
+                }
+            
             }
         }
 
@@ -133,6 +142,7 @@ namespace Zenref.Ava.ViewModels
                     {
                         ContentTitle = "Slet reference",
                         ContentMessage = "Er du sikker på, at du vil slette referencen?",
+                        Icon = Icon.Question,
                         WindowStartupLocation = WindowStartupLocation.CenterScreen,
                         ButtonDefinitions = new[]
                         {  
@@ -144,6 +154,13 @@ namespace Zenref.Ava.ViewModels
                 {
                     references.Remove(selectedReference);
                 }
+            }
+            else
+            {
+                IMsBoxWindow<ButtonResult> messageBoxStandardView = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia
+                    .MessageBoxManager
+                    .GetMessageBoxStandardWindow("Sletning", "Vælg den reference, du vil slette", icon: Icon.Warning);
+                messageBoxStandardView.Show();
             }
         }
         /// <summary>
