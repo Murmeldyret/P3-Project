@@ -18,6 +18,7 @@ using DynamicData;
 using MessageBox.Avalonia.Enums;
 using System;
 using System.Reactive.Linq;
+using MessageBox.Avalonia;
 
 namespace Zenref.Ava.ViewModels
 {
@@ -109,11 +110,21 @@ namespace Zenref.Ava.ViewModels
                 InputReferences.AddRange(referencesInSheets.Where(x => x is not null));
                 Debug.WriteLine($"Found {InputReferences.Count} Reference(s)");
                 Debug.WriteLine($"Number of failed references: {nullReferences}");
-
-                IMsBoxWindow<ButtonResult> messageBoxStandardView = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia
-                    .MessageBoxManager
-                    .GetMessageBoxStandardWindow("Indlæsning", $"{InputReferences.Count} reference(r) indlæst\n{nullReferences} reference(r) ikke indlæst");
-                messageBoxStandardView.Show();
+                if (inputReferences.Count < 1 && nullReferences < 1)
+                {
+                    IMsBoxWindow<ButtonResult> msBoxWindow = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia
+                        .MessageBoxManager
+                        .GetMessageBoxStandardWindow("Fejl", "Fejl i indlæsning af referencer", icon: Icon.Error);
+                    msBoxWindow.Show();
+                }
+                else
+                {
+                    IMsBoxWindow<ButtonResult> msBoxWindow = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia
+                        .MessageBoxManager
+                        .GetMessageBoxStandardWindow("Indlæsning",  $"{inputReferences.Count} reference(r) indlæst\t\t\n{nullReferences} reference(r) ikke indlæst", icon: Icon.Success);
+                    msBoxWindow.Show();
+                }
+            
             }
         }
 
@@ -131,6 +142,7 @@ namespace Zenref.Ava.ViewModels
                     {
                         ContentTitle = "Slet reference",
                         ContentMessage = "Er du sikker på, at du vil slette referencen?",
+                        Icon = Icon.Question,
                         WindowStartupLocation = WindowStartupLocation.CenterScreen,
                         ButtonDefinitions = new[]
                         {  
@@ -147,7 +159,7 @@ namespace Zenref.Ava.ViewModels
             {
                 IMsBoxWindow<ButtonResult> messageBoxStandardView = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia
                     .MessageBoxManager
-                    .GetMessageBoxStandardWindow("Sletning", "Vælg den reference, du vil slette");
+                    .GetMessageBoxStandardWindow("Sletning", "Vælg den reference, du vil slette", icon: Icon.Warning);
                 messageBoxStandardView.Show();
             }
         }
