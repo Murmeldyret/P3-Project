@@ -128,20 +128,29 @@ namespace Zenref.Ava.ViewModels
             // Searching for api key
             try
             {
-                if (File.Exists(@"./ApiKeys/scopusApiKey.txt"))
+                if (!Directory.Exists(@"./ApiKeys"))
                 {
-                    using (StreamReader sr = new StreamReader(@"./ApiKeys/scopusApiKey.txt"))
-                    {
-                        string line;
-                        while ((line = sr.ReadLine()) != null)
-                        {
-                            IsImportButtonEnabled = canProceed();
-                        }
-                    }
+                    Console.WriteLine("directory create");
+                    Directory.CreateDirectory(@"./ApiKeys");
                 }
                 else
                 {
-                    IsImportButtonEnabled = canNotProceed();
+                    if (File.Exists(@"./ApiKeys/scopusApiKey.txt"))
+                    {
+                        using (StreamReader sr = new StreamReader(@"./ApiKeys/scopusApiKey.txt"))
+                        {
+                            string line;
+                            while ((line = sr.ReadLine()) != null)
+                            {
+                                IsImportButtonEnabled = canProceed();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        IsImportButtonEnabled = canNotProceed();
+                    }
+                        
                 }
 
                 if (PremadeFilter.Any())
