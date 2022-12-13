@@ -1,12 +1,6 @@
-﻿using Avalonia.Data.Converters;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Globalization;
-using System.Linq;
-using System.Runtime.Intrinsics.X86;
-using System.Text;
-using System.Threading.Tasks;
+using Avalonia.Data.Converters;
 
 namespace Zenref.Ava.Models
 {

@@ -44,12 +44,15 @@ namespace Zenref.Ava.ViewModels
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(StartCommand))]
         private int unIdentifiedNumberCounter = 0;
+        [ObservableProperty]
+        private int totalReferences = 0;
 
         // Keeps track of which buttons are enabled
         [ObservableProperty] private bool isApiKeyButtonEnabled = true;
         [ObservableProperty] private bool isImportButtonEnabled = false;
         [ObservableProperty] private bool isStartButtonEnabled = false;
         [ObservableProperty] private bool isExportButtonEnabled = false;
+        [ObservableProperty] private bool isSaveFilterButtonEnabled = false;
 
         /// <summary>
         /// Makes a bool true
@@ -67,14 +70,14 @@ namespace Zenref.Ava.ViewModels
         {
             return false;
         }
-        
+
         /// <summary>
         /// Property that hold the information from creating a new publicatino type
         /// </summary>
         private ObservableCollection<Filter> searchCriteria = new ObservableCollection<Filter>();
 
-
-        private ObservableCollection<(Filter filter, int id)> filtercollection = new ObservableCollection<(Filter, int)>();
+        private FilterCollection PremadeFilter = IFilterCollection.GetInstance();
+                
         /// <summary>
         /// A collection of the created publication types
         /// </summary>
@@ -89,10 +92,32 @@ namespace Zenref.Ava.ViewModels
         [ObservableProperty] private ObservableCollection<Reference> references;
         [ObservableProperty] private ObservableCollection<RawReference> rawReferences;
         [ObservableProperty] private IEnumerable<Reference> filteredReferences;
-
         [ObservableProperty] private string apiKey;
+
         private BackgroundWorker StartWorker;
         private bool _isRunning;
+
+
+        [RelayCommand]
+        private void SaveFilter()
+        { 
+            PremadeFilter.Clear();
+            if (PublicationTypes.Any())
+            {
+                foreach (Filter f in PublicationTypes)
+                {
+                    PremadeFilter.Add(f);
+                    Console.WriteLine($"filtC:{PremadeFilter}");
+                }
+                PremadeFilter.SaveFilters();
+                IMsBoxWindow<ButtonResult> messageSaveFilterBox = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia
+                    .MessageBoxManager
+                    .GetMessageBoxStandardWindow("Filter Gemt", "Publikationstyperne er blevet gemt\n til næste gang programmet starter");
+                messageSaveFilterBox.Show();
+                IsSaveFilterButtonEnabled = true;
+            }
+        }
+
 
         /// <summary>
         /// Constructor, sets up the predefined publication types.
@@ -104,20 +129,58 @@ namespace Zenref.Ava.ViewModels
             // Searching for api key
             try
             {
-                if (File.Exists(@"ApiKeys/scopusApiKey.txt"))
+                if (!Directory.Exists(@"./ApiKeys"))
                 {
-                    using (StreamReader sr = new StreamReader(@"ApiKeys/scopusApiKey.txt"))
-                    {
-                        string line;
-                        while ((line = sr.ReadLine()) != null)
-                        {
-                            IsImportButtonEnabled = canProceed();
-                        }
-                    }
+                    Console.WriteLine("directory create");
+                    Directory.CreateDirectory(@"./ApiKeys");
                 }
                 else
                 {
-                    IsImportButtonEnabled = canNotProceed();
+                    if (File.Exists(@"./ApiKeys/scopusApiKey.txt"))
+
+                    {
+                        using (StreamReader sr = new StreamReader(@"./ApiKeys/scopusApiKey.txt"))
+                        {
+                            string line;
+                            while ((line = sr.ReadLine()) != null)
+                            {
+                                IsImportButtonEnabled = canProceed();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        IsImportButtonEnabled = canNotProceed();
+                    }
+                        
+                }
+
+                if (PremadeFilter.Any())
+                {
+                    PremadeFilter.LoadFilters();
+                    int inc = 0;
+                    foreach (Filter filter in PremadeFilter)
+                    {
+                        filter.ReturnFilterCategory();
+                        PublicationTypes.Add(filter);
+
+                        for (int i = inc; i < PublicationTypes.Count; i++)
+                        {
+
+                            PublicationTypes[i].filtQ = new ObservableCollection<SearchTerms>();
+                            
+                            foreach (string query in filter)
+                            {
+                                PublicationTypes[i].filtQ.Add(new SearchTerms(query));
+                            }
+                            
+                        }
+
+                        inc++;
+
+                    }
+                    
+                    IsSaveFilterButtonEnabled = true;
                 }
 
             }
@@ -148,6 +211,14 @@ namespace Zenref.Ava.ViewModels
             searchCriteria = message.SearchPubCollection;
 
             PublicationTypes.Add(new Filter(searchCriteria[0].filtQ, searchCriteria[0].filterQuery, $"Titel"));
+            if (PublicationTypes.Any())
+            {
+                IsSaveFilterButtonEnabled = canProceed();
+            }
+            else
+            {
+                IsSaveFilterButtonEnabled = canNotProceed();
+            }
         }
 
         /// <summary>
@@ -171,7 +242,7 @@ namespace Zenref.Ava.ViewModels
         {
 
             string name = (string)msg.GetType().GetProperty("categoryName").GetValue(msg);
-            
+
             // Find the name of the publication type and delete it
             for (int i = 0; i < PublicationTypes.Count; i++)
             {
@@ -205,7 +276,7 @@ namespace Zenref.Ava.ViewModels
         {
             bool isEditEnabled = true;
             string name = (string)msg.GetType().GetProperty("categoryName").GetValue(msg);
-            
+
             // Loop over publication types
             for (int i = 0; i < PublicationTypes.Count; i++)
             {
@@ -258,6 +329,10 @@ namespace Zenref.Ava.ViewModels
                     }
 
                 }
+                IMsBoxWindow<ButtonResult> messageSaveFilterBox = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia
+                    .MessageBoxManager
+                    .GetMessageBoxStandardWindow("API nøgle", "API nøglen er blevet gemt");
+                messageSaveFilterBox.Show();
 
                 IsStartButtonEnabled = canNotProceed();
                 IsImportButtonEnabled = canProceed();
@@ -278,7 +353,7 @@ namespace Zenref.Ava.ViewModels
         {
             IdentifiedNumberCounter = 0;
             UnIdentifiedNumberCounter = 0;
-            
+
 
             IsStartButtonEnabled = canNotProceed();
 
@@ -338,8 +413,8 @@ namespace Zenref.Ava.ViewModels
             // }
             //
             // filteredReferences = references;
-            
-            
+
+
             IsApiKeyButtonEnabled = canProceed();
             IsExportButtonEnabled = false;
             IsStartButtonEnabled = false;
@@ -347,7 +422,7 @@ namespace Zenref.Ava.ViewModels
 
             IEnumerable<IGrouping<string, Reference>> referencesGroupedByPubType = filteredReferences.GroupBy(
                 reference => reference.PubType.ToLower());
-            foreach (IGrouping<string,Reference> grouping in referencesGroupedByPubType)
+            foreach (IGrouping<string, Reference> grouping in referencesGroupedByPubType)
             {
                 Debug.WriteLine($"{grouping.Key} has {grouping.Count()} reference(s)");
                 sheet.SetActiveSheet(grouping.Key);
@@ -451,26 +526,52 @@ namespace Zenref.Ava.ViewModels
         private void RunBackgroundSearchProcess(object sender, DoWorkEventArgs e)
         {
             _isRunning = true;
+            int[] countRef = { 0, 0 };
             // Read all the references from the excel file
             //ReadAllReferences();
 
-            // Identify the references in the database
-            // TODO: Implement the identification of the references
+            TotalReferences = rawReferences.Count;
 
-            // If the database does not contain the reference, search for it in the internet
-            ApiSearching apiSearching = new ApiSearching();
-            // Call the apisearching method
-            (List<Reference> listReferences, List<RawReference> leftOverRef) = apiSearching.SearchReferences(rawReferences.ToList());
-
-            Console.WriteLine("References: " + rawReferences.Count);
+            List<Reference> OverAllReferences = new List<Reference>();
+            List<RawReference> leftOver = new List<RawReference>();
 
             // Filter the references
             FilterCollection instance = IFilterCollection.GetInstance();
 
-            int[] countRef = { 0, 0 };
+
+            // Identify the references in the database
+            // TODO: Implement the identification of the references
+
+            foreach (RawReference reference in rawReferences.ToList())
+            {
+                Reference dbReference = DatabaseHelper.GetReference(reference.ExtractData().Title);
+
+                if (dbReference.Title != "")
+                {
+                    OverAllReferences.Add(dbReference);
+                }
+                else
+                {
+                    leftOver.Add(reference);
+                }
+            }
+
+
+
+            // If the database does not contain the reference, search for it in the internet
+            ApiSearching apiSearching = new ApiSearching();
+            // Call the apisearching method
+            (List<Reference> listReferences, leftOver) = apiSearching.SearchReferences(leftOver);
+
+            Console.WriteLine("References: " + rawReferences.Count);
+
+            foreach (Reference reference in listReferences)
+            {
+                OverAllReferences.Add(reference);
+            }
 
             // Categorize all the references
-            foreach (Reference reference in listReferences)
+            foreach (Reference reference in OverAllReferences)
             {
                 UpdateCounter(instance, countRef, reference);
 
@@ -478,18 +579,18 @@ namespace Zenref.Ava.ViewModels
             }
 
             // Categorize all the remaining raw references
-            foreach (RawReference rawreference in leftOverRef)
+            foreach (RawReference rawreference in leftOver)
             {
                 Reference reference = rawreference.ExtractData();
                 reference.PubType = instance.categorize(reference);
 
                 UpdateCounter(instance, countRef, reference);
-                
-                listReferences.Add(reference);
+
+                OverAllReferences.Add(reference);
                 StartWorker.ReportProgress(0, countRef);
             }
 
-            FilteredReferences = listReferences;
+            FilteredReferences = OverAllReferences;
         }
 
         private static void UpdateCounter(FilterCollection instance, int[] countRef, Reference reference)
@@ -517,6 +618,9 @@ namespace Zenref.Ava.ViewModels
         {
             _isRunning = false;
             IsExportButtonEnabled = true;
+            IMsBoxWindow<ButtonResult> messageSaveFilterBox = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia
+.MessageBoxManager.GetMessageBoxStandardWindow("Identifikations process", "Identifikations processen er blevet gennemført.");
+            messageSaveFilterBox.Show();
         }
 
         private void ChangedBackgroundSearchProcess(object sender, ProgressChangedEventArgs e)
