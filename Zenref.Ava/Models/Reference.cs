@@ -243,68 +243,42 @@ namespace Zenref.Ava.Models
             // return ((state & identificationState.Identified) == identificationState.Identified);
 
         }
+        
         /// <summary>
-        /// Compares each public property of two references and checks if their value is equal
+        /// This method compares the current Reference object to another Reference object
+        /// It returns true if all of the properties of the two Reference objects are equal, otherwise it returns false
         /// </summary>
-        /// <param name="other">The other reference to compare</param>
-        /// <returns><c>true</c> if all properties are the same, <c>false</c> otherwise.</returns>
-        /// <remarks>If other public properties are added, this method will need to be updated.</remarks>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public bool Equals(Reference? other)
         {
-            bool isEqual = false;
+            // Return false if the other Reference object is null
             if (other is null)
-            {
                 return false;
-            }
-            bool IdEquals = this.Id == other.Id;
-            bool AuthorEquals = this.Author == other.Author;
-            bool TitleEquals = this.Title == other.Title;
-            bool PubTypeEquals = this.PubType == other.PubType;
-            bool PublisherEquals = this.Publisher == other.Publisher;
-            bool YearRefEquals = this.YearRef == other.YearRef;
-            bool RefIdEquals = this.RefId == other.RefId;
-            bool EduEquals = this.Education == other.Education;
-            bool LocationEquals = this.Location == other.Location;
-            bool SemesterEquals = this.Semester == other.Semester;
-            bool LanguageEquals = this.Language == other.Language;
-            bool YearReportEquals = this.YearRef == other.YearRef;
-            bool MatchEquals = this.Match == this.Match;
-            bool CommentaryEquals = this.Commentary == other.Commentary;
-            bool SyllabusEquals = this.Syllabus == other.Syllabus;
-            bool SeasonEquals = this.Season == other.Season;
-            bool ExamEventEquals = this.ExamEvent == other.ExamEvent;
-            bool SourceEquals = this.Source == other.Source;
-            bool PagesEquals = this.Pages == other.Pages;
-            bool VolumeEquals = this.Volume == other.Volume;
-            bool ChaptersEquals = this.Chapters == other.Chapters;
-            bool BookTitleEquals = this.BookTitle == other.BookTitle;
-
-            isEqual = IdEquals
-                      && AuthorEquals
-                      && TitleEquals
-                      && PubTypeEquals
-                      && PublisherEquals
-                      && YearRefEquals
-                      && EduEquals
-                      && LocationEquals
-                      && SemesterEquals
-                      && LanguageEquals
-                      && YearReportEquals
-                      && MatchEquals
-                      && CommentaryEquals
-                      && SyllabusEquals
-                      && SeasonEquals
-                      && ExamEventEquals
-                      && SourceEquals
-                      && PagesEquals
-                      && VolumeEquals
-                      && ChaptersEquals
-                      && BookTitleEquals;
-
-            return isEqual;
+            
+            // Compare the properties of the current Reference object to the other Reference object
+            // Return true if all of the properties are equal, otherwise return false
+            return this.Author == other.Author
+                   && this.Title == other.Title
+                   && this.PubType == other.PubType
+                   && this.Publisher == other.Publisher
+                   && this.YearRef == other.YearRef
+                   && this.RefId == other.RefId
+                   && this.Education == other.Education
+                   && this.Location == other.Location
+                   && this.Semester == other.Semester
+                   && this.Language == other.Language
+                   && this.YearReport == other.YearReport
+                   && this.Match == other.Match
+                   && this.Commentary == other.Commentary
+                   && this.Syllabus == other.Syllabus
+                   && this.Season == other.Season
+                   && this.ExamEvent == other.ExamEvent
+                   && this.Source == other.Source
+                   && this.Pages == other.Pages
+                   && this.Volume == other.Volume
+                   && this.Chapters == other.Chapters
+                   && this.BookTitle == other.BookTitle;
         }
-
-
-
     }
 }

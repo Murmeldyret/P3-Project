@@ -3,6 +3,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using System;
 using System.Collections.Generic;
 using Xunit;
+using Zenref.Ava.Factories;
 using Zenref.Ava.Models;
 
 namespace zenref.Tests
@@ -64,25 +65,9 @@ namespace zenref.Tests
         [Fact]
         public void ValueEqualityOnTwoEqualReferences()
         {
-            Reference reference = new Reference(rawReference,
-                "Anders Rask",
-                "titel på noget",
-                "bog",
-                "AAU",
-                2022,
-                "Dansk",
-                2020,
-                0.9,
-                "No Comment",
-                "Syllabus",
-                "Vinter",
-                "skriftlig",
-                "jeg skal kilde dig skal jeg",
-                20,
-                "Massive",
-                "Argon",
-                "Det samme som din bog");
-                
+            var factory = new ReferenceFactory();
+            var reference = factory.CreateReference();
+            
                 Reference other = new Reference(rawReference,
                 "Anders Rask",
                 "titel på noget",
@@ -107,48 +92,35 @@ namespace zenref.Tests
         [Fact]
         public void ValueEqualsReflexiveProperty()
         {
-            Reference reference = new Reference(rawReference,
-                "Anders Rask",
-                "titel på noget",
-                "bog",
-                "AAU",
-                2022,
-                "Dansk",
-                2020,
-                0.9,
-                "No Comment",
-                "Syllabus",
-                "Vinter",
-                "skriftlig",
-                "jeg skal kilde dig skal jeg",
-                20,
-                "Massive",
-                "Argon",
-                "Det samme som din bog");
+            var factory = new ReferenceFactory();
+            var reference = factory.CreateReference();
+            
+            // Reference reference = new Reference(rawReference,
+            //     "Anders Rask",
+            //     "titel på noget",
+            //     "bog",
+            //     "AAU",
+            //     2022,
+            //     "Dansk",
+            //     2020,
+            //     0.9,
+            //     "No Comment",
+            //     "Syllabus",
+            //     "Vinter",
+            //     "skriftlig",
+            //     "jeg skal kilde dig skal jeg",
+            //     20,
+            //     "Massive",
+            //     "Argon",
+            //     "Det samme som din bog");
 
             Assert.True(reference.Equals(reference));
         }
         [Fact]
         public void ValueEqualsAlsoWorksInReverse()
         {
-            Reference reference = new Reference(rawReference,
-                "Anders Rask",
-                "titel på noget",
-                "bog",
-                "AAU",
-                2022,
-                "Dansk",
-                2020,
-                0.9,
-                "No Comment",
-                "Syllabus",
-                "Vinter",
-                "skriftlig",
-                "jeg skal kilde dig skal jeg",
-                20,
-                "Massive",
-                "Argon",
-                "Det samme som din bog");
+            var factory = new ReferenceFactory();
+            var reference = factory.CreateReference();
 
             Reference other = new Reference(rawReference,
                 "Anders Rask",
@@ -174,24 +146,9 @@ namespace zenref.Tests
         [Fact]
         public void ValueEqualsWhenOtherIsNullReturnsFalse()
         {
-            Reference reference = new Reference(rawReference,
-                "Anders Rask",
-                "Titel på noget",
-                "bog",
-                "AAU",
-                2022,
-                "Dansk",
-                2020,
-                0.9,
-                "Smart kommentar",
-                "ingen idé",
-                "Efterår",
-                "en god eksamen",
-                "pure opspind",
-                21,
-                "20th",
-                "16-21",
-                "Very good book");
+            var factory = new ReferenceFactory();
+            var reference = factory.CreateReference();
+            
             Reference? other = null;
 
             Assert.False(reference.Equals(other));
