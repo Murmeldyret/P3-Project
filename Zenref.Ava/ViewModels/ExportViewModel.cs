@@ -44,6 +44,8 @@ namespace Zenref.Ava.ViewModels
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(StartCommand))]
         private int unIdentifiedNumberCounter = 0;
+        [ObservableProperty]
+        private int totalReferences = 0;
 
         // Keeps track of which buttons are enabled
         [ObservableProperty] private bool isApiKeyButtonEnabled = true;
@@ -455,6 +457,8 @@ namespace Zenref.Ava.ViewModels
             // Read all the references from the excel file
             ReadAllReferences();
 
+            TotalReferences = rawReferences.Count;
+
             List<Reference> OverAllReferences = new List<Reference>();
             List<RawReference> leftOver = new List<RawReference>();
 
@@ -509,11 +513,11 @@ namespace Zenref.Ava.ViewModels
 
                 UpdateCounter(instance, countRef, reference);
 
-                listReferences.Add(reference);
+                OverAllReferences.Add(reference);
                 StartWorker.ReportProgress(0, countRef);
             }
 
-            FilteredReferences = listReferences;
+            FilteredReferences = OverAllReferences;
         }
 
         private static void UpdateCounter(FilterCollection instance, int[] countRef, Reference reference)
@@ -541,6 +545,9 @@ namespace Zenref.Ava.ViewModels
         {
             _isRunning = false;
             IsExportButtonEnabled = true;
+            IMsBoxWindow<ButtonResult> messageSaveFilterBox = (IMsBoxWindow<ButtonResult>)MessageBox.Avalonia
+.MessageBoxManager.GetMessageBoxStandardWindow("Identifikations process", "Identifikations processen er blevet gennemført.");
+            messageSaveFilterBox.Show();
         }
 
         private void ChangedBackgroundSearchProcess(object sender, ProgressChangedEventArgs e)
