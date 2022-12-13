@@ -8,11 +8,14 @@ namespace Zenref.Ava.Models
         public static Reference GetReference(string title)
         {
             using DataContext db = new();
-            
+
             Reference reference = db.References
                 .FirstOrDefault(b => b.Title == title) ?? new Reference();
 
-            reference.Title = "";
+            if (reference.Title == null)
+            {
+                reference.Title = "";
+            }
 
             return reference;
         }
