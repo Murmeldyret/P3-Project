@@ -129,7 +129,7 @@ namespace Zenref.Ava.Models
         {
             return Filters.FirstOrDefault(f => f.ReturnFilterCategory() == filter);
         }
-        
+
         /// <summary>
         /// Finds the index of a filter in the collection.
         /// </summary>
@@ -220,8 +220,13 @@ namespace Zenref.Ava.Models
                     // Loop through each word in the reference.
                     foreach (string text in referenceList)
                     {
-                        // Splits the query into words.
-                        string[] textWords = text.Split(' ');
+                        string[] textWords = new string[] {""};
+                        if (text != null)
+                        {
+
+                            // Splits the query into words.
+                            textWords = text.Split(' ');
+                        }
                         // Match every word in the query to the reference.
 
                         foreach (string queryWord in textWords)
@@ -296,7 +301,7 @@ namespace Zenref.Ava.Models
             this.filterQuery = filterQuery;
             this.categoryName = categoryName;
         }
-        
+
         public Filter(ObservableCollection<SearchTerms> filtQ, List<string> filterQuery, string categoryName)
         {
             this.filtQ = filtQ;
@@ -331,7 +336,7 @@ namespace Zenref.Ava.Models
         {
             return this.filterQuery;
         }
-        
+
         /// <summary>
         /// A method that returns the category name of the filter.
         /// </summary>
@@ -340,7 +345,7 @@ namespace Zenref.Ava.Models
         {
             return this.categoryName;
         }
-        
+
         /// <summary>
         /// A method that returns the number of queries in the filter.
         /// </summary>
