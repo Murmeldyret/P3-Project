@@ -51,7 +51,7 @@ namespace zenref.Tests
                 "lige meget",
                 "lige meget",
                 "lige meget",
-                "Zhao, Nannan. (2024). Improvement of Cloud Computing Medical Data Protection Technology Based on Symmetric Encryption Algorithm");
+                "Sengupta, J., & Hemalatha, K. L. (2019). Automated inception network based cardiac image segmentation analysis. International Journal of Advanced Science and Technology, 28(20), 953-962. Retrieved from www.scopus.com");
 
             //RawReference inputReference = new RawReference("lige meget",
             //    "lige meget",
@@ -71,7 +71,7 @@ namespace zenref.Tests
             (Reference reference, RawReference rawReference) = await scopus.ReferenceFetch(inputReference, scopus.ReferenceParser);
 
             // Assert
-            Assert.NotNull(reference.Title);
+            Assert.Equal("Automated inception network based cardiac image segmentation analysis", reference.Title);
         }
 
         [Fact]
