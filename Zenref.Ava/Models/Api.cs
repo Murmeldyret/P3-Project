@@ -134,7 +134,7 @@ namespace P3Project.API
             // Convert RawReference to a Reference
             Reference convertedReference = inputReference.ExtractData();
 
-            string query = "query=" + queryCleaner(convertedReference.Title!);
+            string query = "query=" + queryCleaner(convertedReference.Author!) + " " + queryCleaner(convertedReference.Title);
 
 
             // Add all parameters to the query
