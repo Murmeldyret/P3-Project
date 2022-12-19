@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.IO;
-using Zenref.Ava.Models.Spreadsheet;
 using System.Collections.Specialized;
 using System.Diagnostics;
 
@@ -227,7 +226,7 @@ namespace Zenref.Ava.ViewModels
         {
             List<string> fileList = (List<string>)e.Data.GetFileNames();
             e.DragEffects = e.DragEffects & DragDropEffects.Copy;
-            if (!e.Data.Contains(DataFormats.FileNames) || !fileList.All(f => f.Contains("xlsx")))
+            if (!fileList.All(f => Path.GetExtension(f) == ".xlsx"))
             {
                 e.DragEffects = DragDropEffects.None;
             }
