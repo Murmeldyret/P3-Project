@@ -262,16 +262,8 @@ namespace Zenref.Ava.ViewModels
         {
             DragAndDropView dragAndDropView = new DragAndDropView();
             dragAndDropView.ShowDialog(window);
-            //if (filePaths is null || filePaths.Count == 0)
-            //{
-            //    IsStartButtonEnabled = canNotProceed();
-            //}
-            //else
-            //{
-            //    IsStartButtonEnabled = canProceed();
-            //}
             IsApiKeyButtonEnabled = canNotProceed();
-            IsStartButtonEnabled = canProceed(); //! Can't do what you are trying to since show dialog is async.
+            IsStartButtonEnabled = canProceed();
         }
 
         /// <summary>
@@ -387,42 +379,6 @@ namespace Zenref.Ava.ViewModels
         /// </remarks>
         private void Export(Spreadsheet sheet, string name)
         {
-            // List<Reference> testreferences = new List<Reference>();
-            // foreach (RawReference reference in rawReferences)
-            // {
-            //     testreferences.Add(new Reference(reference, DateTimeOffset.Now));
-            // }
-            //
-            // List<Reference> references = new List<Reference>();
-            // int i = 0;
-            // string pubType;
-            // foreach (RawReference rawReference in rawReferences)
-            // {
-            //     switch (i % 4)
-            //     {
-            //         case 0:
-            //             pubType = "bog";
-            //             break;
-            //         case 1:
-            //             pubType = "Online";
-            //             break;
-            //         case 2:
-            //             pubType = "Tidsskrift";
-            //             break;
-            //         case 3:
-            //             pubType = "uncategorized";
-            //             break;
-            //         default:
-            //             pubType = "din far";
-            //             break;
-            //     }
-            //     references.Add(new Reference(rawReference, pubType: pubType));
-            //     i++;
-            // }
-            //
-            // filteredReferences = references;
-
-
             IsApiKeyButtonEnabled = canProceed();
             IsExportButtonEnabled = false;
             IsStartButtonEnabled = false;
@@ -536,7 +492,6 @@ namespace Zenref.Ava.ViewModels
             _isRunning = true;
             int[] countRef = { 0, 0 };
             // Read all the references from the excel file
-            //ReadAllReferences();
 
             TotalReferences = rawReferences.Count;
 
@@ -546,9 +501,6 @@ namespace Zenref.Ava.ViewModels
             // Filter the references
             FilterCollection instance = IFilterCollection.GetInstance();
 
-
-            // Identify the references in the database
-            // TODO: Implement the identification of the references
 
             foreach (RawReference reference in rawReferences.ToList())
             {

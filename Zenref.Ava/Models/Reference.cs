@@ -25,7 +25,6 @@ namespace Zenref.Ava.Models
         }
 
         public Reference(RawReference rawReference,
-            // int id,
             string author = "",
             string title = "",
             string pubType = "",
@@ -46,7 +45,6 @@ namespace Zenref.Ava.Models
             DateTimeOffset? time = null
         ) : this(rawReference,time)
         {
-            // Id = id;
             Author = author;
             Title = title;
             PubType = pubType;
@@ -65,113 +63,6 @@ namespace Zenref.Ava.Models
             Chapters = chapters;
             BookTitle = bookTitle;
         }
-        // public Reference() { }
-        // public Reference(
-        //     string _Author = "",
-        //     string _Title = "",
-        //     string _PubType = "",
-        //     string _Publisher = "",
-        //     int? _YearRef = null,
-        //     int? _ID = null,
-        //     string _Edu = "",
-        //     string _Location = "",
-        //     string _Semester = "",
-        //     string _Language = "",
-        //     int? _YearReport = null,
-        //     double? _Match = null,
-        //     string _Commentary = "",
-        //     string _Syllabus = "",
-        //     string _Season = "",
-        //     string _ExamEvent = "",
-        //     string _Source = "",
-        //     int? _Pages = null,
-        //     string _Volume = "",
-        //     string _Chapters = "",
-        //     string _BookTitle = "",
-        //     string _OriReference = ""
-        //     )
-        // {
-        //     Author = _Author;
-        //     Title = _Title;
-        //     PubType = _PubType;
-        //     Publisher = _Publisher;
-        //     YearRef = _YearRef;
-        //     ID = _ID;
-        //     Edu = _Edu;
-        //     Language = _Language;
-        //     YearReport = _YearReport;
-        //     Match = _Match;
-        //     Commentary = _Commentary;
-        //     Syllabus = _Syllabus;
-        //     Season = _Season;
-        //     ExamEvent = _ExamEvent;
-        //     Source = _Source;
-        //     Pages = _Pages;
-        //     Volume = _Volume;
-        //     Chapters = _Chapters;
-        //     BookTitle = _BookTitle;
-        // }
-        
-        // [Obsolete("KeyValuePair is deprecated for now")]
-        // public Reference(
-        //     KeyValuePair<_typeOfId, string> _UID,
-        //     string _Author = "",
-        //     string _Title = "",
-        //     string _PubType = "",
-        //     string _Publisher = "",
-        //     int? _YearRef = null,
-        //     int? _ID = null,
-        //     string _Edu = "",
-        //     string _Location = "",
-        //     string _Semester = "",
-        //     string _Language = "",
-        //     int? _YearReport = null,
-        //     double? _Match = null,
-        //     string _Commentary = "",
-        //     string _Syllabus = "",
-        //     string _Season = "",
-        //     string _ExamEvent = "",
-        //     string _Source = "",
-        //     int? _Pages = null,
-        //     string _Volume = "",
-        //     string _Chapters = "",
-        //     string _BookTitle = ""
-        //     )
-        // {
-        //     UID = _UID;
-        //     Author = _Author;
-        //     Title = _Title;
-        //     PubType = _PubType;
-        //     Publisher = _Publisher;
-        //     YearRef = _YearRef;
-        //     ID = _ID;
-        //     Edu = _Edu;
-        //     Location = _Location;
-        //     Semester = _Semester;
-        //     Language = _Language;
-        //     YearReport = _YearReport;
-        //     Match = _Match;
-        //     Commentary = _Commentary;
-        //     Syllabus = _Syllabus;
-        //     Season = _Season;
-        //     ExamEvent = _ExamEvent;
-        //     Source = _Source;
-        //     Pages = _Pages;
-        //     Volume = _Volume;
-        //     Chapters = _Chapters;
-        //     BookTitle = _BookTitle;
-        // }
-        [Obsolete("KeyValuePair is deprecated for now")]
-        public enum _typeOfId
-        {
-            Unknown,
-            DOI,
-            ISBN,
-            ISSN,
-        }
-        
-        [Obsolete("KeyValuePair is deprecated for now")]
-        public KeyValuePair<_typeOfId, string> UID;
         /// <summary>
         /// The time at which this object returned by API response if present.
         /// </summary>

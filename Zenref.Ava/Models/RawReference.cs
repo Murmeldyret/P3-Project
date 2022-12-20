@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace Zenref.Ava.Models;
-//TODO Erik skal dokumentere metoder :)))))
 /// <summary>
 /// Represents a reference from Raw-data. All properties are required and immutable. 
 /// </summary>
@@ -76,21 +75,6 @@ public class RawReference : IEquatable<RawReference>
                this.Semester == other.Semester &&
                this.RefId == other.RefId &&
                this.OriReference == other.OriReference;
-        
-
-        // bool educationEquals = this.Education == other.Education;
-        // bool locationEquals = this.Location == other.Location;
-        // bool semesterEquals = this.Semester == other.Semester;
-        // bool idEquals = this.RefId == other.RefId;
-        // bool oriReferenceEquals = this.OriReference == other.OriReference;
-        //
-        // isEqual = educationEquals
-        //           && locationEquals
-        //           && semesterEquals
-        //           && idEquals
-        //           && oriReferenceEquals;
-        //
-        // return isEqual;
     }
 
     /// <summary>
@@ -123,7 +107,7 @@ public class RawReference : IEquatable<RawReference>
     /// <summary>
     /// Finds a doi identifier in a reference if one is present.
     /// </summary>
-    /// <returns>A doi identifies, if one is found, otherwise an empty string.</returns>
+    /// <returns>A doi number, if one is found, otherwise an empty string.</returns>
     public string DoiSearch()
     {
         string Commentary;
@@ -147,7 +131,7 @@ public class RawReference : IEquatable<RawReference>
     /// Method for manipulating a raw UCN reference string into smaller, but correct pieces the right places.
     /// This method is not for Antologies or Websites
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Author, title and yearref</returns>
     public (string Author, string Title, int? YearRef) UCNRefAuthorTitleYearRef()
     {
         string author, title;
@@ -180,7 +164,7 @@ public class RawReference : IEquatable<RawReference>
     /// <summary>
     /// Theoretical correct string manipulation APA style
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Author, yearRef, title and source</returns>
     public (string Author, int? yearRef, string Title, string Source) CorrectAPACategorizer()
     {
         // Reference reference = new();
@@ -191,7 +175,7 @@ public class RawReference : IEquatable<RawReference>
 
         author = textAuthor[0] + ".";
         string[] textYear = Regex.Split(textAuthor[1], @"(\)(.*))");
-        //or (?:\)) but make sure to unite the string afterwards
+        //or (?:\)) but unite the string afterwards
         bool check = Int32.TryParse(textYear[0], out int year);
         if (check)
         {
@@ -211,9 +195,10 @@ public class RawReference : IEquatable<RawReference>
     /// <summary>
     /// Finds the links to the source.
     /// USE THIS METHOD BEFORE THE OTHER TWO
+    /// Is used to filter out unstructured references with links.
     /// </summary>
     /// <param name="text"></param>
-    /// <returns></returns>
+    /// <returns>Pubtype as a website and Source</returns>
     public (string? pubType, string? source) UCNRefLinks()
     {
         string pubType, source;
@@ -249,6 +234,13 @@ public class RawReference : IEquatable<RawReference>
             return (pubType, source);
         }
     }
+    /// <summary>
+    /// Levenshtein algorithm comparing two strings and checks the number
+    /// of operations needed to make the two strings equal.
+    /// </summary>
+    /// <param name="test"></param>
+    /// <param name="test2"></param>
+    /// <returns>An integer equal to the number of necessary operations</returns>
     private int Fuzzy(string test, string test2)
     {
         int levenshteinDistance = Fastenshtein.Levenshtein.Distance(test, test2);
@@ -256,12 +248,12 @@ public class RawReference : IEquatable<RawReference>
     }
     
     /// <summary>
-    /// Converts the number of operations needed to change one string into another,
+    /// Converts the number of operations needed to change one string into another (Levenshtein,
     /// into a percentage and allows for better quantification.
     /// </summary>
     /// <param name="newText"></param>
     /// <param name="originalText"></param>
-    /// <returns></returns>
+    /// <returns>double equal to percentage of a match</returns>
     public double MatchingStrings(string newText, string originalText)
     {
         int fuzzy = Fuzzy(newText, originalText);   

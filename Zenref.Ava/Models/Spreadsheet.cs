@@ -148,11 +148,7 @@ namespace Zenref.Ava.Models.Spreadsheet
         /// <exception cref="ArgumentException"> If the size of input dictionary is not the same as the number of fields in a reference</exception>
         public void SetColumnPosition(Dictionary<ReferenceFields, int> inputdic)
         {
-            // if (inputdic.Count == _referenceFieldsCount)
                 PositionOfReferencesInSheet = inputdic;
-            // else
-            //     throw new ArgumentException(
-            //         $"Parameter inputdic must be the same size as the current dictionary. inputdic.Count =={inputdic.Count} !={_referenceFieldsCount}");
         }
 
         /// <summary>
@@ -332,28 +328,6 @@ namespace Zenref.Ava.Models.Spreadsheet
             return row.Cell(PositionOfReferencesInSheet[field]);
         }
 
-        ///// <summary>
-        ///// Reads the next references in the spreadsheet, delimited by <paramref name="amount"/>
-        ///// </summary>
-        ///// <param name="amount">The amount of references to read, if <paramref name="amount"/> is 0, reads all references in the worksheet.</param>
-        ///// <returns>List of references from spreadsheet</returns>
-        ///// <exception cref="NotImplementedException"></exception>
-        //public IEnumerable<RawReference> GetReference(uint amount)
-        //{
-        //    if (amount + CurrentRow >= MaxRowsInExcel)
-        //    {
-        //        throw new ArgumentOutOfRangeException(
-        //            $"Excel does not support more than 1,048,576 rows, tried to read {amount + CurrentRow} rows.");
-        //    }
-
-        //    int totalrows = amount != 0 ? CurrentRow + (int)amount : Count;
-
-        //    for (int i = CurrentRow; i <= totalrows; i++)
-        //    {
-        //        yield return GetReference(i);
-        //    }
-        //}
-
         /// <summary>
         /// Reads the next references in the spreadsheet, delimited by <paramref name="amount"/>
         /// </summary>
@@ -408,24 +382,6 @@ namespace Zenref.Ava.Models.Spreadsheet
             setRawReference(reference, indexedRow);
         }
 
-        // /// <summary>
-        // /// Appends multiple <c>references</c> to the next rows of the first worksheet
-        // /// </summary>
-        // /// <param name="references">Collection of references to be added</param>
-        // /// <param name="startRow">The start row from where the references should be inserted. If default, appends to end of list of references</param>
-        // /// <exception cref="ArgumentException">Throws if parameter startRow is 0 or less than -1</exception>
-        // public void AddReference(IEnumerable<RawReference> references, int startRow = -1)
-        // {
-        //     if (startRow is 0 or < -1)
-        //     {
-        //         throw new ArgumentException("Start row cannot be 0 or less than -1");
-        //     }
-        //     if (startRow == -1) startRow = Count + 1;
-        //     foreach (RawReference reference in references)
-        //     {
-        //         AddRawReference(reference, startRow++);
-        //     }
-        // }
         public void AddReference(Reference reference, int row = -1)
         {
             row = row != -1 ? row : Count + 1;
@@ -685,7 +641,6 @@ namespace Zenref.Ava.Models.Spreadsheet
                 yield break;
             }
             
-            // Forloop giver bedre performance end foreach i NET6.0
             for (int index = 0; index < Count; index++)
             {
                 RawReference item = this[index];

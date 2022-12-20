@@ -54,59 +54,9 @@ namespace Zenref.Ava.ViewModels
             private DragAndDropViewModel ViewModel;
             [ObservableProperty]
             public string columnName;
-            //public ObservableCollection<string> columnName = new ObservableCollection<string>()
-            //{
-            //Spreadsheet.ReferenceFields.Author.ToString(),
-            //    Spreadsheet.ReferenceFields.Title.ToString(),
-            //    Spreadsheet.ReferenceFields.PublicationType.ToString(),
-            //    Spreadsheet.ReferenceFields.Publisher.ToString(),
-            //    Spreadsheet.ReferenceFields.YearRef.ToString(),
-            //    Spreadsheet.ReferenceFields.IdRef.ToString(),
-            //    Spreadsheet.ReferenceFields.Education.ToString(),
-            //    Spreadsheet.ReferenceFields.Location.ToString(),
-            //    Spreadsheet.ReferenceFields.Semester.ToString(),
-            //    Spreadsheet.ReferenceFields.Language.ToString(),
-            //    Spreadsheet.ReferenceFields.YearReport.ToString(),
-            //    Spreadsheet.ReferenceFields.OriginalRef.ToString(),
-            //    Spreadsheet.ReferenceFields.Match.ToString(),
-            //    Spreadsheet.ReferenceFields.Comment.ToString(),
-            //    Spreadsheet.ReferenceFields.Syllabus.ToString(),
-            //    Spreadsheet.ReferenceFields.Season.ToString(),
-            //    Spreadsheet.ReferenceFields.ExamEvent.ToString(),
-            //    Spreadsheet.ReferenceFields.Source.ToString(),
-            //    Spreadsheet.ReferenceFields.Pages.ToString(),
-            //    Spreadsheet.ReferenceFields.Volume.ToString(),
-            //    Spreadsheet.ReferenceFields.Chapters.ToString(),
-            //    Spreadsheet.ReferenceFields.BookTitle.ToString(),
-            //};
+
             [ObservableProperty]
             public int columnPos;
-            //public ObservableCollection<int> columnPos = new ObservableCollection<int>()
-            //{
-            //    1,
-            //    2,
-            //    3,
-            //    4,
-            //    5,
-            //    6,
-            //    7,
-            //    8,
-            //    9,
-            //    10,
-            //    11,
-            //    12,
-            //    13,
-            //    14,
-            //    15,
-            //    16,
-            //    17,
-            //    18,
-            //    19,
-            //    20,
-            //    21,
-            //    22,
-
-            //};
         }
 
         private Action<DragAndDropViewModel> action = (x) =>

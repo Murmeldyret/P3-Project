@@ -183,7 +183,6 @@ namespace zenref.Tests
 
             IXLWorksheet ws = workbook.AddWorksheet(SHEETNAME);
             IXLRow firstrow = ws.Row(1);
-            //IXLRange firstrow = ws.Range(1, 1, 1, 22);
 
             for (int i = 0; i < sheet.PositionOfReferencesInSheet.Count; i++)
             {
@@ -275,7 +274,7 @@ namespace zenref.Tests
 
             File.Delete(FILLEDSPREADSHEETNAME);
         }
-        [Fact] //ha to referencer og de ska være equivalente.
+        [Fact] //Takes two references and they must be equivalent.
                //Check for value reference
         public void IndexOf()
         {
@@ -299,7 +298,7 @@ namespace zenref.Tests
             File.Delete(FILLEDSPREADSHEETNAME);
         }
 
-        [Fact]  //Tar to værdier. index og reference som skal ind.
+        [Fact]  //Takes two values, index and reference, that has to go in.
         public void InsertUnoccupiedRow()
         {
             //Arrange
@@ -322,8 +321,8 @@ namespace zenref.Tests
             File.Delete(FILLEDSPREADSHEETNAME);
         }
 
-        [Fact]  //Tar to værdier. index og reference som skal ind.
-                //den overskriver hvis der allerede er en.
+        [Fact]  //Takes two values, index and reference, that must go in.
+                //It overwrites if there already is one.
         public void InsertOnOccupiedRow()
         {
             //Arrange
@@ -342,15 +341,14 @@ namespace zenref.Tests
             bool result = sheet[1].Equals(reference3);
 
             //Assert
-            //Er reference 1 stadig på index 1?
             sheet.Export(FILLEDSPREADSHEETNAME);
             Assert.True(result);
             File.Delete(FILLEDSPREADSHEETNAME);
             
         }
 
-        [Fact]  //Appendering af reference til spreadsheet
-                // tager kun reference som input
+        [Fact]  //Appends a reference to spreadsheet.
+                //Only takes reference as input.
         public void Add()
         {
             //Arrange
@@ -370,8 +368,8 @@ namespace zenref.Tests
             File.Delete(FILLEDSPREADSHEETNAME);
         }
 
-        [Fact]  //Tog et index som parameter og fjerne hvad
-                //end der er på rækken uden at slette rækken
+        [Fact]  //Took an index as a parameter and removes
+                //whatever is in the row without deleting the row.
         public void RemoveAt()
         {
             //Arrange

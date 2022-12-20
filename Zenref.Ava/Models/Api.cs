@@ -71,14 +71,6 @@ namespace P3Project.API
             this.RateLimitInMsecs = RateLimitInMsecs;
         }
 
-
-        // A function that returns processed data, using delegates to parse data. The API returns a reference
-
-        //public async Task<Reference> ReferenceFetch(string SearchQuery, Func<HttpResponseMessage, Reference> referenceParser)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         /// <summary>
         /// The method responsible for fetching data from a specific Api connection. Implementations should be async
         /// </summary>
@@ -198,9 +190,7 @@ namespace P3Project.API
         {
             if (true)
             {
-                //_isApiKeyValid = false;
-                throw new NotImplementedException("Fuck dig ikke implementeret");
-                //throw new ArgumentException($"{_baseURL}\nAPI key is not valid. Please update the key, or this site will not be available ");
+                throw new NotImplementedException("This isn't implemented");
             }
         }
     }
