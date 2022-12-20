@@ -237,7 +237,7 @@ namespace Zenref.Ava.Models
                             double certainty = 1 - (double)distance / Math.Max(queryWord.Length, filterQueries.Length);
 
                             // If the certainty is greater than the global percent, return the filter category.
-                            if (certainty > 0.7)              //! Replace this with a global variable.
+                            if (certainty > 0.7)              
                             {
                                 return filter.ReturnFilterCategory();
                             }
@@ -365,7 +365,4 @@ namespace Zenref.Ava.Models
             return filterQuery.Contains(query);
         }
     }
-
-
-
 }

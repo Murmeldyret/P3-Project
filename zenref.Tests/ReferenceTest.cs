@@ -94,25 +94,6 @@ namespace zenref.Tests
         {
             var factory = new ReferenceFactory();
             var reference = factory.CreateReference();
-            
-            // Reference reference = new Reference(rawReference,
-            //     "Anders Rask",
-            //     "titel på noget",
-            //     "bog",
-            //     "AAU",
-            //     2022,
-            //     "Dansk",
-            //     2020,
-            //     0.9,
-            //     "No Comment",
-            //     "Syllabus",
-            //     "Vinter",
-            //     "skriftlig",
-            //     "jeg skal kilde dig skal jeg",
-            //     20,
-            //     "Massive",
-            //     "Argon",
-            //     "Det samme som din bog");
 
             Assert.True(reference.Equals(reference));
         }

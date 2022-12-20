@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="P3Project.API.Api" Collapsed="true">
+    <Position X="3.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAhAAAAEAIAAAAAAAAECAAAAAAAgACAgAAAAAAAABIA=</HashCode>
+      <FileName>Models\Api.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Project.API.Scopus" Collapsed="true">
+    <Position X="3.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Models\Scopus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="P3Project.API.ScopusResponse" Collapsed="true">
+    <Position X="5.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ScopusResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Zenref.Ava.Models.ByteConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ByteConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Zenref.Ava.Models.DatabaseHelper" Collapsed="true">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\DatabaseHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Zenref.Ava.Models.DataContext" Collapsed="true">
+    <Position X="11.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAEAAQACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\DataContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Zenref.Ava.Models.Filter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAJAAAAAAAAAABAAAAAAIAAAAAAAAAAAAAGAAAAECIQ=</HashCode>
+      <FileName>Models\Filter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Zenref.Ava.Models.RawReference" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAABAEAAACoAIACAAAAAAAQABAAAAgAEAAIgA=</HashCode>
+      <FileName>Models\RawReference.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Zenref.Ava.Models.Reference" Collapsed="true">
+    <Position X="3.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABCAgAACwAEAEFgqBAAAAAAAAAAQAAAAIYAAAAIEQA=</HashCode>
+      <FileName>Models\Reference.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Zenref.Ava.Models.SearchPublicationType" Collapsed="true">
+    <Position X="7.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAIAAAIAAAAEEAAAIAAAMAAAAAAEAgAA=</HashCode>
+      <FileName>Models\SearchPublicationType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Zenref.Ava.Models.Spreadsheet.Spreadsheet" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEMABEAAAAAAABAYKACABARAoIBAAEQOGABAAAB4KEA=</HashCode>
+      <FileName>Models\Spreadsheet.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Zenref.Ava.ViewModels.PublicationType" Collapsed="true">
+    <Position X="9.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\PublicationType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Zenref.Ava.Models.FilterCollection" Collapsed="true">
+    <Position X="7" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAIAAAAAgAAAABAQAIAABAQAAAAAAAAEQAACAABQYAA=</HashCode>
+      <FileName>Models\Filter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Zenref.Ava.Models.ISingleton" Collapsed="true">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAABABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Filter.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Zenref.Ava.Models.IFilterCollection" Collapsed="true">
+    <Position X="6.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAAAABAAAAAAAAAAAQAACAABAQAA=</HashCode>
+      <FileName>Models\Filter.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Zenref.Ava.Models.IFilter" Collapsed="true">
+    <Position X="8.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAEAIQ=</HashCode>
+      <FileName>Models\Filter.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

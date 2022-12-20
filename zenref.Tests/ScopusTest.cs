@@ -53,11 +53,6 @@ namespace zenref.Tests
                 "lige meget",
                 "Sengupta, J., & Hemalatha, K. L. (2019). Automated inception network based cardiac image segmentation analysis. International Journal of Advanced Science and Technology, 28(20), 953-962. Retrieved from www.scopus.com");
 
-            //RawReference inputReference = new RawReference("lige meget",
-            //    "lige meget",
-            //    "lige meget",
-            //    "lige meget",
-            //    "Andersen, B. B. & Porse, L. H. (2021). TAP. Teori til Analyse og Praksis i billedkunst. Praxis.");
             // Get secret key
             var configuration = new ConfigurationBuilder()
             .AddUserSecrets<Settings>()
