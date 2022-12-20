@@ -105,6 +105,31 @@ namespace zenref.Tests
             Assert.Equal("Test Title 2", reference.Title);
             Assert.Equal("Test Author 2", reference.Author);
         }
+        
+        [Fact]
+        public void ReferenceToDatabaseEmpty()
+        {
+            // Use a DataContext object
+            using DataContext context = new();
+
+            // Create a new reference object
+            var factory = new ReferenceFactory();
+            var reference = factory.CreateReference();
+
+            // Add the reference to the database
+            context.References.Add(reference);
+            context.SaveChanges();
+
+            // Check if there are any records in the References table
+            Assert.True(context.References.Any());
+
+            // Find the reference in the database
+            Reference? reference2 = context.References.Find(reference);
+
+            // Check if the reference was found
+            Assert.Equal(reference.Title, reference2?.Title);
+            Assert.Equal(reference.Author, reference2?.Author);
+        }
 
         public void Dispose()
         {
