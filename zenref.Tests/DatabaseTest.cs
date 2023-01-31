@@ -72,7 +72,7 @@ namespace zenref.Tests
             context.SaveChanges();
 
             // Find the reference in the database
-            Reference? reference2 = context.References.Find(reference);
+            Reference? reference2 = context.References.Find(reference.Id);
 
             // Check if the reference was found
             Assert.Equal(reference.Title, reference2?.Title);
@@ -124,7 +124,7 @@ namespace zenref.Tests
             Assert.True(context.References.Any());
 
             // Find the reference in the database
-            Reference? reference2 = context.References.Find(reference);
+            Reference? reference2 = context.References.Find(reference.Id);
 
             // Check if the reference was found
             Assert.Equal(reference.Title, reference2?.Title);

@@ -11,46 +11,75 @@ namespace Zenref.Ava.Models
 {
     public interface ISingleton
     {
+        // : Property to hold the singleton instance of FilterCollection
         public static FilterCollection? instance { get; set; }
+        
+        // : Method to get the singleton instance of FilterCollection
         public static FilterCollection GetInstance()
         {
+            // : Check if the instance is null, if it is create a new instance
             if (instance == null)
             {
                 instance = new FilterCollection();
             }
+            
+            // : Return the instance
             return instance;
         }
 
     }
     public interface IFilterCollection : ISingleton
     {
+        // : Find filter by its name.
         public Filter FindFilter(string filter);
+        
+        // : Find the index of a filter in the collection.
         public int FindFilterIndex(string filter);
+        
+        // : Save all filters to a file.
         public void SaveFilters();
+        
+        // : Load filters from a file.
         public void LoadFilters();
+        
+        // : Categorize a reference into a filter.
         public string categorize(Reference reference);
+        
+        // : Clear all filters from the collection.
         public void Clear();
     }
 
     public interface IFilter
     {
+        // : Add a filter query to a filter.
         public void AddFilterQuery(string query);
+        
+        // : Remove a filter query from a filter.
         public bool RemoveFilterQuery(string query);
+        
+        // : Get the list of filter queries for a filter.
         public List<string> ReturnFilterQueries();
+        
+        // : Get the name of a filter.
         public string ReturnFilterCategory();
+        
+        // : Check if a filter contains a specific query.
         public bool ContainsQuery(string query);
-
-
     }
 
+    // : Define a FilterCollection class that implements ICollection<Filter> and IFilterCollection interface
     public class FilterCollection : ICollection<Filter>, IFilterCollection
     {
+        // : Private list of filters in the collection
         private List<Filter> Filters { get; set; } // The list of filters in the collection.
 
+        // : Property to get the number of filters in the collection
         public int Count => ((ICollection<Filter>)Filters).Count; // The number of filters in the collection.
 
+        // : Property to check if the collection is read-only
         public bool IsReadOnly => ((ICollection<Filter>)Filters).IsReadOnly;
 
+        // : Constructor to initialize the Filters list and load filters from the file if it exists
         public FilterCollection()
         {
             Filters = new List<Filter>();
@@ -137,33 +166,46 @@ namespace Zenref.Ava.Models
         /// <returns>The index of the filter if it exists, -1 otherwise.</returns>
         public int FindFilterIndex(string filter)
         {
+            // : Loop through all filters in the filter collection.
             for (int i = 0; i < Filters.Count; i++)
             {
+                // : Check if the filter category of the current filter matches the input filter.
                 if (Filters[i].ReturnFilterCategory() == filter)
                 {
+                    // : If a match is found, return the index of the filter.
                     return i;
                 }
             }
+            
+            // : If no match is found, return -1.
             return -1;
         }
 
-        // <summary>
-        // Saves the filters to a file
-        // </summary>
+        /// <summary>
+        /// SaveFilters method to save filters to file
+        /// </summary>
         public void SaveFilters()
         {
-            // Create a new write stream.
+            // : Create a new write stream to "Filters.csv" file
             using (StreamWriter writer = new StreamWriter("Filters.csv"))
             {
-                // Write the filterCollction to the file.
+                // : loop through each filter in Filters collection
                 foreach (Filter filter in Filters)
                 {
+                    // : write the filter category returned by ReturnFilterCategory method to the file
                     writer.Write(filter.ReturnFilterCategory());
+                    
+                    // : loop through each filter query returned by ReturnFilterQueries method 
                     foreach (string query in filter.ReturnFilterQueries())
                     {
+                        // : write the "," separator between filter queries
                         writer.Write(",");
+                        
+                        // : write the filter query to the file
                         writer.Write(query);
                     }
+                    
+                    // : write a new line after each filter
                     writer.WriteLine();
                 }
             }
@@ -174,27 +216,38 @@ namespace Zenref.Ava.Models
         /// </summary>
         public void LoadFilters()
         {
-            // Clear the current filter collection.
+            // : Clear the current filter collection.
             Filters.Clear();
 
-            // Check if file exists.
+            // : Check if the file "Filters.csv" exists.
             if (File.Exists("Filters.csv"))
             {
-                // Load the filters from the file.
+                // : Open the file "Filters.csv" for reading.
                 using (StreamReader sr = new StreamReader("Filters.csv"))
                 {
 
                     // Read all lines from the file.
+                    // : Loop until the end of the file.
                     while (!sr.EndOfStream)
                     {
+                        // : Read a line from the file.
                         string line = sr.ReadLine()!;
+                        
+                        // : Split the line into an array of strings using comma as a separator.
                         string[] values = line.Split(',');
+                        
+                        // : Create a new filter using the first value in the array.
                         Filter filter = new Filter(values[0]);
+                        
                         // Add all queries to the filter.
+                        // : Loop through the rest of the values in the array.
                         for (int i = 1; i < values.Length; i++)
                         {
+                            // : Add the filter query to the filter.
                             filter.AddFilterQuery(values[i]);
                         }
+                        
+                        // : Add the filter to the collection of filters.
                         Filters.Add(filter);
                     }
                 }
