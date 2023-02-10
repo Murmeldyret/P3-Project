@@ -9,16 +9,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Zenref.Ava.Models
 {
+    /// <summary>
+    /// A class representing a Reference, which inherits from RawReference and implements IEquatable interface.
+    /// </summary>
     public class Reference : RawReference, IEquatable<Reference>
     {
+        /// <summary>
+        /// Constructor for the Reference class, it takes a RawReference object and an optional time of creation as arguments.
+        /// </summary>
+        /// <param name="rawReference">The RawReference object to be used in creating the Reference object.</param>
+        /// <param name="time">The time of creation of the Reference object, it is optional and defaults to null</param>
         public Reference(RawReference rawReference, DateTimeOffset? time = null ):base(rawReference)
         {
+            // if time is not null, then assign its value to the TimeOfCreation property
             if (time is not null)
             {
                 TimeOfCreation = (DateTimeOffset)time;
             }
         }
         
+        /// <summary>
+        /// Default constructor for the Reference class
+        /// </summary>
         public Reference()
         {
 
@@ -90,10 +102,13 @@ namespace Zenref.Ava.Models
         /// <summary>
         /// Represents the minimum percentage match for a reference to be considered properly identified.
         /// </summary>
-        private const double MINIMUMMATCHTHRESHOLD = 0.60;
-        
+        private const double MINIMUMMATCHTHRESHOLD = 0.60; // Bliver vist ikke brugt..
+
+        /// <summary>
+        /// An enumeration used to represent the different states a Reference object can be in
+        /// </summary>
         [Flags]
-        private enum identificationState
+        private enum identificationState 
         {
             None = 0,
             Raw = 1,
@@ -112,23 +127,36 @@ namespace Zenref.Ava.Models
         /// Determines whether or not a Reference is considered identified
         /// </summary>
         /// <returns>True if the Reference is identified, false if not and needs to be reviewed manually</returns>
-        public bool isIdentified()
+        public bool isIdentified() // Ikke færdig og Bliver ikke brugt...
         {
+            // Initialize the state to NotFound
             identificationState state = identificationState.NotFound;
+            
+            // Create a variable for the identified state in the API
             identificationState identifiedInApi =
                 (identificationState.FoundInApi | identificationState.HighMatchThreshold);
             
+            // Create a variable for the identified state in the database
             identificationState identifiedInDB = identificationState.FoundInDataBase;
             
+            // Check if the TimeOfCreation property has a value
             if (TimeOfCreation.HasValue)
             {
-                state &= ~identificationState.NotFound;
+                // Clear the NotFound state
+                state &= ~identificationState.NotFound; //  "~" is the bitwise NOT operator. This effectively sets all bits of the "NotFound" state to 0, which means that the state is no longer set to "NotFound".
+                
+                // Set the state to FoundInApi
                 state |= identificationState.FoundInApi;
+                
+                // Check if the match threshold is greater than or equal to the minimum threshold
                 state |= Match >= MINIMUMMATCHTHRESHOLD
+                    // If the match threshold is greater than or equal to the minimum threshold, set the state to HighMatchThreshold
                     ? identificationState.HighMatchThreshold
+                    // If the match threshold is less than the minimum threshold, set the state to LowMatchThreshold
                     : identificationState.LowMatchThreshold;
             }
-
+            
+            // Return true if the state is equal to identified in the API
             return (state | identifiedInApi) == identifiedInApi;
             // return identified.HasFlag(~state & identified);
             // return ((state & identificationState.Identified) == identificationState.Identified);

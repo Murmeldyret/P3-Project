@@ -6,13 +6,17 @@ namespace Zenref.Ava.Models
 {
     public class DataContext : DbContext
     {
+        // DbSet for the Reference table
         public DbSet<Reference> References => Set<Reference>();
         
+        // Configure the database connection
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlite($"Data Source={Path.Combine(Environment.CurrentDirectory, "Zenref1.db")}");
 
+        // Configures the database model - The modelbuilder to configure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Map the Reference classs to the "Reference" table in the database.
             modelBuilder.Entity<Reference>().ToTable("Reference");
             base.OnModelCreating(modelBuilder);
         }

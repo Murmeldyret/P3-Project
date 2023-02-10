@@ -9,13 +9,19 @@ namespace P3Project.API.APIHelper
     /// Class <c>ApiClient</c> is a partial class that can be extended with additional configuration
     public class ApiClient
     {
+        // Private property to hold an instance of HttpClient for making API calls.
         private static HttpClient? _ApiClient { get; set; }
-
+        
+        // Private constructor to prevent direct instantitation of the class.
         private ApiClient()
         {
+            // Initialize the HttpClient
             _ApiClient = new HttpClient();
-
+            
+            // Create a new instance of ApiClientConfiguration
             ApiClientConfiguration apiConfiguration = new ApiClientConfiguration();
+            
+            // Configure the client using the ApiClientConfiguration.
             apiConfiguration.initializeClient(_ApiClient);
         }
 
@@ -25,20 +31,20 @@ namespace P3Project.API.APIHelper
         /// <returns>The Initialized HTTP client instance.</returns>
         public static HttpClient getInstance()
         {
+            // Check if the _ApiClient is null, if it is, create a new instance of ApiClient
             if (_ApiClient == null)
             {
                 new ApiClient();
             }
-
+            
+            // Return the _ApiClient property
             return _ApiClient;
         }
     }
 
     partial class ApiClientConfiguration
     {
-        /// <summary>
         /// Represents a partial method that can be implemented to extend the default initialization of the HTTP client.
-        /// </summary>
         partial void CustomInit(HttpClient _ApiClient);
 
         public void initializeClient(HttpClient _ApiClient)
